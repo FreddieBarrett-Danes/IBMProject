@@ -17,7 +17,7 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 temp = new Vector3(Player.position.x, MainCamera.position.y, MainCamera.position.z);
+        Vector3 temp = new Vector3(Player.position.x, MainCamera.position.y, Player.position.z);
         MainCamera.position = temp;
     }
 }
