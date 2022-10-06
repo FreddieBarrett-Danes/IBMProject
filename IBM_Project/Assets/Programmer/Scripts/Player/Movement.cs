@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public static Movement Instance;
     public float Speed;
-
-    private GameObject player;
-//    public int Framerate; //Testing movement's consistant regardless of framerate
+    public GameObject player;
+//  public int Framerate; //Testing movement's consistant regardless of framerate
     private Vector3 Origin;
-    
     Vector3 Distance;
 	
 	
@@ -18,8 +17,12 @@ public class Movement : MonoBehaviour
     {
         //   Application.targetFrameRate = Framerate;
         //Timer = 0;
+        if (!Instance)
+        {
+            Instance = this;
+        }
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        //player = GameObject.FindGameObjectWithTag("Player");
 
         Origin = player.transform.position;
     }
