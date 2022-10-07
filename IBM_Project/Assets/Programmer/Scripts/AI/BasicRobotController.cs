@@ -11,12 +11,13 @@ public class BasicRobotController : RobotController
             case false:
             {
                 timer += Time.deltaTime;
-                var range = Vector3.Distance(player.transform.position, agent.transform.position);
-                var facing = (player.transform.position - agent.transform.position).normalized;
-                var dotProd = Vector3.Dot(facing, agent.transform.forward);
-
+                var playerPos = player.transform.position;
+                var agentPos = agent.transform.position;
+                var range = Vector3.Distance(playerPos, agentPos);
+                var dirToTarget = (playerPos - agentPos).normalized;
+                
                 // LockOn
-                if (range < playerRadius)
+                if (range < viewRadius && Vector3.Angle (transform.forward, dirToTarget) < viewAngle / 2)
                 {
                     agent.SetDestination(player.transform.position);
                     timer = wanderTimer;

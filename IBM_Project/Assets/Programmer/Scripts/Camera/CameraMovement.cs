@@ -4,25 +4,13 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public GameObject Player;
-    public GameObject MainCamera;
-
-    private Transform TMainCamera;
-    private Transform TPlayer;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        TMainCamera = MainCamera.transform;
-        TPlayer = Player.transform;
-        //MainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
-        //Player = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
+    public GameObject player;
+    public GameObject mainCamera;
+    
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        Vector3 temp = new Vector3(Player.transform.position.x, MainCamera.transform.position.y, Player.transform.position.z);
-        MainCamera.transform.position = temp;
+        var temp = new Vector3(player.transform.position.x, mainCamera.transform.position.y, player.transform.position.z);
+        mainCamera.transform.position = temp;
     }
 }
