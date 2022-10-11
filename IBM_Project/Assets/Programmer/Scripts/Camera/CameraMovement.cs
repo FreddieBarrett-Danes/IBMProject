@@ -6,6 +6,7 @@ public class CameraMovement : MonoBehaviour
 {
     public GameObject player;
     public GameObject mainCamera;
+
     
     // Update is called once per frame
     private void Update()
