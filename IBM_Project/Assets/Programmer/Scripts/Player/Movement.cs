@@ -10,15 +10,7 @@ public class Movement : MonoBehaviour
     public GameObject visuals;
 
     private Vector3 move;
-    public float rotationSpeed;
-	
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
         //move = new Vector3(0, 0, 0);
