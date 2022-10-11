@@ -23,7 +23,6 @@ public class Movement : MonoBehaviour
         move = new Vector3(0, 0, 0);
         move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
         this.gameObject.transform.Translate(move * Speed *Time.deltaTime);
-        Debug.Log(move);
 
         if(move != Vector3.zero)
         {
