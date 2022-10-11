@@ -217,6 +217,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &52451738 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2260522203907100303, guid: 930b47435a649a14895209b54992f312, type: 3}
+  m_PrefabInstance: {fileID: 1213529847}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &52451742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52451738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16900ca15c380ee44b39538b3a9bf013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &177269470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -226,7 +243,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2054899259319685448, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: rotationSpeed
-      value: 10
+      value: 720
       objectReference: {fileID: 0}
     - target: {fileID: 2054899259319685450, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: m_RootOrder
@@ -278,6 +295,10 @@ PrefabInstance:
       objectReference: {fileID: 670670815}
     - target: {fileID: 2054899259319685453, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2054899259319685453, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
