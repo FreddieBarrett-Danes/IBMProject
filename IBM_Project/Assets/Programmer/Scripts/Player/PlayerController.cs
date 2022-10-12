@@ -6,19 +6,28 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
+    
     public GameObject player;
     public GameObject visuals;
 
+    private GameObject mainCamera;
+
     public bool isBehindEnemy = false;
 
-    private Vector3 move;
+    private Vector3 movePlayer;
+    private Vector3 moveCamera;
 
+    void Start()
+    {
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+    }
     void Update()
     {
         Movement();
         TakeControl();
     }
-
+    
+    //old movement fucntion, could still be used do not delete
     /*private void Movement()
     {
         //move = new Vector3(0, 0, 0);
@@ -36,32 +45,47 @@ public class PlayerController : MonoBehaviour
         }
     }*/
 
+    //uses Input.KeyCode to check for button presses, can change to looking through Input Manager
     private void Movement()
     {
-        Vector3 tempMove = new Vector3(0, 0, 0); ;
+        //Temporary vecotrs to update object transforms
+        Vector3 tempPlayerMove = new Vector3(0, 0, 0);
+        Vector3 tempCameraMove = new Vector3(0, 0, 0);
+        
+        //Input Checks
         if (Input.GetKey(KeyCode.A))
         {
-            tempMove += Vector3.left;
+            tempPlayerMove += Vector3.left;
+            tempCameraMove += Vector3.left;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            tempMove += Vector3.right;
+            tempPlayerMove += Vector3.right;
+            tempCameraMove += Vector3.right;
         }
         if (Input.GetKey(KeyCode.W))
         {
-            tempMove += Vector3.forward;
+            tempPlayerMove += Vector3.forward;
+            tempCameraMove += Vector3.up;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            tempMove += Vector3.back;
+            tempPlayerMove += Vector3.back;
+            tempCameraMove += Vector3.down;
         }
+        
+        //normalise for consistent movement
+        movePlayer = tempPlayerMove.normalized;
+        moveCamera = tempCameraMove.normalized;
 
-        move = tempMove.normalized;
-        this.gameObject.transform.Translate(move * speed * Time.deltaTime);
+        //add new translations to player and camera
+        this.gameObject.transform.Translate(movePlayer * speed * Time.deltaTime);
+        mainCamera.transform.Translate(moveCamera * speed * Time.deltaTime);
 
-        if (move != Vector3.zero)
+        //rotates the player visual to give a visual representation for direction of movement
+        if (movePlayer != Vector3.zero)
         {
-            Vector3 NewAt = Vector3.Cross(transform.up, move);
+            Vector3 NewAt = Vector3.Cross(transform.up, movePlayer);
 
             Quaternion toRotation = new Quaternion();
             toRotation.SetLookRotation(NewAt);

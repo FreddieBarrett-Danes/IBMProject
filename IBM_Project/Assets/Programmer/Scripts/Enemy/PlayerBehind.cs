@@ -28,7 +28,6 @@ public class PlayerBehind : MonoBehaviour
             {
                 Vector3 forward = transform.TransformDirection(Vector3.forward);
                 Vector3 toOther = player.transform.position - transform.position;
-                Debug.Log(Vector3.Dot(forward.normalized, toOther.normalized));
                 if (Vector3.Dot(forward, toOther) < 0)
                 {
                     pC.isBehindEnemy = true;

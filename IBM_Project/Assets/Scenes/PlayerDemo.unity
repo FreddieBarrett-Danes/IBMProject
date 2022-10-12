@@ -348,7 +348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2054899259319685448, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: speed
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2054899259319685448, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: Visuals
@@ -406,10 +406,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2054899259319685451, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 670670815}
     - target: {fileID: 2054899259319685453, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: m_Name
       value: Player
@@ -434,8 +430,7 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2054899259319685451, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
 --- !u!1001 &320416157
 PrefabInstance:
@@ -545,7 +540,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c095650712a014541b52995a7078e630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 378670203}
 --- !u!1001 &1213529847
 PrefabInstance:
   m_ObjectHideFlags: 0
