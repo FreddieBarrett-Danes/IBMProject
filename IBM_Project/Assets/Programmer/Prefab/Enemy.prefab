@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2260522203907100298}
   - component: {fileID: 2260522203907100297}
   - component: {fileID: 2260522203907100296}
+  - component: {fileID: 2949899607808946334}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -75,6 +76,19 @@ MonoBehaviour:
   viewRadius: 2
   viewAngle: 90
   stop: 0
+--- !u!135 &2949899607808946334
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260522203907100303}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2260522204230062239
 GameObject:
   m_ObjectHideFlags: 0
