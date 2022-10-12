@@ -7,43 +7,41 @@ using UnityEngine;
 public class ReadCSV : MonoBehaviour
 {
     public TextMeshProUGUI text;
-    public TextAsset CSVFiles;
+    public TextAsset CSVFile;
 
+    [Range(1, 5)]
     public int row;
-    public int col;
+    [Range(1, 5)]
+    public int column;
 
-    public int Length;
+    [SerializeField]
+    private bool find; //Use this to generate the row,column that you've selected using Row and Column
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        var dataset = CSVFiles;
-
-        var splitDataset = dataset.text.Split(new char[] { '\n' });
-
-        for (int i = 0; i < row; i++)
+        if (find)
         {
-            /*var data = splitDataset[i].Split(',');
-            for (int j = 0; j < col; j++)
-            {
-                if(row > splitDataset.Length) row = splitDataset.Length;
-                if(row <= 0) row = 0;
-                if(col > data.Length - 1) col = data.Length - 1;
-                if(col <= 0) col = 0;
-                Debug.Log(splitDataset.Length);
-                text.text = data[j];
-            }*/
-        }
-    }
+            find = false;
+            var dataset = CSVFile;
 
-    /*void ReadCSV()
-    {
-        Length = CSVFiles.text.Length;
-    }*/
+            var splitDataset = dataset.text.Split(new char[] { '\n' });
+
+            if (row <= 1) row = 1;
+            if (column <= 1) column = 1;
+
+            for (int i = 0; i < row; i++)
+            {
+                var data = splitDataset[i].Split(',');
+                for (int j = 0; j < column; j++)
+                {
+                    if (row > splitDataset.Length) row = splitDataset.Length;
+                    if (column > data.Length) column = data.Length;
+
+                    Debug.Log(splitDataset.Length);
+                    text.text = data[j];
+                }
+            }
+        }
+        
+    }
 }
