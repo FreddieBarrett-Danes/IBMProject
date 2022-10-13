@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -84,10 +81,10 @@ public class PlayerController : MonoBehaviour
 
         //rotates the player visual to give a visual representation for direction of movement
         if (movePlayer == Vector3.zero) return;
-        Vector3 NewAt = Vector3.Cross(transform.up, movePlayer);
+        Vector3 newAt = Vector3.Cross(transform.up, movePlayer);
 
         Quaternion toRotation = new Quaternion();
-        toRotation.SetLookRotation(NewAt);
+        toRotation.SetLookRotation(newAt);
         toRotation *= Quaternion.Euler(0, -90, 0);
         visuals.transform.rotation = toRotation;
 
