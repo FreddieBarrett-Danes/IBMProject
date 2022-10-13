@@ -7,27 +7,27 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     
-    public GameObject player;
     public GameObject visuals;
 
     private GameObject mainCamera;
 
-    public bool isBehindEnemy = false;
+    public bool isBehindEnemy;
 
     private Vector3 movePlayer;
     private Vector3 moveCamera;
 
-    void Start()
+    private void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
-    void Update()
+
+    private void Update()
     {
         Movement();
         TakeControl();
     }
     
-    //old movement fucntion, could still be used do not delete
+    //old movement function, could still be used do not delete
     /*private void Movement()
     {
         //move = new Vector3(0, 0, 0);
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     //uses Input.KeyCode to check for button presses, can change to looking through Input Manager
     private void Movement()
     {
-        //Temporary vecotrs to update object transforms
+        //Temporary vectors to update object transforms
         Vector3 tempPlayerMove = new Vector3(0, 0, 0);
         Vector3 tempCameraMove = new Vector3(0, 0, 0);
         
@@ -79,30 +79,26 @@ public class PlayerController : MonoBehaviour
         moveCamera = tempCameraMove.normalized;
 
         //add new translations to player and camera
-        this.gameObject.transform.Translate(movePlayer * speed * Time.deltaTime);
-        mainCamera.transform.Translate(moveCamera * speed * Time.deltaTime);
+        gameObject.transform.Translate(movePlayer * (speed * Time.deltaTime));
+        mainCamera.transform.Translate(moveCamera * (speed * Time.deltaTime));
 
         //rotates the player visual to give a visual representation for direction of movement
-        if (movePlayer != Vector3.zero)
-        {
-            Vector3 NewAt = Vector3.Cross(transform.up, movePlayer);
+        if (movePlayer == Vector3.zero) return;
+        Vector3 NewAt = Vector3.Cross(transform.up, movePlayer);
 
-            Quaternion toRotation = new Quaternion();
-            toRotation.SetLookRotation(NewAt);
-            toRotation *= Quaternion.Euler(0, -90, 0);
-            visuals.transform.rotation = toRotation;
-        }
+        Quaternion toRotation = new Quaternion();
+        toRotation.SetLookRotation(NewAt);
+        toRotation *= Quaternion.Euler(0, -90, 0);
+        visuals.transform.rotation = toRotation;
 
 
     }
     private void TakeControl()
     {
-        if(isBehindEnemy)
+        if (!isBehindEnemy) return;
+        if(Input.GetKeyDown(KeyCode.E))
         {
-            if(Input.GetKeyDown(KeyCode.E))
-            {
-                Debug.Log("Player trying to control enemy");
-            }
+            Debug.Log("Player trying to control enemy");
         }
     }
 }
