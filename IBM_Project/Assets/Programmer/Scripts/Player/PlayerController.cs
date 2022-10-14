@@ -13,14 +13,26 @@ public class PlayerController : MonoBehaviour
     private Vector3 movePlayer;
     private Vector3 moveCamera;
 
+    //variables for shooting, only placed in here to test how dynamic functions are.
+    private Shooting shooting;
+    public float modifyBulletSpeed = 0;
+    public GameObject bulletPrefab;
+
     private void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        //jank for now but handled by 'ability listener' class that will determine what abilities and attirbutes are availbe to the specific actor attached to the class
+        shooting = gameObject.AddComponent<Shooting>();
+        shooting.SetHost(visuals);
+        shooting.bulletSpeed = modifyBulletSpeed;
+        shooting.bullet = bulletPrefab;
     }
 
     private void Update()
     {
         Movement();
+        Shooting();
         TakeControl();
     }
     
@@ -89,6 +101,14 @@ public class PlayerController : MonoBehaviour
         visuals.transform.rotation = toRotation;
 
 
+    }
+    private void Shooting()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("trying to shoot");
+            shooting.Execute();
+        }
     }
     private void TakeControl()
     {
