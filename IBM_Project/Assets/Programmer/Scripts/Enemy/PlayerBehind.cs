@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBehind : MonoBehaviour
@@ -31,12 +29,12 @@ public class PlayerBehind : MonoBehaviour
                 if (Vector3.Dot(forward, toOther) < 0)
                 {
                     pC.isBehindEnemy = true;
-                    Debug.Log("Player Behind Enemy");
+                    //Debug.Log("Player Behind Enemy");
                 }
                 else
                 {
                     pC.isBehindEnemy = false;
-                    Debug.Log("Player In Front Enemy");
+                    //Debug.Log("Player In Front Enemy");
                 }
             }
         }

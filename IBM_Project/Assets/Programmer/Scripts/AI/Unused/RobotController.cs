@@ -78,7 +78,7 @@ public abstract class RobotController : MonoBehaviour
                 // Wander
                 if (timer >= wanderTimer)
                 {
-                    var newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+                    Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
                     agent.SetDestination(newPos);
                     timer = 0;
                     return 0;

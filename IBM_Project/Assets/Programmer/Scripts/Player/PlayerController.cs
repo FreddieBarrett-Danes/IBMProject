@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("trying to shoot");
+            //Debug.Log("trying to shoot");
             shooting.Execute();
         }
     }
@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
         if (!isBehindEnemy) return;
         if(Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Player trying to control enemy");
+            //Debug.Log("Player trying to control enemy");
         }
     }
 }
