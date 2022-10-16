@@ -10,8 +10,8 @@ public class BasicBT : BT_Tree
         {
             new BT_Sequence(new List<BT_Node>
             {
-                new DetectPlayer(GetComponent<NavMeshAgent>(), transform),
-                new PathToPlayer(GetComponent<NavMeshAgent>()),
+                new TDetectPlayer(GetComponent<NavMeshAgent>(), transform),
+                new TPathToPlayer(GetComponent<NavMeshAgent>()),
             }),
             new TWander(GetComponent<NavMeshAgent>(), transform),
         });

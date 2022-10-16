@@ -1,10 +1,10 @@
 using BT;
 using UnityEngine.AI;
 
-public class PathToPlayer : BT_Node
+public class TPathToPlayer : BT_Node
 {
     private readonly NavMeshAgent agent;
-    public PathToPlayer(NavMeshAgent pAgent)
+    public TPathToPlayer(NavMeshAgent pAgent)
     {
         agent = pAgent;
     }

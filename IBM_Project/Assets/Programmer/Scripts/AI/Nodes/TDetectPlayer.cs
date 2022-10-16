@@ -2,12 +2,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using BT;
 
-public class DetectPlayer : BT_Node
+public class TDetectPlayer : BT_Node
 {
     private readonly NavMeshAgent agent;
     private readonly Transform transform;
     
-    public DetectPlayer(NavMeshAgent pAgent, Transform pTransform)
+    public TDetectPlayer(NavMeshAgent pAgent, Transform pTransform)
     {
         agent = pAgent;
         transform = pTransform;

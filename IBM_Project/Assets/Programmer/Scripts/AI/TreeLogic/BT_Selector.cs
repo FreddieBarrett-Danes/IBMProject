@@ -4,7 +4,6 @@ namespace BT
 {
     public class BT_Selector : BT_Node
     {
-        public BT_Selector() : base() { }
         public BT_Selector(List<BT_Node> children) : base(children) { }
 
         public override NodeState Evaluate()

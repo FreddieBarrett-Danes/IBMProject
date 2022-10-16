@@ -4,7 +4,6 @@ namespace BT
 {
     public class BT_Sequence : BT_Node
     {
-        public BT_Sequence() : base() { }
         public BT_Sequence(List<BT_Node> children) : base(children) { }
 
         public override NodeState Evaluate()
