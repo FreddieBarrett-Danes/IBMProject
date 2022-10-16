@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -15,6 +16,10 @@ public class PlayerController : MonoBehaviour
 
     //variables for shooting, only placed in here to test how dynamic functions are.
     private Shooting shooting;
+    private Melee melee;
+
+    public Transform attackPoint;
+
     public float modifyBulletSpeed = 0;
     public GameObject bulletPrefab;
 
@@ -22,17 +27,24 @@ public class PlayerController : MonoBehaviour
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
-        //jank for now but handled by 'ability listener' class that will determine what abilities and attirbutes are availbe to the specific actor attached to the class
+        //jank for now but handled by 'ability listener' class that will determine what abilities and attributes are availbe to the specific actor attached to the class
         shooting = gameObject.AddComponent<Shooting>();
         shooting.SetHost(visuals);
         shooting.bulletSpeed = modifyBulletSpeed;
         shooting.bullet = bulletPrefab;
+        
+        //jank melee intialisation
+        melee = gameObject.AddComponent<Melee>();
+        melee.SetHost(visuals);
+        melee.enemyLayer = LayerMask.GetMask("Enemy");
+        melee.tempAtkPoint = attackPoint;
     }
 
     private void Update()
     {
         Movement();
         Shooting();
+        Melee();
         TakeControl();
     }
     
@@ -110,6 +122,14 @@ public class PlayerController : MonoBehaviour
             shooting.Execute();
         }
     }
+    private void Melee()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("trying to melee");
+            melee.Execute();
+        }
+    }
     private void TakeControl()
     {
         if (!isBehindEnemy) return;
@@ -118,4 +138,10 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Player trying to control enemy");
         }
     }
+    /*private void OnDrawGizmosSelected()
+    {
+        if (attackPoint != null)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.position, melee.attackRange);
+    }*/
 }
