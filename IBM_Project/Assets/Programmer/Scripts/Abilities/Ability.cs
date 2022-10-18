@@ -13,5 +13,9 @@ public class Ability :MonoBehaviour
     {
 
     }
+    public virtual void Execute(LayerMask layerMask)
+    {
+
+    }
 
 }

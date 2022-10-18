@@ -20,7 +20,7 @@ public class PlayerBehind : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
-        if (other == player.GetComponent<SphereCollider>())
+        if (other == player.GetComponent<CapsuleCollider>())
         {
             if (other != null)
             {
@@ -29,12 +29,12 @@ public class PlayerBehind : MonoBehaviour
                 if (Vector3.Dot(forward, toOther) < 0)
                 {
                     pC.isBehindEnemy = true;
-                    //Debug.Log("Player Behind Enemy");
+                    Debug.Log("Player Behind Enemy");
                 }
                 else
                 {
                     pC.isBehindEnemy = false;
-                    //Debug.Log("Player In Front Enemy");
+                    Debug.Log("Player In Front Enemy");
                 }
             }
         }

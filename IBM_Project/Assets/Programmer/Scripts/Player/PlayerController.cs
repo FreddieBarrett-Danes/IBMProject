@@ -4,19 +4,23 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
-    
+
     public GameObject visuals;
 
-    private GameObject mainCamera;
+    private Camera mainCamera;
 
     public bool isBehindEnemy;
 
-    private Vector3 movePlayer;
-    private Vector3 moveCamera;
+    private Rigidbody rBody;
+    public Vector3 velocity;
+
+    //private Vector3 movePlayer;
+    //private Vector3 moveCamera;
 
     //variables for shooting, only placed in here to test how dynamic functions are.
     private Shooting shooting;
     private Melee melee;
+    private LayerMask enemyLayer;
 
     public Transform attackPoint;
 
@@ -25,93 +29,40 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        //controller set up
+        mainCamera = Camera.main;
+        rBody = GetComponent<Rigidbody>();
 
         //jank for now but handled by 'ability listener' class that will determine what abilities and attributes are availbe to the specific actor attached to the class
         shooting = gameObject.AddComponent<Shooting>();
         shooting.SetHost(visuals);
         shooting.bulletSpeed = modifyBulletSpeed;
-        shooting.bullet = bulletPrefab;
-        
+
+
         //jank melee intialisation
         melee = gameObject.AddComponent<Melee>();
-        melee.SetHost(visuals);
-        melee.enemyLayer = LayerMask.GetMask("Enemy");
+        enemyLayer = LayerMask.GetMask("Enemy");
         melee.tempAtkPoint = attackPoint;
     }
 
-    private void Update()
+    void Update()
     {
         Movement();
         Shooting();
         Melee();
         TakeControl();
     }
-    
-    //old movement function, could still be used do not delete
-    /*private void Movement()
+    void FixedUpdate()
     {
-        //move = new Vector3(0, 0, 0);
-        move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-        this.gameObject.transform.Translate(move * speed * Time.deltaTime);
+        rBody.MovePosition(rBody.position + velocity * Time.deltaTime);
+    }
 
-        if (move != Vector3.zero)
-        {
-            Vector3 NewAt = Vector3.Cross(transform.up, move);
-
-            Quaternion toRotation = new Quaternion();
-            toRotation.SetLookRotation(NewAt);
-            toRotation *= Quaternion.Euler(0, -90, 0);
-            visuals.transform.rotation = toRotation;
-        }
-    }*/
-
-    //uses Input.KeyCode to check for button presses, can change to looking through Input Manager
     private void Movement()
     {
-        //Temporary vectors to update object transforms
-        Vector3 tempPlayerMove = new Vector3(0, 0, 0);
-        Vector3 tempCameraMove = new Vector3(0, 0, 0);
-        
-        //Input Checks
-        if (Input.GetKey(KeyCode.A))
-        {
-            tempPlayerMove += Vector3.left;
-            tempCameraMove += Vector3.left;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            tempPlayerMove += Vector3.right;
-            tempCameraMove += Vector3.right;
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            tempPlayerMove += Vector3.forward;
-            tempCameraMove += Vector3.up;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            tempPlayerMove += Vector3.back;
-            tempCameraMove += Vector3.down;
-        }
-        
-        //normalise for consistent movement
-        movePlayer = tempPlayerMove.normalized;
-        moveCamera = tempCameraMove.normalized;
-
-        //add new translations to player and camera
-        gameObject.transform.Translate(movePlayer * (speed * Time.deltaTime));
-        mainCamera.transform.Translate(moveCamera * (speed * Time.deltaTime));
-
-        //rotates the player visual to give a visual representation for direction of movement
-        if (movePlayer == Vector3.zero) return;
-        Vector3 newAt = Vector3.Cross(transform.up, movePlayer);
-
-        Quaternion toRotation = new Quaternion();
-        toRotation.SetLookRotation(newAt);
-        toRotation *= Quaternion.Euler(0, -90, 0);
-        visuals.transform.rotation = toRotation;
-
+        Vector3 mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.transform.position.y));
+        transform.LookAt(mousePos + Vector3.up * transform.position.y);
+        velocity = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * speed;
+        mainCamera.transform.position = new Vector3(transform.position.x, 5, transform.position.z);
 
     }
     private void Shooting()
@@ -124,24 +75,18 @@ public class PlayerController : MonoBehaviour
     }
     private void Melee()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("trying to melee");
-            melee.Execute();
+            melee.Execute(enemyLayer);
         }
     }
     private void TakeControl()
     {
         if (!isBehindEnemy) return;
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            //Debug.Log("Player trying to control enemy");
+            Debug.Log("Player trying to control enemy");
         }
     }
-    /*private void OnDrawGizmosSelected()
-    {
-        if (attackPoint != null)
-            return;
-        Gizmos.DrawWireSphere(attackPoint.position, melee.attackRange);
-    }*/
 }

@@ -210,7 +210,6 @@ GameObject:
   - component: {fileID: 2054899259319685450}
   - component: {fileID: 2054899259319685448}
   - component: {fileID: 378670207}
-  - component: {fileID: 378670208}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -250,6 +249,8 @@ MonoBehaviour:
   speed: 3
   visuals: {fileID: 96709573314991522}
   isBehindEnemy: 0
+  velocity: {x: 0, y: 0, z: 0}
+  attackPoint: {fileID: 0}
   modifyBulletSpeed: 0
   bulletPrefab: {fileID: 0}
 --- !u!54 &378670207
@@ -268,19 +269,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!135 &378670208
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054899259319685453}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8219708761519835638
 GameObject:
   m_ObjectHideFlags: 0

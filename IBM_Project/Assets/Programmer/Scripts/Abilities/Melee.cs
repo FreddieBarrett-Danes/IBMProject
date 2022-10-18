@@ -7,12 +7,11 @@ public class Melee : Ability
     public Transform tempAtkPoint;
     
     public float attackRange = 0.1f;
-    public LayerMask enemyLayer;
 
 
-    public override void Execute()
+    public override void Execute(LayerMask targetLayer)
     {
-        Collider[] hitEnemies = Physics.OverlapSphere(tempAtkPoint.position, attackRange, enemyLayer);
+        Collider[] hitEnemies = Physics.OverlapSphere(tempAtkPoint.position, attackRange, targetLayer);
 
         foreach(Collider enemy in hitEnemies)
         {
