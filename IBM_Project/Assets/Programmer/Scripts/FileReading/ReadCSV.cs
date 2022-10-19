@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class ReadCSV : MonoBehaviour
 
     public GameObject panelTest;
     public List<GameObject> list;
+    public List<int> numbers;
     public Vector2 panelSize;
 
     private float startX;
@@ -32,7 +34,19 @@ public class ReadCSV : MonoBehaviour
     {
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several
         canvasRectTransform = canvas.GetComponent<RectTransform>();
+
+
     }
+
+    void RandomNumberSequence(int length)
+    {
+        int[] list;
+
+
+
+        return;
+    }
+
 
     void Update()
     {
@@ -61,9 +75,9 @@ public class ReadCSV : MonoBehaviour
 
             //Generate question answers
 
-            if(list.Count != 0) //Reset list
+            if (list.Count != 0) //Reset list
             {
-                for(int i = 0; i < list.Count; i++)
+                for (int i = 0; i < list.Count; i++)
                 {
                     Destroy(list[i]);
                 }
@@ -72,7 +86,7 @@ public class ReadCSV : MonoBehaviour
 
             startX = 0.25f; //Set start values for coords.
             startY = 0.25f;
-            
+
             panelSize = new Vector2((canvasRectTransform.sizeDelta.x * 0.9f) / 2, canvasRectTransform.sizeDelta.y * 0.25f); //Find panel size
 
             for (int i = 0; i < 2; i++)
@@ -82,11 +96,11 @@ public class ReadCSV : MonoBehaviour
                 tempPanelY.GetComponent<RectTransform>().sizeDelta = panelSize;
 
                 tempPanelY.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x * startX, canvasRectTransform.sizeDelta.y * startY);
-                
+
                 list.Add(tempPanelY);
 
                 startX += 0.5f;
-                
+
                 for (int j = 0; j < 1; j++)
                 {
                     GameObject tempPanelZ = Instantiate(panelTest);
@@ -102,12 +116,26 @@ public class ReadCSV : MonoBehaviour
                     startY += 0.33f;
                 }
             }
+
             panelTest.GetComponent<RectTransform>().sizeDelta = panelSize;
 
             panelTest.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
 
-            int random = UnityEngine.Random.Range(0, list.Count);
-            list[random].GetComponentInChildren<TextMeshProUGUI>().text = ("arrrrggghhhh");
+            //Debug.Log(UnityEngine.Random.RandomRange(1,4));
+
+            for (int k = 1; k < list.Count; k++)
+            {
+                int random = UnityEngine.Random.Range(0, list.Count);
+
+                if (random != numbers[k])
+                {
+                    //add
+
+                }
+            }
+
+            //numbers.Add(random);
+            //list[random].GetComponentInChildren<TextMeshProUGUI>().text = ("arrrrggghhhh");
 
         }
     }
