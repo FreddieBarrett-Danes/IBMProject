@@ -15,5 +15,8 @@ namespace BT
         [Range(0, 360)] 
         public const float viewAngle = 90f;
         public static bool engaging;
+
+        //Combat
+        public int threatLevel = 1;
     }
 }

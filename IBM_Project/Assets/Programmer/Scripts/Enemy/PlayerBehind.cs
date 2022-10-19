@@ -4,6 +4,8 @@ public class PlayerBehind : MonoBehaviour
 {
     private GameObject player;
 
+    private GameObject enemy;
+
     private PlayerController pC;
     // Start is called before the first frame update
     void Start()
@@ -29,14 +31,24 @@ public class PlayerBehind : MonoBehaviour
                 if (Vector3.Dot(forward, toOther) < 0)
                 {
                     pC.isBehindEnemy = true;
-                    Debug.Log("Player Behind Enemy");
+                    pC.enemyControlled = this.gameObject;
                 }
                 else
                 {
                     pC.isBehindEnemy = false;
-                    Debug.Log("Player In Front Enemy");
                 }
             }
         }
     }
+/*    private void OnTriggerExit(Collider other)
+    {
+
+        if (other == player.GetComponent<CapsuleCollider>())
+        {
+            if (other != null)
+            {
+                pC.enemyControlled = null;
+            }
+        }
+    }*/
 }
