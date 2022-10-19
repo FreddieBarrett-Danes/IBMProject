@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ReadCSV : MonoBehaviour
@@ -10,12 +11,14 @@ public class ReadCSV : MonoBehaviour
     public TextMeshProUGUI text;
     public TextAsset CSVFile;
     private GameObject canvas;
+    private RectTransform canvasRectTransform;
 
     public GameObject panelTest;
+    public List<GameObject> list;
     public Vector2 panelSize;
 
-    public float tempX;
-    public float tempY;
+    private float startX;
+    private float startY;
 
     [Range(1, 5)]
     public int row;
@@ -28,6 +31,7 @@ public class ReadCSV : MonoBehaviour
     void Start()
     {
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several
+        canvasRectTransform = canvas.GetComponent<RectTransform>();
     }
 
     void Update()
@@ -50,48 +54,61 @@ public class ReadCSV : MonoBehaviour
                     if (row > splitDataset.Length) row = splitDataset.Length;
                     if (column > data.Length) column = data.Length;
 
-                    Debug.Log(splitDataset.Length);
+                    //Debug.Log(splitDataset.Length);
                     text.text = data[j];
                 }
             }
+
+            //Generate question answers
+
+            if(list.Count != 0) //Reset list
+            {
+                for(int i = 0; i < list.Count; i++)
+                {
+                    Destroy(list[i]);
+                }
+                list.Clear();
+            }
+
+            startX = 0.25f; //Set start values for coords.
+            startY = 0.25f;
             
-            panelSize = new Vector2((canvas.GetComponent<RectTransform>().sizeDelta.x * 0.9f) / 2, canvas.GetComponent<RectTransform>().sizeDelta.y * 0.25f);
+            panelSize = new Vector2((canvasRectTransform.sizeDelta.x * 0.9f) / 2, canvasRectTransform.sizeDelta.y * 0.25f); //Find panel size
 
             for (int i = 0; i < 2; i++)
             {
-                GameObject tempPanel = Instantiate(panelTest);
-                tempPanel.transform.SetParent(canvas.transform);
-                //tempPanel.transform.parent = canvas.transform;
-                Debug.Log(i);
+                GameObject tempPanelY = Instantiate(panelTest);
+                tempPanelY.transform.SetParent(canvas.transform);
+                tempPanelY.GetComponent<RectTransform>().sizeDelta = panelSize;
 
-                for (int j = 0; j < 2; j++)
+                tempPanelY.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x * startX, canvasRectTransform.sizeDelta.y * startY);
+                
+                list.Add(tempPanelY);
+
+                startX += 0.5f;
+                
+                for (int j = 0; j < 1; j++)
                 {
+                    GameObject tempPanelZ = Instantiate(panelTest);
 
+                    tempPanelZ.transform.SetParent(canvas.transform);
+                    tempPanelZ.GetComponent<RectTransform>().sizeDelta = panelSize;
+
+                    tempPanelZ.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
+
+                    list.Add(tempPanelZ);
+
+                    startX -= 0.5f;
+                    startY += 0.33f;
                 }
             }
             panelTest.GetComponent<RectTransform>().sizeDelta = panelSize;
 
-            panelTest.GetComponent<RectTransform>().position = new Vector2((canvas.GetComponent<RectTransform>().sizeDelta.x * tempX), canvas.GetComponent<RectTransform>().sizeDelta.y * tempY);
+            panelTest.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
+
+            int random = UnityEngine.Random.Range(0, list.Count);
+            list[random].GetComponentInChildren<TextMeshProUGUI>().text = ("arrrrggghhhh");
+
         }
-
-        /*panelSize = new Vector2((canvas.GetComponent<RectTransform>().sizeDelta.x * 0.9f) / 2, canvas.GetComponent<RectTransform>().sizeDelta.y * 0.25f);
-
-        for (int i = 0; i < 2; i++)
-        {
-            GameObject tempPanel = Instantiate(panelTest);
-            tempPanel.transform.parent = canvas.transform;
-
-            for (int j = 0; j < 2; j++)
-            {
-
-            }
-        }
-        panelTest.GetComponent<RectTransform>().sizeDelta = panelSize;
-
-        panelTest.GetComponent<RectTransform>().position = new Vector2((canvas.GetComponent<RectTransform>().sizeDelta.x * tempX), canvas.GetComponent<RectTransform>().sizeDelta.y * tempY);*/
-
-        //Generate panel size
-
-
     }
 }
