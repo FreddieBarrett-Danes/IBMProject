@@ -1,10 +1,10 @@
-using System;
+//using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ReadCSV : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class ReadCSV : MonoBehaviour
 
     public GameObject panelTest;
     public List<GameObject> list;
+    //public int[] numbers;
     public Vector2 panelSize;
 
     private float startX;
@@ -28,12 +29,44 @@ public class ReadCSV : MonoBehaviour
     [SerializeField]
     private bool find; //Use this to generate the row,column that you've selected using Row and Column
 
+    //public System.Random rng = new System.Random();
+
+    List<int> Shuffle(int length)
+    {
+        List<int> orderedList = new List<int>(4);
+        
+        for(int i = 1; i < length + 1; i++) //create list of numbers 1-4
+        {
+            orderedList.Add(i);
+        }
+        
+        return orderedList;
+    }
+
+    public static List<int> FisherYatesShuffle(List<int> list)
+    {
+
+        System.Random sysRandom = new System.Random();
+
+        int tempInt;
+
+        int n = list.Count;
+        for (int i = 0; i < n; i++)
+        {
+            int r = i + (int)(sysRandom.NextDouble() * (n - i)); // NextDouble returns a random number between 0 and 1 (dont ask)
+            tempInt = list[r];
+            list[r] = list[i];
+            list[i] = tempInt;
+        }
+
+        return list;
+    }
+
     void Start()
     {
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several
         canvasRectTransform = canvas.GetComponent<RectTransform>();
     }
-
     void Update()
     {
         if (find) //File Reading / generate
@@ -54,16 +87,15 @@ public class ReadCSV : MonoBehaviour
                     if (row > splitDataset.Length) row = splitDataset.Length;
                     if (column > data.Length) column = data.Length;
 
-                    //Debug.Log(splitDataset.Length);
                     text.text = data[j];
                 }
             }
 
             //Generate question answers
 
-            if(list.Count != 0) //Reset list
+            if (list.Count != 0) //Reset list
             {
-                for(int i = 0; i < list.Count; i++)
+                for (int i = 0; i < list.Count; i++)
                 {
                     Destroy(list[i]);
                 }
@@ -72,7 +104,7 @@ public class ReadCSV : MonoBehaviour
 
             startX = 0.25f; //Set start values for coords.
             startY = 0.25f;
-            
+
             panelSize = new Vector2((canvasRectTransform.sizeDelta.x * 0.9f) / 2, canvasRectTransform.sizeDelta.y * 0.25f); //Find panel size
 
             for (int i = 0; i < 2; i++)
@@ -82,11 +114,11 @@ public class ReadCSV : MonoBehaviour
                 tempPanelY.GetComponent<RectTransform>().sizeDelta = panelSize;
 
                 tempPanelY.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x * startX, canvasRectTransform.sizeDelta.y * startY);
-                
+
                 list.Add(tempPanelY);
 
                 startX += 0.5f;
-                
+
                 for (int j = 0; j < 1; j++)
                 {
                     GameObject tempPanelZ = Instantiate(panelTest);
@@ -102,13 +134,17 @@ public class ReadCSV : MonoBehaviour
                     startY += 0.33f;
                 }
             }
+
             panelTest.GetComponent<RectTransform>().sizeDelta = panelSize;
 
             panelTest.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
+            
+            List<int> tempList = new List<int>(FisherYatesShuffle(Shuffle(4)));
 
-            int random = UnityEngine.Random.Range(0, list.Count);
-            list[random].GetComponentInChildren<TextMeshProUGUI>().text = ("arrrrggghhhh");
-
+            Debug.Log(tempList[0]);
+            Debug.Log(tempList[1]);
+            Debug.Log(tempList[2]);
+            Debug.Log(tempList[3]);
         }
     }
 }
