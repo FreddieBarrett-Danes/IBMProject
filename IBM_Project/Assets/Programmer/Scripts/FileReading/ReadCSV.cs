@@ -67,6 +67,7 @@ public class ReadCSV : MonoBehaviour
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several
         canvasRectTransform = canvas.GetComponent<RectTransform>();
     }
+
     void Update()
     {
         if (find) //File Reading / generate
@@ -139,12 +140,15 @@ public class ReadCSV : MonoBehaviour
 
             panelTest.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
             
-            List<int> tempList = new List<int>(FisherYatesShuffle(Shuffle(4)));
+            List<int> orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
 
-            Debug.Log(tempList[0]);
-            Debug.Log(tempList[1]);
-            Debug.Log(tempList[2]);
-            Debug.Log(tempList[3]);
+            //Debug.Log(list[1].name);
+            list[1].GetComponentInChildren<TextMeshProUGUI>().text = orderList[1].ToString();
+
+            Debug.Log(orderList[0]);
+            Debug.Log(orderList[1]);
+            Debug.Log(orderList[2]);
+            Debug.Log(orderList[3]);
         }
     }
 }
