@@ -8,22 +8,18 @@ using UnityEngine.UIElements;
 
 public class ReadCSV : MonoBehaviour
 {
-    public TextMeshProUGUI questionText;
-    //public TextMeshProUGUI[] answersText;
+    public GameObject questionText;
     public List<GameObject> answersList;
     public TextAsset CSVFile;
     private GameObject canvas;
     private RectTransform canvasRectTransform;
 
     public GameObject panelTest;
-    //public int[] numbers;
     public Vector2 panelSize;
 
     private float startX;
     private float startY;
 
-    //[Range(1, 5)]
-    //public int row;
     [Range(1, 5)]
     public int row;
 
@@ -114,6 +110,7 @@ public class ReadCSV : MonoBehaviour
                 {
                     Destroy(answersList[i]);
                 }
+                Destroy(questionText);
                 answersList.Clear();
             }
 
@@ -122,6 +119,17 @@ public class ReadCSV : MonoBehaviour
 
             panelSize = new Vector2((canvasRectTransform.sizeDelta.x * 0.9f) / 2, canvasRectTransform.sizeDelta.y * 0.25f); //Find panel size
 
+            //Instantiating question box
+
+            questionText = Instantiate(panelTest);
+            questionText.transform.SetParent(canvas.transform);
+            questionText.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f , panelSize.y);
+            questionText.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x / 2, canvasRectTransform.sizeDelta.y * 0.83f);
+            
+            
+
+
+            //Instantiating answer boxes
             for (int i = 0; i < 2; i++)
             {
                 GameObject tempPanelY = Instantiate(panelTest);
@@ -146,7 +154,7 @@ public class ReadCSV : MonoBehaviour
                     answersList.Add(tempPanelZ);
 
                     startX -= 0.5f;
-                    startY += 0.33f;
+                    startY += 0.28f; //was 0.33
                 }
             }
 
@@ -161,6 +169,8 @@ public class ReadCSV : MonoBehaviour
                 //ebug.Log(i);
                 answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = Find(row,orderList[i] + 1).ToString();
             }
+
+            questionText.GetComponentInChildren<TextMeshProUGUI>().text = Find(row, 1).ToString();
         }
     }
 }
