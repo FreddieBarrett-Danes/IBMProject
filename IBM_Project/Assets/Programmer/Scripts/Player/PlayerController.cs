@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEditor.AI;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,8 +16,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rBody;
     public Vector3 velocity;
 
-    //private Vector3 movePlayer;
-    //private Vector3 moveCamera;
+    public int threatLevel = 0;
 
     //variables for shooting, only placed in here to test how dynamic functions are.
     private Shooting shooting;
@@ -26,6 +27,9 @@ public class PlayerController : MonoBehaviour
 
     public float modifyBulletSpeed = 0;
     public GameObject bulletPrefab;
+
+    public GameObject enemyControlled;
+
 
     private void Start()
     {
@@ -43,6 +47,7 @@ public class PlayerController : MonoBehaviour
         melee = gameObject.AddComponent<Melee>();
         enemyLayer = LayerMask.GetMask("Enemy");
         melee.tempAtkPoint = attackPoint;
+ 
     }
 
     void Update()
@@ -61,7 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.transform.position.y));
         transform.LookAt(mousePos + Vector3.up * transform.position.y);
-        velocity = new Vector3(Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal")).normalized * speed;
+        velocity = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * speed;
         mainCamera.transform.position = new Vector3(transform.position.x, 5, transform.position.z);
 
     }
@@ -86,7 +91,13 @@ public class PlayerController : MonoBehaviour
         if (!isBehindEnemy) return;
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Player trying to control enemy");
+            Debug.Log("trying to control");
+            
+            this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
+            
+            Destroy(enemyControlled);
+
+            //Destroy(enemyControlled.GetComponent("Player Behind"));
         }
     }
 }
