@@ -246,13 +246,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085a771bef0da494aa47f392077fc3b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 1909861717}
+  questionText: {fileID: 0}
+  answersList: []
   CSVFile: {fileID: 4900000, guid: 192693ebeb5fc4b49b72bcb04487444c, type: 3}
   panelTest: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
-  list: []
   panelSize: {x: 0, y: 0}
   row: 0
-  column: 0
   find: 1
 --- !u!4 &314326035
 Transform:
@@ -545,7 +544,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1909861717
 MonoBehaviour:
   m_ObjectHideFlags: 0
