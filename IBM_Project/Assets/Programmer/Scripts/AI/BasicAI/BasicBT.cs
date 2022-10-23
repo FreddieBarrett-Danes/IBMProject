@@ -12,8 +12,10 @@ public class BasicBT : BT_Tree
             {
                 new TDetectPlayer(GetComponent<NavMeshAgent>(), transform),
                 new TPathToPlayer(GetComponent<NavMeshAgent>()),
+                new BT_Decorator(new DBoolChecks(BBTInfo.playerInView)),
+                new TSuspicious(GetComponent<NavMeshAgent>()),
             }),
-            new TWander(GetComponent<NavMeshAgent>(), transform),
+            new TPatrol(GetComponent<NavMeshAgent>())
         });
 
         return root;

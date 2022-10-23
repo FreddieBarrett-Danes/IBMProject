@@ -24,13 +24,15 @@ namespace BT
         protected BT_Node(List<BT_Node> children)
         {
             foreach (BT_Node child in children)
-                Attach(child);
+            {
+                child.parent = this;
+                childrenList.Add(child);
+            }
         }
-
-        private void Attach(BT_Node btNode)
+        
+        protected BT_Node(BT_Node child)
         {
-            btNode.parent = this;
-            childrenList.Add(btNode);
+            child.parent = this;
         }
 
         public virtual NodeState Evaluate() => NodeState.FAILURE;

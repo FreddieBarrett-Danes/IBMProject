@@ -15,12 +15,12 @@ public class TWander : BT_Node
 
     public override NodeState Evaluate()
     {
-        BTInfo.timer += Time.deltaTime;
-        if (BTInfo.timer >= BTInfo.wanderTimer)
+        BBTInfo.timer += Time.deltaTime;
+        if (BBTInfo.timer >= BBTInfo.wanderTimer)
         {
-            Vector3 newPos = RandomNavSphere(transform.position, BTInfo.wanderRadius, -1);
+            Vector3 newPos = RandomNavSphere(transform.position, BBTInfo.wanderRadius, -1);
             agent.SetDestination(newPos);
-            BTInfo.timer = 0;
+            BBTInfo.timer = 0;
         }
         state = NodeState.RUNNING;
         return state;
