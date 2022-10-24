@@ -91,7 +91,6 @@ public class PlayerController : MonoBehaviour
         if (!isBehindEnemy) return;
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("trying to control");
             
             this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
             
