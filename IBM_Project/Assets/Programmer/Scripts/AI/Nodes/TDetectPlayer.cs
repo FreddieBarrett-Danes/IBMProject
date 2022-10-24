@@ -15,24 +15,27 @@ public class TDetectPlayer : BT_Node
 
     public override NodeState Evaluate()
     {
-        if (BTInfo.engaging == false)
+        if (BBTInfo.engaging == false)
         {
-            BTInfo.timer += Time.deltaTime;
-            Vector3 playerPos = BTInfo.player.transform.position;
+            BBTInfo.timer += Time.deltaTime;
+            Vector3 playerPos = BBTInfo.player.transform.position;
             Vector3 agentPos = agent.transform.position;
             float range = Vector3.Distance(playerPos, agentPos);
             Vector3 dirToTarget = (playerPos - agentPos).normalized;
-            
-            if (range < BTInfo.viewRadius && Vector3.Angle (transform.forward, dirToTarget) < BTInfo.viewAngle / 2)
+
+            if (range < BBTInfo.viewRadius && Vector3.Angle(transform.forward, dirToTarget) < BBTInfo.viewAngle / 2)
             {
-                BTInfo.timer = BTInfo.wanderTimer;
-                BTInfo.engaging = true;
+                BBTInfo.timer = BBTInfo.wanderTimer;
+                BBTInfo.engaging = true;
+                BBTInfo.lastKnownPos = playerPos;
+                BBTInfo.playerInView = true;
                 state = NodeState.SUCCESS;
                 return state;
             }
             state = NodeState.FAILURE;
             return state;
         }
+        BBTInfo.playerInView = false;
         state = NodeState.SUCCESS;
         return state;
     }

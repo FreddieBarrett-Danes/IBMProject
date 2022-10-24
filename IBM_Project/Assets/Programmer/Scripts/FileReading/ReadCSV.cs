@@ -67,7 +67,7 @@ public class ReadCSV : MonoBehaviour
 
         if (findRow < 1)
         {
-            findRow = 1; 
+            findRow = 1;
             Debug.LogWarning("Desired Row given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
         }
 
@@ -86,7 +86,7 @@ public class ReadCSV : MonoBehaviour
                 if (findColmn > data.Length) findColmn = data.Length;
 
                 //questionText.text = data[j];
-                
+
                 rv = data[j];
             }
         }
@@ -123,10 +123,10 @@ public class ReadCSV : MonoBehaviour
 
             questionText = Instantiate(panelTest);
             questionText.transform.SetParent(canvas.transform);
-            questionText.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f , panelSize.y);
+            questionText.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y);
             questionText.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x / 2, canvasRectTransform.sizeDelta.y * 0.83f);
-            
-            
+
+
 
 
             //Instantiating answer boxes
@@ -161,13 +161,13 @@ public class ReadCSV : MonoBehaviour
             panelTest.GetComponent<RectTransform>().sizeDelta = panelSize;
 
             panelTest.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
-            
+
             List<int> orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
 
             for (int i = 0; i < answersList.Count; i++)
             {
                 //ebug.Log(i);
-                answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = Find(row,orderList[i] + 1).ToString();
+                answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = Find(row, orderList[i] + 1).ToString();
             }
 
             questionText.GetComponentInChildren<TextMeshProUGUI>().text = Find(row, 1).ToString();

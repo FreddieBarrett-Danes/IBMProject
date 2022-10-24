@@ -14,14 +14,14 @@ public class RobotValueUIEditor : Editor
         {
             Vector3 position = t.transform.position;
             Handles.color = Color.red;
-            Handles.DrawWireArc (position, Vector3.up, Vector3.forward, 360, BTInfo.viewRadius);
+            Handles.DrawWireArc (position, Vector3.up, Vector3.forward, 360, BBTInfo.viewRadius);
             Handles.color = Color.white;
-            Handles.DrawWireArc(position, Vector3.up, Vector3.forward, 360, BTInfo.wanderRadius);
+            Handles.DrawWireArc(position, Vector3.up, Vector3.forward, 360, BBTInfo.wanderRadius);
             Handles.color = Color.blue;
-            Vector3 viewAngleA = DirFromAngle (t, -BTInfo.viewAngle / 2, false);
-            Vector3 viewAngleB = DirFromAngle (t, BTInfo.viewAngle / 2, false);
-            Handles.DrawLine (position, position + viewAngleA * BTInfo.viewRadius);
-            Handles.DrawLine (position, position + viewAngleB * BTInfo.viewRadius);
+            Vector3 viewAngleA = DirFromAngle (t, -BBTInfo.viewAngle / 2, false);
+            Vector3 viewAngleB = DirFromAngle (t, BBTInfo.viewAngle / 2, false);
+            Handles.DrawLine (position, position + viewAngleA * BBTInfo.viewRadius);
+            Handles.DrawLine (position, position + viewAngleB * BBTInfo.viewRadius);
             Vector3 linePos = new Vector3(position.x, position.y + 0.1f, position.z);
             Handles.DrawLine(new Vector3(linePos.x, linePos.y, linePos.z + t.GetComponent<NavMeshAgent>().speed), linePos);
         }

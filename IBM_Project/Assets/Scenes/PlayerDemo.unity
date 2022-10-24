@@ -895,7 +895,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 378670203}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f3e117d74d74424c8bc75a97240eebd, type: 3}
+  m_Script: {fileID: 11500000, guid: ea331cae521b2374589c193d7c83e447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 5
@@ -906,11 +906,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
-  visibleTargets: []
   meshResolution: 3
   edgeResolveIterations: 4
-  edgeDstThreshold: 0.5
-  maskCutawayDst: 0
+  edgeDistanceThreshold: 0
   viewMeshFilter: {fileID: 144499790}
 --- !u!1 &1183949743
 GameObject:
@@ -1026,15 +1024,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2260522203907100298, guid: 930b47435a649a14895209b54992f312, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.19
+      value: -3.194
       objectReference: {fileID: 0}
     - target: {fileID: 2260522203907100298, guid: 930b47435a649a14895209b54992f312, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.008
       objectReference: {fileID: 0}
     - target: {fileID: 2260522203907100298, guid: 930b47435a649a14895209b54992f312, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2260522203907100298, guid: 930b47435a649a14895209b54992f312, type: 3}
       propertyPath: m_LocalRotation.w

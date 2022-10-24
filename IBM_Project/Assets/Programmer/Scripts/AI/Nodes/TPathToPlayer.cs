@@ -11,9 +11,9 @@ public class TPathToPlayer : BT_Node
 
     public override NodeState Evaluate()
     {
-        agent.SetDestination(BTInfo.player.transform.position);
-        BTInfo.timer = BTInfo.wanderTimer;
-        BTInfo.engaging = false;
+        agent.SetDestination(BBTInfo.player.transform.position);
+        BBTInfo.timer = BBTInfo.wanderTimer;
+        BBTInfo.engaging = false;
         state = NodeState.RUNNING;
         return state;
     }

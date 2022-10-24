@@ -2,26 +2,29 @@ using UnityEngine;
 using UnityEngine.AI;
 using BT;
 
-public class TWander : BT_Node
+public class TSuspicious : BT_Node
 {
     private readonly NavMeshAgent agent;
-    private readonly Transform transform;
 
-    public TWander(NavMeshAgent pAgent, Transform pTransform)
+    public TSuspicious(NavMeshAgent pAgent)
     {
         agent = pAgent;
-        transform = pTransform;
     }
 
     public override NodeState Evaluate()
     {
-        BBTInfo.timer += Time.deltaTime;
-        if (BBTInfo.timer >= BBTInfo.wanderTimer)
+        if (!BBTInfo.playerInView)
         {
-            Vector3 newPos = RandomNavSphere(transform.position, BBTInfo.wanderRadius, -1);
-            agent.SetDestination(newPos);
-            BBTInfo.timer = 0;
+            BBTInfo.stimer += Time.deltaTime;
+            if (BBTInfo.stimer >= BBTInfo.susTimer)
+            {
+                Vector3 newPos = RandomNavSphere(BBTInfo.lastKnownPos, BBTInfo.suspiciousRadius, -1);
+                Debug.Log("Searching for player at last known location!");
+                agent.SetDestination(newPos);
+                BBTInfo.stimer = 0;
+            }
         }
+
         state = NodeState.RUNNING;
         return state;
     }
