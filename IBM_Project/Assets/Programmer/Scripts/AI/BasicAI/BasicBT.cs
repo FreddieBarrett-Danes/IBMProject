@@ -10,12 +10,13 @@ public class BasicBT : BT_Tree
         {
             new BT_Sequence(new List<BT_Node>
             {
-                new TDetectPlayer(GetComponent<NavMeshAgent>(), transform),
-                new TPathToPlayer(GetComponent<NavMeshAgent>()),
-                new BT_Decorator(new DBoolChecks(BBTInfo.playerInView)),
-                new TSuspicious(GetComponent<NavMeshAgent>()),
+                new TDetectPlayer(GetComponent<NavMeshAgent>(), transform, GetComponent<BotInfo>()),
+                new TPathToPlayer(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),
+                //new BT_Decorator(new DBoolChecks(GetComponent<BotInfo>().playerInView)),
+                //new TSuspicious(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),
             }),
-            new TPatrol(GetComponent<NavMeshAgent>())
+            //new TPatrol(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>())
+            new TWander(GetComponent<NavMeshAgent>(), transform, GetComponent<BotInfo>())
         });
 
         return root;

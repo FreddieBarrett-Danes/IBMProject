@@ -1,29 +1,50 @@
 using UnityEngine;
 
-public class BotInfo
+public class BotInfo : MonoBehaviour
 {
-    public static int remainingBots = 4;
-    public static int threatLevel;
+    public int threatLevel;
     
-    public static Transform[] patrol;
-    public static int destPoint = 0;
-    public static bool start;
+    public Transform[] patrol;
+    public int destPoint;
+    public bool start;
     // Wander
-    public static float wanderRadius;
-    public static float wanderTimer;
-    public static float timer = wanderTimer;
+    public float wanderRadius;
+    public float wanderTimer;
+    public float timer;
     
     // LockOn
-    public static readonly GameObject player = GameObject.FindGameObjectWithTag("Player");
-    public static float viewRadius;
+    public GameObject player;
+    public float viewRadius;
     [Range(0, 360)] 
-    public static float viewAngle;
-    public static bool engaging;
+    public float viewAngle;
+    public bool engaging;
 
     // Suspicious
-    public static Vector3 lastKnownPos;
-    public static float suspiciousRadius;
-    public static float susTimer;
-    public static float stimer = susTimer;
-    public static bool playerInView;
+    public Vector3 lastKnownPos;
+    public float suspiciousRadius;
+    public float susTimer;
+    public float stimer;
+    public bool playerInView;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        destPoint = 0;
+        timer = wanderTimer;
+        stimer = susTimer;
+    }
+
+    public BotInfo()
+    {
+        threatLevel = 1;
+        start = false;
+        wanderRadius = 1f;
+        wanderTimer = 1f;
+        viewRadius = 1f;
+        viewAngle = 1f;
+        engaging = false;
+        suspiciousRadius = 1f;
+        susTimer = 1f;
+        playerInView = false;
+    }
 }
