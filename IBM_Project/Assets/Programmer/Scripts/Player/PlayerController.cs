@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public Transform attackPoint;
 
     public float modifyBulletSpeed = 0;
-    public GameObject bulletPrefab;
+    //public GameObject bulletPrefab;
 
     public GameObject enemyControlled;
 
