@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 378670207}
   - component: {fileID: 8412993873090396806}
   - component: {fileID: 7615786345096911059}
+  - component: {fileID: 7217827791204828193}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -253,7 +254,7 @@ MonoBehaviour:
   visuals: {fileID: 96709573314991522}
   isBehindEnemy: 0
   velocity: {x: 0, y: 0, z: 0}
-  threatLevel: 0
+  threatLevel: 10
   attackPoint: {fileID: 2054899258900365623}
   modifyBulletSpeed: 1000
   enemyControlled: {fileID: 0}
@@ -311,6 +312,20 @@ MonoBehaviour:
   edgeResolveIterations: 4
   edgeDistanceThreshold: 0
   viewMeshFilter: {fileID: 1534855630365262357}
+--- !u!114 &7217827791204828193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054899259319685453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5576b7bb2ce25ee4695611274ade5c1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  enemies: []
 --- !u!1 &3326731200786062777
 GameObject:
   m_ObjectHideFlags: 0
