@@ -20,7 +20,7 @@ public class CollisionListener : MonoBehaviour
         {
             if (other == enemy.GetComponent<CapsuleCollider>())
             {
-/*                if(playerController.threatLevel < )
+/*                if(playerController.threatLevel < enemy.Get)
                 {
                     Destroy(this);
                 }
