@@ -6,11 +6,11 @@ public class wallDestory : MonoBehaviour
 {
     
 
-    int Num;
-    int Repeat;
-    bool touch;
-    GameObject currentPos;
-    GameObject targetPos;
+    //int Num;
+    //int Repeat;
+    //bool touch;
+    //GameObject currentPos;
+    //GameObject targetPos;
     private void OnCollisionEnter(Collision collision)
     {
         
@@ -19,8 +19,8 @@ public class wallDestory : MonoBehaviour
         {
             //Debug.Log("Hit wall");
             Object.Destroy(collision.gameObject);
-            Num = 0;
-            Repeat = 0;
+            //Num = 0;
+            //Repeat = 0;
             
         }
 
@@ -31,11 +31,11 @@ public class wallDestory : MonoBehaviour
 
         if (collision != null)
         {
-            touch = true;
+            //touch = true;
         }
         else
         {
-            touch = false;
+            //touch = false;
         }
         //Object.Destroy(collision.gameObject);
     }
@@ -43,8 +43,8 @@ public class wallDestory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentPos = GameObject.FindGameObjectWithTag("currentPos");
-        targetPos = GameObject.FindGameObjectWithTag("targetPos");
+        //currentPos = GameObject.FindGameObjectWithTag("currentPos");
+        //targetPos = GameObject.FindGameObjectWithTag("targetPos");
     }
 
     // Update is called once per frame

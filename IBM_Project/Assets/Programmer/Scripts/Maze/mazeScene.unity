@@ -247,7 +247,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 22108485}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d398a3f74e39644b983a9b1ee589977, type: 3}
+  m_Script: {fileID: 11500000, guid: 86bd2ebfb1cc48847af3629a36512c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
@@ -263,7 +263,6 @@ GameObject:
   - component: {fileID: 201398808}
   - component: {fileID: 201398807}
   - component: {fileID: 201398806}
-  - component: {fileID: 201398810}
   - component: {fileID: 201398811}
   m_Layer: 0
   m_Name: Cube
@@ -350,19 +349,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &201398810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201398805}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb5d2159bc2e6344caa2a591c0567c8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 1568283554}
 --- !u!114 &201398811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +358,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 201398805}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e5a94845a3368840bff09f9e11270d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 44068726c73ed194685655b6795cbf08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 710526793}
@@ -584,7 +570,6 @@ GameObject:
   - component: {fileID: 710526797}
   - component: {fileID: 710526796}
   - component: {fileID: 710526795}
-  - component: {fileID: 710526794}
   m_Layer: 0
   m_Name: Wall Test
   m_TagString: mazeWall
@@ -592,23 +577,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &710526794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710526793}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e5a94845a3368840bff09f9e11270d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  Maze_Width: 0
-  Maze_Height: 0
-  currentPos: {fileID: 0}
-  targetPos: {fileID: 0}
 --- !u!65 &710526795
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -919,7 +887,6 @@ GameObject:
   - component: {fileID: 1117321005}
   - component: {fileID: 1117321004}
   - component: {fileID: 1117321003}
-  - component: {fileID: 1117321001}
   - component: {fileID: 1117321006}
   m_Layer: 5
   m_Name: uiPlayer
@@ -948,22 +915,6 @@ RectTransform:
   m_AnchoredPosition: {x: -446, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1117321001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1117320999}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d326c31138d196b4da3323ae42329490, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 200
-  frameRate: 0
-  StartPos: {x: -483, y: -31}
-  uiPlayer: {fileID: 0}
 --- !u!61 &1117321003
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1330,8 +1281,6 @@ GameObject:
   - component: {fileID: 1581050377}
   - component: {fileID: 1581050376}
   - component: {fileID: 1581050375}
-  - component: {fileID: 1581050380}
-  - component: {fileID: 1581050381}
   m_Layer: 0
   m_Name: targetPos
   m_TagString: targetPos
@@ -1418,30 +1367,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1581050380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1581050374}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad71b87e3cd81a545b1eb4a741bea208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1581050381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1581050374}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d91268792aec3400eb9eb5fe539a0618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1886704945
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,8 +1380,6 @@ GameObject:
   - component: {fileID: 1886704949}
   - component: {fileID: 1886704948}
   - component: {fileID: 1886704951}
-  - component: {fileID: 1886704952}
-  - component: {fileID: 1886704953}
   m_Layer: 5
   m_Name: walCol
   m_TagString: Untagged
@@ -1569,39 +1492,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1886704952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1886704945}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e5a94845a3368840bff09f9e11270d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 1886704945}
-  Maze_Width: 0
-  Maze_Height: 0
-  currentPos: {fileID: 0}
-  targetPos: {fileID: 0}
---- !u!114 &1886704953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1886704945}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d326c31138d196b4da3323ae42329490, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  frameRate: 0
-  StartPos: {x: 0, y: 0}
-  uiPlayer: {fileID: 0}
 --- !u!1 &2042099465
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,7 +1601,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2042099465}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d91268792aec3400eb9eb5fe539a0618, type: 3}
+  m_Script: {fileID: 11500000, guid: c572ac64118afba4fa66c8af3d3091e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &2042099471

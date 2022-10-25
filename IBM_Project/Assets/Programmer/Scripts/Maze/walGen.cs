@@ -20,17 +20,10 @@ public class walGen : MonoBehaviour
     private int currentGridPos;
     private int targetGridPos;
 
-    public bool[,] Visitedtest;
+    public bool[,] Visitedtest; //to set max grid width/height
 
 
     Vector2 abV2;
-
-
-    ///current issue: can't create boolean array of visited based on Maze Width and Height outside of a function
-    ///Idea: set a 'max size' of Visited bool e.g.
-    ///bool[,] Visited = new bool[100,100] (grid Width/Height cannot be bigger than 100 in x (width) or y (height)
-    ///
-    ///during detection of unvisited cells, check if cell location isn't beyond the Maze_width or Maze_Height boundries.
 
 
 
@@ -56,109 +49,7 @@ public class walGen : MonoBehaviour
         //Instantiate(prefab, new Vector3(Origin.x, 0, Origin.y), Quaternion.identity);
     }
 
-    void processCell(int x, int y) //Mark current cell as visited and check if adjacent cells are visited
-    {
-        //Convert co-ordinates to grid-space
-        int x2 = x / 4;
-        int y2 = y / 4;
-
-        bool[,] Visited = new bool[(int)Maze_Size.x, (int)Maze_Size.y];
-
-        //marking current cell as visited (setting current gridcell to true)
-        Visited[x2, y2] = true;
-
-        //Check adjacent cells up, down, left and right, true if visited
-        Debug.Log(Visited[x + 1, y]); // check right
-        Debug.Log(Visited[x, y + 1]); // check up
-        Debug.Log(Visited[x - 1, y]); // check left
-        Debug.Log(Visited[x, y - 1]); // check down
-
-        //int nx = x2; //new x
-        //int ny = y2; //new y
-
-
-        //bool valid = false;
-        //while(valid == false)
-        //{
-        int Direction = Random.Range(1, 5); //Random direction between 1-4
-                                            //Randomly assign one of these values: x + 1, x - 1, y + 1, y - 1 
-        bool inGrid = true;
-        ///Re-roll if:
-        ///Direction is of visited cell
-        ///If a dead-end is reached (e.g. end of the board)
-
-        //right, up, left, down
-        //  1,   2,   3,    4
-        switch (Direction)
-        {
-            case 1:
-                x2 += 1;
-                //move right
-                break;
-            case 2:
-                y2 += 1;
-                //move up
-                break;
-            case 3:
-                x2 -= 1;
-                //move left
-                break;
-            case 4:
-                y2 -= 1;
-                //move down
-                break;
-        }
-
-        if (x2 + 1 > Maze_Width || x2 - 1 < 0 || y2 + 1 > Maze_Width || y2 - 1 < Maze_Width) //if new position is outside maze paramiters
-        {
-            inGrid = false;
-        }
-        else
-        {
-            inGrid = true;
-        }
-        //dead-end reached, direction unavailable
-
-
-        if (Visited[x2, y2] == false && inGrid == true)
-            //((Visited[nx, y2] == false && inGrid == true) || (Visited[x2, ny] == false && inGrid == true)) //If the selected direction is marked as true (before swich case, both should be set to true)
-        {
-            //valid = true
-            Vector3 dir = targetPos.transform.position - currentPos.transform.position;
-            targetPos.transform.position = new Vector3(x2 * 4, y2 * 4);
-            currentPos.transform.position += (dir.normalized * 50) * Time.deltaTime; //move currentPos to targetPos
-        }
-        x2 = x / 4;
-        y2 = y / 4;
-        //else, return back up to while loop
-        //}
-
-
-
-        //if (Direction == 1 && Visited[x + 1, y] == false)
-        //{
-        //    //move right
-        //}
-        //if (Direction == 2 && Visited[x , y + 1] == false) //up is visited, try again
-        //{
-        //    //move up
-        //}
-        //if (Direction == 3 && Visited[x - 1, y] == false) //left is visited, try again
-        //{
-        //    //move left
-        //}
-        //if (Direction == 4 && Visited[x, y - 1] == false) //down is visited, try again
-        //{
-        //    //move down
-        //}
-        //else
-        //{
-        //    //loop back
-        //}
-
-
-
-    }
+    
 
     void moveGen(char dir, int amount)
     {
@@ -278,7 +169,7 @@ public class walGen : MonoBehaviour
         goalLocation.transform.position = targetPos.transform.position;
         currentPos.SetActive(false);
         targetPos.SetActive(false);
-        Debug.Log("is maze compete yet?");
+        Debug.Log("Maze Generated");
         //transform.position = new Vector3(0, 0, 0);
         //yield return new WaitForSeconds(1);
         //transform.position = new Vector3(1, 0, 0);
@@ -429,4 +320,110 @@ public class walGen : MonoBehaviour
 
 
     }
+
+
+    //unused function:
+/*    void processCell(int x, int y) //Mark current cell as visited and check if adjacent cells are visited
+    {
+        //Convert co-ordinates to grid-space
+        int x2 = x / 4;
+        int y2 = y / 4;
+
+        bool[,] Visited = new bool[(int)Maze_Size.x, (int)Maze_Size.y];
+
+        //marking current cell as visited (setting current gridcell to true)
+        Visited[x2, y2] = true;
+
+        //Check adjacent cells up, down, left and right, true if visited
+        Debug.Log(Visited[x + 1, y]); // check right
+        Debug.Log(Visited[x, y + 1]); // check up
+        Debug.Log(Visited[x - 1, y]); // check left
+        Debug.Log(Visited[x, y - 1]); // check down
+
+        //int nx = x2; //new x
+        //int ny = y2; //new y
+
+
+        //bool valid = false;
+        //while(valid == false)
+        //{
+        int Direction = Random.Range(1, 5); //Random direction between 1-4
+                                            //Randomly assign one of these values: x + 1, x - 1, y + 1, y - 1 
+        bool inGrid = true;
+        ///Re-roll if:
+        ///Direction is of visited cell
+        ///If a dead-end is reached (e.g. end of the board)
+
+        //right, up, left, down
+        //  1,   2,   3,    4
+        switch (Direction)
+        {
+            case 1:
+                x2 += 1;
+                //move right
+                break;
+            case 2:
+                y2 += 1;
+                //move up
+                break;
+            case 3:
+                x2 -= 1;
+                //move left
+                break;
+            case 4:
+                y2 -= 1;
+                //move down
+                break;
+        }
+
+        if (x2 + 1 > Maze_Width || x2 - 1 < 0 || y2 + 1 > Maze_Width || y2 - 1 < Maze_Width) //if new position is outside maze paramiters
+        {
+            inGrid = false;
+        }
+        else
+        {
+            inGrid = true;
+        }
+        //dead-end reached, direction unavailable
+
+
+        if (Visited[x2, y2] == false && inGrid == true)
+        //((Visited[nx, y2] == false && inGrid == true) || (Visited[x2, ny] == false && inGrid == true)) //If the selected direction is marked as true (before swich case, both should be set to true)
+        {
+            //valid = true
+            Vector3 dir = targetPos.transform.position - currentPos.transform.position;
+            targetPos.transform.position = new Vector3(x2 * 4, y2 * 4);
+            currentPos.transform.position += (dir.normalized * 50) * Time.deltaTime; //move currentPos to targetPos
+        }
+        x2 = x / 4;
+        y2 = y / 4;
+        //else, return back up to while loop
+        //}
+
+
+
+        //if (Direction == 1 && Visited[x + 1, y] == false)
+        //{
+        //    //move right
+        //}
+        //if (Direction == 2 && Visited[x , y + 1] == false) //up is visited, try again
+        //{
+        //    //move up
+        //}
+        //if (Direction == 3 && Visited[x - 1, y] == false) //left is visited, try again
+        //{
+        //    //move left
+        //}
+        //if (Direction == 4 && Visited[x, y - 1] == false) //down is visited, try again
+        //{
+        //    //move down
+        //}
+        //else
+        //{
+        //    //loop back
+        //}
+
+
+
+    } */
 }
