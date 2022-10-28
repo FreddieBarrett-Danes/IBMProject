@@ -224,6 +224,11 @@ Transform:
   m_Father: {fileID: 45831156}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &70847235 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2260522203907100303, guid: 930b47435a649a14895209b54992f312, type: 3}
+  m_PrefabInstance: {fileID: 755418409}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &97692137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,6 +1129,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 378670207, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 96709573314991522, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -1203,6 +1212,34 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2260522203907100298, guid: 930b47435a649a14895209b54992f312, type: 3}
   m_PrefabInstance: {fileID: 755418409}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2129957586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70847235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9797dd348566f419c0fc9ab6095f09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threatLevel: 3
+  patrol: []
+  destPoint: 0
+  start: 0
+  wanderRadius: 5
+  wanderTimer: 10
+  timer: 0
+  player: {fileID: 0}
+  viewRadius: 2
+  viewAngle: 90
+  engaging: 0
+  lastKnownPos: {x: 0, y: 0, z: 0}
+  suspiciousRadius: 3
+  susTimer: 5
+  stimer: 0
+  playerInView: 0
 --- !u!1 &2142024885
 GameObject:
   m_ObjectHideFlags: 0

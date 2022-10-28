@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rBody;
     public Vector3 velocity;
 
-    public int threatLevel = 0;
+    public int threatLevel;
 
     //variables for shooting, only placed in here to test how dynamic functions are.
     private Shooting shooting;
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public Transform attackPoint;
 
     public float modifyBulletSpeed = 0;
-    public GameObject bulletPrefab;
+    //public GameObject bulletPrefab;
 
     public GameObject enemyControlled;
 
