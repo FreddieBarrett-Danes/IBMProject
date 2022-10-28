@@ -14,7 +14,7 @@ public class ReadCSV : MonoBehaviour
     private GameObject canvas;
     private RectTransform canvasRectTransform;
 
-    public GameObject panelTest;
+    public GameObject panel;
     public Vector2 panelSize;
 
     private float startX;
@@ -79,7 +79,9 @@ public class ReadCSV : MonoBehaviour
 
         for (int i = 0; i < findRow; i++)
         {
-            var data = splitDataset[i].Split(',');
+            char tabSpace = '\u0009';
+            var data = splitDataset[i].Split(tabSpace.ToString()); //
+            //var data = splitDataset[i].Split(',');
             for (int j = 0; j < findColmn; j++)
             {
                 if (findRow > splitDataset.Length) findRow = splitDataset.Length;
@@ -121,10 +123,12 @@ public class ReadCSV : MonoBehaviour
 
             //Instantiating question box
 
-            questionText = Instantiate(panelTest);
+            questionText = Instantiate(panel);
             questionText.transform.SetParent(canvas.transform);
             questionText.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y);
             questionText.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x / 2, canvasRectTransform.sizeDelta.y * 0.83f);
+
+            questionText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set siz of textbox
 
 
 
@@ -132,11 +136,13 @@ public class ReadCSV : MonoBehaviour
             //Instantiating answer boxes
             for (int i = 0; i < 2; i++)
             {
-                GameObject tempPanelY = Instantiate(panelTest);
+                GameObject tempPanelY = Instantiate(panel);
                 tempPanelY.transform.SetParent(canvas.transform);
                 tempPanelY.GetComponent<RectTransform>().sizeDelta = panelSize;
 
                 tempPanelY.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x * startX, canvasRectTransform.sizeDelta.y * startY);
+
+                tempPanelY.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = panelSize; //set size of textbox
 
                 answersList.Add(tempPanelY);
 
@@ -144,12 +150,14 @@ public class ReadCSV : MonoBehaviour
 
                 for (int j = 0; j < 1; j++)
                 {
-                    GameObject tempPanelZ = Instantiate(panelTest);
+                    GameObject tempPanelZ = Instantiate(panel);
 
                     tempPanelZ.transform.SetParent(canvas.transform);
                     tempPanelZ.GetComponent<RectTransform>().sizeDelta = panelSize;
 
                     tempPanelZ.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
+
+                    tempPanelZ.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = panelSize; //set size of textbox
 
                     answersList.Add(tempPanelZ);
 
@@ -158,9 +166,9 @@ public class ReadCSV : MonoBehaviour
                 }
             }
 
-            panelTest.GetComponent<RectTransform>().sizeDelta = panelSize;
+            panel.GetComponent<RectTransform>().sizeDelta = panelSize;
 
-            panelTest.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
+            panel.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
 
             List<int> orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
 
