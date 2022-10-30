@@ -30,6 +30,8 @@ public class TDetectPlayer : BT_Node
                 botInfo.timer = botInfo.wanderTimer;
                 botInfo.engaging = true;
                 botInfo.lastKnownPos = playerPos;
+                Debug.Log("Player is in view");
+                Debug.Log(botInfo.threatLevel);
                 botInfo.playerInView = true;
                 state = NodeState.SUCCESS;
                 return state;
@@ -38,6 +40,7 @@ public class TDetectPlayer : BT_Node
             return state;
         }
         botInfo.playerInView = false;
+        Debug.Log("TRIGGER");
         state = NodeState.SUCCESS;
         return state;
     }

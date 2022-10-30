@@ -15,6 +15,7 @@ public class TSuspicious : BT_Node
 
     public override NodeState Evaluate()
     {
+        Debug.Log("Entering Suspicious State!");
         if (!botInfo.playerInView)
         {
             botInfo.stimer += Time.deltaTime;

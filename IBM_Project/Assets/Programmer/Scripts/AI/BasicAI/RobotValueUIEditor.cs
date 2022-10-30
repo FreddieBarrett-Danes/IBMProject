@@ -1,13 +1,17 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using BT;
 
 [CustomEditor(typeof(BotInfo))]
 [CanEditMultipleObjects]
 public class RobotValueUIEditor : Editor
 {
-    private BotInfo bot;
+    private static BotInfo bot;
+
+    private void OnEnable()
+    {
+        bot = (BotInfo)target;
+    }
     private void OnSceneGUI()
     {
         GameObject[] robots = GameObject.FindGameObjectsWithTag("Enemy");

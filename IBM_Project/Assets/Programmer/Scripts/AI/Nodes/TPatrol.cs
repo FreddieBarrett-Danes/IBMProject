@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.AI;
 using BT;
+using static System.Array;
 
 public class TPatrol : BT_Node
 {
     private static NavMeshAgent agent;
     private static BotInfo botInfo;
-    private static readonly Transform patrolPoints = agent.gameObject.transform.Find("Patrol Path").transform;
-
+    private static GameObject patrolPoints;
     public TPatrol(NavMeshAgent pAgent, BotInfo pbotInfo)
     {
         agent = pAgent;
@@ -16,9 +16,11 @@ public class TPatrol : BT_Node
 
     public override NodeState Evaluate()
     {
+        patrolPoints = botInfo.transform.root.Find("PatrolPath").gameObject;
+        Resize(ref botInfo.patrol, patrolPoints.transform.childCount);
         for (int i = 0; i < patrolPoints.transform.childCount; i++)
         {
-            botInfo.patrol[i] = patrolPoints.transform.GetChild(i).gameObject.transform;
+            botInfo.patrol[i] = patrolPoints.transform.GetChild(i).transform;
         }
         if (!botInfo.start)
         {

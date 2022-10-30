@@ -5,7 +5,13 @@ using UnityEngine;
 [CanEditMultipleObjects]
 public class RobotInfoUI : Editor
 {
-    private static readonly BotInfo bot = new();
+    private static BotInfo bot;
+
+    private void OnEnable()
+    {
+        bot = (BotInfo)target;
+    }
+
     public enum DisplayCategory
     {
         Basic, Sentinel
@@ -15,12 +21,14 @@ public class RobotInfoUI : Editor
     
     public override void OnInspectorGUI()
     {
-        categoryToDisplay = (DisplayCategory) EditorGUILayout.EnumPopup("Display", categoryToDisplay);
+        EditorGUI.BeginChangeCheck();
+        categoryToDisplay = (DisplayCategory) EditorGUILayout.EnumPopup("EnemyType", categoryToDisplay);
+        if (!EditorGUI.EndChangeCheck()) return;
         EditorGUILayout.Space();
         switch (categoryToDisplay)
         {
             case DisplayCategory.Basic:
-                DisplayBasicInfo(); 
+                DisplayBasicInfo();
                 break;
             case DisplayCategory.Sentinel:
                 DisplaySentinelInfo();
@@ -29,6 +37,7 @@ public class RobotInfoUI : Editor
                 Debug.Log("No Section to Display!");
                 break;
         }
+
         serializedObject.ApplyModifiedProperties();
     }
 
@@ -44,6 +53,7 @@ public class RobotInfoUI : Editor
         bot.suspiciousRadius = 3f;
         bot.susTimer = 5f;
         bot.playerInView = false;
+        Debug.Log("Called Basic");
         //EditorGUILayout.PropertyField(bot.threatLevel);
     }
     
@@ -59,5 +69,6 @@ public class RobotInfoUI : Editor
         bot.suspiciousRadius = 5f;
         bot.susTimer = 3f;
         bot.playerInView = false;
+        Debug.Log("Called Sentinel");
     }
 }
