@@ -53,7 +53,6 @@ public class RobotInfoUI : Editor
         bot.suspiciousRadius = 3f;
         bot.susTimer = 5f;
         bot.playerInView = false;
-        Debug.Log("Called Basic");
         //EditorGUILayout.PropertyField(bot.threatLevel);
     }
     
@@ -69,6 +68,5 @@ public class RobotInfoUI : Editor
         bot.suspiciousRadius = 5f;
         bot.susTimer = 3f;
         bot.playerInView = false;
-        Debug.Log("Called Sentinel");
     }
 }

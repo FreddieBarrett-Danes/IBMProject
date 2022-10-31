@@ -46,6 +46,5 @@ public class BotInfo : MonoBehaviour
         suspiciousRadius = 1f;
         susTimer = 1f;
         playerInView = false;
-        Debug.Log("Constructor Call");
     }
 }

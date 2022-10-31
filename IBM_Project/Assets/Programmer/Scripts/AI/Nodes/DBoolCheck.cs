@@ -3,25 +3,22 @@ using UnityEngine;
 
 public class DBoolCheck : BT_Node
 {
-    private readonly bool check;
+    private readonly BotInfo bot;
 
-    public DBoolCheck(bool input)
+    public DBoolCheck(BotInfo pinput)
     {
-        check = input;
+        bot = pinput;
     }
 
     public override NodeState Evaluate()
     {
-        Debug.Log(check);
-        switch (check)
+        switch (bot.playerInView)
         {
             case true:
                 state = NodeState.SUCCESS;
-                Debug.Log("Check Success");
                 return state;
             case false:
                 state = NodeState.FAILURE;
-                Debug.Log("Check Failure");
                 return state;
         }
     }
