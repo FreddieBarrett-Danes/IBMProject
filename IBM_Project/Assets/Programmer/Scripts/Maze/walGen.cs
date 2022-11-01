@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class walGen : MonoBehaviour
 {
@@ -15,12 +17,19 @@ public class walGen : MonoBehaviour
 
     GameObject mazePlayer;
     GameObject goalLocation;
-    
+
+    public TextMeshProUGUI pregameText;
+    public TextMeshProUGUI ingameText;
+    public TextMeshProUGUI Timer;
+    public bool showIngameText;
+
     //Positions of Gameobjects represented in bool grid space
     private int currentGridPos;
     private int targetGridPos;
 
     public bool[,] Visitedtest; //to set max grid width/height
+
+    public int frameRate;
 
 
     Vector2 abV2;
@@ -88,6 +97,14 @@ public class walGen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = frameRate;
+        GameObject.FindGameObjectWithTag("MainCamera").transform.position = new Vector3(24.8f, 28.3f, 12.1f);
+        GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.black;
+        pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
+        ingameText.GetComponent<TextMeshProUGUI>().enabled = false;
+        Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+
+        //camera game position: (24.8, 28.3, 12.1) x = 24.8, y = 28.3 , z = 12.1 | rotation x = 90 y and z are 0 | scale is all 1
         Maze_Size.x = Maze_Width;
         Maze_Size.y = Maze_Height;
         Maze_Width = 5;
@@ -138,6 +155,8 @@ public class walGen : MonoBehaviour
         goalLocation = GameObject.FindGameObjectWithTag("goalLocation");
         //moveGen('n', 3);
 
+        
+
 
         StartCoroutine(setGen());
         //Debug.Log("is maze complete yet?");
@@ -169,6 +188,14 @@ public class walGen : MonoBehaviour
         goalLocation.transform.position = targetPos.transform.position;
         currentPos.SetActive(false);
         targetPos.SetActive(false);
+        GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
+        pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
+        Timer.GetComponent<TextMeshProUGUI>().enabled = true;
+        if (showIngameText == true)
+        {
+            ingameText.GetComponent<TextMeshProUGUI>().enabled = true;
+        }
+        // myDialogBalloon.GetComponent<Image>().enabled = false;
         Debug.Log("Maze Generated");
         //transform.position = new Vector3(0, 0, 0);
         //yield return new WaitForSeconds(1);
@@ -180,6 +207,19 @@ public class walGen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if (GameObject.FindGameObjectWithTag("goalLocation").activeInHierarchy == true)
+        //{
+        //    Debug.Log("Goal Location is found active");
+        //}
+        //if (GameObject.FindGameObjectWithTag("goalLocation").activeInHierarchy == false)
+        //{
+        //    Debug.Log("Goal Location is found to be inactive");
+        //}
+        if (GameObject.FindGameObjectWithTag("goalLocation").transform.position == new Vector3(-100,100,-100))
+        {
+            Debug.Log("goalLocation should now be moved");
+        }
+
         //Maze_Size.x = Maze_Width;
         //Maze_Size.y = Maze_Height;
         Vector3 dir = targetPos.transform.position - currentPos.transform.position;

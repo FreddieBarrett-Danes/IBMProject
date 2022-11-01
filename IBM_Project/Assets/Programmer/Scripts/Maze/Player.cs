@@ -13,8 +13,9 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "mazeWall")
         {
-            Debug.Log("Trigger Wall hit");
-            touchWall = true;
+            //Debug.Log("Trigger Wall hit");
+            transform.position = new Vector3(2, 0, 0);
+            //touchWall = true;
         }
         //else if (other.gameObject == null)
         //{
@@ -24,9 +25,21 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "goalLocation")
         {
             Debug.Log("Maze win");
-            GameObject.FindWithTag("goalLocation").SetActive(false);
-            GameObject.FindWithTag("mazePlayer").SetActive(false);
-            
+
+            //Setting gameobjects invisible
+            GameObject.FindGameObjectWithTag("goalLocation").GetComponent<MeshRenderer>().enabled = false;
+            GameObject.FindGameObjectWithTag("mazePlayer").GetComponent<MeshRenderer>().enabled = false;
+
+            //Method transforming gameobjects to different location
+            //GameObject.FindGameObjectWithTag("goalLocation").transform.position = new Vector3(-100,100,-100);
+            //GameObject.FindGameObjectWithTag("mazePlayer").transform.position = new Vector3(-100, 80, -100);
+
+
+
+            //Method deactivating gameobjects
+            //GameObject.FindWithTag("goalLocation").SetActive(false);
+            //GameObject.FindWithTag("mazePlayer").SetActive(false);
+
         }
     }
 
@@ -34,57 +47,17 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "mazeWall")
         {
-            Debug.Log("Wall exit");
-            touchWall = false;
+            //Debug.Log("Trigger Wall exit");
+            transform.position = new Vector3(2, 0, 0);
+            //touchWall = false;
         }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        //Debug.Log("Collision Detected");
-        if (collision.gameObject.tag == "mazeWall")
-        {
-            Debug.Log("Wall hit");
-            touchWall = true;
-        }
-        else
-        {
-            touchWall = false;
-        }
-        if (collision.gameObject.tag == "goalLocation")
-        {
-            Debug.Log("Maze win");
-        }
-        //if (collision.gameObject.tag == "mazeWall")
-        //{
-        //    //Debug.Log("Hit wall");
-        //    Object.Destroy(collision.gameObject);
-        //    Num = 0;
-        //    Repeat = 0;
-
-        //}
-
-        //if (collision.gameObject.tag == "goalLocation")
-        //{
-
-        //}
-
-        //if (collision != null)
-        //{
-        //    touch = true;
-        //}
-        //else
-        //{
-        //    touch = false;
-        //}
-        //Object.Destroy(collision.gameObject);
     }
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.GetComponent<Renderer>().material.color = Color.white;
-        GameObject test = GameObject.FindGameObjectWithTag("goalLocation");
-        test.GetComponent<Renderer>().material.color = Color.green;
+        gameObject.GetComponent<Renderer>().material.color = Color.white; //Setting colour of Player gameobject
+        GameObject goalLocation = GameObject.FindGameObjectWithTag("goalLocation");
+        goalLocation.GetComponent<Renderer>().material.color = Color.green;
         //Color test2 = gameObject.GetComponent<Renderer>().material.color = Color.green;
     }
 
