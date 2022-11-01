@@ -15,14 +15,14 @@ public class TSuspicious : BT_Node
 
     public override NodeState Evaluate()
     {
-        Debug.Log("Entering Suspicious State!");
         if (!botInfo.playerInView)
         {
             botInfo.stimer += Time.deltaTime;
+            // Not reaching below
             if (botInfo.stimer >= botInfo.susTimer)
             {
                 Vector3 newPos = RandomNavSphere(botInfo.lastKnownPos, botInfo.suspiciousRadius, -1);
-                Debug.Log("Searching for player at last known location!");
+                //Debug.Log("Searching for player at last known location!");
                 agent.SetDestination(newPos);
                 botInfo.stimer = 0;
             }
