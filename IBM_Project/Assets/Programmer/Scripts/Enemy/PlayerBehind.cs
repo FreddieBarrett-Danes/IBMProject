@@ -7,18 +7,19 @@ public class PlayerBehind : MonoBehaviour
     private GameObject enemy;
 
     private PlayerController pC;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         pC = player.GetComponent<PlayerController>();
     }
-    // Update is called once per frame
     void Update()
     {
 
-
     }
+
+
     private void OnTriggerStay(Collider other)
     {
 
@@ -40,15 +41,12 @@ public class PlayerBehind : MonoBehaviour
             }
         }
     }
-/*    private void OnTriggerExit(Collider other)
-    {
 
-        if (other == player.GetComponent<CapsuleCollider>())
+    private void OnTriggerExit(Collider other)
+    {
+        if(other == player.GetComponent<CapsuleCollider>())
         {
-            if (other != null)
-            {
-                pC.enemyControlled = null;
-            }
+            pC.isBehindEnemy = false;
         }
-    }*/
+    }
 }

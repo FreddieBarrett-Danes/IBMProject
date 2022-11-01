@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
             this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
             
             Destroy(enemyControlled);
+            isBehindEnemy = false;
 
             //Destroy(enemyControlled.GetComponent("Player Behind"));
         }
