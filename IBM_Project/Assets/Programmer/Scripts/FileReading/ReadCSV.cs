@@ -56,7 +56,7 @@ public class ReadCSV : MonoBehaviour
         return list;
     }
 
-    string Find(int findRow, int findColmn)
+    string RandomizeAnswers(int findRow, int findColmn)
     {
         string rv = null;
 
@@ -79,7 +79,7 @@ public class ReadCSV : MonoBehaviour
 
         for (int i = 0; i < findRow; i++)
         {
-            char tabSpace = '\u0009';
+            char tabSpace = '\u0009'; //takes the TAB ascii code as the splitter character. this value used to be a , when using CSV but now we are using TSV.
             var data = splitDataset[i].Split(tabSpace.ToString()); //
             //var data = splitDataset[i].Split(',');
             for (int j = 0; j < findColmn; j++)
@@ -175,10 +175,10 @@ public class ReadCSV : MonoBehaviour
             for (int i = 0; i < answersList.Count; i++)
             {
                 //ebug.Log(i);
-                answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = Find(row, orderList[i] + 1).ToString();
+                answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = RandomizeAnswers(row, orderList[i] + 1).ToString();
             }
 
-            questionText.GetComponentInChildren<TextMeshProUGUI>().text = Find(row, 1).ToString();
+            questionText.GetComponentInChildren<TextMeshProUGUI>().text = RandomizeAnswers(row, 1).ToString();
         }
     }
 }
