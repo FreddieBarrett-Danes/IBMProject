@@ -1,10 +1,9 @@
-//using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class ReadCSV : MonoBehaviour
 {
@@ -13,6 +12,10 @@ public class ReadCSV : MonoBehaviour
     public TextAsset CSVFile;
     private GameObject canvas;
     private RectTransform canvasRectTransform;
+    [SerializeField]
+    private int test;
+    [SerializeField]
+    private int correctAnswers;
 
     public GameObject panel;
     public Vector2 panelSize;
@@ -56,7 +59,7 @@ public class ReadCSV : MonoBehaviour
         return list;
     }
 
-    string RandomizeAnswers(int findRow, int findColmn)
+    string answersArray(int findRow, int findColmn)
     {
         string rv = null;
 
@@ -128,6 +131,13 @@ public class ReadCSV : MonoBehaviour
             questionText.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y);
             questionText.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x / 2, canvasRectTransform.sizeDelta.y * 0.83f);
 
+            questionText.GetComponent<Button>().enabled = false; //disables the button component on the question box.
+
+            if(questionText.GetComponentInChildren<TextMeshProUGUI>().isTextOverflowing == true)
+            {
+                Debug.Log("Text overflow");
+            }
+
             questionText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set siz of textbox
 
 
@@ -170,15 +180,23 @@ public class ReadCSV : MonoBehaviour
 
             panel.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
 
+            int.TryParse(answersArray(row, test), out correctAnswers);
+
+            if(correctAnswers < 1)
+            {
+                correctAnswers = 1;
+                Debug.LogWarning(this.name + " was unable to determine how many correct answers there are. It was automatically set to 1. - ask Istvan");
+            }
+
             List<int> orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
 
             for (int i = 0; i < answersList.Count; i++)
             {
                 //ebug.Log(i);
-                answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = RandomizeAnswers(row, orderList[i] + 1).ToString();
+                answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = answersArray(row, orderList[i] + 1).ToString();
             }
 
-            questionText.GetComponentInChildren<TextMeshProUGUI>().text = RandomizeAnswers(row, 1).ToString();
+            questionText.GetComponentInChildren<TextMeshProUGUI>().text = answersArray(row, 1).ToString();
         }
     }
 }
