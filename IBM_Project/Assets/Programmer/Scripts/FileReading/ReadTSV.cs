@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-//using UnityEngine.UIElements;
 using UnityEngine.UI;
 
-public class ReadCSV : MonoBehaviour
+public class ReadTSV : MonoBehaviour
 {
+    [Header("pp")]
     public GameObject questionText;
     public List<GameObject> answersList;
     public TextAsset CSVFile;
@@ -16,6 +16,7 @@ public class ReadCSV : MonoBehaviour
     private int test;
     [SerializeField]
     private int correctAnswers;
+    [Header("poopoo")]
 
     public GameObject panel;
     public Vector2 panelSize;
@@ -28,6 +29,8 @@ public class ReadCSV : MonoBehaviour
 
     [SerializeField]
     private bool find; //Use this to generate the row,column that you've selected using Row and Column
+    [SerializeField]
+    private bool submit; //Use this to generate the row,column that you've selected using Row and Column
 
     List<int> Shuffle(int length)
     {
@@ -59,7 +62,7 @@ public class ReadCSV : MonoBehaviour
         return list;
     }
 
-    string answersArray(int findRow, int findColmn)
+    string Find(int findRow, int findColmn)
     {
         string rv = null;
 
@@ -131,7 +134,8 @@ public class ReadCSV : MonoBehaviour
             questionText.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y);
             questionText.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x / 2, canvasRectTransform.sizeDelta.y * 0.83f);
 
-            questionText.GetComponent<Button>().enabled = false; //disables the button component on the question box.
+            Destroy(questionText.GetComponent<Button>());
+            Destroy(questionText.GetComponent<answersScript>());
 
             if(questionText.GetComponentInChildren<TextMeshProUGUI>().isTextOverflowing == true)
             {
@@ -139,9 +143,6 @@ public class ReadCSV : MonoBehaviour
             }
 
             questionText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set siz of textbox
-
-
-
 
             //Instantiating answer boxes
             for (int i = 0; i < 2; i++)
@@ -180,23 +181,38 @@ public class ReadCSV : MonoBehaviour
 
             panel.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
 
-            int.TryParse(answersArray(row, test), out correctAnswers);
+            int.TryParse(Find(row, test), out correctAnswers);
 
             if(correctAnswers < 1)
             {
                 correctAnswers = 1;
                 Debug.LogWarning(this.name + " was unable to determine how many correct answers there are. It was automatically set to 1. - ask Istvan");
             }
+            
+            /*for(int j = 0; j < correctAnswers; j++) //This determines which answers are the correct ones
+            {
+                Debug.Log(j);
+            }*/
+
+            
 
             List<int> orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
 
             for (int i = 0; i < answersList.Count; i++)
             {
-                //ebug.Log(i);
-                answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = answersArray(row, orderList[i] + 1).ToString();
+                if (orderList[i] <= correctAnswers)
+                {
+                    answersList[i].GetComponent<answersScript>().isCorrect = true;
+                }
+
+                Debug.Log(orderList[i]);
+                
+                answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = Find(row, orderList[i] + 1).ToString();
             }
 
-            questionText.GetComponentInChildren<TextMeshProUGUI>().text = answersArray(row, 1).ToString();
+            questionText.GetComponentInChildren<TextMeshProUGUI>().text = Find(row, 1).ToString();
         }
+
+
     }
 }

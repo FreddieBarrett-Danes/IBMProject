@@ -7,6 +7,7 @@ public class answersScript : MonoBehaviour
 {
     private Button btn;
     public bool selected;
+    public bool isCorrect; 
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class answersScript : MonoBehaviour
     {
         if (selected)
         {
-            this.GetComponent<Image>().color = Color.red;
+            this.GetComponent<Image>().color = Color.yellow;
         }
         if (!selected)
         {
@@ -29,6 +30,5 @@ public class answersScript : MonoBehaviour
     private void buttonClicked()
     {
         selected = !selected;
-        this.GetComponent<Image>().color = Color.red;
     }
 }
