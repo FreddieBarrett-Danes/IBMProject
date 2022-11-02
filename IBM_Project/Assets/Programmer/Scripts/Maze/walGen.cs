@@ -60,6 +60,7 @@ public class walGen : MonoBehaviour
 
     
 
+    //'Direction' of the maze generation can be influenced using moveGen
     void moveGen(char dir, int amount)
     {
         Vector3 dist = targetPos.transform.position - currentPos.transform.position;
@@ -136,6 +137,13 @@ public class walGen : MonoBehaviour
 
         abV2.x = a / 4;
         abV2.y = b / 4;
+        targetPos.transform.position = new Vector3(2, 0, 4);
+        currentPos.transform.position = new Vector3(2, 0, -16);
+        mazePlayer = GameObject.FindGameObjectWithTag("mazePlayer");
+        goalLocation = GameObject.FindGameObjectWithTag("goalLocation");
+        StartCoroutine(setGen());
+
+
         //GenCell(new Vector3(0, 0, 10));
         //GenCell(new Vector3(0, 0, 14));
         //GenCell(new Vector3(4, 0, 10));
@@ -149,23 +157,17 @@ public class walGen : MonoBehaviour
         //}
         //currentPos.transform.position = new Vector3((Random.Range(1,(int)Maze_Size.x) * 4) + 2.0f ,0,Random.Range(1, (int)Maze_Size.y * 4) + 1.0f);
 
-        targetPos.transform.position = new Vector3(2, 0, 4);
-        currentPos.transform.position = new Vector3(2, 0, -16);
-        mazePlayer = GameObject.FindGameObjectWithTag("mazePlayer");
-        goalLocation = GameObject.FindGameObjectWithTag("goalLocation");
+
         //moveGen('n', 3);
 
-        
-
-
-        StartCoroutine(setGen());
         //Debug.Log("is maze complete yet?");
 
     }
 
+    //Generates sample maze for proof of concept within 5 seconds.
     IEnumerator setGen()
     {
-
+        Debug.Log("Generating Maze...");
         moveGen('n', 3);
         yield return new WaitForSeconds(1.0f);
         moveGen('e', 4);
@@ -207,6 +209,21 @@ public class walGen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 dir = targetPos.transform.position - currentPos.transform.position;
+        currentPos.transform.position += (dir.normalized * 50) * Time.deltaTime;
+        currentPos.transform.rotation = Quaternion.Euler(90, 0, 0);
+
+        if (Input.GetKeyDown("r"))
+        {
+            targetPos.transform.position = new Vector3(2, 0, 4);
+            currentPos.transform.position = new Vector3(2, 0, -16);
+            Debug.Log("Refreshing Maze, please wait");
+            StartCoroutine(setGen());
+        }
+
+
+
+        //Attempts at maze functionality such as grid position (and goalLocation placement?) not used for prototype
         //if (GameObject.FindGameObjectWithTag("goalLocation").activeInHierarchy == true)
         //{
         //    Debug.Log("Goal Location is found active");
@@ -215,20 +232,19 @@ public class walGen : MonoBehaviour
         //{
         //    Debug.Log("Goal Location is found to be inactive");
         //}
-        if (GameObject.FindGameObjectWithTag("goalLocation").transform.position == new Vector3(-100,100,-100))
-        {
-            Debug.Log("goalLocation should now be moved");
-        }
+        //if (GameObject.FindGameObjectWithTag("goalLocation").transform.position == new Vector3(-100,100,-100))
+        //{
+        //    Debug.Log("goalLocation should now be moved");
+        //}
 
         //Maze_Size.x = Maze_Width;
         //Maze_Size.y = Maze_Height;
-        Vector3 dir = targetPos.transform.position - currentPos.transform.position;
+        
         //bool[] test = new bool[3]; //sets every value in the array to false by default
         //test[Random.Range(1,3)] = true;
 
         
-        currentPos.transform.position += (dir.normalized * 50) * Time.deltaTime;
-        currentPos.transform.rotation = Quaternion.Euler(90, 0, 0);
+        
 
         //Debug.Log(test[0] + "," + test[1] + "," + test[2] + ",");
 

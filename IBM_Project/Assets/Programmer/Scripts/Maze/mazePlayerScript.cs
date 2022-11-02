@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class mazePlayerScript : MonoBehaviour
 {
     public float speed;
+    public bool returnToStartUponCollision;
     bool touchWall;
+    public TextMeshProUGUI Timer;
 
 
     private void OnTriggerEnter(Collider other)
@@ -14,29 +17,27 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "mazeWall")
         {
             //Debug.Log("Trigger Wall hit");
-            transform.position = new Vector3(2, 0, 0);
-            //touchWall = true;
+            if (returnToStartUponCollision == true) transform.position = new Vector3(2, 0, 0);
+            touchWall = true;
         }
-        //else if (other.gameObject == null)
-        //{
-        //    Debug.Log("Wall exit");
-        //    touchWall = false;
-        //}
-        if (other.gameObject.tag == "goalLocation")
+        else if (other.gameObject.tag == "goalLocation")
         {
-            Debug.Log("Maze win");
+            //Debug.Log("Maze win");
 
-            //Setting gameobjects invisible
+            //Setting gameobjects invisible:
             GameObject.FindGameObjectWithTag("goalLocation").GetComponent<MeshRenderer>().enabled = false;
             GameObject.FindGameObjectWithTag("mazePlayer").GetComponent<MeshRenderer>().enabled = false;
+            Timer.GetComponent<TextMeshProUGUI>().enabled = false;
 
-            //Method transforming gameobjects to different location
+            //Method transforming gameobjects to different location:
+
             //GameObject.FindGameObjectWithTag("goalLocation").transform.position = new Vector3(-100,100,-100);
             //GameObject.FindGameObjectWithTag("mazePlayer").transform.position = new Vector3(-100, 80, -100);
 
 
 
-            //Method deactivating gameobjects
+            //Method deactivating gameobjects:
+
             //GameObject.FindWithTag("goalLocation").SetActive(false);
             //GameObject.FindWithTag("mazePlayer").SetActive(false);
 
@@ -48,8 +49,8 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "mazeWall")
         {
             //Debug.Log("Trigger Wall exit");
-            transform.position = new Vector3(2, 0, 0);
-            //touchWall = false;
+            //transform.position = new Vector3(2, 0, 0);
+            touchWall = false;
         }
     }
     // Start is called before the first frame update
@@ -58,16 +59,17 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<Renderer>().material.color = Color.white; //Setting colour of Player gameobject
         GameObject goalLocation = GameObject.FindGameObjectWithTag("goalLocation");
         goalLocation.GetComponent<Renderer>().material.color = Color.green;
-        //Color test2 = gameObject.GetComponent<Renderer>().material.color = Color.green;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.rotation = Quaternion.Euler(0, 0, 0);
-        //Debug.Log("Player");
 
-        //convert to switch case
+
+
+
         if (Input.GetKey("d"))
         {
             transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
@@ -104,5 +106,45 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(2, 0, 0);
         }
+
+
+        //Attempted to convert input to a switch case, didn't turnout as smooth
+        //var mazeInput = Input.inputString;
+        //switch (mazeInput)
+        //{
+        //    case "d":
+        //        transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+        //        if (touchWall == true)
+        //        {
+        //            transform.position -= new Vector3(speed * Time.deltaTime, 0, 0) * 3;
+        //        }
+        //        break;
+        //    case "w":
+        //        transform.position += new Vector3(0, 0, speed * Time.deltaTime);
+        //        if (touchWall == true)
+        //        {
+        //            transform.position -= new Vector3(0, 0, speed * Time.deltaTime) * 3;
+        //        }
+        //        break;
+        //    case "a":
+        //        transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
+        //        if (touchWall == true)
+        //        {
+        //            transform.position += new Vector3(speed * Time.deltaTime, 0, 0) * 3;
+        //        }
+        //        break;
+        //    case "s":
+        //        transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
+        //        if (touchWall == true)
+        //        {
+        //            transform.position += new Vector3(0, 0, speed * Time.deltaTime) * 3;
+        //        }
+        //        break;
+        //    case "space":
+        //        transform.position = new Vector3(2, 0, 0);
+        //        break;
+        //}
+
+
     }
 }
