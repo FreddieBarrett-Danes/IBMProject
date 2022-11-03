@@ -248,10 +248,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questionText: {fileID: 0}
   answersList: []
-  CSVFile: {fileID: 4900000, guid: 192693ebeb5fc4b49b72bcb04487444c, type: 3}
-  panelTest: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
+  CSVFile: {fileID: 4900000, guid: 5ef45e18d30328141b98445df1bd595d, type: 3}
+  test: 6
+  correctAnswers: 0
+  panel: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
   panelSize: {x: 0, y: 0}
-  row: 0
+  row: 3
   find: 1
 --- !u!4 &314326035
 Transform:
