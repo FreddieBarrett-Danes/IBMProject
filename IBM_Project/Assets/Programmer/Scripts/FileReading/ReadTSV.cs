@@ -6,17 +6,15 @@ using UnityEngine.UI;
 
 public class ReadTSV : MonoBehaviour
 {
-    [Header("pp")]
     public GameObject questionText;
     public List<GameObject> answersList;
     public TextAsset CSVFile;
     private GameObject canvas;
     private RectTransform canvasRectTransform;
-    [SerializeField]
-    private int test;
+    //[SerializeField]
+    public int rightAnswers;
     [SerializeField]
     private int correctAnswers;
-    [Header("poopoo")]
 
     public GameObject panel;
     public Vector2 panelSize;
@@ -27,10 +25,19 @@ public class ReadTSV : MonoBehaviour
     [Range(1, 5)]
     public int row;
 
+    [Header("File Renaming")]
+
+    [SerializeField]
+    private string orginalName;
+    [SerializeField]
+    private string newName;
+
     [SerializeField]
     private bool find; //Use this to generate the row,column that you've selected using Row and Column
     [SerializeField]
-    private bool submit; //Use this to generate the row,column that you've selected using Row and Column
+    private bool submit;
+    [SerializeField]
+    private bool renameFile;
 
     List<int> Shuffle(int length)
     {
@@ -127,6 +134,8 @@ public class ReadTSV : MonoBehaviour
 
             panelSize = new Vector2((canvasRectTransform.sizeDelta.x * 0.9f) / 2, canvasRectTransform.sizeDelta.y * 0.25f); //Find panel size
 
+            rightAnswers = 0; //reset the counter for how many answers player got right
+            
             //Instantiating question box
 
             questionText = Instantiate(panel);
@@ -181,7 +190,7 @@ public class ReadTSV : MonoBehaviour
 
             panel.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
 
-            int.TryParse(Find(row, test), out correctAnswers);
+            int.TryParse(Find(row, 6), out correctAnswers);
 
             if(correctAnswers < 1)
             {
@@ -213,6 +222,23 @@ public class ReadTSV : MonoBehaviour
             questionText.GetComponentInChildren<TextMeshProUGUI>().text = Find(row, 1).ToString();
         }
 
+        if (renameFile) // okay maybe dont need this now then. cool.
+        {
+            System.IO.File.Copy(orginalName, newName);
+            renameFile = false;
+        }
 
+        if (submit)
+        {
+            for(int i = 0; i < answersList.Count; i++) //check to make sure correct answers were ticked
+            {
+                if (answersList[i].GetComponent<answersScript>().isCorrect == true && answersList[i].GetComponent<answersScript>().selected == true)
+                {
+                    rightAnswers++;
+                }
+            }
+
+            submit = false; 
+        }
     }
 }
