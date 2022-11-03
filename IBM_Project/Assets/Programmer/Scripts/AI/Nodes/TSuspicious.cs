@@ -5,23 +5,26 @@ using BT;
 public class TSuspicious : BT_Node
 {
     private readonly NavMeshAgent agent;
+    private readonly BotInfo botInfo;
 
-    public TSuspicious(NavMeshAgent pAgent)
+    public TSuspicious(NavMeshAgent pAgent, BotInfo pbotInfo)
     {
         agent = pAgent;
+        botInfo = pbotInfo;
     }
 
     public override NodeState Evaluate()
     {
-        if (!BBTInfo.playerInView)
+        if (!botInfo.playerInView)
         {
-            BBTInfo.stimer += Time.deltaTime;
-            if (BBTInfo.stimer >= BBTInfo.susTimer)
+            botInfo.stimer += Time.deltaTime;
+            // Not reaching below
+            if (botInfo.stimer >= botInfo.susTimer)
             {
-                Vector3 newPos = RandomNavSphere(BBTInfo.lastKnownPos, BBTInfo.suspiciousRadius, -1);
-                Debug.Log("Searching for player at last known location!");
+                Vector3 newPos = RandomNavSphere(botInfo.lastKnownPos, botInfo.suspiciousRadius, -1);
+                //Debug.Log("Searching for player at last known location!");
                 agent.SetDestination(newPos);
-                BBTInfo.stimer = 0;
+                botInfo.stimer = 0;
             }
         }
 

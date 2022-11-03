@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rBody;
     public Vector3 velocity;
 
-    public int threatLevel = 0;
+    public int threatLevel;
 
     //variables for shooting, only placed in here to test how dynamic functions are.
     private Shooting shooting;
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public Transform attackPoint;
 
     public float modifyBulletSpeed = 0;
-    public GameObject bulletPrefab;
+    //public GameObject bulletPrefab;
 
     public GameObject enemyControlled;
 
@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
             this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
             
             Destroy(enemyControlled);
+            isBehindEnemy = false;
 
             //Destroy(enemyControlled.GetComponent("Player Behind"));
         }

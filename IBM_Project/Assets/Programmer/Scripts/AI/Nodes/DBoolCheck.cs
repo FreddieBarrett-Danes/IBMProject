@@ -1,17 +1,18 @@
 using BT;
+using UnityEngine;
 
-public class DBoolChecks : BT_Node
+public class DBoolCheck : BT_Node
 {
-    private readonly bool check;
+    private readonly BotInfo bot;
 
-    public DBoolChecks(bool input)
+    public DBoolCheck(BotInfo pinput)
     {
-        check = input;
+        bot = pinput;
     }
 
     public override NodeState Evaluate()
     {
-        switch (check)
+        switch (bot.playerInView)
         {
             case true:
                 state = NodeState.SUCCESS;
