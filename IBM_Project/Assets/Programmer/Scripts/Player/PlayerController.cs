@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
 
     public GameObject visuals;
+    public GameObject body;
 
     private Camera mainCamera;
 
@@ -20,8 +21,8 @@ public class PlayerController : MonoBehaviour
 
     //variables for shooting, only placed in here to test how dynamic functions are.
     private Shooting shooting;
-    private Melee melee;
-    private LayerMask enemyLayer;
+/*    private Melee melee;
+    private LayerMask enemyLayer;*/
 
     public Transform attackPoint;
 
@@ -43,18 +44,18 @@ public class PlayerController : MonoBehaviour
         shooting.bulletSpeed = modifyBulletSpeed;
 
 
-        //jank melee intialisation
+ /*       //jank melee intialisation
         melee = gameObject.AddComponent<Melee>();
         enemyLayer = LayerMask.GetMask("Enemy");
         melee.tempAtkPoint = attackPoint;
- 
+ */
     }
 
     void Update()
     {
         Movement();
         Shooting();
-        Melee();
+        //Melee();
         TakeControl();
     }
     void FixedUpdate()
@@ -78,14 +79,14 @@ public class PlayerController : MonoBehaviour
             shooting.Execute();
         }
     }
-    private void Melee()
+/*    private void Melee()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("trying to melee");
             melee.Execute(enemyLayer);
         }
-    }
+    }*/
     private void TakeControl()
     {
         if (!isBehindEnemy) return;
@@ -93,11 +94,12 @@ public class PlayerController : MonoBehaviour
         {
             
             this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
-            
+            threatLevel = enemyControlled.GetComponent<BotInfo>().threatLevel;
+            //body.GetComponent<MeshRenderer>().material.SetColor("_color", Color.red);
+            //visuals.GetComponent<MeshRenderer>().material.SetColor("_color", Color.red);
+            //speed = enemyControlled.GetComponent<BotInfo>().speed;
             Destroy(enemyControlled);
             isBehindEnemy = false;
-
-            //Destroy(enemyControlled.GetComponent("Player Behind"));
         }
     }
 }
