@@ -214,7 +214,7 @@ public class ReadTSV : MonoBehaviour
                     answersList[i].GetComponent<answersScript>().isCorrect = true;
                 }
 
-                Debug.Log(orderList[i]);
+                //Debug.Log(orderList[i]);
                 
                 answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = Find(row, orderList[i] + 1).ToString();
             }
@@ -230,11 +230,23 @@ public class ReadTSV : MonoBehaviour
 
         if (submit)
         {
-            for(int i = 0; i < answersList.Count; i++) //check to make sure correct answers were ticked
+            for(int i = 0; i < answersList.Count; i++) //check to make sure correct answers were ticked and set colours
             {
-                if (answersList[i].GetComponent<answersScript>().isCorrect == true && answersList[i].GetComponent<answersScript>().selected == true)
+                Destroy(answersList[i].GetComponent<Button>());
+
+                if (answersList[i].GetComponent<answersScript>().isCorrect && answersList[i].GetComponent<answersScript>().selected) // selected is correct
                 {
                     rightAnswers++;
+                    answersList[i].GetComponent<answersScript>().panelColour = Color.green; // set colour to green
+                    //answersList[i].GetComponent<Image>().color);
+                }
+                else if (!answersList[i].GetComponent<answersScript>().isCorrect && answersList[i].GetComponent<answersScript>().selected) // selected is incorrect
+                {
+                    answersList[i].GetComponent<answersScript>().panelColour = Color.red; // set colour to red
+                }
+                else if (answersList[i].GetComponent<answersScript>().isCorrect && !answersList[i].GetComponent<answersScript>().selected) // not seleced correct answer
+                {
+                    answersList[i].GetComponent<answersScript>().panelColour = new Color(1,0.5f,0,1); // set colour to orange
                 }
             }
 
