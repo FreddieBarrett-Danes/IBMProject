@@ -300,8 +300,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b8706261aadafd447885576f8882beb8, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: b8706261aadafd447885576f8882beb8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 1221275430}
   m_Layer: 0
   m_Name: EnemyStore
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1077,7 +1077,7 @@ SpriteRenderer:
   m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!135 &6488441714342342022
@@ -1264,7 +1264,7 @@ GameObject:
   - component: {fileID: 8285415280122120931}
   m_Layer: 3
   m_Name: Enemy
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1414,6 +1414,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   threatLevel: 3
+  botCount: 0
+  remainingBots: 0
   patrol: []
   destPoint: 0
   start: 0
@@ -1423,6 +1425,7 @@ MonoBehaviour:
   player: {fileID: 0}
   viewRadius: 2
   viewAngle: 90
+  detectionTimer: 0
   engaging: 0
   lastKnownPos: {x: 0, y: 0, z: 0}
   suspiciousRadius: 3

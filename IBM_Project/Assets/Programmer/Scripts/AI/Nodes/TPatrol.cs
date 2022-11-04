@@ -32,6 +32,7 @@ public class TPatrol : BT_Node
         }
         if (botInfo.engaging == false)
         {
+            botInfo.playerInView = false;
             if (botInfo.patrol.Length == 0)
             {
                 state = NodeState.FAILURE;

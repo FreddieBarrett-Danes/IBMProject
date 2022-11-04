@@ -17,7 +17,7 @@ public class TDetectPlayer : BT_Node
 
     public override NodeState Evaluate()
     {
-        if (botInfo.engaging == false)
+        if (!botInfo.engaging)
         {
             botInfo.timer += Time.deltaTime;
             Vector3 playerPos = botInfo.player.transform.position;
@@ -27,10 +27,18 @@ public class TDetectPlayer : BT_Node
 
             if (range < botInfo.viewRadius && Vector3.Angle(transform.forward, dirToTarget) < botInfo.viewAngle / 2)
             {
-                botInfo.timer = botInfo.wanderTimer;
-                botInfo.engaging = true;
-                botInfo.lastKnownPos = playerPos;
-                botInfo.playerInView = true;
+                botInfo.detectionTimer += Time.deltaTime;
+                if (botInfo.detectionTimer >= 1.5)
+                {
+                    botInfo.timer = botInfo.wanderTimer;
+                    botInfo.engaging = true;
+                    botInfo.lastKnownPos = playerPos;
+                    botInfo.playerInView = true;
+                    state = NodeState.SUCCESS;
+                    return state;
+                }
+                botInfo.playerInView = false;
+                botInfo.engaging = false;
                 state = NodeState.SUCCESS;
                 return state;
             }
@@ -38,6 +46,7 @@ public class TDetectPlayer : BT_Node
             return state;
         }
         botInfo.playerInView = false;
+        botInfo.engaging = false;
         state = NodeState.SUCCESS;
         return state;
     }

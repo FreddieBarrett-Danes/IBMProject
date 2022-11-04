@@ -17,7 +17,7 @@ public class TPathToPlayer : BT_Node
         agent.SetDestination(botInfo.player.transform.position);
         botInfo.timer = botInfo.wanderTimer;
         botInfo.engaging = false;
-        state = NodeState.RUNNING;
+        state = NodeState.SUCCESS;
         return state;
     }
 

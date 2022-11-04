@@ -1,18 +1,17 @@
 using BT;
-using UnityEngine;
 
-public class DBoolCheck : BT_Node
+public class DVariableThreshold : BT_Node
 {
     private readonly BotInfo bot;
 
-    public DBoolCheck(BotInfo pinput)
+    public DVariableThreshold(BotInfo pinput)
     {
         bot = pinput;
     }
 
     public override NodeState Evaluate()
     {
-        switch (bot.playerInView)
+        switch (bot.remainingBots < bot.botCount / 2)
         {
             case true:
                 state = NodeState.SUCCESS;

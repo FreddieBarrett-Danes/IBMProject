@@ -1,12 +1,25 @@
+using System;
 using UnityEngine;
 
 public class BotInfo : MonoBehaviour
 {
+    // Misc
     public int threatLevel;
+    public int botCount;
+    public int remainingBots;
     
+    // Throwing
+    public Transform ShotStart;
+    public GameObject BananaProjectile;
+    public float ProjectileSpeed;
+    public float FireRate = 0.3f;
+    private float NextFire;
+    
+    // Patrol
     public Transform[] patrol;
     public int destPoint;
     public bool start;
+    
     // Wander
     public float wanderRadius;
     public float wanderTimer;
@@ -17,6 +30,7 @@ public class BotInfo : MonoBehaviour
     public float viewRadius;
     [Range(0, 360)] 
     public float viewAngle;
+    public float detectionTimer;
     public bool engaging;
 
     // Suspicious
@@ -32,6 +46,13 @@ public class BotInfo : MonoBehaviour
         destPoint = 0;
         timer = wanderTimer;
         stimer = susTimer;
+        detectionTimer = 0;
+    }
+
+    private void LateUpdate()
+    {
+        GameObject[] botsInGame = GameObject.FindGameObjectsWithTag ("Enemy");
+        remainingBots = botsInGame.Length;
     }
 
     public BotInfo()
