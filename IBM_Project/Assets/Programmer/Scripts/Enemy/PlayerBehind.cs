@@ -4,8 +4,6 @@ public class PlayerBehind : MonoBehaviour
 {
     private GameObject player;
 
-    private GameObject enemy;
-
     private PlayerController pC;
 
     // Start is called before the first frame update

@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public GameObject enemyControlled;
 
 
+
     private void Start()
     {
         //controller set up
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour
         shooting.SetHost(visuals);
         shooting.bulletSpeed = modifyBulletSpeed;
 
+        
 
  /*       //jank melee intialisation
         melee = gameObject.AddComponent<Melee>();
@@ -95,6 +97,8 @@ public class PlayerController : MonoBehaviour
             
             this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().threatLevel;
+            body.GetComponent<Renderer>().material.color = enemyControlled.transform.Find("Capsule").GetComponent<Renderer>().material.color;
+            visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.Find("Forward").GetComponent<Renderer>().material.color;
             //body.GetComponent<MeshRenderer>().material.SetColor("_color", Color.red);
             //visuals.GetComponent<MeshRenderer>().material.SetColor("_color", Color.red);
             //speed = enemyControlled.GetComponent<BotInfo>().speed;
