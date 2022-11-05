@@ -1,10 +1,10 @@
 using BT;
 
-public class DVariableThreshold : BT_Node
+public class DRemainingBots : BT_Node
 {
     private readonly BotInfo bot;
 
-    public DVariableThreshold(BotInfo pinput)
+    public DRemainingBots(BotInfo pinput)
     {
         bot = pinput;
     }

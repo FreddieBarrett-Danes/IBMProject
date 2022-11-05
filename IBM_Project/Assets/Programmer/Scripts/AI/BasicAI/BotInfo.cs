@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BotInfo : MonoBehaviour
@@ -10,11 +11,12 @@ public class BotInfo : MonoBehaviour
     
     // Throwing
     public Transform ShotStart;
-    public GameObject BananaProjectile;
     public float ProjectileSpeed;
-    public float FireRate = 0.3f;
-    private float NextFire;
-    
+    public float FireRate = 0.5f;
+    public float NextFire;
+    public Shooting shooting;
+    private GameObject visuals;
+
     // Patrol
     public Transform[] patrol;
     public int destPoint;
@@ -42,6 +44,12 @@ public class BotInfo : MonoBehaviour
 
     private void Start()
     {
+        visuals = gameObject.transform.GetChild(1).gameObject;
+        ProjectileSpeed = 1000;
+        shooting = gameObject.AddComponent<Shooting>();
+        shooting.SetHost(visuals);
+        shooting.bulletSpeed = ProjectileSpeed;
+        ShotStart = gameObject.transform.GetChild(2);
         player = GameObject.FindGameObjectWithTag("Player");
         destPoint = 0;
         timer = wanderTimer;
