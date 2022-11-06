@@ -12,6 +12,7 @@ public class Shooting : Ability
         GameObject tempBullet = Instantiate(bullet, host.transform.position, host.transform.rotation);
         Rigidbody tempRigidBodyBullet = tempBullet.GetComponent<Rigidbody>();
         tempRigidBodyBullet.AddForce(tempRigidBodyBullet.transform.forward * bulletSpeed);
+        tempBullet.tag = host.tag;
         Destroy(tempBullet, 5f);
     }
 }

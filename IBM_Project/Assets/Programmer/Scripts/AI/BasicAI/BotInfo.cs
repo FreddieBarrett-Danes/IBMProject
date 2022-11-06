@@ -45,7 +45,7 @@ public class BotInfo : MonoBehaviour
     private void Start()
     {
         visuals = gameObject.transform.GetChild(1).gameObject;
-        ProjectileSpeed = 1000;
+        ProjectileSpeed = 1000.0f;
         shooting = gameObject.AddComponent<Shooting>();
         shooting.SetHost(visuals);
         shooting.bulletSpeed = ProjectileSpeed;
