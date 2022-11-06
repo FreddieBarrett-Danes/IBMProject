@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ReadTSV : MonoBehaviour
@@ -16,6 +18,10 @@ public class ReadTSV : MonoBehaviour
     [SerializeField]
     private int correctAnswers;
 
+    public float timer;
+    public float waitTime;
+    public bool waiting;
+    
     public GameObject panel;
     public Vector2 panelSize;
 
@@ -25,19 +31,12 @@ public class ReadTSV : MonoBehaviour
     [Range(1, 5)]
     public int row;
 
-    [Header("File Renaming")]
-
-    [SerializeField]
-    private string orginalName;
-    [SerializeField]
-    private string newName;
-
     //[SerializeField]
     public bool find; //Use this to generate the row,column that you've selected using Row and Column
     [SerializeField]
     private bool submit;
     [SerializeField]
-    private bool renameFile;
+    private bool reloadSceneAtEnd;
 
     List<int> Shuffle(int length)
     {
@@ -222,10 +221,11 @@ public class ReadTSV : MonoBehaviour
             questionText.GetComponentInChildren<TextMeshProUGUI>().text = Find(row, 1).ToString();
         }
 
-        if (renameFile) // okay maybe dont need this now then. cool.
+        if (reloadSceneAtEnd) // okay maybe dont need this now then. cool.
         {
-            System.IO.File.Copy(orginalName, newName);
-            renameFile = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            reloadSceneAtEnd = false;
         }
 
         if (submit)
@@ -250,7 +250,17 @@ public class ReadTSV : MonoBehaviour
                 }
             }
 
-            submit = false; 
+            submit = false;
+            waiting = true;
+
+            //start timer here
+            timer = waitTime;
+        }
+
+        if(timer > 0 && !waiting)
+        {
+            find = true;
+            waiting = false;
         }
     }
 }

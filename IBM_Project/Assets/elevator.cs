@@ -11,7 +11,7 @@ public class elevator : MonoBehaviour
     public Vector3 debug;
 
     //OMG FOR THE LOVE OF GOD WE NEED TO CHANGE THIS LATER. UNLOAD THE SCENE OR SOMETHING. 
-    private GameObject camera;
+    private GameObject cam;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,7 @@ public class elevator : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         quizMaster = GameObject.Find("QuizMaster");
         reader = quizMaster.GetComponent<ReadTSV>();
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        cam = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +27,7 @@ public class elevator : MonoBehaviour
         if(other.gameObject == player)
         {
             reader.find = true;
-            camera.GetComponent<Camera>().farClipPlane = 0.5f;
+            cam.GetComponent<Camera>().farClipPlane = 0.5f;
         }
     }
 }
