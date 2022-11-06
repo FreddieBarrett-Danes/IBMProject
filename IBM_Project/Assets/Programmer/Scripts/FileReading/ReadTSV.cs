@@ -249,18 +249,23 @@ public class ReadTSV : MonoBehaviour
                     answersList[i].GetComponent<answersScript>().panelColour = new Color(1,0.5f,0,1); // set colour to orange
                 }
             }
-
-            submit = false;
             waiting = true;
 
             //start timer here
             timer = waitTime;
+            submit = false;
+            
+        }
+        if(waiting)
+        {
+            timer -= Time.deltaTime;
         }
 
-        if(timer > 0 && !waiting)
+        if(timer < 0 && waiting)
         {
             find = true;
             waiting = false;
+            
         }
     }
 }
