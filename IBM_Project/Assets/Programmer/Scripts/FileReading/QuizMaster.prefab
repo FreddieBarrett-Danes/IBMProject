@@ -49,11 +49,12 @@ MonoBehaviour:
   CSVFile: {fileID: 4900000, guid: 5ef45e18d30328141b98445df1bd595d, type: 3}
   rightAnswers: 0
   correctAnswers: 0
+  timer: 0
+  waitTime: 2
+  waiting: 0
   panel: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
   panelSize: {x: 0, y: 0}
   row: 3
-  orginalName: 
-  newName: 
-  find: 1
+  find: 0
   submit: 0
-  renameFile: 0
+  reloadSceneAtEnd: 0
