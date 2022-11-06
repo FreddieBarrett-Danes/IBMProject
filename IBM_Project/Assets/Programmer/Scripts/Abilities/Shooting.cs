@@ -13,6 +13,7 @@ public class Shooting : Ability
         Rigidbody tempRigidBodyBullet = tempBullet.GetComponent<Rigidbody>();
         tempRigidBodyBullet.AddForce(tempRigidBodyBullet.transform.forward * bulletSpeed);
         tempBullet.tag = host.tag;
+        Debug.Log(tempBullet.tag + " Bullet Shot");
         Destroy(tempBullet, 5f);
     }
 }
