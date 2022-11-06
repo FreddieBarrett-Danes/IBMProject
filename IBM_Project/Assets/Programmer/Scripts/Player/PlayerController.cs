@@ -98,8 +98,6 @@ public class PlayerController : MonoBehaviour
             threatLevel = enemyControlled.GetComponent<BotInfo>().threatLevel;
             body.GetComponent<Renderer>().material.color = enemyControlled.transform.Find("Capsule").GetComponent<Renderer>().material.color;
             visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.Find("Forward").GetComponent<Renderer>().material.color;
-            //body.GetComponent<MeshRenderer>().material.SetColor("_color", Color.red);
-            //visuals.GetComponent<MeshRenderer>().material.SetColor("_color", Color.red);
             //speed = enemyControlled.GetComponent<BotInfo>().speed;
             Destroy(enemyControlled);
             isBehindEnemy = false;
