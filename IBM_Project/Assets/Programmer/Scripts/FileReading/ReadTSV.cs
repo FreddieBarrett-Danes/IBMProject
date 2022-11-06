@@ -32,8 +32,8 @@ public class ReadTSV : MonoBehaviour
     [SerializeField]
     private string newName;
 
-    [SerializeField]
-    private bool find; //Use this to generate the row,column that you've selected using Row and Column
+    //[SerializeField]
+    public bool find; //Use this to generate the row,column that you've selected using Row and Column
     [SerializeField]
     private bool submit;
     [SerializeField]
