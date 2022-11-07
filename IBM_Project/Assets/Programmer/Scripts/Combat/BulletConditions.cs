@@ -9,8 +9,10 @@ public class BulletConditions : MonoBehaviour
     {
        if(this.gameObject.tag == "Player")
        {
+            
             if (other.gameObject == GameObject.FindGameObjectWithTag("Enemy"))
             {
+                Debug.Log("playe bullet");
                 Destroy(other.gameObject);
                 Destroy(this.gameObject);
             }
@@ -24,6 +26,7 @@ public class BulletConditions : MonoBehaviour
             if (other.gameObject == GameObject.FindGameObjectWithTag("Player"))
             {
                 Destroy(other.gameObject);
+                Destroy(this.gameObject);
             }
             else if (other.gameObject == GameObject.FindGameObjectWithTag("Wall"))
             {

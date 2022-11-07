@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1748087701172676824}
   - component: {fileID: 7377228568826762357}
   - component: {fileID: 298864271308130700}
+  - component: {fileID: 5159962278399625301}
   m_Layer: 3
   m_Name: Capsule
   m_TagString: Enemy
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &5159962278399625301
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714381111424364099}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3271091143047487825
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,10 +495,10 @@ MonoBehaviour:
   threatLevel: 3
   botCount: 0
   remainingBots: 0
-  ShotStart: {fileID: 0}
-  ProjectileSpeed: 0
-  FireRate: 0.3
-  NextFire: 0
+  shotStart: {fileID: 0}
+  projectileSpeed: 0
+  fireRate: 0.5
+  nextFire: 0
   shooting: {fileID: 0}
   patrol: []
   destPoint: 0
