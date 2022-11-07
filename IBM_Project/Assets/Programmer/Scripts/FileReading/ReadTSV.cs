@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
+//using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,8 +35,10 @@ public class ReadTSV : MonoBehaviour
     private float startX;
     private float startY;
 
-    [Range(1, 5)]
+    public int rangeOfQuestionsMax = 6;
+    [Range(1, 6)]
     public int row;
+
 
     //[SerializeField]
     public bool find; //Use this to generate the row,column that you've selected using Row and Column
@@ -75,7 +77,7 @@ public class ReadTSV : MonoBehaviour
         return list;
     }
 
-    string Find(int findRow, int findColmn)
+    string Find(int findRow, int findColumn)
     {
         string rv = null;
 
@@ -90,9 +92,9 @@ public class ReadTSV : MonoBehaviour
             Debug.LogWarning("Desired Row given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
         }
 
-        if (findColmn < 1)
+        if (findColumn < 1)
         {
-            findColmn = 1;
+            findColumn = 1;
             Debug.LogWarning("Desired Column given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
         }
 
@@ -101,10 +103,10 @@ public class ReadTSV : MonoBehaviour
             char tabSpace = '\u0009'; //takes the TAB ascii code as the splitter character. this value used to be a , when using CSV but now we are using TSV.
             var data = splitDataset[i].Split(tabSpace.ToString()); //
             //var data = splitDataset[i].Split(',');
-            for (int j = 0; j < findColmn; j++)
+            for (int j = 0; j < findColumn; j++)
             {
                 if (findRow > splitDataset.Length) findRow = splitDataset.Length;
-                if (findColmn > data.Length) findColmn = data.Length;
+                if (findColumn > data.Length) findColumn = data.Length;
 
                 //questionText.text = data[j];
 
@@ -112,6 +114,8 @@ public class ReadTSV : MonoBehaviour
             }
         }
         //Debug.Log(rv);
+        Debug.Log(findColumn);
+        //Debug.Log(findRow);
         return rv;
     }
 
@@ -130,6 +134,8 @@ public class ReadTSV : MonoBehaviour
     {
         if (find) //File Reading / generate
         {
+            row = Random.Range(1, rangeOfQuestionsMax);
+
             if (answersList.Count != 0) //Reset list
             {
                 for (int i = 0; i < answersList.Count; i++)
@@ -217,7 +223,7 @@ public class ReadTSV : MonoBehaviour
 
             panel.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
 
-            int.TryParse(Find(row, 6), out correctAnswers);
+            int.TryParse(Find(row, 6), out correctAnswers); // randomissation added here;
 
             if(correctAnswers < 1)
             {
@@ -286,6 +292,7 @@ public class ReadTSV : MonoBehaviour
             submit = false;
             
         }
+
         if(waiting)
         {
             timer -= Time.deltaTime;
