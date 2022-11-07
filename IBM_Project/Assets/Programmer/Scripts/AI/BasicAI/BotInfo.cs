@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BotInfo : MonoBehaviour
@@ -10,10 +8,10 @@ public class BotInfo : MonoBehaviour
     public int remainingBots;
     
     // Throwing
-    public Transform ShotStart;
-    public float ProjectileSpeed;
-    public float FireRate = 0.5f;
-    public float NextFire;
+    public Transform shotStart;
+    public float projectileSpeed;
+    public float fireRate = 0.5f;
+    public float nextFire;
     public Shooting shooting;
     private GameObject visuals;
 
@@ -45,13 +43,14 @@ public class BotInfo : MonoBehaviour
     private void Start()
     {
         visuals = gameObject.transform.GetChild(1).gameObject;
-        ProjectileSpeed = 1000.0f;
+        projectileSpeed = 1000.0f;
         shooting = gameObject.AddComponent<Shooting>();
         shooting.SetHost(visuals);
-        shooting.bulletSpeed = ProjectileSpeed;
-        ShotStart = gameObject.transform.GetChild(2);
+        shooting.bulletSpeed = projectileSpeed;
+        shotStart = gameObject.transform.GetChild(2);
         player = GameObject.FindGameObjectWithTag("Player");
         destPoint = 0;
+        nextFire = fireRate;
         timer = wanderTimer;
         stimer = susTimer;
         detectionTimer = 0;

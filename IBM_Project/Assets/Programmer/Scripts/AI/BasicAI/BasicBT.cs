@@ -21,8 +21,8 @@ public class BasicBT : BT_Tree
                 }),
                 */
             }),
-            new TPatrol(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>())
-            //new TWander(GetComponent<NavMeshAgent>(), transform, GetComponent<BotInfo>())
+            //new TPatrol(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>())
+            new TWander(GetComponent<NavMeshAgent>(), transform, GetComponent<BotInfo>())
         });
 
         return root;
