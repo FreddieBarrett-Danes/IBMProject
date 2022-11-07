@@ -8,19 +8,26 @@ using UnityEngine.UI;
 
 public class ReadTSV : MonoBehaviour
 {
-    public GameObject questionText;
+    private GameObject questionText;
+    public GameObject submitText;
+    public Button submitButton;
     public List<GameObject> answersList;
     public TextAsset CSVFile;
     private GameObject canvas;
     private RectTransform canvasRectTransform;
     //[SerializeField]
-    public int rightAnswers;
+    public int rightAnswers; //How many the player got right
     [SerializeField]
-    private int correctAnswers;
+    private int correctAnswers; // how may there are
 
-    public float timer;
-    public float waitTime;
-    public bool waiting;
+    private float timer;
+    [SerializeField]
+    private float waitTime;
+    private bool waiting;
+
+    [SerializeField]
+    private int questionsInARow;
+    private int loopNumber;
     
     public GameObject panel;
     public Vector2 panelSize;
@@ -108,6 +115,11 @@ public class ReadTSV : MonoBehaviour
         return rv;
     }
 
+    private void submitClicked()
+    {
+        submit = true;
+    }
+
     void Start()
     {
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several
@@ -125,11 +137,12 @@ public class ReadTSV : MonoBehaviour
                     Destroy(answersList[i]);
                 }
                 Destroy(questionText);
+                Destroy(submitText);
                 answersList.Clear();
             }
 
             startX = 0.25f; //Set start values for coords.
-            startY = 0.25f;
+            startY = 0.29f; // 0.25f by default
 
             panelSize = new Vector2((canvasRectTransform.sizeDelta.x * 0.9f) / 2, canvasRectTransform.sizeDelta.y * 0.25f); //Find panel size
 
@@ -151,6 +164,21 @@ public class ReadTSV : MonoBehaviour
             }
 
             questionText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set siz of textbox
+
+            //Instantiating submit box
+
+            submitText = Instantiate(panel);
+            submitText.transform.SetParent(canvas.transform);
+            submitText.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.45f, panelSize.y * 0.5f);
+            submitText.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x / 2, canvasRectTransform.sizeDelta.y * 0.085f);
+            
+
+            submitText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set siz of textbox
+            submitText.GetComponentInChildren<TextMeshProUGUI>().text = ("Submit Answer");
+
+            submitButton = submitText.GetComponent<Button>();
+
+            Destroy(submitText.GetComponentInChildren<answersScript>());
 
             //Instantiating answer boxes
             for (int i = 0; i < 2; i++)
@@ -202,8 +230,6 @@ public class ReadTSV : MonoBehaviour
                 Debug.Log(j);
             }*/
 
-            
-
             List<int> orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
 
             for (int i = 0; i < answersList.Count; i++)
@@ -219,6 +245,8 @@ public class ReadTSV : MonoBehaviour
             }
 
             questionText.GetComponentInChildren<TextMeshProUGUI>().text = Find(row, 1).ToString();
+
+            loopNumber++;
         }
 
         if (reloadSceneAtEnd) // okay maybe dont need this now then. cool.
@@ -227,6 +255,8 @@ public class ReadTSV : MonoBehaviour
 
             reloadSceneAtEnd = false;
         }
+
+        submitButton.onClick.AddListener(submitClicked);
 
         if (submit)
         {
@@ -261,11 +291,18 @@ public class ReadTSV : MonoBehaviour
             timer -= Time.deltaTime;
         }
 
-        if(timer < 0 && waiting)
+        if(timer < 0 && waiting && loopNumber < questionsInARow)
         {
             find = true;
             waiting = false;
-            
+        }
+        
+        else if(timer < 0 && waiting && loopNumber == questionsInARow)
+        {
+            //find = true;
+            //waiting = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
         }
     }
 }
