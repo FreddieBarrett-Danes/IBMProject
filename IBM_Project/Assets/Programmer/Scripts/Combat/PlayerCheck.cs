@@ -15,7 +15,7 @@ public class PlayerCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player != null)
+        if(player == null)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
