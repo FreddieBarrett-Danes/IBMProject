@@ -46,5 +46,11 @@ public class answersScript : MonoBehaviour
     private void buttonClicked()
     {
         selected = !selected;
+
+        //seingle select functionality
+        if (selected)
+        {
+            GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>().singleSelected = this.gameObject;
+        }
     }
 }

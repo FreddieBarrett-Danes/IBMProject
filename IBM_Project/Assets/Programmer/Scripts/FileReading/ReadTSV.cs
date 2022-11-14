@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 //using System.Threading;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,9 @@ public class ReadTSV : MonoBehaviour
     public int rightAnswers; //How many the player got right
     [SerializeField]
     private int correctAnswers; // how may there are
+
+    public GameObject singleSelected;
+    private GameObject tempSingleSelected;
 
     private float timer;
     [SerializeField]
@@ -114,7 +118,7 @@ public class ReadTSV : MonoBehaviour
             }
         }
         //Debug.Log(rv);
-        Debug.Log(findColumn);
+        //Debug.Log(findColumn);
         //Debug.Log(findRow);
         return rv;
     }
@@ -311,5 +315,22 @@ public class ReadTSV : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         }
+
+        //SingleSelectfunctionality
+        if(correctAnswers <= 1)//if only 1 answer is available
+        {//if selected answer has changed since last frame then unselect all but current
+            if(singleSelected != tempSingleSelected)
+            {
+                for (int i = 0; i < answersList.Count; i++)
+                {
+                    if(answersList[i] != singleSelected)
+                    {
+                        answersList[i].GetComponent<answersScript>().selected = false;
+                    }
+                }
+                singleSelected.GetComponent<answersScript>().selected = true;
+            }
+        }
+        tempSingleSelected = singleSelected; //setting selected "last frame" to current
     }
 }
