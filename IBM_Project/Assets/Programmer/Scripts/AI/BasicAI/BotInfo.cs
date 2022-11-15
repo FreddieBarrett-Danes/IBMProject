@@ -2,11 +2,24 @@ using UnityEngine;
 
 public class BotInfo : MonoBehaviour
 {
+    // Misc
     public int threatLevel;
+    public int botCount;
+    public int remainingBots;
     
+    // Throwing
+    public Transform shotStart;
+    public float projectileSpeed;
+    public float fireRate = 0.5f;
+    public float nextFire;
+    public Shooting shooting;
+    private GameObject visuals;
+
+    // Patrol
     public Transform[] patrol;
     public int destPoint;
     public bool start;
+    
     // Wander
     public float wanderRadius;
     public float wanderTimer;
@@ -17,6 +30,7 @@ public class BotInfo : MonoBehaviour
     public float viewRadius;
     [Range(0, 360)] 
     public float viewAngle;
+    public float detectionTimer;
     public bool engaging;
 
     // Suspicious
@@ -28,10 +42,24 @@ public class BotInfo : MonoBehaviour
 
     private void Start()
     {
+        visuals = gameObject.transform.GetChild(1).gameObject;
+        projectileSpeed = 1000.0f;
+        shooting = gameObject.AddComponent<Shooting>();
+        shooting.SetHost(visuals);
+        shooting.bulletSpeed = projectileSpeed;
+        shotStart = gameObject.transform.GetChild(2);
         player = GameObject.FindGameObjectWithTag("Player");
         destPoint = 0;
+        nextFire = fireRate;
         timer = wanderTimer;
         stimer = susTimer;
+        detectionTimer = 0;
+    }
+
+    private void LateUpdate()
+    {
+        GameObject[] botsInGame = GameObject.FindGameObjectsWithTag ("Enemy");
+        remainingBots = botsInGame.Length;
     }
 
     public BotInfo()

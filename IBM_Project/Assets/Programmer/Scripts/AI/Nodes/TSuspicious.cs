@@ -15,20 +15,20 @@ public class TSuspicious : BT_Node
 
     public override NodeState Evaluate()
     {
-        if (!botInfo.playerInView)
+        botInfo.stimer += Time.deltaTime;
+        //Debug.Log(botInfo.stimer);
+        //Debug.Log(botInfo.susTimer);
+        if (botInfo.stimer >= botInfo.susTimer)
         {
-            botInfo.stimer += Time.deltaTime;
-            // Not reaching below
-            if (botInfo.stimer >= botInfo.susTimer)
-            {
-                Vector3 newPos = RandomNavSphere(botInfo.lastKnownPos, botInfo.suspiciousRadius, -1);
-                //Debug.Log("Searching for player at last known location!");
-                agent.SetDestination(newPos);
-                botInfo.stimer = 0;
-            }
+            //Debug.Log("STEPPED IN");
+            Vector3 newPos = RandomNavSphere(botInfo.lastKnownPos, botInfo.suspiciousRadius, -1);
+            //Debug.Log("Searching for player at last known location!");
+            agent.SetDestination(newPos);
+            botInfo.stimer = 0;
+            state = NodeState.SUCCESS;
+            return state;
         }
-
-        state = NodeState.RUNNING;
+        state = NodeState.SUCCESS;
         return state;
     }
     

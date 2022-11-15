@@ -1,43 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
+//using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ReadTSV : MonoBehaviour
 {
-    public GameObject questionText;
+    private GameObject questionText;
+    public GameObject submitText;
+    public Button submitButton;
     public List<GameObject> answersList;
     public TextAsset CSVFile;
     private GameObject canvas;
     private RectTransform canvasRectTransform;
     //[SerializeField]
-    public int rightAnswers;
+    public int rightAnswers; //How many the player got right
     [SerializeField]
-    private int correctAnswers;
+    private int correctAnswers; // how may there are
 
+    public GameObject singleSelected;
+    private GameObject tempSingleSelected;
+
+    private float timer;
+    [SerializeField]
+    private float waitTime;
+    private bool waiting;
+
+    [SerializeField]
+    private int questionsInARow;
+    private int loopNumber;
+    
     public GameObject panel;
     public Vector2 panelSize;
 
     private float startX;
     private float startY;
 
-    [Range(1, 5)]
+    public int rangeOfQuestionsMax = 6;
+    [Range(1, 6)]
     public int row;
 
-    [Header("File Renaming")]
 
-    [SerializeField]
-    private string orginalName;
-    [SerializeField]
-    private string newName;
-
-    [SerializeField]
-    private bool find; //Use this to generate the row,column that you've selected using Row and Column
+    //[SerializeField]
+    public bool find; //Use this to generate the row,column that you've selected using Row and Column
     [SerializeField]
     private bool submit;
     [SerializeField]
-    private bool renameFile;
+    private bool reloadSceneAtEnd;
 
     List<int> Shuffle(int length)
     {
@@ -69,7 +81,7 @@ public class ReadTSV : MonoBehaviour
         return list;
     }
 
-    string Find(int findRow, int findColmn)
+    string Find(int findRow, int findColumn)
     {
         string rv = null;
 
@@ -84,9 +96,9 @@ public class ReadTSV : MonoBehaviour
             Debug.LogWarning("Desired Row given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
         }
 
-        if (findColmn < 1)
+        if (findColumn < 1)
         {
-            findColmn = 1;
+            findColumn = 1;
             Debug.LogWarning("Desired Column given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
         }
 
@@ -95,10 +107,10 @@ public class ReadTSV : MonoBehaviour
             char tabSpace = '\u0009'; //takes the TAB ascii code as the splitter character. this value used to be a , when using CSV but now we are using TSV.
             var data = splitDataset[i].Split(tabSpace.ToString()); //
             //var data = splitDataset[i].Split(',');
-            for (int j = 0; j < findColmn; j++)
+            for (int j = 0; j < findColumn; j++)
             {
                 if (findRow > splitDataset.Length) findRow = splitDataset.Length;
-                if (findColmn > data.Length) findColmn = data.Length;
+                if (findColumn > data.Length) findColumn = data.Length;
 
                 //questionText.text = data[j];
 
@@ -106,7 +118,14 @@ public class ReadTSV : MonoBehaviour
             }
         }
         //Debug.Log(rv);
+        //Debug.Log(findColumn);
+        //Debug.Log(findRow);
         return rv;
+    }
+
+    private void submitClicked()
+    {
+        submit = true;
     }
 
     void Start()
@@ -119,6 +138,8 @@ public class ReadTSV : MonoBehaviour
     {
         if (find) //File Reading / generate
         {
+            row = Random.Range(1, rangeOfQuestionsMax);
+
             if (answersList.Count != 0) //Reset list
             {
                 for (int i = 0; i < answersList.Count; i++)
@@ -126,11 +147,12 @@ public class ReadTSV : MonoBehaviour
                     Destroy(answersList[i]);
                 }
                 Destroy(questionText);
+                Destroy(submitText);
                 answersList.Clear();
             }
 
             startX = 0.25f; //Set start values for coords.
-            startY = 0.25f;
+            startY = 0.29f; // 0.25f by default
 
             panelSize = new Vector2((canvasRectTransform.sizeDelta.x * 0.9f) / 2, canvasRectTransform.sizeDelta.y * 0.25f); //Find panel size
 
@@ -152,6 +174,21 @@ public class ReadTSV : MonoBehaviour
             }
 
             questionText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set siz of textbox
+
+            //Instantiating submit box
+
+            submitText = Instantiate(panel);
+            submitText.transform.SetParent(canvas.transform);
+            submitText.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.45f, panelSize.y * 0.5f);
+            submitText.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x / 2, canvasRectTransform.sizeDelta.y * 0.085f);
+            
+
+            submitText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set siz of textbox
+            submitText.GetComponentInChildren<TextMeshProUGUI>().text = ("Submit Answer");
+
+            submitButton = submitText.GetComponent<Button>();
+
+            Destroy(submitText.GetComponentInChildren<answersScript>());
 
             //Instantiating answer boxes
             for (int i = 0; i < 2; i++)
@@ -190,7 +227,7 @@ public class ReadTSV : MonoBehaviour
 
             panel.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
 
-            int.TryParse(Find(row, 6), out correctAnswers);
+            int.TryParse(Find(row, 6), out correctAnswers); // randomissation added here;
 
             if(correctAnswers < 1)
             {
@@ -203,8 +240,6 @@ public class ReadTSV : MonoBehaviour
                 Debug.Log(j);
             }*/
 
-            
-
             List<int> orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
 
             for (int i = 0; i < answersList.Count; i++)
@@ -214,31 +249,88 @@ public class ReadTSV : MonoBehaviour
                     answersList[i].GetComponent<answersScript>().isCorrect = true;
                 }
 
-                Debug.Log(orderList[i]);
+                //Debug.Log(orderList[i]);
                 
                 answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = Find(row, orderList[i] + 1).ToString();
             }
 
             questionText.GetComponentInChildren<TextMeshProUGUI>().text = Find(row, 1).ToString();
+
+            loopNumber++;
         }
 
-        if (renameFile) // okay maybe dont need this now then. cool.
+        if (reloadSceneAtEnd) // okay maybe dont need this now then. cool.
         {
-            System.IO.File.Copy(orginalName, newName);
-            renameFile = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            reloadSceneAtEnd = false;
         }
+
+        submitButton.onClick.AddListener(submitClicked);
 
         if (submit)
         {
-            for(int i = 0; i < answersList.Count; i++) //check to make sure correct answers were ticked
+            for(int i = 0; i < answersList.Count; i++) //check to make sure correct answers were ticked and set colours
             {
-                if (answersList[i].GetComponent<answersScript>().isCorrect == true && answersList[i].GetComponent<answersScript>().selected == true)
+                Destroy(answersList[i].GetComponent<Button>());
+
+                if (answersList[i].GetComponent<answersScript>().isCorrect && answersList[i].GetComponent<answersScript>().selected) // selected is correct
                 {
                     rightAnswers++;
+                    answersList[i].GetComponent<answersScript>().panelColour = Color.green; // set colour to green
+                    //answersList[i].GetComponent<Image>().color);
+                }
+                else if (!answersList[i].GetComponent<answersScript>().isCorrect && answersList[i].GetComponent<answersScript>().selected) // selected is incorrect
+                {
+                    answersList[i].GetComponent<answersScript>().panelColour = Color.red; // set colour to red
+                }
+                else if (answersList[i].GetComponent<answersScript>().isCorrect && !answersList[i].GetComponent<answersScript>().selected) // not seleced correct answer
+                {
+                    answersList[i].GetComponent<answersScript>().panelColour = new Color(1,0.5f,0,1); // set colour to orange
                 }
             }
+            waiting = true;
 
-            submit = false; 
+            //start timer here
+            timer = waitTime;
+            submit = false;
+            
         }
+
+        if(waiting)
+        {
+            timer -= Time.deltaTime;
+        }
+
+        if(timer < 0 && waiting && loopNumber < questionsInARow)
+        {
+            find = true;
+            waiting = false;
+        }
+        
+        else if(timer < 0 && waiting && loopNumber == questionsInARow)
+        {
+            //find = true;
+            //waiting = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        }
+
+        //SingleSelectfunctionality
+        if(correctAnswers <= 1)//if only 1 answer is available
+        {//if selected answer has changed since last frame then unselect all but current
+            if(singleSelected != tempSingleSelected)
+            {
+                for (int i = 0; i < answersList.Count; i++)
+                {
+                    if(answersList[i] != singleSelected)
+                    {
+                        answersList[i].GetComponent<answersScript>().selected = false;
+                    }
+                }
+                singleSelected.GetComponent<answersScript>().selected = true;
+            }
+        }
+        tempSingleSelected = singleSelected; //setting selected "last frame" to current
     }
 }

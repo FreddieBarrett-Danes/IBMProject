@@ -5,7 +5,7 @@ using UnityEngine;
 public class ComputerInteraction : MonoBehaviour
 {
     private GameObject player;
-    private GameObject[] enemies;
+    public GameObject[] enemies;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +20,7 @@ public class ComputerInteraction : MonoBehaviour
             {
                 Destroy(enemy);
             }
+            enemies = null;
         }
     }
 }
