@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml;
-//using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,13 +11,21 @@ public class ReadTSV : MonoBehaviour
     public GameObject submitText;
     public Button submitButton;
     public List<GameObject> answersList;
-    public TextAsset CSVFile;
+    public TextAsset TSVFile;
     private GameObject canvas;
     private RectTransform canvasRectTransform;
+
     //[SerializeField]
     public int rightAnswers; //How many the player got right
     [SerializeField]
     private int correctAnswers; // how may there are
+
+    [SerializeField]
+    private List<int> incorrectAnswersList; //list of questions the user answered wrong
+    [SerializeField]
+    private List<int> askedList; //list of questions alreasasked
+    private int tempCorrect;
+    private int tempWrong;
 
     public GameObject singleSelected;
     private GameObject tempSingleSelected;
@@ -39,7 +45,7 @@ public class ReadTSV : MonoBehaviour
     private float startX;
     private float startY;
 
-    public int rangeOfQuestionsMax = 6;
+    public int rangeOfQuestionsMax = 6; //find a way to set this automatically
     [Range(1, 6)]
     public int row;
 
@@ -86,7 +92,7 @@ public class ReadTSV : MonoBehaviour
         string rv = null;
 
         find = false;
-        var dataset = CSVFile;
+        var dataset = TSVFile;
 
         var splitDataset = dataset.text.Split(new char[] { '\n' });
 
@@ -126,11 +132,28 @@ public class ReadTSV : MonoBehaviour
     private void submitClicked()
     {
         submit = true;
+        //DON'T WRITE ANYTHING UNDER HERE
+        //UNITY UI WILL LAG YOU INTO NEXT SUNDAY
+        //Caused by button hold for a couple of frames .... I think
+    }
+
+    private void nonDuplicateRow()
+    {
+        row = Random.Range(1, rangeOfQuestionsMax + 1);
+
+        for(int i = 0; i < askedList.Count; i++)
+        {
+            if(row == askedList[i])
+            {
+                Debug.Log("alredy asked question: " + askedList[i]);
+                nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+            }
+        }
     }
 
     void Start()
     {
-        canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several
+        canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
         canvasRectTransform = canvas.GetComponent<RectTransform>();
     }
 
@@ -138,7 +161,8 @@ public class ReadTSV : MonoBehaviour
     {
         if (find) //File Reading / generate
         {
-            row = Random.Range(1, rangeOfQuestionsMax);
+            //row = Random.Range(1, rangeOfQuestionsMax);
+            nonDuplicateRow(); //Generates a row number that is not on askedList.
 
             if (answersList.Count != 0) //Reset list
             {
@@ -270,6 +294,11 @@ public class ReadTSV : MonoBehaviour
 
         if (submit)
         {
+            //This segment resets all of the temp counte values
+            //It is used to measure how many questions the user answered right/wrong. It is used for calculations later...
+            tempCorrect = 0;
+            tempWrong = 0;
+
             for(int i = 0; i < answersList.Count; i++) //check to make sure correct answers were ticked and set colours
             {
                 Destroy(answersList[i].GetComponent<Button>());
@@ -278,23 +307,35 @@ public class ReadTSV : MonoBehaviour
                 {
                     rightAnswers++;
                     answersList[i].GetComponent<answersScript>().panelColour = Color.green; // set colour to green
+                    tempCorrect++;
                     //answersList[i].GetComponent<Image>().color);
                 }
                 else if (!answersList[i].GetComponent<answersScript>().isCorrect && answersList[i].GetComponent<answersScript>().selected) // selected is incorrect
                 {
                     answersList[i].GetComponent<answersScript>().panelColour = Color.red; // set colour to red
+                    tempWrong++;
                 }
                 else if (answersList[i].GetComponent<answersScript>().isCorrect && !answersList[i].GetComponent<answersScript>().selected) // not seleced correct answer
                 {
                     answersList[i].GetComponent<answersScript>().panelColour = new Color(1,0.5f,0,1); // set colour to orange
+                    tempWrong++;
                 }
             }
+
+            //set this question as asked
+            askedList.Add(row); //double check this works
+
+            //set this question right/wrong/partial depending on answer
+            if(tempWrong > 0)
+            {
+                incorrectAnswersList.Add(row);
+            }
+
             waiting = true;
 
             //start timer here
             timer = waitTime;
             submit = false;
-            
         }
 
         if(waiting)
@@ -333,4 +374,5 @@ public class ReadTSV : MonoBehaviour
         }
         tempSingleSelected = singleSelected; //setting selected "last frame" to current
     }
+
 }

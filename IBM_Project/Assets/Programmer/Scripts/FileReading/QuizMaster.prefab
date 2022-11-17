@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2262967250685415510}
   m_Layer: 0
   m_Name: QuizMaster
-  m_TagString: Untagged
+  m_TagString: QuizMaster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,16 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085a771bef0da494aa47f392077fc3b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionText: {fileID: 0}
+  submitText: {fileID: 0}
+  submitButton: {fileID: 0}
   answersList: []
-  CSVFile: {fileID: 4900000, guid: 5ef45e18d30328141b98445df1bd595d, type: 3}
+  TSVFile: {fileID: -1022232229856555865, guid: de74e8f252c53a641a3fc668f5090091, type: 3}
   rightAnswers: 0
   correctAnswers: 0
-  timer: 0
+  singleSelected: {fileID: 0}
   waitTime: 2
-  waiting: 0
+  questionsInARow: 0
   panel: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
   panelSize: {x: 0, y: 0}
+  rangeOfQuestionsMax: 6
   row: 3
   find: 0
   submit: 0

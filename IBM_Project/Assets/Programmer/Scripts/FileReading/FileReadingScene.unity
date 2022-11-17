@@ -361,14 +361,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173514902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.21806818, y: -0.26478812, z: 0.06160423, w: 0.93730384}
+  m_LocalPosition: {x: 1.79, y: 2.71, z: -2.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 26.194, y: -31.55, z: 0}
 --- !u!224 &1717762947 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6723219057468046862, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
@@ -636,6 +636,14 @@ PrefabInstance:
       objectReference: {fileID: 6259634388974335316, guid: aa8379325a677064cb9223ef3b9da08f, type: 3}
     - target: {fileID: 2262967250685415510, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
       propertyPath: questionsInARow
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262967250685415510, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
+      propertyPath: reloadSceneAtEnd
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262967250685415510, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
+      propertyPath: rangeOfQuestionsMax
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2262967250685415511, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
