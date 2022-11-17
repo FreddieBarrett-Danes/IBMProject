@@ -620,6 +620,10 @@ PrefabInstance:
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 1418904913576553514, guid: c9f0929b8eba3214c97d207e6e81a880, type: 3}
+    - target: {fileID: 2054899259319685448, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
+      propertyPath: modifyBulletSpeed
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 2054899259319685450, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -910,7 +914,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76adefe1bc89f5f44bde7a88fc975343, type: 2}
+  - {fileID: 2100000, guid: 0fcea23041a6a9c4b9c472aa81bf627c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
