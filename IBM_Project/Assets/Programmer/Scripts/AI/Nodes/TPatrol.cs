@@ -5,9 +5,10 @@ using static System.Array;
 
 public class TPatrol : BT_Node
 {
-    private static NavMeshAgent agent;
-    private static BotInfo botInfo;
-    private static GameObject patrolPoints;
+    private readonly NavMeshAgent agent;
+    private readonly BotInfo botInfo;
+    private GameObject patrolPoints;
+
     public TPatrol(NavMeshAgent pAgent, BotInfo pbotInfo)
     {
         agent = pAgent;
@@ -16,18 +17,30 @@ public class TPatrol : BT_Node
 
     public override NodeState Evaluate()
     {
-        patrolPoints = botInfo.transform.root.Find("PatrolPath").gameObject;
-        Resize(ref botInfo.patrol, patrolPoints.transform.childCount);
-        for (int i = 0; i < patrolPoints.transform.childCount; i++)
+        if (botInfo.createPoints == false)
         {
-            botInfo.patrol[i] = patrolPoints.transform.GetChild(i).transform;
+            patrolPoints = botInfo.transform.root.Find("PatrolPath").gameObject;
+            Resize(ref botInfo.patrol, patrolPoints.transform.childCount);
+            for (int i = 0; i < patrolPoints.transform.childCount; i++)
+            {
+                botInfo.patrol[i] = patrolPoints.transform.GetChild(i).transform;
+            }
+            botInfo.createPoints = true;
         }
         if (!botInfo.start)
         {
-            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            if (!agent.pathPending && agent.remainingDistance < 0.25f)
             {
                 agent.destination = botInfo.patrol[botInfo.destPoint].position;
-                botInfo.destPoint = (botInfo.destPoint + 1) % botInfo.patrol.Length;
+                switch (botInfo.pointLoop)
+                {
+                    case true:
+                        botInfo.destPoint = (botInfo.destPoint + 1) % botInfo.patrol.Length;
+                        break;
+                    case false:
+                        // Not loop
+                        break;
+                }
             }
         }
         if (botInfo.engaging == false)
@@ -38,10 +51,18 @@ public class TPatrol : BT_Node
                 state = NodeState.FAILURE;
                 return state;
             }
-            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            if (!agent.pathPending && agent.remainingDistance < 0.25f)
             {
                 agent.destination = botInfo.patrol[botInfo.destPoint].position;
-                botInfo.destPoint = (botInfo.destPoint + 1) % botInfo.patrol.Length;
+                switch (botInfo.pointLoop)
+                {
+                    case true:
+                        botInfo.destPoint = (botInfo.destPoint + 1) % botInfo.patrol.Length;
+                        break;
+                    case false:
+                        // Not loop
+                        break;
+                }
             }
         }
         state = NodeState.SUCCESS;

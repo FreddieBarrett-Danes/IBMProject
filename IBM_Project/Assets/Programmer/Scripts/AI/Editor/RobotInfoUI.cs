@@ -21,24 +21,27 @@ public class RobotInfoUI : Editor
     
     public override void OnInspectorGUI()
     {
+        bot.pointLoop = EditorGUILayout.Toggle("Loop Waypoints?", bot.pointLoop);
         EditorGUI.BeginChangeCheck();
         categoryToDisplay = (DisplayCategory) EditorGUILayout.EnumPopup("EnemyType", categoryToDisplay);
-        if (!EditorGUI.EndChangeCheck()) return;
-        EditorGUILayout.Space();
-        switch (categoryToDisplay)
+        if (EditorGUI.EndChangeCheck())
         {
-            case DisplayCategory.Basic:
-                DisplayBasicInfo();
-                break;
-            case DisplayCategory.Sentinel:
-                DisplaySentinelInfo();
-                break;
-            default:
-                Debug.Log("No Section to Display!");
-                break;
-        }
+            EditorGUILayout.Space();
+            switch (categoryToDisplay)
+            {
+                case DisplayCategory.Basic:
+                    DisplayBasicInfo();
+                    break;
+                case DisplayCategory.Sentinel:
+                    DisplaySentinelInfo();
+                    break;
+                default:
+                    Debug.Log("No Section to Display!");
+                    break;
+            }
 
-        serializedObject.ApplyModifiedProperties();
+            serializedObject.ApplyModifiedProperties();
+        }
     }
 
     private static void DisplayBasicInfo()
@@ -53,7 +56,6 @@ public class RobotInfoUI : Editor
         bot.suspiciousRadius = 3f;
         bot.susTimer = 5f;
         bot.playerInView = false;
-        //EditorGUILayout.PropertyField(bot.threatLevel);
     }
     
     private static void DisplaySentinelInfo()

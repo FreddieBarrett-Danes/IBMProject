@@ -20,9 +20,7 @@ public class TSuspicious : BT_Node
         //Debug.Log(botInfo.susTimer);
         if (botInfo.stimer >= botInfo.susTimer)
         {
-            //Debug.Log("STEPPED IN");
             Vector3 newPos = RandomNavSphere(botInfo.lastKnownPos, botInfo.suspiciousRadius, -1);
-            //Debug.Log("Searching for player at last known location!");
             agent.SetDestination(newPos);
             botInfo.stimer = 0;
             state = NodeState.SUCCESS;

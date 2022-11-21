@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BotInfo : MonoBehaviour
@@ -6,7 +8,8 @@ public class BotInfo : MonoBehaviour
     public int threatLevel;
     public int botCount;
     public int remainingBots;
-    
+    public List<Transform> visibleTargets = new();
+
     // Throwing
     public Transform shotStart;
     public float projectileSpeed;
@@ -16,9 +19,11 @@ public class BotInfo : MonoBehaviour
     private GameObject visuals;
 
     // Patrol
+    public bool createPoints;
     public Transform[] patrol;
     public int destPoint;
     public bool start;
+    public bool pointLoop;
     
     // Wander
     public float wanderRadius;
@@ -54,12 +59,13 @@ public class BotInfo : MonoBehaviour
         timer = wanderTimer;
         stimer = susTimer;
         detectionTimer = 0;
+        botCount = BotCalc();
+        remainingBots = BotCalc();
     }
 
     private void LateUpdate()
     {
-        GameObject[] botsInGame = GameObject.FindGameObjectsWithTag ("Enemy");
-        remainingBots = botsInGame.Length;
+        remainingBots = BotCalc();
     }
 
     public BotInfo()
@@ -74,5 +80,13 @@ public class BotInfo : MonoBehaviour
         suspiciousRadius = 1f;
         susTimer = 1f;
         playerInView = false;
+        pointLoop = true;
+    }
+
+    private static int BotCalc()
+    {
+        BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
+        List<GameObject> bots = botScripts.Select(t => t.transform.root.gameObject).ToList();
+        return bots.Count;
     }
 }

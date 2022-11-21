@@ -13,8 +13,7 @@ public class BulletConditions : MonoBehaviour
     {
        if(this.gameObject.tag == "Player")
        {
-            Debug.Log("player shot");
-            foreach(GameObject enemy in enemies)
+           foreach(GameObject enemy in enemies)
             {
                 if (other.gameObject == enemy)
                 {
@@ -32,8 +31,7 @@ public class BulletConditions : MonoBehaviour
        }
        else if (this.gameObject.tag == "Enemy")
        {
-            Debug.Log("enemy shot");
-            if (other.gameObject == GameObject.FindGameObjectWithTag("Player"))
+           if (other.gameObject == GameObject.FindGameObjectWithTag("Player"))
             {
                 Destroy(other.gameObject);
                 Destroy(this.gameObject);

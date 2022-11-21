@@ -25,7 +25,6 @@ public class TRangedAttack : BT_Node
             botInfo.nextFire = Time.time + botInfo.fireRate;
             botInfo.shooting.Execute();
         }
-        
         state = NodeState.SUCCESS;
         return state;
     }

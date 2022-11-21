@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine.AI;
 using BT;
+using UnityEditor;
 
+[CanEditMultipleObjects]
 public class BasicBT : BT_Tree
 {
     protected override BT_Node SetupTree()
@@ -10,19 +12,17 @@ public class BasicBT : BT_Tree
         {
             new BT_Sequence(new List<BT_Node>
             {
-                new TDetectPlayer(GetComponent<NavMeshAgent>(), transform, GetComponent<BotInfo>()),
+                new TDetectPlayer(GetComponent<NavMeshAgent>(), transform, GetComponent<BotInfo>(), GetComponent<Perception>()),
                 new TPathToPlayer(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),
                 new TRangedAttack(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),
-                /*
                 new BT_Sequence(new List<BT_Node>
                 {
-                    new BT_Decorator(new DRemainingBots(GetComponent<BotInfo>())),
+                    //new BT_Decorator(new DRemainingBots(GetComponent<BotInfo>())),
                     new TSuspicious(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),
                 }),
-                */
             }),
-            //new TPatrol(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>())
-            new TWander(GetComponent<NavMeshAgent>(), transform, GetComponent<BotInfo>())
+            new TPatrol(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),
+            //new TWander(GetComponent<NavMeshAgent>(), transform, GetComponent<BotInfo>())
         });
 
         return root;

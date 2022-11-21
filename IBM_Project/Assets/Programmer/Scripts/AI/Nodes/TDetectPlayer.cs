@@ -7,12 +7,14 @@ public class TDetectPlayer : BT_Node
     private readonly NavMeshAgent agent;
     private readonly Transform transform;
     private readonly BotInfo botInfo;
+    private readonly Perception perception;
     
-    public TDetectPlayer(NavMeshAgent pAgent, Transform pTransform, BotInfo pbotInfo)
+    public TDetectPlayer(NavMeshAgent pAgent, Transform pTransform, BotInfo pbotInfo, Perception pperception)
     {
         agent = pAgent;
         transform = pTransform;
         botInfo = pbotInfo;
+        perception = pperception;
     }
 
     public override NodeState Evaluate()
@@ -27,13 +29,19 @@ public class TDetectPlayer : BT_Node
 
             if (range < botInfo.viewRadius && Vector3.Angle(transform.forward, dirToTarget) < botInfo.viewAngle / 2)
             {
+                botInfo.visibleTargets.Clear();
                 botInfo.detectionTimer += Time.deltaTime;
                 if (botInfo.detectionTimer >= 1.5)
                 {
                     botInfo.timer = botInfo.wanderTimer;
                     botInfo.engaging = true;
-                    botInfo.lastKnownPos = playerPos;
+                    botInfo.visibleTargets.Add(botInfo.player.transform);
                     botInfo.playerInView = true;
+                    perception.ClearFoV();
+                    foreach(Transform target in botInfo.visibleTargets)
+                    {
+                        perception.AddMemory(target.gameObject);
+                    }
                     state = NodeState.SUCCESS;
                     return state;
                 }
