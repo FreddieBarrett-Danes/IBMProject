@@ -6,132 +6,185 @@ using UnityEngine.UI;
 
 public class walGen : MonoBehaviour
 {
-    public GameObject prefab;
-    public int Maze_Width;
-    public int Maze_Height;
-    Vector2 Maze_Size; //Maze_Size.x, Maze_Size.y
+    public int frameRate;
+
+
+    public int Maze_Width; //Designer input to set maze Width (up to 100?)
+    public int Maze_Height; //Designer input to set maze Height (up to 100?)
+    Vector2 Maze_Size; //Maze_Size.x, Maze_Size.y, uses Maze_Width and Maze_Height
+    bool[,] mazeGrid; //
+    bool mazeReady; //Indicates when maze has finished generating
 
     //Positions represented in Unity World Space
-    public GameObject currentPos;
-    public GameObject targetPos;
+    //public GameObject currentPos;
 
-    GameObject mazePlayer;
-    GameObject goalLocation;
 
+
+    public GameObject wallDestroyer; //Wall destroyer
+
+
+
+    GameObject mazePlayer; //Gameobject of player avatar for maze
+    GameObject goalLocation; //Gameobject of goal location
+    public GameObject wallPrefab; //Reference gameobject for walls of maze
+
+    public GameObject targetPosWorld;
+    public GameObject currentPosWorld;
+    Vector2 targetPosGrid;
+    Vector2 currentPosGrid;
+
+    //UI
     public TextMeshProUGUI pregameText;
     public TextMeshProUGUI ingameText;
     public TextMeshProUGUI Timer;
     public bool showIngameText;
 
     //Positions of Gameobjects represented in bool grid space
-    private int currentGridPos;
-    private int targetGridPos;
+    //private int currentGridPos;
+    //private int targetGridPos;
 
-    public bool[,] Visitedtest; //to set max grid width/height
-
-    public int frameRate;
-
-    //bool pressedPlay;
-    bool mazeReady;
-
-
-    Vector2 abV2;
+    //Converting between GridSpace and WorldSpace
+    //WorldSpace -> GridSpace: (WorldSpace - 2x) / 4
+    //GridSpace -> WorldSpace: (GridSpace * 4) + 2x
 
 
 
 
-    void GenCell(Vector3 Origin, Vector2 ab) //Generate Maze cell by instantiating 4 walls
+    void genGrid(Vector3 Origin, Vector2 ab) //Generate Maze cell by instantiating 4 walls
     {
         //Debug.Log(Origin.x + "," + Origin.y + "," + Origin.z);
-        Instantiate(prefab, new Vector3(Origin.x + 2.0f, Origin.y, Origin.z + 2.0f), Quaternion.identity);
-        Instantiate(prefab, new Vector3(Origin.x + 2.0f, Origin.y, Origin.z - 2.0f), Quaternion.identity);
-        Instantiate(prefab, new Vector3(Origin.x, Origin.y, Origin.z), Quaternion.Euler(0.0f, 90.0f, 0.0f));
-        Instantiate(prefab, new Vector3(Origin.x + 4.0f, Origin.y, Origin.z), Quaternion.Euler(0.0f, 90.0f, 0.0f));
+        Instantiate(wallPrefab, new Vector3(Origin.x + 2.0f, Origin.y, Origin.z + 2.0f), Quaternion.identity);
+        Instantiate(wallPrefab, new Vector3(Origin.x + 2.0f, Origin.y, Origin.z - 2.0f), Quaternion.identity);
+        Instantiate(wallPrefab, new Vector3(Origin.x, Origin.y, Origin.z), Quaternion.Euler(0.0f, 90.0f, 0.0f));
+        Instantiate(wallPrefab, new Vector3(Origin.x + 4.0f, Origin.y, Origin.z), Quaternion.Euler(0.0f, 90.0f, 0.0f));
+    }
+
+    Vector2 convertToGrid(Vector3 v3) //WorldSpace -> GridSpace
+    {
+        v3 -= new Vector3(-2, 0, 0);
+        v3 *= 4;
+
+        return new Vector2(v3.x, v3.z);
+    }
+
+    Vector3 convertToWorld(Vector2 v2) //GridSpace -> WorldSpace
+    {
+        Vector3 rv = new Vector3(v2.x, 0, v2.y);
+        rv *= 4;
+        rv += new Vector3(2, 0, 0);
+        Debug.Log(v2 + "," + rv);
+        return rv;
+    }
+    Vector2 gridMovement(Vector2 cgp) //Moves currentposGrid to an adjacent unvistied cell if viable (backtracks using stack if isn't)
+                                      //cgp = current grip pos
+    {
+        int[] array1 = new int[] { 0, 0, 0, 0, 0 }; //Array is used to hold which cells are unvisited to use for rng.
+        //north, south, east, west, none
 
 
-        if (ab.x == Origin.x && ab.y == Origin.z)
+        //This checks what adjacent cells are unvisited.
+        //Area of refinement: convert to switch case?
+        if (mazeGrid[(int)cgp.x, (int)cgp.y + 1] == false)
         {
-            //Instantiate(currentPos, new Vector3(Origin.x + 2.0f, Origin.y, Origin.z), Quaternion.identity);
-
-
-            //targetPos.transform.position = new Vector3(Origin.x + 2.0f, Origin.y, Origin.z);
-
-            currentPos.transform.position = new Vector3(Origin.x + 2.0f, Origin.y, Origin.z);
+            //north is viable
+            array1[0] = 1;
 
         }
-        //Instantiate(currentPos, new Vector3(Origin.x + 2.0f, Origin.y, Origin.z), Quaternion.identity);
-        //Instantiate(prefab, new Vector3(Origin.x - 2.0f, Origin.y, Origin.z - 2.0f), Quaternion.identity);
-        //Instantiate(prefab, new Vector3(Origin.x, 0, Origin.y), Quaternion.identity);
+        if (mazeGrid[(int)cgp.x, (int)cgp.y - 1] == false)
+        {
+            //south is viable
+            array1[1] = 2;
+        }
+        if (mazeGrid[(int)cgp.x + 1, (int)cgp.y] == false)
+        {
+            //east is viable
+            array1[2] = 3;
+        }
+        if (mazeGrid[(int)cgp.x - 1, (int)cgp.y] == false)
+        {
+            //west is viable
+            array1[3] = 4;
+        }
+
+        //Area of refinement: check if all values of array = 0
+        if (array1[0] == 0 && array1[1] == 0 && array1[2] == 0 && array1[3] == 0)
+        {
+            array1[4] = 5;
+        }
+
+        int rng = 0;
+
+        while (rng == 0)
+        {
+            Debug.Log("Finding value amoung array. rng = " + array1);
+            rng = array1[Random.Range(1, 5)];
+            if (array1[4] == 5)
+            {
+                rng = 5;
+            }
+            //should keep looping until a value different from 0 is found
+        }
+        switch (rng)
+        {
+            case 1:
+                cgp.x += 1;
+                //add position to the stack
+                break;
+            case 2:
+                cgp.x -= 1;
+                //add position to the stack
+                break;
+            case 3:
+                cgp.y += 1;
+                //add position to the stack
+                break;
+            case 4:
+                cgp.y -= 1;
+                //add position to the stack
+                break;
+            case 5:
+                //backtrack using the stack
+                break;
+        }
+        return cgp;
     }
 
 
 
     //'Direction' of the maze generation can be influenced using moveGen
-    void moveGen(char dir, int amount)
+
+    void moveGen3(short dir)
     {
-        Vector3 dist = targetPos.transform.position - currentPos.transform.position;
         switch (dir)
         {
-
-
-            case 'n':
-                targetPos.transform.position += new Vector3(0.0f, 0.0f, 4.0f * amount);
-                //currentPos.transform.position += (dist.normalized * 50) * Time.deltaTime;
-                //currentPos.transform.rotation = Quaternion.Euler(0, 0, 0);
+            case 1:
+                wallDestroyer.transform.position += new Vector3(0, 0, 4);
                 break;
-            case 's':
-                targetPos.transform.position -= new Vector3(0.0f, 0.0f, 4.0f * amount);
-                //currentPos.transform.position += (dist.normalized * 50) * Time.deltaTime;
-                //currentPos.transform.rotation = Quaternion.Euler(0, 0, 0);
+            case 2:
+                wallDestroyer.transform.position += new Vector3(2, 0, 2);
                 break;
-            case 'e':
-                targetPos.transform.position += new Vector3(4.0f * amount, 0.0f, 0.0f);
-                //currentPos.transform.position += (dist.normalized * 50) * Time.deltaTime;
-                //currentPos.transform.rotation = Quaternion.Euler(0, 0, 0);
+            case 3:
+                wallDestroyer.transform.position += new Vector3(4, 0, 0);
                 break;
-            case 'w':
-                targetPos.transform.position -= new Vector3(4.0f * amount, 0.0f, 0.0f);
-                //currentPos.transform.position += (dist.normalized * 50) * Time.deltaTime;
-                //currentPos.transform.rotation = Quaternion.Euler(0, 0, 0);
+            case 4:
+                wallDestroyer.transform.position += new Vector3(2, 0, -2);
                 break;
-        }
 
-    }
-
-    void moveGen2(char dir)
-    {
-        Vector3 dist = targetPos.transform.position - currentPos.transform.position;
-
-        switch (dir)
-        {
-            case 'n':
-                targetPos.transform.position += new Vector3(0.0f, 0.0f, 4.0f);
+            case 5:
+                wallDestroyer.transform.position += new Vector3(0, 0, -4);
                 break;
-            case 's':
-                targetPos.transform.position -= new Vector3(0.0f, 0.0f, 4.0f);
-
-                //targetPos.transform.position -= new Vector3(0.0f, 0.0f, 4.0f * amount);
-                //currentPos.transform.position += (dist.normalized * 50) * Time.deltaTime;
-                //currentPos.transform.rotation = Quaternion.Euler(0, 0, 0);
+            case 6:
+                wallDestroyer.transform.position += new Vector3(-2, 0, -2);
                 break;
-            case 'e':
-                targetPos.transform.position += new Vector3(4.0f, 0.0f, 0.0f);
-
-                //targetPos.transform.position += new Vector3(4.0f * amount, 0.0f, 0.0f);
-                //currentPos.transform.position += (dist.normalized * 50) * Time.deltaTime;
-                //currentPos.transform.rotation = Quaternion.Euler(0, 0, 0);
+            case 7:
+                wallDestroyer.transform.position += new Vector3(-4, 0, 0);
                 break;
-            case 'w':
-                targetPos.transform.position -= new Vector3(4.0f, 0.0f, 0.0f);
-
-                //targetPos.transform.position -= new Vector3(4.0f * amount, 0.0f, 0.0f);
-                //currentPos.transform.position += (dist.normalized * 50) * Time.deltaTime;
-                //currentPos.transform.rotation = Quaternion.Euler(0, 0, 0);
+            case 8:
+                wallDestroyer.transform.position += new Vector3(-2, 0, 2);
                 break;
         }
-
-
     }
+
 
 
 
@@ -139,6 +192,7 @@ public class walGen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Stack<Vector2> visitedStack = new Stack<Vector2>();
         mazeReady = false;
         Application.targetFrameRate = frameRate;
         GameObject.FindGameObjectWithTag("MainCamera").transform.position = new Vector3(24.8f, 28.3f, 12.1f);
@@ -147,6 +201,22 @@ public class walGen : MonoBehaviour
         ingameText.GetComponent<TextMeshProUGUI>().enabled = false;
         Timer.GetComponent<TextMeshProUGUI>().enabled = false;
 
+        mazeGrid = new bool[100, 100];
+
+
+        //Assuming starting position is 0, 0
+        for (int i = 0; i < 100; i++)
+        {
+
+            for (int j = 0; j < 100; j++)
+            {
+                mazeGrid[i, j] = false;
+            }
+        }
+        mazeGrid[0, 0] = true;
+        //currentGridPos = new Vector2(0, 0);
+
+
         //camera game position: (24.8, 28.3, 12.1) x = 24.8, y = 28.3 , z = 12.1 | rotation x = 90 y and z are 0 | scale is all 1
         Maze_Size.x = Maze_Width;
         Maze_Size.y = Maze_Height;
@@ -154,9 +224,9 @@ public class walGen : MonoBehaviour
         Maze_Height = 5;
         Maze_Size.x = 5;
         Maze_Size.y = 5;
-        bool[,] Visited = new bool[(int)Maze_Size.x, (int)Maze_Size.y];
-        //Instantiate(prefab, new Vector2(prefab.transform.position.x + 3.0f, prefab.transform.position.y), Quaternion.identity);
-        //Instantiate(prefab, new Vector3(prefab.transform.position.x + 50.0f, prefab.transform.position.y, prefab.transform.position.z), Quaternion.identity);
+        //bool[,] Visited = new bool[(int)Maze_Size.x, (int)Maze_Size.y];
+        //Instantiate(wallPrefab, new Vector2(wallPrefab.transform.position.x + 3.0f, wallPrefab.transform.position.y), Quaternion.identity);
+        //Instantiate(wallPrefab, new Vector3(wallPrefab.transform.position.x + 50.0f, wallPrefab.transform.position.y, wallPrefab.transform.position.z), Quaternion.identity);
 
         int a = Random.Range(1, (int)Maze_Size.x) * 4;
         int b = Random.Range(1, (int)Maze_Size.y) * 4;
@@ -167,137 +237,132 @@ public class walGen : MonoBehaviour
             for (int j = 0; j < ((int)Maze_Size.y * 4); j += 4)
             {
                 //Debug.Log("(" + i + "," + j + "," + ")");
-                GenCell(new Vector3(i, 0, j), new Vector2(a, b));
+                genGrid(new Vector3(i, 0, j), new Vector2(a, b));
             }
         }
 
-        Visited[a / 4, b / 4] = true;
-        //visitedGridPos(a / 4, b / 4, false);
-        //visitedGridPos(a, b, true);
-        //Debug.Log((currentPos.transform.position.x - 2) / 4 + "," + (currentPos.transform.position.y) / 4);
-        //Debug.Log(a / 4 + "," + b / 4);
-
-        abV2.x = a / 4;
-        abV2.y = b / 4;
-        //targetPos.transform.position = new Vector3(2, 0, 4);
-        currentPos.transform.position = new Vector3(2, 0, -16);
         mazePlayer = GameObject.FindGameObjectWithTag("mazePlayer");
         goalLocation = GameObject.FindGameObjectWithTag("goalLocation");
-        targetPos.transform.position = new Vector3(2, 0, 0);
-        //GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
+        //wallDestroyer.transform.position = new Vector3(2, 0, 0);
+
+        targetPosGrid = new Vector2(0, 0);
+        currentPosGrid = new Vector2(5, 5);
+        //Vector3 test = new Vector3(convertToWorld(currentPosGrid).x, 0, convertToWorld(currentPosGrid).y);
+        mazePlayer.transform.position = convertToWorld(currentPosGrid);
+        Debug.Log(convertToWorld(currentPosGrid).x + "," + 0 + "," + convertToWorld(currentPosGrid).y);
+
+        ////Test for random generation
+        //targetPosGrid = gridMovement(targetPosGrid);
+        //visitedStack.Push(targetPosGrid);
+        //Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
+        //currentPosGrid = targetPosGrid;
+
+
+        ////Generation for pre-set maze for prototype
         StartCoroutine(setGen());
-        //moveGen2('n', 1);
-
-        //---------------------------------------------------
-        ////mazePlayer.transform.position = new Vector3(2, 0, 0);
-        //////goalLocation.transform.position = targetPos.transform.position;
-        ////currentPos.SetActive(false);
-        //////targetPos.SetActive(false);
-        ////GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
-        ////pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
-        ////Timer.GetComponent<TextMeshProUGUI>().enabled = true;
-        ////if (showIngameText == true)
-        ////{
-        ////    ingameText.GetComponent<TextMeshProUGUI>().enabled = true;
-        ////}
-        ////Debug.Log("Maze Generated");
-        //---------------------------------------------------
 
 
-
-
-
-        //GenCell(new Vector3(0, 0, 10));
-        //GenCell(new Vector3(0, 0, 14));
-        //GenCell(new Vector3(4, 0, 10));
-        //GenCell(new Vector3(4, 0, 14));
-        //int test1 = (int)Maze_Size.x;
-        //int test2 = ((int)Maze_Size.y) * test1;
-        //bool[] Visited = new bool[test2];
-        //for (int k = 0; k < test2; k++)
-        //{
-        //    Debug.Log(Visited[k]);
-        //}
-        //currentPos.transform.position = new Vector3((Random.Range(1,(int)Maze_Size.x) * 4) + 2.0f ,0,Random.Range(1, (int)Maze_Size.y * 4) + 1.0f);
-
-
-        //moveGen('n', 3);
-
-        //Debug.Log("is maze complete yet?");
 
     }
 
     //Generates sample maze for proof of concept within 5 seconds.
     IEnumerator setGen()
     {
-        float delay = 0.035f;
+        float delay = 0.035f; //0.035f;
         Debug.Log("Generating Maze...");
         yield return new WaitForSeconds(delay);
-        targetPos.transform.position = new Vector3(2, 0, 2);
+        wallDestroyer.transform.position = new Vector3(2, 0, 2);
+        //moveGen3(1);
         yield return new WaitForSeconds(delay);
-        moveGen2('n');
+        //moveGen2('n');
+        moveGen3(1);
         yield return new WaitForSeconds(delay);
-        moveGen2('n');
+        moveGen3(1);
+        //moveGen2('n');
         yield return new WaitForSeconds(delay);
-        moveGen2('n');
+        moveGen3(1);
+        //moveGen2('n');
         yield return new WaitForSeconds(delay);
-        targetPos.transform.position += new Vector3(2, 0, 2);
+        //targetPos.transform.position += new Vector3(2, 0, 2);
+        moveGen3(2);
         yield return new WaitForSeconds(delay);
         //---------------
-        moveGen2('e');
+        //moveGen2('e');
+        moveGen3(3);
         yield return new WaitForSeconds(delay);
-        moveGen2('e');
+        //moveGen2('e');
+        moveGen3(3);
         yield return new WaitForSeconds(delay);
-        moveGen2('e');
+        //moveGen2('e');
+        moveGen3(3);
         yield return new WaitForSeconds(delay);
-        targetPos.transform.position += new Vector3(2, 0, -2);
+        //targetPos.transform.position += new Vector3(2, 0, -2);
+        moveGen3(4);
         yield return new WaitForSeconds(delay);
         //-------------------------------
-        moveGen2('s');
+        //moveGen2('s');
+        moveGen3(5);
         yield return new WaitForSeconds(delay);
-        moveGen2('s');
+        //moveGen2('s');
+        moveGen3(5);
         yield return new WaitForSeconds(delay);
-        moveGen2('s');
+        //('s');
+        moveGen3(5);
         yield return new WaitForSeconds(delay);
-        targetPos.transform.position += new Vector3(-2, 0, -2);
+        //targetPos.transform.position += new Vector3(-2, 0, -2);
+        moveGen3(6);
         yield return new WaitForSeconds(delay);
         //------------------------------
-        moveGen2('w');
+        //moveGen2('w');
+        moveGen3(7);
         yield return new WaitForSeconds(delay);
-        moveGen2('w');
+        moveGen3(7);
+        // moveGen2('w');
         yield return new WaitForSeconds(delay);
-        targetPos.transform.position += new Vector3(-2, 0, 2);
+        //targetPos.transform.position += new Vector3(-2, 0, 2);
+        moveGen3(8);
         yield return new WaitForSeconds(delay);
         //-----------------------------
 
 
-        moveGen2('n');
-        yield return new WaitForSeconds(delay);
-        moveGen2('n');
-        yield return new WaitForSeconds(delay);
-        targetPos.transform.position += new Vector3(2, 0, 2);
-        yield return new WaitForSeconds(delay);
-        //---------------------------
-        moveGen2('e');
-        yield return new WaitForSeconds(delay);
-        targetPos.transform.position += new Vector3(2, 0, -2);
-        yield return new WaitForSeconds(delay);
-        //----------------------------
-        moveGen2('s');
-        yield return new WaitForSeconds(delay);
-        targetPos.transform.position += new Vector3(-2, 0, -2);
-        yield return new WaitForSeconds(delay);
-        //----------------------------
-        //moveGen2('w');
-        //yield return new WaitForSeconds(delay);
-        targetPos.transform.position += new Vector3(-2, 0, 2);
-        yield return new WaitForSeconds(delay);
         //moveGen2('n');
+        moveGen3(1);
+        yield return new WaitForSeconds(delay);
+        moveGen3(1);
+        //moveGen2('n');
+        yield return new WaitForSeconds(delay);
+        moveGen3(2);
+        //targetPos.transform.position += new Vector3(2, 0, 2);
+        yield return new WaitForSeconds(delay);
+        ////---------------------------
+        //moveGen2('e');
+        moveGen3(3);
+        yield return new WaitForSeconds(delay);
+        moveGen3(4);
+        //targetPos.transform.position += new Vector3(-2, 0, -2);
+        yield return new WaitForSeconds(delay);
+        moveGen3(5);
+        yield return new WaitForSeconds(delay);
+
+        moveGen3(6);
+        yield return new WaitForSeconds(delay);
+        moveGen3(8);
+        yield return new WaitForSeconds(delay);
+        ////----------------------------
+        ////moveGen2('w');
+        //moveGen3(7);
+
+        //yield return new WaitForSeconds(delay);
+        //moveGen3(8);
+        //targetPos.transform.position += new Vector3(-2, 0, 2);
+        //yield return new WaitForSeconds(delay);
+        //moveGen3(1);
+        ////moveGen2('n');
         //yield return new WaitForSeconds(delay);
         mazePlayer.transform.position = new Vector3(2, 0, 0);
-        goalLocation.transform.position = (targetPos.transform.position + new Vector3(0, 0, 2));
-        currentPos.SetActive(false);
-        targetPos.SetActive(false);
+        goalLocation.transform.position = (wallDestroyer.transform.position + new Vector3(0, 0, 2));
+        //currentPos.SetActive(false);
+        wallDestroyer.SetActive(false);
         mazeReady = true;
         ////GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
         ////pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
@@ -317,17 +382,20 @@ public class walGen : MonoBehaviour
 
 
 
+
+
+
     // Update is called once per frame
     void Update()
     {
-        Vector3 dir = targetPos.transform.position - currentPos.transform.position;
+        //Vector3 dir = targetPos.transform.position - currentPos.transform.position;
         //currentPos.transform.position += (dir.normalized * 50) * Time.deltaTime;
         //currentPos.transform.rotation = Quaternion.Euler(90, 0, 0);
 
         if (Input.GetKeyDown("r"))
         {
-            targetPos.transform.position = new Vector3(2, 0, 4);
-            currentPos.transform.position = new Vector3(2, 0, -16);
+            wallDestroyer.transform.position = new Vector3(2, 0, 4);
+            //currentPos.transform.position = new Vector3(2, 0, -16);
             Debug.Log("Refreshing Maze, please wait");
             StartCoroutine(setGen());
         }
@@ -344,263 +412,7 @@ public class walGen : MonoBehaviour
         }
 
 
-        //Attempts at maze functionality such as grid position (and goalLocation placement?) not used for prototype
-        //if (GameObject.FindGameObjectWithTag("goalLocation").activeInHierarchy == true)
-        //{
-        //    Debug.Log("Goal Location is found active");
-        //}
-        //if (GameObject.FindGameObjectWithTag("goalLocation").activeInHierarchy == false)
-        //{
-        //    Debug.Log("Goal Location is found to be inactive");
-        //}
-        //if (GameObject.FindGameObjectWithTag("goalLocation").transform.position == new Vector3(-100,100,-100))
-        //{
-        //    Debug.Log("goalLocation should now be moved");
-        //}
-
-        //Maze_Size.x = Maze_Width;
-        //Maze_Size.y = Maze_Height;
-
-        //bool[] test = new bool[3]; //sets every value in the array to false by default
-        //test[Random.Range(1,3)] = true;
-
-
-
-
-        //Debug.Log(test[0] + "," + test[1] + "," + test[2] + ",");
-
-        //Debug.Log(Visited[2, 1]);
-
-        //for (int i = 0; i > (int)Maze_Size.x; i++)
-        //{
-        //    Debug.Log(Visited[i, 0]);
-        //}
-
-
-        /*
-        ///Debug.Log(abV2.x + "," + abV2.y); //CurrentPos Position in Gridspace
-        //Debug.Log(dir.magnitude);
-        //Debug.Log(dir.normalized);
-
-        
-
-
-        if (Input.GetKeyDown("d"))
-        {
-            //targetPos.transform.position.x += 4.0f;
-            targetPos.transform.position += new Vector3(4.0f, 0.0f, 0.0f);
-            abV2.x += 1;
-        }
-        if (Input.GetKeyDown("w"))
-        {
-            //targetPos.transform.position.x += 4.0f;
-            targetPos.transform.position += new Vector3(0.0f, 0.0f, 4.0f);
-            abV2.y += 1;
-        }
-        if (Input.GetKeyDown("a"))
-        {
-            //targetPos.transform.position.x += 4.0f;
-            targetPos.transform.position -= new Vector3(4.0f, 0.0f, 0.0f);
-            abV2.x -= 1;
-        }
-        if (Input.GetKeyDown("s"))
-        {
-            //targetPos.transform.position.x += 4.0f;
-            targetPos.transform.position -= new Vector3(0.0f, 0.0f, 4.0f);
-            abV2.y -= 1;
-        }
-
-        */
-
-
-        //---------------------------------------------------------------------
-
-
-        /*
-
-        //Convert co-ordinates to grid-space
-        int x2 = (int)(targetPos.transform.position.x / 4);
-        int y2 = (int)(targetPos.transform.position.y / 4);
-
-        bool[,] Visited = new bool[(int)Maze_Size.x, (int)Maze_Size.y];
-
-        //marking current cell as visited (setting current gridcell to true)
-        Visited[x2, y2] = true;
-
-        //Check adjacent cells up, down, left and right, true if visited
-        //Debug.Log(Visited[x2 + 1, y2]); // check right
-        //Debug.Log(Visited[x2, y2 + 1]); // check up
-        //Debug.Log(Visited[x2 - 1, y2]); // check left
-        //Debug.Log(Visited[x2, y2 - 1]); // check down
-
-        //int nx = x2; //new x
-        //int ny = y2; //new y
-
-
-        //bool valid = false;
-        //while(valid == false)
-        //{
-        int Direction = Random.Range(1, 5); //Random direction between 1-4
-                                            //Randomly assign one of these values: x + 1, x - 1, y + 1, y - 1 
-        bool inGrid = true;
-        ///Re-roll if:
-        ///Direction is of visited cell
-        ///If a dead-end is reached (e.g. end of the board)
-
-        //right, up, left, down
-        //  1,   2,   3,    4
-        switch (Direction)
-        {
-            case 1:
-                x2 += 1;
-                //move right
-                break;
-            case 2:
-                y2 += 1;
-                //move up
-                break;
-            case 3:
-                x2 -= 1;
-                //move left
-                break;
-            case 4:
-                y2 -= 1;
-                //move down
-                break;
-        }
-
-        if (x2 + 1 > Maze_Width || x2 - 1 < 0 || y2 + 1 > Maze_Width || y2 - 1 < Maze_Width) //if new position is outside maze paramiters
-        {
-            inGrid = false;
-        }
-        else
-        {
-            inGrid = true;
-        }
-        //dead-end reached, direction unavailable
-
-
-        if (Visited[x2, y2] == false && inGrid == true)
-        //((Visited[nx, y2] == false && inGrid == true) || (Visited[x2, ny] == false && inGrid == true)) //If the selected direction is marked as true (before swich case, both should be set to true)
-        {
-            //valid = true
-            //Vector3 dir = targetPos.transform.position - currentPos.transform.position;
-            targetPos.transform.position = new Vector3(x2 * 4, y2 * 4);
-            currentPos.transform.position += (dir.normalized * 50) * Time.deltaTime; //move currentPos to targetPos
-        }
-        x2 = x2 / 4;
-        y2 = y2 / 4;
-        //else, return back up to while loop
-        //}
-        */
-
-
 
     }
-
-
-    //unused function:
-    /*    void processCell(int x, int y) //Mark current cell as visited and check if adjacent cells are visited
-        {
-            //Convert co-ordinates to grid-space
-            int x2 = x / 4;
-            int y2 = y / 4;
-
-            bool[,] Visited = new bool[(int)Maze_Size.x, (int)Maze_Size.y];
-
-            //marking current cell as visited (setting current gridcell to true)
-            Visited[x2, y2] = true;
-
-            //Check adjacent cells up, down, left and right, true if visited
-            Debug.Log(Visited[x + 1, y]); // check right
-            Debug.Log(Visited[x, y + 1]); // check up
-            Debug.Log(Visited[x - 1, y]); // check left
-            Debug.Log(Visited[x, y - 1]); // check down
-
-            //int nx = x2; //new x
-            //int ny = y2; //new y
-
-
-            //bool valid = false;
-            //while(valid == false)
-            //{
-            int Direction = Random.Range(1, 5); //Random direction between 1-4
-                                                //Randomly assign one of these values: x + 1, x - 1, y + 1, y - 1 
-            bool inGrid = true;
-            ///Re-roll if:
-            ///Direction is of visited cell
-            ///If a dead-end is reached (e.g. end of the board)
-
-            //right, up, left, down
-            //  1,   2,   3,    4
-            switch (Direction)
-            {
-                case 1:
-                    x2 += 1;
-                    //move right
-                    break;
-                case 2:
-                    y2 += 1;
-                    //move up
-                    break;
-                case 3:
-                    x2 -= 1;
-                    //move left
-                    break;
-                case 4:
-                    y2 -= 1;
-                    //move down
-                    break;
-            }
-
-            if (x2 + 1 > Maze_Width || x2 - 1 < 0 || y2 + 1 > Maze_Width || y2 - 1 < Maze_Width) //if new position is outside maze paramiters
-            {
-                inGrid = false;
-            }
-            else
-            {
-                inGrid = true;
-            }
-            //dead-end reached, direction unavailable
-
-
-            if (Visited[x2, y2] == false && inGrid == true)
-            //((Visited[nx, y2] == false && inGrid == true) || (Visited[x2, ny] == false && inGrid == true)) //If the selected direction is marked as true (before swich case, both should be set to true)
-            {
-                //valid = true
-                Vector3 dir = targetPos.transform.position - currentPos.transform.position;
-                targetPos.transform.position = new Vector3(x2 * 4, y2 * 4);
-                currentPos.transform.position += (dir.normalized * 50) * Time.deltaTime; //move currentPos to targetPos
-            }
-            x2 = x / 4;
-            y2 = y / 4;
-            //else, return back up to while loop
-            //}
-
-
-
-            //if (Direction == 1 && Visited[x + 1, y] == false)
-            //{
-            //    //move right
-            //}
-            //if (Direction == 2 && Visited[x , y + 1] == false) //up is visited, try again
-            //{
-            //    //move up
-            //}
-            //if (Direction == 3 && Visited[x - 1, y] == false) //left is visited, try again
-            //{
-            //    //move left
-            //}
-            //if (Direction == 4 && Visited[x, y - 1] == false) //down is visited, try again
-            //{
-            //    //move down
-            //}
-            //else
-            //{
-            //    //loop back
-            //}
-
-
-
-        } */
 }
+
