@@ -24,7 +24,7 @@ public class Perception : MonoBehaviour
     public void AddMemory(GameObject target)
     {
         //Create a new memory record
-        MemoryRecord record = new MemoryRecord(DateTime.Now, target.transform.position, true);
+        MemoryRecord record = new(DateTime.Now, target.transform.position, true);
 
         //Check if we already have a previous memory record for this target
         if(memoryMap.ContainsKey(target))

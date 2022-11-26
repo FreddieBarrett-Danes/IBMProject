@@ -15,6 +15,7 @@ namespace BT
 
         private BT_Node parent;
         protected readonly List<BT_Node> childrenList = new();
+        protected readonly BT_Node decoratorNode;
         protected readonly BT_Node childNode;
 
         protected BT_Node()
@@ -29,6 +30,14 @@ namespace BT
                 child.parent = this;
                 childrenList.Add(child);
             }
+        }
+        
+        protected BT_Node(BT_Node decorator, BT_Node child)
+        {
+            decorator.parent = this;
+            child.parent = this;
+            decoratorNode = decorator;
+            childNode = child;
         }
         
         protected BT_Node(BT_Node child)

@@ -16,8 +16,6 @@ public class TSuspicious : BT_Node
     public override NodeState Evaluate()
     {
         botInfo.stimer += Time.deltaTime;
-        //Debug.Log(botInfo.stimer);
-        //Debug.Log(botInfo.susTimer);
         if (botInfo.stimer >= botInfo.susTimer)
         {
             Vector3 newPos = RandomNavSphere(botInfo.lastKnownPos, botInfo.suspiciousRadius, -1);

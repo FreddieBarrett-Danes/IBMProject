@@ -9,25 +9,28 @@ public class TDetectPlayer : BT_Node
     private readonly BotInfo botInfo;
     private readonly Perception perception;
     
-    public TDetectPlayer(NavMeshAgent pAgent, Transform pTransform, BotInfo pbotInfo, Perception pperception)
+    public TDetectPlayer(NavMeshAgent pAgent, Transform pTransform, BotInfo pBotInfo, Perception pPerception)
     {
         agent = pAgent;
         transform = pTransform;
-        botInfo = pbotInfo;
-        perception = pperception;
+        botInfo = pBotInfo;
+        perception = pPerception;
     }
 
     public override NodeState Evaluate()
     {
         if (!botInfo.engaging)
         {
+            Vector3 playerPos = new();
             botInfo.timer += Time.deltaTime;
-            Vector3 playerPos = botInfo.player.transform.position;
+            if (botInfo.player)
+                playerPos = botInfo.player.transform.position;
             Vector3 agentPos = agent.transform.position;
             float range = Vector3.Distance(playerPos, agentPos);
-            Vector3 dirToTarget = (playerPos - agentPos).normalized;
+            Vector3 toTarget = playerPos - agentPos;
+            Vector3 dirToTarget = toTarget.normalized;
 
-            if (range < botInfo.viewRadius && Vector3.Angle(transform.forward, dirToTarget) < botInfo.viewAngle / 2)
+            if (range < botInfo.viewRadius && Vector3.Angle(transform.forward, dirToTarget) < botInfo.viewAngle / 2 && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude, botInfo.ObstacleLayer))
             {
                 botInfo.visibleTargets.Clear();
                 botInfo.detectionTimer += Time.deltaTime;

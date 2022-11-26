@@ -8,8 +8,11 @@ public class BotInfo : MonoBehaviour
     public int threatLevel;
     public int botCount;
     public int remainingBots;
-    public List<Transform> visibleTargets = new();
-
+    public List<Transform> visibleTargets;
+    public LayerMask ObstacleLayer;
+    public List<Component> abilitiesList;
+    private bool abilityAdd;
+    
     // Throwing
     public Transform shotStart;
     public float projectileSpeed;
@@ -61,11 +64,18 @@ public class BotInfo : MonoBehaviour
         detectionTimer = 0;
         botCount = BotCalc();
         remainingBots = BotCalc();
+        visibleTargets = new List<Transform>();
+        ObstacleLayer = LayerMask.NameToLayer("Obstacle");
+        abilitiesList = new List<Component>();
+        abilityAdd = false;
     }
 
     private void LateUpdate()
     {
         remainingBots = BotCalc();
+        if (abilityAdd) return;
+        abilitiesList.AddRange(GetComponents(typeof(Ability)));
+        abilityAdd = true;
     }
 
     public BotInfo()
