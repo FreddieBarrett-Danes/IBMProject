@@ -27,7 +27,7 @@ public class TRangedAttack : BT_Node
                 if (range >= (botInfo.viewRadius / 4) && botInfo.nextFire <= Time.time && dotProd > 0.95)
                 {
                     botInfo.nextFire = Time.time + botInfo.fireRate;
-                    Debug.Log(botInfo.abilitiesList[0].GetComponent<Ability>().name);
+                    //Debug.Log(botInfo.abilitiesList[0].GetComponent<Ability>().name);
                     botInfo.abilitiesList[0].GetComponent<Ability>().Execute();
                 }
                 state = NodeState.SUCCESS;

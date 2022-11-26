@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 //sing UnityEditor.AI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject enemyControlled;
 
+    private bool canShoot = false;
 
 
     private void Start()
@@ -39,23 +41,12 @@ public class PlayerController : MonoBehaviour
         //controller set up
         mainCamera = Camera.main;
         rBody = GetComponent<Rigidbody>();
-
-        //jank for now but handled by 'ability listener' class that will determine what abilities and attributes are availbe to the specific actor attached to the class
-        shooting = gameObject.AddComponent<Shooting>();
-        shooting.SetHost(visuals);
-        shooting.bulletSpeed = modifyBulletSpeed;
-
-        /*       //jank melee intialisation
-               melee = gameObject.AddComponent<Melee>();
-               enemyLayer = LayerMask.GetMask("Enemy");
-               melee.tempAtkPoint = attackPoint;
-        */
     }
 
     void Update()
     {
         Movement();
-        Shooting();
+        PlayerShooting();
         //Melee();
         TakeControl();
     }
@@ -72,22 +63,14 @@ public class PlayerController : MonoBehaviour
         mainCamera.transform.position = new Vector3(transform.position.x, 5, transform.position.z);
 
     }
-    private void Shooting()
+    private void PlayerShooting()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canShoot)
         {
-            //Debug.Log("trying to shoot");
             shooting.Execute();
         }
     }
-/*    private void Melee()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("trying to melee");
-            melee.Execute(enemyLayer);
-        }
-    }*/
+
     private void TakeControl()
     {
         if (!isBehindEnemy) return;
@@ -98,7 +81,22 @@ public class PlayerController : MonoBehaviour
             threatLevel = enemyControlled.GetComponent<BotInfo>().threatLevel;
             body.GetComponent<Renderer>().material.color = enemyControlled.transform.Find("Capsule").GetComponent<Renderer>().material.color;
             visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.Find("Forward").GetComponent<Renderer>().material.color;
-            //speed = enemyControlled.GetComponent<BotInfo>().speed;
+            
+            //goes through abilities of each robot and adds them to character usiung switch statement. this needs to b eadded to another list so they can be removed after timer is up on controlling robots
+            foreach(Component t in enemyControlled.GetComponent<BotInfo>().abilitiesList)
+            {
+                switch(t.GetType().ToString())
+                {
+                    case "Shooting":
+                        shooting = this.gameObject.AddComponent<Shooting>();
+                        shooting.SetHost(visuals);
+                        shooting.bulletSpeed = modifyBulletSpeed;
+                        canShoot = true;
+                        break;
+
+                }
+            }
+
             Destroy(enemyControlled);
             isBehindEnemy = false;
         }
