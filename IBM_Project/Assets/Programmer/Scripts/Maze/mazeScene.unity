@@ -364,8 +364,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameRate: 60
-  Maze_Width: 5
-  Maze_Height: 5
+  Maze_Width: 12
+  Maze_Height: 12
   wallDestroyer: {fileID: 1581050374}
   wallPrefab: {fileID: 710526793}
   targetPosWorld: {fileID: 1822425550}
@@ -373,7 +373,8 @@ MonoBehaviour:
   pregameText: {fileID: 816839555}
   ingameText: {fileID: 1030846124}
   Timer: {fileID: 1147405199}
-  showIngameText: 1
+  showIngameText: 0
+  cameraPosition: {x: 30, y: 46, z: 22}
 --- !u!1 &407638674
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,7 +820,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 816839553}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -1000,7 +1001,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 24.8, y: 28.3, z: 12.1}
+  m_LocalPosition: {x: 24.8, y: 50.95, z: 29.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

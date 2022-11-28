@@ -87,6 +87,9 @@ public class walGen : MonoBehaviour
     Stack<Vector2> visitedStack;
 
 
+    public Vector3 cameraPosition;
+
+
 
 
     //Positions of Gameobjects represented in bool grid space
@@ -171,6 +174,7 @@ public class walGen : MonoBehaviour
         //Area of refinement: check if all values of array = 0
         if (array1[0] == 0 && array1[1] == 0 && array1[2] == 0 && array1[3] == 0)
         {
+            Debug.Log("Dead end reached");
             array1[4] = 5;
         }
 
@@ -180,12 +184,21 @@ public class walGen : MonoBehaviour
 
         while (rng == 0)
         {
-            rng = array1[Random.Range(0, 5)];
-            Debug.Log("rng = " + rng + " array being referenced: " + array1[rng]);
             if (array1[4] == 5)
             {
                 rng = 5;
             }
+            Debug.Log("This should be showing");
+            if (array1[4] == 0)
+            {
+                rng = array1[Random.Range(0, 5)];
+            }
+            //if (visitedStack.Count == 0)
+            //{
+            //    rng = 6;
+            //}
+            Debug.Log("This should also be showing");
+            //Debug.Log("rng = " + rng + " array being referenced: " + array1[rng]);
             //should keep looping until a value different from 0 is found
         }
 
@@ -199,25 +212,42 @@ public class walGen : MonoBehaviour
                 break;
             case 1:
                 cgp.y += 1;
+                visitedStack.Push(cgp);
                 //add position to the stack
+                mazeGrid[(int)cgp.x, (int)cgp.y] = true;
                 break;
             case 2:
                 cgp.y -= 1;
+                visitedStack.Push(cgp);
                 //add position to the stack
+                mazeGrid[(int)cgp.x, (int)cgp.y] = true;
                 break;
             case 3:
                 cgp.x += 1;
+                visitedStack.Push(cgp);
                 //add position to the stack
+                mazeGrid[(int)cgp.x, (int)cgp.y] = true;
                 break;
             case 4:
                 cgp.x -= 1;
+                visitedStack.Push(cgp);
                 //add position to the stack
+                mazeGrid[(int)cgp.x, (int)cgp.y] = true;
                 break;
             case 5:
                 Debug.Log("Backtrack using stack");
+                //Debug.Log(visitedStack.Peek());
+                cgp = visitedStack.Peek();
+                visitedStack.Pop();
+                //visitedStack.Push(currentPosGrid);
                 //backtrack using the stack
                 break;
+            case 6:
+                Debug.Log("Reached end of stack");
+                break;
         }
+        //Vector2 rv2 = cgp;
+        //mazeGrid[(int)rv2.x, (int)rv2.y] = true;
         return cgp;
     }
 
@@ -267,9 +297,10 @@ public class walGen : MonoBehaviour
         visitedStack = new Stack<Vector2>();
         mazeReady = false;
         Application.targetFrameRate = frameRate;
-        GameObject.FindGameObjectWithTag("MainCamera").transform.position = new Vector3(24.8f, 28.3f, 12.1f);
+        GameObject.FindGameObjectWithTag("MainCamera").transform.position = cameraPosition;
         GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.black;
-        pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
+        //pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
+        pregameText.GetComponent<TextMeshProUGUI>().enabled = false; //for debugging and clearer demonstration of wall generation
         ingameText.GetComponent<TextMeshProUGUI>().enabled = false;
         Timer.GetComponent<TextMeshProUGUI>().enabled = false;
 
@@ -292,10 +323,10 @@ public class walGen : MonoBehaviour
         //camera game position: (24.8, 28.3, 12.1) x = 24.8, y = 28.3 , z = 12.1 | rotation x = 90 y and z are 0 | scale is all 1
         Maze_Size.x = Maze_Width;
         Maze_Size.y = Maze_Height;
-        Maze_Width = 5;
-        Maze_Height = 5;
-        Maze_Size.x = 5;
-        Maze_Size.y = 5;
+        //Maze_Width = 5;
+        //Maze_Height = 5;
+        //Maze_Size.x = 5;
+        //Maze_Size.y = 5;
         //bool[,] Visited = new bool[(int)Maze_Size.x, (int)Maze_Size.y];
         //Instantiate(wallPrefab, new Vector2(wallPrefab.transform.position.x + 3.0f, wallPrefab.transform.position.y), Quaternion.identity);
         //Instantiate(wallPrefab, new Vector3(wallPrefab.transform.position.x + 50.0f, wallPrefab.transform.position.y, wallPrefab.transform.position.z), Quaternion.identity);
@@ -333,13 +364,17 @@ public class walGen : MonoBehaviour
 
 
         //Setting Start Position: 1,1
-
-        targetPosGrid = new Vector2(1, 1);
-        currentPosGrid = targetPosGrid;
+        currentPosGrid = new Vector2(0, 0);
+        targetPosGrid = new Vector2(0, 0);
+        //currentPosWorld.transform.position = new Vector3(2, 0, 0);
+        //targetPosWorld.transform.position = new Vector3(4, 0, 0);
+        //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
+        //wallDestroyer.transform.position = Vector3.Lerp(currentPosWorld.transform.position, targetPosWorld.transform.position, 0.5f);
+        //currentPosGrid = targetPosGrid;
 
         //targetPosGrid = gridMovement(currentPosGrid);
         //Debug.Log("currentPosGrid , targetPosGrid" + " " + currentPosGrid + "," + targetPosGrid);
-
+        //visitedStack.Push(currentPosGrid);
         StartCoroutine(destroyWall());
 
         //targetPosWorld.transform.position = convertToWorld(targetPosGrid);
@@ -380,20 +415,55 @@ public class walGen : MonoBehaviour
         //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
         //yield return new WaitForSeconds(delay);
 
-        for (int i = 0; i < 100; i++) //Looping 100 times for demonstration
+        yield return new WaitForSeconds(0.5f);
+
+        targetPosGrid = gridMovement(currentPosGrid);
+        targetPosWorld.transform.position = convertToWorld(targetPosGrid);
+        currentPosWorld.transform.position = convertToWorld(currentPosGrid);
+        wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
+        currentPosGrid = targetPosGrid;
+        //mazeGrid[(int)currentPosGrid.x, (int)currentPosGrid.y] = true;
+        //visitedStack.Push(currentPosGrid);
+        currentPosWorld.transform.position = targetPosWorld.transform.position;
+        Debug.Log("UPDATE " + targetPosGrid.x + "," + targetPosGrid.y);
+
+        yield return new WaitForSeconds(delay);
+
+        while (visitedStack.Count != 0) //Looping 100 times for demonstration
         {
             targetPosGrid = gridMovement(currentPosGrid);
             targetPosWorld.transform.position = convertToWorld(targetPosGrid);
             currentPosWorld.transform.position = convertToWorld(currentPosGrid);
-
             wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
             currentPosGrid = targetPosGrid;
+            //mazeGrid[(int)currentPosGrid.x, (int)currentPosGrid.y] = true;
+            //visitedStack.Push(currentPosGrid);
             currentPosWorld.transform.position = targetPosWorld.transform.position;
-            visitedStack.Push(currentPosGrid);
             Debug.Log("UPDATE " + targetPosGrid.x + "," + targetPosGrid.y);
 
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay); 
         }
+        yield return new WaitForSeconds(delay);
+        Debug.Log("MAZE IS COMPLETE!!! WOOOH!!!!");
+        
+
+        //mazePlayer.transform.position = new Vector3(2, 0, 0);
+        //goalLocation.transform.position = new Vector3(12,0,12);
+        //currentPos.SetActive(false);
+        wallDestroyer.SetActive(false);
+        currentPosWorld.SetActive(false);
+        targetPosWorld.SetActive(false);
+        mazeReady = true;
+
+        //for (int i = 0; i < 100; i++)
+        //{
+
+        //    for (int j = 0; j < 100; j++)
+        //    {
+        //        Debug.Log(mazeGrid[i, j]);
+        //    }
+        //}
+
         ////Repeat test
 
         //Debug.Log("Repeat");
@@ -507,11 +577,11 @@ public class walGen : MonoBehaviour
         //moveGen3(1);
         ////moveGen2('n');
         //yield return new WaitForSeconds(delay);
-        mazePlayer.transform.position = new Vector3(2, 0, 0);
-        goalLocation.transform.position = (wallDestroyer.transform.position + new Vector3(0, 0, 2));
-        //currentPos.SetActive(false);
-        wallDestroyer.SetActive(false);
-        mazeReady = true;
+        //mazePlayer.transform.position = new Vector3(2, 0, 0);
+        //goalLocation.transform.position = (wallDestroyer.transform.position + new Vector3(0, 0, 2));
+        ////currentPos.SetActive(false);
+        //wallDestroyer.SetActive(false);
+        //mazeReady = true;
         ////GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
         ////pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
         ////Timer.GetComponent<TextMeshProUGUI>().enabled = true;
@@ -549,6 +619,8 @@ public class walGen : MonoBehaviour
         }
         if (Input.GetKeyDown("space") && mazeReady == true) //&& pressedPlay == false
         {
+            mazePlayer.transform.position = new Vector3(2, 0, 0);
+            goalLocation.transform.position = new Vector3(18, 0, 16);
             GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
             pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
             Timer.GetComponent<TextMeshProUGUI>().enabled = true;
