@@ -11,6 +11,24 @@ public class mazePlayerScript : MonoBehaviour
     bool touchWall;
     public TextMeshProUGUI Timer;
 
+    bool mazeReadyPlayer;
+
+
+    private void OnEnable()
+    {
+        walGen.OnMazeReady += applyReady;
+    }
+
+    private void OnDisable()
+    {
+        walGen.OnMazeReady -= applyReady;
+    }
+
+    void applyReady(bool mazeReady)
+    {
+        mazeReadyPlayer = mazeReady;
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -56,6 +74,7 @@ public class mazePlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mazeReadyPlayer = false;
         gameObject.GetComponent<Renderer>().material.color = Color.white; //Setting colour of Player gameobject
         GameObject goalLocation = GameObject.FindGameObjectWithTag("goalLocation");
         goalLocation.GetComponent<Renderer>().material.color = Color.green;
@@ -102,9 +121,10 @@ public class mazePlayerScript : MonoBehaviour
                 transform.position += new Vector3(0, 0, speed * Time.deltaTime) * 3;
             }
         }
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") && mazeReadyPlayer == true)
         {
             transform.position = new Vector3(2, 0, 0);
+            //returnToStart(true);
         }
 
 
