@@ -10,19 +10,12 @@ public class BasicBT : BT_Tree
         {
             new BT_Sequence(new List<BT_Node>
             {
-                new TDetectPlayer(GetComponent<NavMeshAgent>(), transform, GetComponent<BotInfo>()),
-                new TPathToPlayer(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),
-                new TRangedAttack(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),
-                /*
-                new BT_Sequence(new List<BT_Node>
-                {
-                    new BT_Decorator(new DRemainingBots(GetComponent<BotInfo>())),
-                    new TSuspicious(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),
-                }),
-                */
+                new TDetectPlayer(GetComponent<NavMeshAgent>(), transform),
+                new TPathToPlayer(GetComponent<NavMeshAgent>()),
+                new BT_Decorator(new DBoolChecks(BBTInfo.playerInView)),
+                new TSuspicious(GetComponent<NavMeshAgent>()),
             }),
-            //new TPatrol(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>())
-            new TWander(GetComponent<NavMeshAgent>(), transform, GetComponent<BotInfo>())
+            new TPatrol(GetComponent<NavMeshAgent>())
         });
 
         return root;

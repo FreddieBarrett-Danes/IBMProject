@@ -5,43 +5,31 @@ using BT;
 
 public class CollisionListener : MonoBehaviour
 {
-    private GameObject player;
+    public PlayerController playerController;
     public GameObject[] enemies;
     //get enemies to compile into array, check through array on collisions to determine which enemy hit the player. compare threat levels of multiple types of enemies dynamically with one script
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        playerController = gameObject.GetComponent<PlayerController>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other == player.GetComponent<CapsuleCollider>())
-        {
-            if (player.GetComponent<PlayerController>().threatLevel < this.gameObject.GetComponentInParent<BotInfo>().threatLevel)
-            {
-                Destroy(player);
-            }
-            else if (player.GetComponent<PlayerController>().threatLevel > this.gameObject.GetComponentInParent<BotInfo>().threatLevel)
-            {
-                Destroy(this.gameObject.transform.parent.gameObject);
-            }
-        }
-
-/*        foreach (GameObject enemy in enemies)
+        foreach (GameObject enemy in enemies)
         {
             if (other == enemy.GetComponent<CapsuleCollider>())
             {
-                if(player.GetComponent<PlayerController>().threatLevel < enemy.GetComponent<BotInfo>().threatLevel)
+                if(playerController.threatLevel < BBTInfo.threatLevel)
                 {
-                    Destroy(player);
+                    Destroy(this);
                 }
-                else if (player.GetComponent<PlayerController>().threatLevel > enemy.GetComponent<BotInfo>().threatLevel)
+                else
                 {
                     Destroy(enemy);
                 }
             }
-        }*/
+        }
     }
 
 

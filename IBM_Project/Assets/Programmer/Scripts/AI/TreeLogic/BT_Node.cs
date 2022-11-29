@@ -15,7 +15,6 @@ namespace BT
 
         private BT_Node parent;
         protected readonly List<BT_Node> childrenList = new();
-        protected readonly BT_Node childNode;
 
         protected BT_Node()
         {
@@ -34,7 +33,6 @@ namespace BT
         protected BT_Node(BT_Node child)
         {
             child.parent = this;
-            childNode = child;
         }
 
         public virtual NodeState Evaluate() => NodeState.FAILURE;

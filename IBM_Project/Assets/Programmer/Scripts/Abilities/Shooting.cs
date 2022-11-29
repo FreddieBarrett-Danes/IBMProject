@@ -9,11 +9,9 @@ public class Shooting : Ability
     public override void Execute()
     {
         GameObject bullet = Resources.Load<GameObject>("Bullet");
-        GameObject tempBullet = Instantiate(bullet, host.transform.position, host.transform.rotation);
+        GameObject tempBullet = Instantiate(bullet, host.transform.position, host.transform.rotation) as GameObject;
         Rigidbody tempRigidBodyBullet = tempBullet.GetComponent<Rigidbody>();
         tempRigidBodyBullet.AddForce(tempRigidBodyBullet.transform.forward * bulletSpeed);
-        tempBullet.tag = host.tag;
-        //Debug.Log(tempBullet.tag + " Bullet Shot");
         Destroy(tempBullet, 5f);
     }
 }

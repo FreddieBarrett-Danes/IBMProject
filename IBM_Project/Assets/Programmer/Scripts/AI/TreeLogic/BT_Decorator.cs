@@ -6,21 +6,25 @@ namespace BT
 
         public override NodeState Evaluate()
         {
-            switch (childNode.Evaluate())
+            bool ChildIsRunning = false;
+            BT_Node node = null;
+            
+            switch (node.Evaluate())
             {
                 case NodeState.FAILURE:
                     state = NodeState.FAILURE;
                     return state;
                 case NodeState.SUCCESS:
-                    state = NodeState.SUCCESS;
-                    return state;
+                    break;
                 case NodeState.RUNNING:
-                    state = NodeState.RUNNING;
-                    return state;
+                    ChildIsRunning = true;
+                    break;
                 default:
                     state = NodeState.SUCCESS;
                     return state;
             }
+            state = ChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
+            return state;
         }
     }
 }
