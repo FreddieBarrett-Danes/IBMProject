@@ -6,21 +6,23 @@ public class TWander : BT_Node
 {
     private readonly NavMeshAgent agent;
     private readonly Transform transform;
+    private readonly BotInfo botInfo;
 
-    public TWander(NavMeshAgent pAgent, Transform pTransform)
+    public TWander(NavMeshAgent pAgent, Transform pTransform, BotInfo pbotInfo)
     {
         agent = pAgent;
         transform = pTransform;
+        botInfo = pbotInfo;
     }
 
     public override NodeState Evaluate()
     {
-        BBTInfo.timer += Time.deltaTime;
-        if (BBTInfo.timer >= BBTInfo.wanderTimer)
+        botInfo.timer += Time.deltaTime;
+        if (botInfo.timer >= botInfo.wanderTimer)
         {
-            Vector3 newPos = RandomNavSphere(transform.position, BBTInfo.wanderRadius, -1);
+            Vector3 newPos = RandomNavSphere(transform.position, botInfo.wanderRadius, -1);
             agent.SetDestination(newPos);
-            BBTInfo.timer = 0;
+            botInfo.timer = 0;
         }
         state = NodeState.RUNNING;
         return state;

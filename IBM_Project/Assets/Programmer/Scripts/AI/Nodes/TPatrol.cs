@@ -1,42 +1,47 @@
 using UnityEngine;
 using UnityEngine.AI;
 using BT;
+using static System.Array;
 
 public class TPatrol : BT_Node
 {
     private static NavMeshAgent agent;
-    private static readonly GameObject patrolPoints = agent.gameObject.transform.Find("Patrol Path").gameObject;
-
-    public TPatrol(NavMeshAgent pAgent)
+    private static BotInfo botInfo;
+    private static GameObject patrolPoints;
+    public TPatrol(NavMeshAgent pAgent, BotInfo pbotInfo)
     {
         agent = pAgent;
+        botInfo = pbotInfo;
     }
 
     public override NodeState Evaluate()
     {
+        patrolPoints = botInfo.transform.root.Find("PatrolPath").gameObject;
+        Resize(ref botInfo.patrol, patrolPoints.transform.childCount);
         for (int i = 0; i < patrolPoints.transform.childCount; i++)
         {
-            BBTInfo.patrol[i] = patrolPoints.transform.GetChild(i).gameObject.transform;
+            botInfo.patrol[i] = patrolPoints.transform.GetChild(i).transform;
         }
-        if (!BBTInfo.start)
+        if (!botInfo.start)
         {
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                agent.destination = BBTInfo.patrol[BBTInfo.destPoint].position;
-                BBTInfo.destPoint = (BBTInfo.destPoint + 1) % BBTInfo.patrol.Length;
+                agent.destination = botInfo.patrol[botInfo.destPoint].position;
+                botInfo.destPoint = (botInfo.destPoint + 1) % botInfo.patrol.Length;
             }
         }
-        if (BBTInfo.engaging == false)
+        if (botInfo.engaging == false)
         {
-            if (BBTInfo.patrol.Length == 0)
+            botInfo.playerInView = false;
+            if (botInfo.patrol.Length == 0)
             {
                 state = NodeState.FAILURE;
                 return state;
             }
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                agent.destination = BBTInfo.patrol[BBTInfo.destPoint].position;
-                BBTInfo.destPoint = (BBTInfo.destPoint + 1) % BBTInfo.patrol.Length;
+                agent.destination = botInfo.patrol[botInfo.destPoint].position;
+                botInfo.destPoint = (botInfo.destPoint + 1) % botInfo.patrol.Length;
             }
         }
         state = NodeState.SUCCESS;
