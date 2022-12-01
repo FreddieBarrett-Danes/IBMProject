@@ -48,14 +48,17 @@ public class TDetectPlayer : BT_Node
                     state = NodeState.SUCCESS;
                     return state;
                 }
+                perception.ClearFoV();
                 botInfo.playerInView = false;
                 botInfo.engaging = false;
                 state = NodeState.SUCCESS;
                 return state;
             }
+            perception.ClearFoV();
             state = NodeState.FAILURE;
             return state;
         }
+        perception.ClearFoV();
         botInfo.playerInView = false;
         botInfo.engaging = false;
         state = NodeState.SUCCESS;
