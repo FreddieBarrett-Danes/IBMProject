@@ -48,9 +48,9 @@ public class Disc_Rotation : MonoBehaviour
     {
         currentSelect = 1;
         numAligned = new bool[3];
-        Disc1 = GameObject.Find("Disc1");
-        Disc2 = GameObject.Find("Disc2");
-        Disc3 = GameObject.Find("Disc3");
+        Disc1 = GameObject.Find("Disc1n");
+        Disc2 = GameObject.Find("Disc2n");
+        Disc3 = GameObject.Find("Disc3n");
 
 
         numAligned[0] = true;
@@ -139,14 +139,14 @@ public class Disc_Rotation : MonoBehaviour
         }
 
         //Changed rotation input from Q and E to A and D to keep consistency with player controls
-        if (Input.GetKey(KeyCode.A) && Selected == true)
+        if (Input.GetKey(KeyCode.D) && Selected == true)
         {
 
             transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
             //if (currentSelect == 2) { ... }
         }
 
-        if (Input.GetKey(KeyCode.D) && Selected == true)
+        if (Input.GetKey(KeyCode.A) && Selected == true)
         {
 
             transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
