@@ -15,6 +15,7 @@ namespace BT
 
         private BT_Node parent;
         protected readonly List<BT_Node> childrenList = new();
+        protected readonly int loopTimesInt;
         protected readonly BT_Node decoratorNode;
         protected readonly BT_Node childNode;
 
@@ -40,6 +41,13 @@ namespace BT
             childNode = child;
         }
         
+        protected BT_Node(int timesToLoop, BT_Node child)
+        {
+            loopTimesInt = timesToLoop;
+            child.parent = this;
+            childNode = child;
+        }
+
         protected BT_Node(BT_Node child)
         {
             child.parent = this;
