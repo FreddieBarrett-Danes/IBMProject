@@ -30,6 +30,7 @@ public class PlayerBehind : MonoBehaviour
                 if (Vector3.Dot(forward, toOther) < 0)
                 {
                     pC.isBehindEnemy = true;
+                    //this needs to c;heck if there are more than one enemy
                     pC.enemyControlled = this.gameObject;
                 }
                 else

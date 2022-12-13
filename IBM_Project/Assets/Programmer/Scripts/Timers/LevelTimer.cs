@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class LevelTimer : MonoBehaviour
 {
     public float startTime;
-    private float currentTime;
+    public float currentTime;
+    public bool TimeUp = false;
 
     public TextMeshProUGUI countdownText;
 
@@ -19,21 +20,24 @@ public class LevelTimer : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        currentTime -= Time.deltaTime;
-        countdownText.text = currentTime.ToString("0");
-        
-        if(currentTime > 0)
+    {   
+        if (!TimeUp)
         {
-            //in play time
-        }
-        else
-        {
-            //time has run out
-            currentTime = 0;
+            if (currentTime > 0)
+            {
+                //in play time
+                currentTime -= Time.deltaTime;
+                updateTimer(currentTime);
+            }
+            else
+            {
+                //time has run out
+                currentTime = 0;
+                TimeUp = false;
+            }
         }
     }
-    void updatetimer(float currentTime)
+    void updateTimer(float currentTime)
     {
         currentTime += 1;
 
