@@ -33,4 +33,13 @@ public class LevelTimer : MonoBehaviour
             currentTime = 0;
         }
     }
+    void updatetimer(float currentTime)
+    {
+        currentTime += 1;
+
+        float minutes = Mathf.FloorToInt(currentTime / 60);
+        float seconds = Mathf.FloorToInt(currentTime % 60);
+
+        countdownText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+    }
 }
