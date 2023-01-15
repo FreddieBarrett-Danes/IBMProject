@@ -17,7 +17,7 @@ public class BasicBT : BT_Tree
                 new TRangedAttack(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),
                 new BT_Sequence(new List<BT_Node>
                 {
-                    new BT_Decorator(new DRemainingBots(GetComponent<BotInfo>()), new TSuspicious(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>())),
+                    new BT_Decorator(new DRemainingBots(GetComponent<BotInfo>()), new BT_LoopDecorator(5, new TSuspicious(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()))),
                 }),
             }),
             new TPatrol(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()),

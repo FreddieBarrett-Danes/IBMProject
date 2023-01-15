@@ -32,19 +32,16 @@ public class TDetectPlayer : BT_Node
 
             if (range < botInfo.viewRadius && Vector3.Angle(transform.forward, dirToTarget) < botInfo.viewAngle / 2 && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude, botInfo.ObstacleLayer))
             {
-                botInfo.visibleTargets.Clear();
+                botInfo.targetVisible = null;
                 botInfo.detectionTimer += Time.deltaTime;
                 if (botInfo.detectionTimer >= 1.5)
                 {
                     botInfo.timer = botInfo.wanderTimer;
                     botInfo.engaging = true;
-                    botInfo.visibleTargets.Add(botInfo.player.transform);
+                    botInfo.targetVisible = botInfo.player.transform;
                     botInfo.playerInView = true;
                     perception.ClearFoV();
-                    foreach(Transform target in botInfo.visibleTargets)
-                    {
-                        perception.AddMemory(target.gameObject);
-                    }
+                    perception.AddMemory(botInfo.player.transform.gameObject);
                     state = NodeState.SUCCESS;
                     return state;
                 }

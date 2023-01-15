@@ -8,7 +8,7 @@ public class BotInfo : MonoBehaviour
     public int threatLevel;
     public int botCount;
     public int remainingBots;
-    public List<Transform> visibleTargets;
+    public Transform targetVisible;
     public LayerMask ObstacleLayer;
     public List<Component> abilitiesList;
     private bool abilityAdd;
@@ -64,7 +64,7 @@ public class BotInfo : MonoBehaviour
         detectionTimer = 0;
         botCount = BotCalc();
         remainingBots = BotCalc();
-        visibleTargets = new List<Transform>();
+        targetVisible = null;
         ObstacleLayer = LayerMask.NameToLayer("Obstacle");
         abilitiesList = new List<Component>();
         abilityAdd = false;
