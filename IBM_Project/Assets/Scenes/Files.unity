@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 126846663}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 578138392}
   m_Layer: 0
   m_Name: FileReader
-  m_TagString: Untagged
+  m_TagString: QuizMaster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,12 +253,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085a771bef0da494aa47f392077fc3b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 1055818341}
-  CSVFiles: {fileID: 4900000, guid: 192693ebeb5fc4b49b72bcb04487444c, type: 3}
-  row: -6
-  col: -9
-  find: 0
-  Length: 0
+  submitText: {fileID: 0}
+  submitButton: {fileID: 0}
+  answersList: []
+  TSVFile: {fileID: 6259634388974335316, guid: aa8379325a677064cb9223ef3b9da08f, type: 3}
+  rightAnswers: 0
+  correctAnswers: 0
+  incorrectAnswersList: 
+  askedList: 
+  singleSelected: {fileID: 0}
+  waitTime: 1
+  questionsInARow: 3
+  panel: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
+  panelSize: {x: 0, y: 0}
+  rangeOfQuestionsMax: 4
+  row: 1
+  find: 1
+  submit: 0
+  reloadSceneAtEnd: 0
 --- !u!4 &578138393
 Transform:
   m_ObjectHideFlags: 0
@@ -309,8 +321,8 @@ Camera:
   m_GameObject: {fileID: 590010152}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -469,7 +481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1055818340
 RectTransform:
   m_ObjectHideFlags: 0
@@ -512,8 +524,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b8706261aadafd447885576f8882beb8, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: b8706261aadafd447885576f8882beb8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
