@@ -43,6 +43,11 @@ public class answersScript : MonoBehaviour
         }*/
     }
 
+    void LateUpdate()
+    {
+        
+    }
+
     private void buttonClicked()
     {
         selected = !selected;
