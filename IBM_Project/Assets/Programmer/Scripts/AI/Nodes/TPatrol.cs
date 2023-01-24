@@ -38,7 +38,14 @@ public class TPatrol : BT_Node
                         botInfo.destPoint = (botInfo.destPoint + 1) % botInfo.patrol.Length;
                         break;
                     case false:
-                        // Not loop
+                        if (botInfo.pointInArray != botInfo.stopArray)
+                        {
+                            botInfo.destPoint = botInfo.pointInArray;
+                            botInfo.pointInArray += botInfo.direction;
+                            Debug.Log(botInfo.destPoint);
+                            Debug.Log(botInfo.pointInArray);
+                            Debug.Log(botInfo.direction);
+                        }
                         break;
                 }
             }

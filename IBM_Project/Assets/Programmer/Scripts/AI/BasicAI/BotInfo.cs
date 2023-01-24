@@ -27,6 +27,9 @@ public class BotInfo : MonoBehaviour
     public int destPoint;
     public bool start;
     public bool pointLoop;
+    public int direction = 1;
+    public int pointInArray;
+    public int stopArray;
     
     // Wander
     public float wanderRadius;
@@ -50,6 +53,8 @@ public class BotInfo : MonoBehaviour
 
     private void Start()
     {
+        pointInArray = direction > 0 ? 0 : patrol.Length - 1; 
+        stopArray = direction > 0 ? patrol.Length : -1;
         visuals = gameObject.transform.GetChild(1).gameObject;
         projectileSpeed = 1000.0f;
         shooting = gameObject.AddComponent<Shooting>();
