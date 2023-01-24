@@ -1,4 +1,3 @@
-using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -19,7 +18,7 @@ public class MeshTestScript : MonoBehaviour
     public LineRenderer circleRenderer;
     public List<Vector3> vertices = new List<Vector3>();
 
-    private Transform transform;
+    private new Transform transform;
 
     // Start is called before the first frame update
     void Start()

@@ -39,6 +39,14 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
+    <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-projectPath C:\Users\rewri\Documents\GitHub\TemplateIBMProject\IBM_Project -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\rewri\Documents\GitHub\TemplateIBMProject\IBM_Project" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath C:\Users\rewri\Documents\GitHub\TemplateIBMProject\IBM_Project -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />

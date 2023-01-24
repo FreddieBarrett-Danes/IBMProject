@@ -9,7 +9,7 @@
 [Bb]uilds/
 [Ll]ogs/
 [Mm]emoryCaptures/
-[Uu]serSettings/
+[Uu]ser[Ss]ettings/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -62,5 +62,6 @@ crashlytics-build.properties
 **/.idea/workspace.xml
 #*.meta
 
-# This should ignore file: default-2021.dwlt
-**/default-2021.dwlt
+IBM_Project/UserSettings/Layouts/default-2021.dwlt
+*.dwlt
+/ProjectSettings/Packages/
