@@ -32,7 +32,14 @@ public class Disc_Rotation : MonoBehaviour
     GameObject R1;
     GameObject R2;
     GameObject R3;
-    
+
+    Quaternion Disc1startRotation;
+    Quaternion Disc2startRotation;
+    Quaternion Disc3startRotation;
+
+    Vector3 R1startPosition;
+    Vector3 R1startRotation;
+
     // Start is called before the first frame update
 
     Vector3 RotationToDegrees(Vector3 v3)
@@ -65,6 +72,14 @@ public class Disc_Rotation : MonoBehaviour
         R2.transform.position = new Vector3(0, 15, 0);
         R3.transform.position = new Vector3(5, 15, 0);
 
+        Disc1startRotation = Disc1.transform.rotation;
+        Disc2startRotation = Disc2.transform.rotation;
+        Disc3startRotation = Disc3.transform.rotation;
+
+        //R1startPosition = R1.transform.position;
+        //R1startRotation = R1.transform.eulerAngles;
+        //Debug.Log(R1startPosition + "," + R1startRotation);
+
     }
 
     // Update is called once per frame
@@ -75,7 +90,7 @@ public class Disc_Rotation : MonoBehaviour
         {
             Selected = true;
             //GetComponent<Renderer>().material.color = Color.black;
-            Debug.Log("Disc1: " + (int)Disc1.transform.rotation.eulerAngles.x + " | Disc2: " + (int)Disc2.transform.rotation.eulerAngles.x + " | Disc3: " + (int)Disc3.transform.rotation.eulerAngles.x + " | currentSelect: " + currentSelect);
+            ////////Debug.Log("Disc1: " + (int)Disc1.transform.rotation.eulerAngles.x + " | Disc2: " + (int)Disc2.transform.rotation.eulerAngles.x + " | Disc3: " + (int)Disc3.transform.rotation.eulerAngles.x + " | currentSelect: " + currentSelect);
 
             //Only for debugging purposes before implementing custom game objects
             //My aim is to make this system easily expandable if more/less discs were to be added
@@ -162,7 +177,17 @@ public class Disc_Rotation : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            transform.rotation = Quaternion.Euler(0, 90, 90);
+            //Debug.Log("R Pressed");
+            //R1.transform.position = R1startPosition;
+            //R1.transform.eulerAngles = R1startRotation;
+
+
+            Debug.Log("R1.transform.rotation | startRotationR1 " + Disc1.transform.rotation + " | " + Disc1startRotation);
+            //transform.rotation = Quaternion.Euler(0, -90, 90); //Default rotation: 0, -90, 90
+            Disc1.transform.rotation = Disc1startRotation;
+            Disc2.transform.rotation = Disc2startRotation;
+            Disc3.transform.rotation = Disc3startRotation;
+            Debug.Log("[Updated] R1.transform.rotation | startRotationR1 " + Disc1.transform.rotation + " | " + Disc1startRotation);
         }
 
         //Testing example, to be set when paths align
