@@ -18,7 +18,10 @@ public class elevator : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         quizMaster = GameObject.Find("QuizMaster");
-        reader = quizMaster.GetComponent<ReadTSV>();
+        if (reader != null)
+        {
+            reader = quizMaster.GetComponent<ReadTSV>();
+        }
         cam = GameObject.FindGameObjectWithTag("MainCamera");
     }
 

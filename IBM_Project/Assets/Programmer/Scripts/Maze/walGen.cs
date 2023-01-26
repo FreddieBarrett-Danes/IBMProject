@@ -330,7 +330,7 @@ public class walGen : MonoBehaviour
         mazeReady = false;
         Application.targetFrameRate = frameRate;
         GameObject.FindGameObjectWithTag("MainCamera").transform.position = cameraPosition;
-        GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.black;
+        GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.white;
         //pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
         pregameText.GetComponent<TextMeshProUGUI>().enabled = showPregameTutorial; //for debugging and clearer demonstration of wall generation
         GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().enabled = showPregameTutorial;

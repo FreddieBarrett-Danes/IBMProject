@@ -6,33 +6,28 @@ public class TSuspicious : BT_Node
 {
     private readonly NavMeshAgent agent;
     private readonly BotInfo botInfo;
+    private readonly Perception percep;
 
-    public TSuspicious(NavMeshAgent pAgent, BotInfo pbotInfo)
+    public TSuspicious(NavMeshAgent pAgent, BotInfo pbotInfo, Perception pPercep)
     {
         agent = pAgent;
         botInfo = pbotInfo;
+        percep = pPercep;
     }
 
     public override NodeState Evaluate()
     {
-        botInfo.stimer += Time.deltaTime;
-        if (botInfo.stimer >= botInfo.susTimer)
+        botInfo.bSusTimer += Time.deltaTime;
+        if (botInfo.bSusTimer >= botInfo.bSuspiciousTimer)
         {
-            Vector3 newPos = RandomNavSphere(botInfo.lastKnownPos, botInfo.suspiciousRadius, -1);
-            agent.SetDestination(newPos);
-            botInfo.stimer = 0;
+            Vector3 randDir = Random.insideUnitSphere * botInfo.bSuspiciousRadius;
+            randDir += percep.sensedRecord[0].lastSensedPosition;
+            agent.SetDestination(randDir);
+            botInfo.bSusTimer = 0;
             state = NodeState.SUCCESS;
             return state;
         }
-        state = NodeState.SUCCESS;
+        state = NodeState.FAILURE;
         return state;
-    }
-    
-    private static Vector3 RandomNavSphere(Vector3 origin, float distance, int layerMask)
-    {
-        Vector3 randDir = Random.insideUnitSphere * distance;
-        randDir += origin;
-        NavMesh.SamplePosition(randDir, out NavMeshHit navHit, distance, layerMask);
-        return navHit.position;
     }
 }

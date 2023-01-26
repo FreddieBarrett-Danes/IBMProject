@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
         {
             
             this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
-            threatLevel = enemyControlled.GetComponent<BotInfo>().threatLevel;
+            threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
             body.GetComponent<Renderer>().material.color = enemyControlled.transform.Find("Capsule").GetComponent<Renderer>().material.color;
             visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.Find("Forward").GetComponent<Renderer>().material.color;
             switch(threatLevel)
@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
             }
 
             //goes through abilities of each robot and adds them to character usiung switch statement. this needs to b eadded to another list so they can be removed after timer is up on controlling robots
-            foreach(Component t in enemyControlled.GetComponent<BotInfo>().abilitiesList)
+            foreach(Component t in enemyControlled.GetComponent<BotInfo>().bAbilitiesList)
             {
                 switch(t.GetType().ToString())
                 {
