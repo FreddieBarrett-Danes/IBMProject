@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,6 +12,8 @@ public class ReadTSV : MonoBehaviour
     private GameObject questionText;
     public GameObject submitText;
     public Button submitButton;
+    [Range(0.1f, 1f)]
+    public float submitButtonSizeMultiplier; //Multiplier of the Submit text-box 
     public List<GameObject> answersList;
     public TextAsset TSVFile;
     private GameObject canvas;
@@ -19,6 +23,7 @@ public class ReadTSV : MonoBehaviour
     public int rightAnswers; //How many the player got right
     [SerializeField]
     private int correctAnswers; // how may there are
+    private int amountSelected;
 
     [SerializeField]
     private List<int> incorrectAnswersList; //list of questions the user answered wrong
@@ -41,6 +46,9 @@ public class ReadTSV : MonoBehaviour
     
     public GameObject panel;
     public Vector2 panelSize;
+    public float smallestFont;
+    [Range(0.1f, 1f)]
+    public float fontSizeMultiplier;
 
     private float startX;
     private float startY;
@@ -161,6 +169,7 @@ public class ReadTSV : MonoBehaviour
     {
         if (find) //File Reading / generate
         {
+
             //row = Random.Range(1, rangeOfQuestionsMax);
             nonDuplicateRow(); //Generates a row number that is not on askedList.
 
@@ -177,6 +186,18 @@ public class ReadTSV : MonoBehaviour
 
             startX = 0.25f; //Set start values for coords.
             startY = 0.29f; // 0.25f by default
+
+            /*if (Find(row, 4) == null || Find(row, 4) == "") //there are 2 answers
+            {
+                Debug.Log("question has no 3rd answer");
+                panelSize = new Vector2((canvasRectTransform.sizeDelta.x * 0.9f) / 2, canvasRectTransform.sizeDelta.y * 0.5f); //Find panel size
+            }
+
+            if (Find(row, 6) != null || Find(row, 6) != "") //there are 4 answers
+            {
+                Debug.Log("question has 4th answer");
+
+            }*/
 
             panelSize = new Vector2((canvasRectTransform.sizeDelta.x * 0.9f) / 2, canvasRectTransform.sizeDelta.y * 0.25f); //Find panel size
 
@@ -197,7 +218,7 @@ public class ReadTSV : MonoBehaviour
                 Debug.Log("Text overflow");
             }
 
-            questionText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set siz of textbox
+            questionText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set size of textbox
 
             //Instantiating submit box
 
@@ -207,45 +228,88 @@ public class ReadTSV : MonoBehaviour
             submitText.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x / 2, canvasRectTransform.sizeDelta.y * 0.085f);
             
 
-            submitText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set siz of textbox
+            submitText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set size of textbox
             submitText.GetComponentInChildren<TextMeshProUGUI>().text = ("Submit Answer");
+            submitText.GetComponent<Transform>().GetChild(0).GetComponent<RectTransform>().localScale *= submitButtonSizeMultiplier;
 
             submitButton = submitText.GetComponent<Button>();
 
             Destroy(submitText.GetComponentInChildren<answersScript>());
 
-            //Instantiating answer boxes
-            for (int i = 0; i < 2; i++)
+            if (Find(row, 4) == "")
             {
-                GameObject tempPanelY = Instantiate(panel);
-                tempPanelY.transform.SetParent(canvas.transform);
-                tempPanelY.GetComponent<RectTransform>().sizeDelta = panelSize;
-
-                tempPanelY.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x * startX, canvasRectTransform.sizeDelta.y * startY);
-
-                tempPanelY.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = panelSize; //set size of textbox
-
-                answersList.Add(tempPanelY);
-
-                startX += 0.5f;
-
-                for (int j = 0; j < 1; j++)
+                Debug.Log("question has 2nd answer");
+                //Instantiating answer boxes
+                for (int i = 0; i < 2; i++)
                 {
-                    GameObject tempPanelZ = Instantiate(panel);
+                    GameObject tempPanelY = Instantiate(panel);
+                    tempPanelY.transform.SetParent(canvas.transform);
+                    tempPanelY.GetComponent<RectTransform>().sizeDelta = panelSize * new Vector2(1f, 1.5f); // Sets the size of the text-box for the answer
 
-                    tempPanelZ.transform.SetParent(canvas.transform);
-                    tempPanelZ.GetComponent<RectTransform>().sizeDelta = panelSize;
+                    tempPanelY.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x * startX, (canvasRectTransform.sizeDelta.y * startY) * 1.5f); // Sets the position of the text-box for the answer
 
-                    tempPanelZ.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
+                    tempPanelY.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = panelSize; 
+                    
+                    answersList.Add(tempPanelY);
 
-                    tempPanelZ.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = panelSize; //set size of textbox
+                    startX += 0.5f;
 
-                    answersList.Add(tempPanelZ);
+                    /*for (int j = 0; j < 1; j++)
+                    {
+                        GameObject tempPanelZ = Instantiate(panel);
 
-                    startX -= 0.5f;
-                    startY += 0.28f; //was 0.33
+                        tempPanelZ.transform.SetParent(canvas.transform);
+                        tempPanelZ.GetComponent<RectTransform>().sizeDelta = panelSize;
+
+                        tempPanelZ.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
+
+                        tempPanelZ.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = panelSize; //set size of textbox
+
+                        answersList.Add(tempPanelZ);
+
+                        startX -= 0.5f;
+                        startY += 0.28f; //was 0.33
+                    }*/
                 }
             }
+
+            else
+            {
+                Debug.Log("question has 4th answer");
+                //Instantiating answer boxes
+                for (int i = 0; i < 2; i++)
+                {
+                    GameObject tempPanelY = Instantiate(panel);
+                    tempPanelY.transform.SetParent(canvas.transform);
+                    tempPanelY.GetComponent<RectTransform>().sizeDelta = panelSize;
+
+                    tempPanelY.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x * startX, canvasRectTransform.sizeDelta.y * startY);
+
+                    tempPanelY.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = panelSize; //set size of textbox
+
+                    answersList.Add(tempPanelY);
+
+                    startX += 0.5f;
+
+                    for (int j = 0; j < 1; j++)
+                    {
+                        GameObject tempPanelZ = Instantiate(panel);
+
+                        tempPanelZ.transform.SetParent(canvas.transform);
+                        tempPanelZ.GetComponent<RectTransform>().sizeDelta = panelSize;
+
+                        tempPanelZ.GetComponent<RectTransform>().position = new Vector2((canvasRectTransform.sizeDelta.x * startX), canvasRectTransform.sizeDelta.y * startY);
+
+                        tempPanelZ.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = panelSize; //set size of textbox
+
+                        answersList.Add(tempPanelZ);
+
+                        startX -= 0.5f;
+                        startY += 0.28f; //was 0.33
+                    }
+                }
+            }
+
 
             panel.GetComponent<RectTransform>().sizeDelta = panelSize;
 
@@ -258,13 +322,25 @@ public class ReadTSV : MonoBehaviour
                 correctAnswers = 1;
                 Debug.LogWarning(this.name + " was unable to determine how many correct answers there are. It was automatically set to 1. - ask Istvan");
             }
-            
+
             /*for(int j = 0; j < correctAnswers; j++) //This determines which answers are the correct ones
             {
                 Debug.Log(j);
             }*/
 
-            List<int> orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
+            List<int> orderList; 
+            //List<int> orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
+
+            if(Find(row, 4) == "")
+            {
+                orderList = new List<int>(FisherYatesShuffle(Shuffle(2)));
+            }
+
+            else
+            {
+                orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
+            }
+
 
             for (int i = 0; i < answersList.Count; i++)
             {
@@ -290,7 +366,22 @@ public class ReadTSV : MonoBehaviour
             reloadSceneAtEnd = false;
         }
 
-        submitButton.onClick.AddListener(submitClicked);
+        amountSelected = 0;
+
+        for (int i = 0; i < answersList.Count; i++) // finds how many buttons have been selected
+        {
+            if (answersList[i].GetComponent<answersScript>().selected)
+            {
+                amountSelected++;
+            }
+        }
+
+        Debug.Log(amountSelected);
+        
+        if(amountSelected != 0) //allows submit to be clicked if something is selected //THIS IS'NT WORKING AS INTENDED
+        {
+            submitButton.onClick.AddListener(submitClicked);
+        }
 
         if (submit)
         {
@@ -375,9 +466,24 @@ public class ReadTSV : MonoBehaviour
         tempSingleSelected = singleSelected; //setting selected "last frame" to current
     }
 
-    void LateUpdate()
+    void OnGUI()
     {
-        
-    }
+        smallestFont = Mathf.Infinity;
 
+        for (int i = 0; i < answersList.Count; i++)
+        {
+            if (answersList[i].GetComponentInChildren<TextMeshProUGUI>().fontSize < smallestFont)
+            {
+                smallestFont = answersList[i].GetComponentInChildren<TextMeshProUGUI>().fontSize;
+            }
+        }
+
+        smallestFont = smallestFont * fontSizeMultiplier;
+
+        for (int i = 0; i < answersList.Count; i++)
+        {
+            answersList[i].GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = false;
+            answersList[i].GetComponentInChildren<TextMeshProUGUI>().fontSize = smallestFont;
+        }
+    }
 }
