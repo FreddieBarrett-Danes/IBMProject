@@ -289,9 +289,10 @@ public class ReadTSV : MonoBehaviour
 
             reloadSceneAtEnd = false;
         }
-
-        submitButton.onClick.AddListener(submitClicked);
-
+        if (submitButton != null)
+        {
+            submitButton.onClick.AddListener(submitClicked);
+        }
         if (submit)
         {
             //This segment resets all of the temp counte values
