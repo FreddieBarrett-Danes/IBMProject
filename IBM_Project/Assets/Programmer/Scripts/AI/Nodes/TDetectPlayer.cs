@@ -1,63 +1,66 @@
 using UnityEngine;
-using UnityEngine.AI;
 using BT;
 
 public class TDetectPlayer : BT_Node
 {
-    private readonly NavMeshAgent agent;
-    private readonly Transform transform;
     private readonly BotInfo botInfo;
     private readonly Perception perception;
     
-    public TDetectPlayer(NavMeshAgent pAgent, Transform pTransform, BotInfo pBotInfo, Perception pPerception)
+    public TDetectPlayer(BotInfo pBotInfo, Perception pPerception)
     {
-        agent = pAgent;
-        transform = pTransform;
         botInfo = pBotInfo;
         perception = pPerception;
     }
 
     public override NodeState Evaluate()
     {
-        if (!botInfo.engaging)
+        if (botInfo.bRecentlyChase)
+        {
+            botInfo.bRecentChaseTimer--;
+            if (botInfo.bRecentChaseTimer <= 0)
+            {
+                botInfo.bRecentlyChase = false;
+                botInfo.bRecentChaseTimer = botInfo.bRecentChaseTimerN;
+            }
+        }
+        if (!botInfo.bEngaging)
         {
             Vector3 playerPos = new();
-            botInfo.timer += Time.deltaTime;
-            if (botInfo.player)
-                playerPos = botInfo.player.transform.position;
-            Vector3 agentPos = agent.transform.position;
+            botInfo.bTimer += Time.deltaTime;
+            if (botInfo.bPlayer)
+                playerPos = botInfo.bPlayer.transform.position;
+            Vector3 agentPos = botInfo.transform.position;
             float range = Vector3.Distance(playerPos, agentPos);
             Vector3 toTarget = playerPos - agentPos;
             Vector3 dirToTarget = toTarget.normalized;
 
-            if (range < botInfo.viewRadius && Vector3.Angle(transform.forward, dirToTarget) < botInfo.viewAngle / 2 && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude, botInfo.ObstacleLayer))
+            if (range < botInfo.bViewRadius && Vector3.Angle(botInfo.transform.forward, dirToTarget) < botInfo.bViewAngle / 2 && !Physics.Raycast(botInfo.transform.position, dirToTarget, toTarget.magnitude, botInfo.bObstacleLayer))
             {
-                botInfo.targetVisible = null;
-                botInfo.detectionTimer += Time.deltaTime;
-                if (botInfo.detectionTimer >= 1.5)
+                botInfo.bDetectionTimer += Time.deltaTime;
+                perception.ClearFoV();
+                perception.AddMemory(botInfo.bPlayer.transform.gameObject);
+                botInfo.bDebugLastKnownPos = botInfo.bPlayer.transform.position;
+                botInfo.bPlayerInView = true;
+                if (botInfo.bDetectionTimer >= 1.5)
                 {
-                    botInfo.timer = botInfo.wanderTimer;
-                    botInfo.engaging = true;
-                    botInfo.targetVisible = botInfo.player.transform;
-                    botInfo.playerInView = true;
-                    perception.ClearFoV();
-                    perception.AddMemory(botInfo.player.transform.gameObject);
+                    botInfo.bTimer = botInfo.bWanderTimer;
+                    botInfo.bEngaging = true;
                     state = NodeState.SUCCESS;
                     return state;
                 }
-                perception.ClearFoV();
-                botInfo.playerInView = false;
-                botInfo.engaging = false;
+                botInfo.bPlayerInView = false;
+                botInfo.bEngaging = false;
                 state = NodeState.SUCCESS;
                 return state;
             }
+            botInfo.bPlayerInView = false;
             perception.ClearFoV();
             state = NodeState.FAILURE;
             return state;
         }
         perception.ClearFoV();
-        botInfo.playerInView = false;
-        botInfo.engaging = false;
+        botInfo.bPlayerInView = false;
+        botInfo.bEngaging = false;
         state = NodeState.SUCCESS;
         return state;
     }

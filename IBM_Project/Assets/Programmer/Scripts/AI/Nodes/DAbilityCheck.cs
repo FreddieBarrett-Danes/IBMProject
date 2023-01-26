@@ -14,7 +14,7 @@ public class DAbilityCheck : BT_Node
 
     public override NodeState Evaluate()
     {
-        foreach (Component t in botInfo.abilitiesList)
+        foreach (Component t in botInfo.bAbilitiesList)
         {
             if (t.GetType().ToString() == ability)
             {

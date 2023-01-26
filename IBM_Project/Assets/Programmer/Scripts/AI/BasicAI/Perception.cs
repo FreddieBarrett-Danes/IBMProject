@@ -34,20 +34,16 @@ public class Perception : MonoBehaviour
         memoryMap.Values.CopyTo(sensedRecord, 0);
     }
 }
-
 [Serializable]
 public class MemoryRecord
 {
     public DateTime timeLastSensed;
-
     [SerializeField]
     public Vector3 lastSensedPosition;
-
     [SerializeField]
     public bool withinFoV;
-
     [SerializeField]
-    public string timeLastSenseStr;
+    //public string timeLastSenseStr;
 
     public MemoryRecord()
     {
@@ -61,6 +57,6 @@ public class MemoryRecord
         timeLastSensed = TTime;
         lastSensedPosition = TPos;
         withinFoV = TFoV;
-        timeLastSenseStr = TTime.ToLongTimeString();
+        //timeLastSenseStr = TTime.ToLongTimeString();
     }
 }

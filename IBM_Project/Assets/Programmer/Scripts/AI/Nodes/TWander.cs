@@ -5,34 +5,27 @@ using BT;
 public class TWander : BT_Node
 {
     private readonly NavMeshAgent agent;
-    private readonly Transform transform;
     private readonly BotInfo botInfo;
 
-    public TWander(NavMeshAgent pAgent, Transform pTransform, BotInfo pbotInfo)
+    public TWander(NavMeshAgent pAgent, BotInfo pbotInfo)
     {
         agent = pAgent;
-        transform = pTransform;
         botInfo = pbotInfo;
     }
 
     public override NodeState Evaluate()
     {
-        botInfo.timer += Time.deltaTime;
-        if (botInfo.timer >= botInfo.wanderTimer)
+        botInfo.bTimer += Time.deltaTime;
+        if (botInfo.bTimer >= botInfo.bWanderTimer)
         {
-            Vector3 newPos = RandomNavSphere(transform.position, botInfo.wanderRadius, -1);
-            agent.SetDestination(newPos);
-            botInfo.timer = 0;
+            Vector3 randomPoint = Random.insideUnitCircle * botInfo.bWanderRadius;
+            randomPoint += Random.insideUnitSphere * botInfo.bWanderJitter;
+            botInfo.bWanderTarget = botInfo.transform.position + botInfo.transform.forward * botInfo.bWanderDistance + randomPoint;
+            NavMesh.SamplePosition(botInfo.bWanderTarget, out NavMeshHit navHit, botInfo.bWanderDistance, -1);
+            agent.SetDestination(navHit.position);
+            botInfo.bTimer = 0;
         }
         state = NodeState.RUNNING;
         return state;
-    }
-    
-    private static Vector3 RandomNavSphere(Vector3 origin, float distance, int layerMask)
-    {
-        Vector3 randDir = Random.insideUnitSphere * distance;
-        randDir += origin;
-        NavMesh.SamplePosition(randDir, out NavMeshHit navHit, distance, layerMask);
-        return navHit.position;
     }
 }

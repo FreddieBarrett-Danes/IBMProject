@@ -1,101 +1,135 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BotInfo : MonoBehaviour
 {
     // Misc
-    public int threatLevel;
-    public int botCount;
-    public int remainingBots;
-    public Transform targetVisible;
-    public LayerMask ObstacleLayer;
-    public List<Component> abilitiesList;
-    private bool abilityAdd;
+    [Header("Misc Settings")]
+    public int bThreatLevel;
+    public int bBotCount;
+    public int bRemainingBots;
+    public LayerMask bObstacleLayer;
+    public List<Component> bAbilitiesList;
+    private bool bAbilityAdd;
     
     // Throwing
-    public Transform shotStart;
-    public float projectileSpeed;
-    public float fireRate = 0.5f;
-    public float nextFire;
-    public Shooting shooting;
-    private GameObject visuals;
+    [Header("Ranged Attack Settings")] 
+    public float bFireRate = 0.5f;
+    [HideInInspector]
+    public Transform bShotStart;
+    [HideInInspector]
+    public float bProjectileSpeed;
+    [HideInInspector]
+    public float bNextFire;
+    [HideInInspector]
+    public Shooting bShooting;
+    private GameObject bVisuals;
 
     // Patrol
-    public bool createPoints;
-    public Transform[] patrol;
-    public int destPoint;
-    public bool start;
-    public bool pointLoop;
-    public int direction = 1;
-    public int pointInArray;
-    public int stopArray;
+    [Header("Patrol Settings")] 
+    public bool bPointLoop;
+    [HideInInspector]
+    public bool bCreatePoints;
+    [HideInInspector]
+    public Transform[] bPatrol;
+    [HideInInspector]
+    public int bDestPoint;
+    [HideInInspector]
+    public bool bStart;
+    [HideInInspector]
+    public int bDirection = 1;
+    [HideInInspector]
+    public int bPointInArray;
+    [HideInInspector]
+    public int bStopArray;
     
     // Wander
-    public float wanderRadius;
-    public float wanderTimer;
-    public float timer;
+    [Header("Wander Settings")] 
+    [HideInInspector]
+    public bool bRecentlyChase;
+    public float bWanderRadius;
+    public float bWanderTimer;
+    public float bWanderDistance;
+    public float bWanderJitter;
+    [HideInInspector]
+    public Vector3 bWanderTarget;
+    [HideInInspector]
+    public float bTimer;
     
     // LockOn
-    public GameObject player;
-    public float viewRadius;
+    [Header("Player Chase Settings")]
+    public GameObject bPlayer;
+    public float bViewRadius;
     [Range(0, 360)] 
-    public float viewAngle;
-    public float detectionTimer;
-    public bool engaging;
-
+    public float bViewAngle;
+    [HideInInspector] 
+    public float bViewAngleN;
+    [HideInInspector]
+    public float bViewAngleD;
+    [HideInInspector]
+    public float bDetectionTimer;
+    [HideInInspector]
+    public bool bEngaging;
+    public float bSpeed;
+    public float bRotationSpeed;
+    [HideInInspector]
+    public Vector3 bPreviousPos;
+    [HideInInspector]
+    public Vector3 bVelocity;
+    public float bPredictionTime;
+    public float bRecentChaseTimer;
+    [HideInInspector]
+    public float bRecentChaseTimerN;
+    
     // Suspicious
-    public Vector3 lastKnownPos;
-    public float suspiciousRadius;
-    public float susTimer;
-    public float stimer;
-    public bool playerInView;
+    [Header("Suspicious Settings")]
+    public float bSuspiciousRadius;
+    public float bSuspiciousTimer;
+    public int bSearchTime;
+    [HideInInspector]
+    public Vector3 bDebugLastKnownPos;
+    [HideInInspector]
+    public float bSusTimer;
+    [HideInInspector]
+    public bool bPlayerInView;
 
     private void Start()
     {
-        pointInArray = direction > 0 ? 0 : patrol.Length - 1; 
-        stopArray = direction > 0 ? patrol.Length : -1;
-        visuals = gameObject.transform.GetChild(1).gameObject;
-        projectileSpeed = 1000.0f;
-        shooting = gameObject.AddComponent<Shooting>();
-        shooting.SetHost(visuals);
-        shooting.bulletSpeed = projectileSpeed;
-        shotStart = gameObject.transform.GetChild(2);
-        player = GameObject.FindGameObjectWithTag("Player");
-        destPoint = 0;
-        nextFire = fireRate;
-        timer = wanderTimer;
-        stimer = susTimer;
-        detectionTimer = 0;
-        botCount = BotCalc();
-        remainingBots = BotCalc();
-        targetVisible = null;
-        ObstacleLayer = LayerMask.NameToLayer("Obstacle");
-        abilitiesList = new List<Component>();
-        abilityAdd = false;
+        // Misc
+        bBotCount = BotCalc();
+        bRemainingBots = BotCalc();
+        bObstacleLayer = LayerMask.NameToLayer("Obstacle");
+        bAbilitiesList = new List<Component>();
+        bAbilityAdd = false;
+        // Ranged Attack
+        bVisuals = gameObject.transform.GetChild(0).GetChild(1).gameObject;
+        bProjectileSpeed = 1000.0f;
+        bShooting = gameObject.AddComponent<Shooting>();
+        bShooting.SetHost(bVisuals);
+        bShooting.bulletSpeed = bProjectileSpeed;
+        bShotStart = gameObject.transform.GetChild(0).GetChild(2);
+        bNextFire = bFireRate;
+        // Patrol
+        bPointInArray = bDirection > 0 ? 0 : bPatrol.Length - 1; 
+        bStopArray = bDirection > 0 ? bPatrol.Length : -1;
+        bDestPoint = 0;
+        // Wander
+        bTimer = bWanderTimer;
+        // LockOn
+        bDetectionTimer = 0;
+        bRecentChaseTimerN = bRecentChaseTimer;
+        // Suspicious
+        bSusTimer = bSuspiciousTimer;
     }
 
     private void LateUpdate()
     {
-        remainingBots = BotCalc();
-        if (abilityAdd) return;
-        abilitiesList.AddRange(GetComponents(typeof(Ability)));
-        abilityAdd = true;
-    }
-
-    public BotInfo()
-    {
-        threatLevel = 1;
-        start = false;
-        wanderRadius = 1f;
-        wanderTimer = 1f;
-        viewRadius = 1f;
-        viewAngle = 1f;
-        engaging = false;
-        suspiciousRadius = 1f;
-        susTimer = 1f;
-        playerInView = false;
-        pointLoop = true;
+        bRemainingBots = BotCalc();
+        if (bAbilityAdd) return;
+        bAbilitiesList.AddRange(GetComponents(typeof(Ability)));
+        bAbilityAdd = true;
     }
 
     private static int BotCalc()
@@ -103,5 +137,11 @@ public class BotInfo : MonoBehaviour
         BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
         List<GameObject> bots = botScripts.Select(t => t.transform.root.gameObject).ToList();
         return bots.Count;
+    }
+    
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawLine(transform.position, GetComponent<NavMeshAgent>().destination);
     }
 }

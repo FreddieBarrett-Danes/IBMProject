@@ -11,7 +11,7 @@ public class DBoolCheckInverted : BT_Node
 
     public override NodeState Evaluate()
     {
-        switch (bot.playerInView)
+        switch (bot.bPlayerInView)
         {
             case true:
                 state = NodeState.FAILURE;

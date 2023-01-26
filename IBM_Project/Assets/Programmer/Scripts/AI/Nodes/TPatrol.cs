@@ -17,57 +17,64 @@ public class TPatrol : BT_Node
 
     public override NodeState Evaluate()
     {
-        if (botInfo.createPoints == false)
+        if (botInfo.bCreatePoints == false)
         {
-            patrolPoints = botInfo.transform.root.Find("PatrolPath").gameObject;
-            Resize(ref botInfo.patrol, patrolPoints.transform.childCount);
+            patrolPoints = botInfo.transform.GetChild(1).gameObject;
+            Resize(ref botInfo.bPatrol, patrolPoints.transform.childCount);
             for (int i = 0; i < patrolPoints.transform.childCount; i++)
             {
-                botInfo.patrol[i] = patrolPoints.transform.GetChild(i).transform;
+                botInfo.bPatrol[i] = patrolPoints.transform.GetChild(i).transform;
             }
-            botInfo.createPoints = true;
+            botInfo.bCreatePoints = true;
         }
-        if (!botInfo.start)
+        if (!botInfo.bStart)
         {
             if (!agent.pathPending && agent.remainingDistance < 0.25f)
             {
-                agent.destination = botInfo.patrol[botInfo.destPoint].position;
-                switch (botInfo.pointLoop)
+                agent.destination = botInfo.bPatrol[botInfo.bDestPoint].position;
+                switch (botInfo.bPointLoop)
                 {
                     case true:
-                        botInfo.destPoint = (botInfo.destPoint + 1) % botInfo.patrol.Length;
+                        botInfo.bDestPoint = (botInfo.bDestPoint + 1) % botInfo.bPatrol.Length;
                         break;
                     case false:
-                        if (botInfo.pointInArray != botInfo.stopArray)
+                        if (botInfo.bPointInArray != botInfo.bStopArray)
                         {
-                            botInfo.destPoint = botInfo.pointInArray;
-                            botInfo.pointInArray += botInfo.direction;
-                            Debug.Log(botInfo.destPoint);
-                            Debug.Log(botInfo.pointInArray);
-                            Debug.Log(botInfo.direction);
+                            botInfo.bDestPoint = botInfo.bPointInArray;
+                            botInfo.bPointInArray += botInfo.bDirection;
+                            Debug.Log(botInfo.bDestPoint);
+                            Debug.Log(botInfo.bPointInArray);
+                            Debug.Log(botInfo.bDirection);
                         }
                         break;
                 }
             }
         }
-        if (botInfo.engaging == false)
+        if (botInfo.bEngaging == false)
         {
-            botInfo.playerInView = false;
-            if (botInfo.patrol.Length == 0)
+            botInfo.bPlayerInView = false;
+            if (botInfo.bPatrol.Length == 0)
             {
                 state = NodeState.FAILURE;
                 return state;
             }
             if (!agent.pathPending && agent.remainingDistance < 0.25f)
             {
-                agent.destination = botInfo.patrol[botInfo.destPoint].position;
-                switch (botInfo.pointLoop)
+                agent.destination = botInfo.bPatrol[botInfo.bDestPoint].position;
+                switch (botInfo.bPointLoop)
                 {
                     case true:
-                        botInfo.destPoint = (botInfo.destPoint + 1) % botInfo.patrol.Length;
+                        botInfo.bDestPoint = (botInfo.bDestPoint + 1) % botInfo.bPatrol.Length;
                         break;
                     case false:
-                        // Not loop
+                        if (botInfo.bPointInArray != botInfo.bStopArray)
+                        {
+                            botInfo.bDestPoint = botInfo.bPointInArray;
+                            botInfo.bPointInArray += botInfo.bDirection;
+                            Debug.Log(botInfo.bDestPoint);
+                            Debug.Log(botInfo.bPointInArray);
+                            Debug.Log(botInfo.bDirection);
+                        }
                         break;
                 }
             }

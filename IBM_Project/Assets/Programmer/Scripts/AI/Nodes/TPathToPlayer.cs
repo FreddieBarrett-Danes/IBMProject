@@ -14,9 +14,12 @@ public class TPathToPlayer : BT_Node
 
     public override NodeState Evaluate()
     {
-        agent.SetDestination(botInfo.player.transform.position);
-        botInfo.timer = botInfo.wanderTimer;
-        botInfo.engaging = false;
+        Vector3 pVelocity = botInfo.bPlayer.GetComponent<Rigidbody>().velocity;
+        Vector3 bTargetPos = botInfo.bPlayer.transform.position + pVelocity * botInfo.bPredictionTime;
+        botInfo.bRecentlyChase = true;
+        agent.SetDestination(bTargetPos);
+        botInfo.bTimer = botInfo.bWanderTimer;
+        botInfo.bEngaging = false;
         state = NodeState.SUCCESS;
         return state;
     }

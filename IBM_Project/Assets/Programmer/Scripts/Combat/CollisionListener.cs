@@ -18,11 +18,11 @@ public class CollisionListener : MonoBehaviour
     {
         if(other == player.GetComponent<CapsuleCollider>())
         {
-            if (player.GetComponent<PlayerController>().threatLevel < this.gameObject.GetComponentInParent<BotInfo>().threatLevel)
+            if (player.GetComponent<PlayerController>().threatLevel < this.gameObject.GetComponentInParent<BotInfo>().bThreatLevel)
             {
                 Destroy(player);
             }
-            else if (player.GetComponent<PlayerController>().threatLevel > this.gameObject.GetComponentInParent<BotInfo>().threatLevel)
+            else if (player.GetComponent<PlayerController>().threatLevel > this.gameObject.GetComponentInParent<BotInfo>().bThreatLevel)
             {
                 Destroy(this.gameObject.transform.parent.gameObject);
             }
