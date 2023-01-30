@@ -15,13 +15,13 @@ public class DoorsScript : MonoBehaviour
     private GameObject player;
     private float distToPlayer;
 
-    public List<GameObject> enemies = new List<GameObject>();
-    public float nearestEnemy;
+    private List<GameObject> enemies = new List<GameObject>();
+    private float nearestEnemy;
 
     [SerializeField]
-    private float activateDist;     // Distance between player and door to open
+    private float activateDistance;     // Distance between player and door to open
     [SerializeField]
-    private float openDist;          // How far doors should open
+    private float openDistance;         // How far doors should open
 
     private bool isOpen;
     private bool wasOpen;
@@ -33,14 +33,15 @@ public class DoorsScript : MonoBehaviour
     public float lerpMultiplier;
     public float lerpTime;
 
-    private Vector3 tempStart;
-    private Vector3 tempTarget;
+    private Vector3 start;
+    private Vector3 target;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         ADoors = this.gameObject.transform.Find("ADoor");
         BDoors = this.gameObject.transform.Find("BDoor");
+
 
         FindEnemiesInScene();
 
@@ -62,7 +63,7 @@ public class DoorsScript : MonoBehaviour
 
         distToPlayer = (this.transform.position - player.transform.position).magnitude;
 
-        if(distToPlayer < activateDist || nearestEnemy < activateDist) //open door
+        if(distToPlayer < activateDistance || nearestEnemy < activateDistance) //open door
         {
             isOpen = true;
         }
@@ -78,14 +79,14 @@ public class DoorsScript : MonoBehaviour
             if (isOpen)
             {
                 OpenDoor();
-                tempStart = new Vector3(-openDist, restingDoorPos.y, restingDoorPos.z);
-                tempTarget = restingDoorPos;
+                start = new Vector3(-openDistance, restingDoorPos.y, restingDoorPos.z);
+                target = restingDoorPos;
             }
             if (!isOpen)
             {
                 CloseDoor();
-                tempTarget = new Vector3(-openDist, restingDoorPos.y, restingDoorPos.z);
-                tempStart = restingDoorPos;
+                target = new Vector3(-openDistance, restingDoorPos.y, restingDoorPos.z);
+                start = restingDoorPos;
             }
         }
 
@@ -95,7 +96,7 @@ public class DoorsScript : MonoBehaviour
 
             lerpTime = (lerpTime + Time.deltaTime) * lerpMultiplier;
 
-            LerpLocation = Vector3.Lerp(tempStart, restingDoorPos, lerpTime);
+            LerpLocation = Vector3.Lerp(start, restingDoorPos, lerpTime);
 
             if(lerpTime > 1f)
             {
@@ -108,8 +109,8 @@ public class DoorsScript : MonoBehaviour
 
     private void OpenDoor()
     {
-        ADoors.transform.localPosition = new Vector3(-openDist, restingDoorPos.y, restingDoorPos.z);
-        BDoors.transform.localPosition = new Vector3(openDist, restingDoorPos.y, restingDoorPos.z);
+        ADoors.transform.localPosition = new Vector3(-openDistance, restingDoorPos.y, restingDoorPos.z);
+        BDoors.transform.localPosition = new Vector3(openDistance, restingDoorPos.y, restingDoorPos.z);
     }
 
     private void CloseDoor()
