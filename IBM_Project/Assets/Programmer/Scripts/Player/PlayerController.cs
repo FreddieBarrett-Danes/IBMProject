@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
-{
+{   
     public float speed;
 
     public GameObject visuals;
@@ -42,8 +42,8 @@ public class PlayerController : MonoBehaviour
     //visual player representation will be changed when using sprites
     private Color playerColor;
 
-
-    private List<Ability> abilities;
+    //maybe be unesscary see what comes from development
+    //private List<Ability> abilities;
 
     private void Start()
     {

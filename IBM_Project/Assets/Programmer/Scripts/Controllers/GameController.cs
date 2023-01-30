@@ -7,6 +7,9 @@ public class GameController : MonoBehaviour
     //keeps track of if a bot has alerted, is safe or is hunting maybe keep[ track in player controller
     //keeps track if in lavel/mingame or quiz
     private LevelTimer levelTimer;
+    private GameObject level;
+    private ComputerInteraction cI;
+    public bool inMinigame = false;
 
     public float LevelTimeBank = 0.0f;
     public bool completedLevel = false;
@@ -14,7 +17,9 @@ public class GameController : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
-        levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
+        level = GameObject.FindGameObjectWithTag("Level");
+        cI = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
+        //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
     }
 
     // Update is called once per frame
@@ -22,11 +27,31 @@ public class GameController : MonoBehaviour
     {
         if (!completedLevel)
         {
-            //playing level
+            if(inMinigame)
+            {
+                level.SetActive(false);
+                if (cI.chosenMinigame != null)
+                {
+                    cI.chosenMinigame.SetActive(true);
+                }
+            }
+            else
+            {
+                GameObject[] mazeWalls = GameObject.FindGameObjectsWithTag("mazeWall");
+                for(int i = 0; i < mazeWalls.Length; i++)
+                {
+                    Destroy(mazeWalls[i]);
+                }
+                level.SetActive(true);
+                if (cI.chosenMinigame != null)
+                {
+                    cI.chosenMinigame.SetActive(false);
+                }
+            }
         }
         else
         {
-            LevelTimeBank += levelTimer.currentTime;
+            //LevelTimeBank += levelTimer.currentTime;
         }
     }
 }

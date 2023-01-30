@@ -9,8 +9,12 @@ public class ComputerInteraction : MonoBehaviour
     private GameObject level;
 
     public GameObject[] enemies;
+    public GameObject chosenMinigame;
 
+    private GameController gameController;
     private int minigameCount;
+
+    public bool completedMinigame = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,27 +22,34 @@ public class ComputerInteraction : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         minigameHolder = GameObject.FindGameObjectWithTag("Minigames");
         level = GameObject.FindGameObjectWithTag("Level");
+        gameController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>();
     }
     private void OnTriggerStay(Collider other)
     {
         if(other == player.GetComponent<CapsuleCollider>() && Input.GetKeyDown(KeyCode.E))
         {
-            minigameCount = minigameHolder.transform.childCount;
-            int randomMinigame = Mathf.RoundToInt(Random.Range(0, minigameCount - 1));
-            GameObject chosenMinigame = minigameHolder.transform.GetChild(randomMinigame).gameObject;
-
-            if(!chosenMinigame.active)
+            if (!completedMinigame)
             {
-                chosenMinigame.SetActive(true);
-                level.SetActive(false);
+                minigameCount = minigameHolder.transform.childCount;
+                int randomMinigame = Mathf.RoundToInt(Random.Range(0, minigameCount - 1));
+                chosenMinigame = minigameHolder.transform.GetChild(randomMinigame).gameObject;
 
+                if (!chosenMinigame.active)
+                {
+                    gameController.inMinigame = true;
+
+                }
+            }
+            else
+            {
+                foreach (GameObject enemy in enemies)
+                {
+                    Destroy(enemy);
+                }
+                enemies = null;
+                completedMinigame = false;
             }
 
-            foreach(GameObject enemy in enemies)
-            {
-                Destroy(enemy);
-            }
-            enemies = null;
         }
     }
 }
