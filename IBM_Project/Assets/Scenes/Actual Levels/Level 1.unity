@@ -36157,7 +36157,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &875335994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64035,7 +64035,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2262967250685415509, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262967250685415510, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
+      propertyPath: row
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2262967250685415510, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
       propertyPath: find
@@ -64046,8 +64050,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6259634388974335316, guid: aa8379325a677064cb9223ef3b9da08f, type: 3}
     - target: {fileID: 2262967250685415510, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
+      propertyPath: waitTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262967250685415510, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
       propertyPath: questionsInARow
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262967250685415510, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
+      propertyPath: fontSizeMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262967250685415510, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
+      propertyPath: rangeOfQuestionsMax
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262967250685415510, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
+      propertyPath: submitButtonSizeMultiplier
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 2262967250685415511, guid: 46a0d1ee3a8ced64094e6f03a37698a1, type: 3}
       propertyPath: m_RootOrder
@@ -64302,6 +64322,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ac44c0274fbca489c9cb968d56a894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  quizMaster: {fileID: 0}
+  reader: {fileID: 0}
   debug: {x: 0, y: 0, z: 0}
 --- !u!1 &1591031923
 GameObject:

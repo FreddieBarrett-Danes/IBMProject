@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class elevator : MonoBehaviour
 {
+    [SerializeField]
     private GameObject player;
+    [SerializeField]
     private GameObject quizMaster;
+    [SerializeField]
     private ReadTSV reader;
 
     public Vector3 debug;
@@ -17,11 +20,9 @@ public class elevator : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        quizMaster = GameObject.Find("QuizMaster");
-        if (reader != null)
-        {
-            reader = quizMaster.GetComponent<ReadTSV>();
-        }
+        quizMaster = GameObject.FindGameObjectWithTag("QuizMaster");
+        reader = quizMaster.GetComponent<ReadTSV>();
+
         cam = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
