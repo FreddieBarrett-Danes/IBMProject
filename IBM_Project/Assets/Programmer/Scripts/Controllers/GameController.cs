@@ -10,6 +10,11 @@ public class GameController : MonoBehaviour
     private GameObject level;
     private ComputerInteraction cI;
     public bool inMinigame = false;
+    public GameObject Canvas;
+
+    private GameObject chosenCanvas = null;
+
+    private List<GameObject> canvasElements;
 
     public float LevelTimeBank = 0.0f;
     public bool completedLevel = false;
@@ -27,6 +32,10 @@ public class GameController : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
+        foreach (Transform child in Canvas.transform)
+        {
+            canvasElements.Add(child.gameObject);
+        }
         level = GameObject.FindGameObjectWithTag("Level");
         cI = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
         PlayerStatus = Status.SAFE;
@@ -43,7 +52,16 @@ public class GameController : MonoBehaviour
                 level.SetActive(false);
                 if (cI.chosenMinigame != null)
                 {
+                    for (int i = 0; i < canvasElements.Count; i++)
+                    {
+                        if (canvasElements[i].tag == cI.chosenMinigame.tag)
+                        {
+                            chosenCanvas = canvasElements[i];
+                        }
+                    }
+                    chosenCanvas.SetActive(true);
                     cI.chosenMinigame.SetActive(true);
+
                 }
             }
             else
@@ -57,6 +75,7 @@ public class GameController : MonoBehaviour
                 if (cI.chosenMinigame != null)
                 {
                     cI.chosenMinigame.SetActive(false);
+                    chosenCanvas.SetActive(false);
                 }
             }
         }
