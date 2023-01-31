@@ -89,7 +89,7 @@ public class walGen : MonoBehaviour
     Stack<Vector2> visitedStack;
 
 
-    public Vector3 cameraPosition;
+    //public Vector3 cameraPosition;
     Vector3 preGoalLocation;
     int goalLocationRng;
 
@@ -329,8 +329,8 @@ public class walGen : MonoBehaviour
         visitedStack = new Stack<Vector2>();
         mazeReady = false;
         Application.targetFrameRate = frameRate;
-        GameObject.FindGameObjectWithTag("MainCamera").transform.position = cameraPosition;
-        GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.white;
+        //GameObject.FindGameObjectWithTag("MainCamera").transform.position = cameraPosition;
+        //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.white;
         //pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
         Debug.Log("Pregame enabled: " + pregameText.GetComponent<TextMeshProUGUI>().enabled);
         pregameText.GetComponent<TextMeshProUGUI>().enabled = showPregameTutorial; //for debugging and clearer demonstration of wall generation
