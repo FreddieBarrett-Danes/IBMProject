@@ -452,13 +452,16 @@ public class walGen : MonoBehaviour
 
     IEnumerator destroyWall()
     {
-        float delay = 0.035f; //0.035f;
+        float delay = 0.035f; //0.0175f; //0.035f;
+
+        //delay = (1 / frameRate) * 2;
+        Debug.Log(delay);
         //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
         //yield return new WaitForSeconds(delay);
 
         int cellCount = 0;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(delay);
 
         targetPosGrid = gridMovement(currentPosGrid);
         //targetPosWorld.transform.position = convertToWorld(targetPosGrid);
