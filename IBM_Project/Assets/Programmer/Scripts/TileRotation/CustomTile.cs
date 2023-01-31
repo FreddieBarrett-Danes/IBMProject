@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class CustomTile
 {
-    public Vector2 Pos;
+    //public Vector2 Pos;
     public bool[] Directions;
     public bool Visited;
+    //public string Type;
+    public tileType type;
 
-
-    public CustomTile(Vector2 Pos, bool[] Directions, bool Visited)
+    public enum tileType
     {
-        this.Pos = Pos;
-        this.Directions = Directions;
+        UpDown,
+        LeftRight,
+        //--
+        DownRight,
+        DownLeft,
+        UpLeft,
+        UpRight,
+        //---
+        //---
+        StartUp,
+        StartDown,
+        StartLeft,
+        StartRight
+    }
+
+    //public CustomTile(Vector2 Pos, bool[] Directions, bool Visited)
+    public CustomTile(tileType type, bool Visited)
+    {
+        //this.Pos = Pos;
+        this.type = type;
         this.Visited = Visited;
+        type = tileType.UpDown;
     }
 }
