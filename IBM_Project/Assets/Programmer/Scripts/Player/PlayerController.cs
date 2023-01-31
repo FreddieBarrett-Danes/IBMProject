@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager;
-using UnityEditor.SceneManagement;
+//using UnityEditor.PackageManager;
+//using UnityEditor.SceneManagement;
 //sing UnityEditor.AI;
 using UnityEngine;
-using UnityEngine.AI;
+//using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {   
