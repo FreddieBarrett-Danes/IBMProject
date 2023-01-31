@@ -42,7 +42,6 @@ public class DoorsScript : MonoBehaviour
         ADoors = this.gameObject.transform.Find("ADoor");
         BDoors = this.gameObject.transform.Find("BDoor");
 
-
         FindEnemiesInScene();
 
         restingDoorPos = ADoors.localPosition;
@@ -51,7 +50,7 @@ public class DoorsScript : MonoBehaviour
     void Update()
     {
         nearestEnemy = (this.transform.position - player.transform.position).magnitude;
-        nearestEnemy = 100f;
+        nearestEnemy = Mathf.Infinity;
 
         for(int i = 0; i < enemies.Count; i++)
         {
@@ -124,7 +123,7 @@ public class DoorsScript : MonoBehaviour
         enemies.Clear();
 
         BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
-        enemies = botScripts.Select(t => t.transform.root.gameObject).ToList();
+        enemies = botScripts.Select(t => t.transform.gameObject).ToList();
     }
 
     /*public Vector3 LerpBetween(Vector3 startPos, Vector3 endPos, float lerpTime)
