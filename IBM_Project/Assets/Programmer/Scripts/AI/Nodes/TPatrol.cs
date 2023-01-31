@@ -19,7 +19,7 @@ public class TPatrol : BT_Node
     {
         if (botInfo.bCreatePoints == false)
         {
-            patrolPoints = botInfo.transform.GetChild(1).gameObject;
+            patrolPoints = botInfo.bPaths.transform.GetChild(0).gameObject;
             Resize(ref botInfo.bPatrol, patrolPoints.transform.childCount);
             for (int i = 0; i < patrolPoints.transform.childCount; i++)
             {

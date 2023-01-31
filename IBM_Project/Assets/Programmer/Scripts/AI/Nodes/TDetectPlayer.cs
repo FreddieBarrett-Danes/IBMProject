@@ -14,6 +14,14 @@ public class TDetectPlayer : BT_Node
 
     public override NodeState Evaluate()
     {
+        if (botInfo.bPlayer)
+        {
+            perception.ClearFoV();
+            botInfo.bPlayerInView = false;
+            botInfo.bEngaging = false;
+            state = NodeState.SUCCESS;
+            return state;
+        }
         if (botInfo.bRecentlyChase)
         {
             botInfo.bRecentChaseTimer--;

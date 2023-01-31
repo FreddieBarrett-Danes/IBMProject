@@ -12,6 +12,7 @@ public class BasicBT : BT_Tree
             {
                 new TDetectPlayer(GetComponent<BotInfo>(), GetComponent<Perception>()),
                 new TPathToPlayer(GetComponent<NavMeshAgent>(),GetComponent<BotInfo>()),
+                new TRangedAttack(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>())
             }),
             new BT_Sequence(new List<BT_Node>
             {

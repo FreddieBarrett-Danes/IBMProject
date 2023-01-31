@@ -20,7 +20,9 @@ public class CameraMovement : MonoBehaviour
         }
         else
         {
-            Vector3 temp = new Vector3(player.transform.position.x, gameObject.transform.position.y, player.transform.position.z);
+            if (!player) return;
+            Vector3 temp = new Vector3(player.transform.position.x, gameObject.transform.position.y,
+                player.transform.position.z);
             gameObject.transform.position = temp;
             gameObject.GetComponent<Camera>().orthographicSize = 5.0f;
         }

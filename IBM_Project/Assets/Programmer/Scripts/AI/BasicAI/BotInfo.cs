@@ -29,6 +29,7 @@ public class BotInfo : MonoBehaviour
 
     // Patrol
     [Header("Patrol Settings")] 
+    public GameObject bPaths;
     public bool bPointLoop;
     [HideInInspector]
     public bool bCreatePoints;
@@ -112,6 +113,7 @@ public class BotInfo : MonoBehaviour
         bShotStart = gameObject.transform.GetChild(0).GetChild(2);
         bNextFire = bFireRate;
         // Patrol
+        bPaths = GameObject.Find("PatrolPaths");
         bPointInArray = bDirection > 0 ? 0 : bPatrol.Length - 1; 
         bStopArray = bDirection > 0 ? bPatrol.Length : -1;
         bDestPoint = 0;
