@@ -13,12 +13,23 @@ public class GameController : MonoBehaviour
 
     public float LevelTimeBank = 0.0f;
     public bool completedLevel = false;
+
+    public enum Status
+    {
+        SAFE,
+        ALERTED,
+        HUNTED
+    }
+
+    public Status PlayerStatus;
+    
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(this);
         level = GameObject.FindGameObjectWithTag("Level");
         cI = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
+        PlayerStatus = Status.SAFE;
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
     }
 
