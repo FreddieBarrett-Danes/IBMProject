@@ -7,14 +7,16 @@ public class GameController : MonoBehaviour
     //keeps track of if a bot has alerted, is safe or is hunting maybe keep[ track in player controller
     //keeps track if in lavel/mingame or quiz
     private LevelTimer levelTimer;
-    private GameObject level;
+    public GameObject level;
     private ComputerInteraction cI;
     public bool inMinigame = false;
-    public GameObject Canvas;
+    public Canvas canvas;
 
     private GameObject chosenCanvas = null;
 
-    private List<GameObject> canvasElements;
+    public RectTransform[] canvasElements;
+
+    
 
     public float LevelTimeBank = 0.0f;
     public bool completedLevel = false;
@@ -32,11 +34,14 @@ public class GameController : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
-        foreach (Transform child in Canvas.transform)
+
+        //dont use get component here
+        canvasElements = canvas.gameObject.GetComponentsInChildren<RectTransform>();
+        /*foreach (Transform child in Canvas.transform)
         {
             canvasElements.Add(child.gameObject);
-        }
-        level = GameObject.FindGameObjectWithTag("Level");
+        }*/
+        //level = GameObject.FindGameObjectWithTag("Level");
         cI = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
         PlayerStatus = Status.SAFE;
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
@@ -52,11 +57,11 @@ public class GameController : MonoBehaviour
                 level.SetActive(false);
                 if (cI.chosenMinigame != null)
                 {
-                    for (int i = 0; i < canvasElements.Count; i++)
+                    for (int i = 0; i < canvasElements.Length; i++)
                     {
                         if (canvasElements[i].tag == cI.chosenMinigame.tag)
                         {
-                            chosenCanvas = canvasElements[i];
+                            //chosenCanvas = canvasElements[i];
                         }
                     }
                     chosenCanvas.SetActive(true);
