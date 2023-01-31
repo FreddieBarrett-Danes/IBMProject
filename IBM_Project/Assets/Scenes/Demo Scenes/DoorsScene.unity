@@ -611,6 +611,7 @@ MonoBehaviour:
   bThreatLevel: 0
   bBotCount: 0
   bRemainingBots: 0
+  bStatus: 0
   bObstacleLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -770,6 +771,7 @@ MonoBehaviour:
   bThreatLevel: 0
   bBotCount: 0
   bRemainingBots: 0
+  bStatus: 0
   bObstacleLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -876,6 +878,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9055653331049746319, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
       propertyPath: isLerping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9055653331049746319, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
+      propertyPath: moveSpeed
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9055653331049746319, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
+      propertyPath: lerpMultiplier
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9055653331049746319, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
