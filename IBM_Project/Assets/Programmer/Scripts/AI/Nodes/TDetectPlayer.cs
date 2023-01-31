@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using BT;
+using UnityEngine.PlayerLoop;
 
 public class TDetectPlayer : BT_Node
 {
@@ -59,7 +61,7 @@ public class TDetectPlayer : BT_Node
                 }
                 botInfo.bPlayerInView = false;
                 botInfo.bEngaging = false;
-                state = NodeState.SUCCESS;
+                state = NodeState.FAILURE;
                 return state;
             }
             botInfo.bPlayerInView = false;
@@ -70,7 +72,7 @@ public class TDetectPlayer : BT_Node
         perception.ClearFoV();
         botInfo.bPlayerInView = false;
         botInfo.bEngaging = false;
-        state = NodeState.SUCCESS;
+        state = NodeState.FAILURE;
         return state;
     }
 

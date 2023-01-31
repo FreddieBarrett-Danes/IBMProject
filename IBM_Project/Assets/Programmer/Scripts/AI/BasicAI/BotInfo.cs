@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,9 +8,11 @@ public class BotInfo : MonoBehaviour
 {
     // Misc
     [Header("Misc Settings")]
+    
     public int bThreatLevel;
     public int bBotCount;
     public int bRemainingBots;
+    public GameController.Status bStatus;
     public LayerMask bObstacleLayer;
     public List<Component> bAbilitiesList;
     private bool bAbilityAdd;
@@ -69,7 +72,6 @@ public class BotInfo : MonoBehaviour
     public float bViewAngleN;
     [HideInInspector]
     public float bViewAngleD;
-    [HideInInspector]
     public float bDetectionTimer;
     [HideInInspector]
     public bool bEngaging;
@@ -101,6 +103,7 @@ public class BotInfo : MonoBehaviour
         // Misc
         bBotCount = BotCalc();
         bRemainingBots = BotCalc();
+        bStatus = GameObject.Find("Main Camera").GetComponent<GameController>().PlayerStatus;
         //bObstacleLayer = LayerMask.NameToLayer("Obstacle");
         bObstacleLayer = LayerMask.GetMask("Obstacle");
         bAbilitiesList = new List<Component>();
@@ -127,6 +130,14 @@ public class BotInfo : MonoBehaviour
         bSusTimer = bSuspiciousTimer;
     }
 
+    private void Update()
+    {
+        if (bDetectionTimer == 0) return;
+        DateTime now = DateTime.Now;
+        if (!bPlayerInView &&
+            GetComponent<Perception>().sensedRecord[0].timeLastSensed < now.Subtract(new TimeSpan(0, 0, 10)))
+            bDetectionTimer = 0;
+    }
     private void LateUpdate()
     {
         bRemainingBots = BotCalc();
