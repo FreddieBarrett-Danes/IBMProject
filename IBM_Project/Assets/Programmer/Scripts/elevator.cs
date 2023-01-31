@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class elevator : MonoBehaviour
@@ -12,6 +13,8 @@ public class elevator : MonoBehaviour
     private ReadTSV reader;
 
     public Vector3 debug;
+
+    private List<GameObject> enemies = new List<GameObject>();
 
     //OMG FOR THE LOVE OF GOD WE NEED TO CHANGE THIS LATER. UNLOAD THE SCENE OR SOMETHING. 
     private GameObject cam;
@@ -28,10 +31,20 @@ public class elevator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == player)
+        FindEnemiesInScene();
+
+        if(other.gameObject == player && enemies.Count == 0)
         {
             reader.find = true;
             cam.GetComponent<Camera>().farClipPlane = 0.5f;
         }
+    }
+
+    private void FindEnemiesInScene()
+    {
+        enemies.Clear();
+
+        BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
+        enemies = botScripts.Select(t => t.transform.gameObject).ToList();
     }
 }
