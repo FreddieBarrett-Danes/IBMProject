@@ -14,12 +14,12 @@ public class TDetectPlayer : BT_Node
 
     public override NodeState Evaluate()
     {
-        if (botInfo.bPlayer)
+        if (!botInfo.bPlayer)
         {
             perception.ClearFoV();
             botInfo.bPlayerInView = false;
             botInfo.bEngaging = false;
-            state = NodeState.SUCCESS;
+            state = NodeState.FAILURE;
             return state;
         }
         if (botInfo.bRecentlyChase)
@@ -44,6 +44,7 @@ public class TDetectPlayer : BT_Node
 
             if (range < botInfo.bViewRadius && Vector3.Angle(botInfo.transform.forward, dirToTarget) < botInfo.bViewAngle / 2 && !Physics.Raycast(botInfo.transform.position, dirToTarget, toTarget.magnitude, botInfo.bObstacleLayer))
             {
+                Debug.Log("Detected Player");
                 botInfo.bDetectionTimer += Time.deltaTime;
                 perception.ClearFoV();
                 perception.AddMemory(botInfo.bPlayer.transform.gameObject);

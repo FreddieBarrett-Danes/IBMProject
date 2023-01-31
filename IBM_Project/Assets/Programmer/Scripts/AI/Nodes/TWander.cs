@@ -18,6 +18,7 @@ public class TWander : BT_Node
         botInfo.bTimer += Time.deltaTime;
         if (botInfo.bTimer >= botInfo.bWanderTimer)
         {
+            Debug.Log("Wander State");
             Vector3 randomPoint = Random.insideUnitCircle * botInfo.bWanderRadius;
             randomPoint += Random.insideUnitSphere * botInfo.bWanderJitter;
             botInfo.bWanderTarget = botInfo.transform.position + botInfo.transform.forward * botInfo.bWanderDistance + randomPoint;

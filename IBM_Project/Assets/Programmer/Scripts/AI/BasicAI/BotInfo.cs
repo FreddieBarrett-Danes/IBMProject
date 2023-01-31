@@ -101,7 +101,8 @@ public class BotInfo : MonoBehaviour
         // Misc
         bBotCount = BotCalc();
         bRemainingBots = BotCalc();
-        bObstacleLayer = LayerMask.NameToLayer("Obstacle");
+        //bObstacleLayer = LayerMask.NameToLayer("Obstacle");
+        bObstacleLayer = LayerMask.GetMask("Obstacle");
         bAbilitiesList = new List<Component>();
         bAbilityAdd = false;
         // Ranged Attack
