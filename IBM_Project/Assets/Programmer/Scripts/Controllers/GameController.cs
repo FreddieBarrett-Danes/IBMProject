@@ -1,22 +1,19 @@
-using System.Collections;
+                      using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
     //keeps track of if a bot has alerted, is safe or is hunting maybe keep[ track in player controller
     //keeps track if in lavel/mingame or quiz
-    private LevelTimer levelTimer;
+    //private LevelTimer levelTimer;
     public GameObject level;
     private ComputerInteraction cI;
     public bool inMinigame = false;
-    public Canvas canvas;
 
-    private GameObject chosenCanvas = null;
-
-    public RectTransform[] canvasElements;
-
-    
+    public GameObject[] levelUI;
+    public GameObject[] mazeUI;
 
     public float LevelTimeBank = 0.0f;
     public bool completedLevel = false;
@@ -36,12 +33,12 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(this);
 
         //dont use get component here
-        canvasElements = canvas.gameObject.GetComponentsInChildren<RectTransform>();
-        /*foreach (Transform child in Canvas.transform)
+        
+        foreach(GameObject maze in mazeUI)
         {
-            canvasElements.Add(child.gameObject);
-        }*/
-        //level = GameObject.FindGameObjectWithTag("Level");
+            maze.SetActive(false);
+        }
+
         cI = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
         PlayerStatus = Status.SAFE;
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
@@ -55,19 +52,15 @@ public class GameController : MonoBehaviour
             if(inMinigame)
             {
                 level.SetActive(false);
-                if (cI.chosenMinigame != null)
+                for(int i = 0; i < levelUI.Length; i++)
                 {
-                    for (int i = 0; i < canvasElements.Length; i++)
-                    {
-                        if (canvasElements[i].tag == cI.chosenMinigame.tag)
-                        {
-                            //chosenCanvas = canvasElements[i];
-                        }
-                    }
-                    chosenCanvas.SetActive(true);
-                    cI.chosenMinigame.SetActive(true);
-
+                    levelUI[i].SetActive(false);
                 }
+                /*foreach (GameObject maze in mazeUI)
+                {
+                    maze.SetActive(true);
+                }*/
+
             }
             else
             {
@@ -77,11 +70,18 @@ public class GameController : MonoBehaviour
                     Destroy(mazeWalls[i]);
                 }
                 level.SetActive(true);
+                for (int i = 0; i < levelUI.Length; i++)
+                {
+                    levelUI[i].SetActive(true);
+                }
                 if (cI.chosenMinigame != null)
                 {
                     cI.chosenMinigame.SetActive(false);
-                    chosenCanvas.SetActive(false);
                 }
+                /*foreach (GameObject maze in mazeUI)
+                {
+                    maze.SetActive(false);
+                }*/
             }
         }
         else

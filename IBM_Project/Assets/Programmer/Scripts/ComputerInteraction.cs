@@ -42,19 +42,22 @@ public class ComputerInteraction : MonoBehaviour
                 if (!chosenMinigame.active)
                 {
                     gameController.inMinigame = true;
+                    chosenMinigame.SetActive(true);
+                    gameObject.GetComponent<Renderer>().enabled = false;
 
                 }
             }
-            else
+
+        }
+        if (completedMinigame)
+        {
+            foreach (GameObject enemy in enemies)
             {
-                foreach (GameObject enemy in enemies)
-                {
-                    Destroy(enemy);
-                }
-                enemies = null;
-                completedMinigame = false;
+                Destroy(enemy);
             }
-
+            gameObject.GetComponent<Renderer>().enabled = true;
+            enemies = null;
+            completedMinigame = false;
         }
 
     }

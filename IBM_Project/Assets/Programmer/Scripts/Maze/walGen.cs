@@ -78,10 +78,9 @@ public class walGen : MonoBehaviour
     Vector2 currentPosGrid;
 
     //UI
-    public TextMeshProUGUI pregameText;
-    public TextMeshProUGUI pressStartText;
-    public TextMeshProUGUI ingameText;
-    public TextMeshProUGUI Timer;
+    public GameObject pregameText;
+    public GameObject pressStartText;
+    public GameObject Timer;
     public bool showIngameText;
     public bool showPregameTutorial;
 
@@ -333,13 +332,14 @@ public class walGen : MonoBehaviour
         //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.white;
         //pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
         Debug.Log("Pregame enabled: " + pregameText.GetComponent<TextMeshProUGUI>().enabled);
-        pregameText.GetComponent<TextMeshProUGUI>().enabled = showPregameTutorial; //for debugging and clearer demonstration of wall generation
+        pregameText.SetActive(true);
+        pressStartText.SetActive(true);
+        Timer.SetActive(true);
         GameObject.Find("tutorialBackground").GetComponent<MeshRenderer>().enabled = showPregameTutorial;
 
         //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().enabled = showPregameTutorial;
         //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().transform.position = new Vector3(cameraPosition.x, cameraPosition.y-2, cameraPosition.z);
         pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
-        ingameText.GetComponent<TextMeshProUGUI>().enabled = false;
         Timer.GetComponent<TextMeshProUGUI>().enabled = false;
         preGoalLocation = new Vector3(0, 0, 0);
         goalLocationRng = Random.Range(Maze_Width*2, (Maze_Width * Maze_Height));
@@ -685,10 +685,6 @@ public class walGen : MonoBehaviour
             Timer.GetComponent<TextMeshProUGUI>().enabled = true;
             pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
 
-            if (showIngameText == true)
-            {
-                ingameText.GetComponent<TextMeshProUGUI>().enabled = true;
-            }
             //pressedPlay = true;
         }
 
