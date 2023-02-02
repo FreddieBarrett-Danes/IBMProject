@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
         //for testing builds
         if(Input.GetKeyDown(KeyCode.R))
         {
+            SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
