@@ -18,7 +18,7 @@ public class BasicBT : BT_Tree
             {
                 new BT_Decorator(new DTimeSense(GetComponent<BotInfo>(), GetComponent<Perception>()), new TSuspicious(GetComponent<NavMeshAgent>(),GetComponent<BotInfo>(),GetComponent<Perception>()))
             }),
-            new BT_Decorator(new DRecentChase(GetComponent<BotInfo>()), new TWander(GetComponent<NavMeshAgent>(),GetComponent<BotInfo>()))
+            new BT_Decorator(new DRecentChase(GetComponent<BotInfo>()), new TPatrol(GetComponent<NavMeshAgent>(),GetComponent<BotInfo>()))
         });
 
         return root;

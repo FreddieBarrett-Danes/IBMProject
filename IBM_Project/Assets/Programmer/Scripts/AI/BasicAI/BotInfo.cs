@@ -41,14 +41,8 @@ public class BotInfo : MonoBehaviour
     [HideInInspector]
     public int bDestPoint;
     [HideInInspector]
-    public bool bStart;
-    [HideInInspector]
-    public int bDirection = 1;
-    [HideInInspector]
-    public int bPointInArray;
-    [HideInInspector]
-    public int bStopArray;
-    
+    public bool bDirection;
+
     // Wander
     [Header("Wander Settings")] 
     [HideInInspector]
@@ -72,7 +66,9 @@ public class BotInfo : MonoBehaviour
     public float bViewAngleN;
     [HideInInspector]
     public float bViewAngleD;
+    [HideInInspector]
     public float bDetectionTimer;
+    public int bTimeBeforeDetect;
     [HideInInspector]
     public bool bEngaging;
     public float bSpeed;
@@ -118,8 +114,6 @@ public class BotInfo : MonoBehaviour
         bNextFire = bFireRate;
         // Patrol
         bPaths = GameObject.Find("PatrolPaths");
-        bPointInArray = bDirection > 0 ? 0 : bPatrol.Length - 1; 
-        bStopArray = bDirection > 0 ? bPatrol.Length : -1;
         bDestPoint = 0;
         // Wander
         bTimer = bWanderTimer;
@@ -135,7 +129,7 @@ public class BotInfo : MonoBehaviour
         if (bDetectionTimer == 0) return;
         DateTime now = DateTime.Now;
         if (!bPlayerInView &&
-            GetComponent<Perception>().sensedRecord[0].timeLastSensed < now.Subtract(new TimeSpan(0, 0, 10)))
+            GetComponent<Perception>().sensedRecord[0].timeLastSensed < now.Subtract(new TimeSpan(0, 0, bTimeBeforeDetect)))
             bDetectionTimer = 0;
     }
     private void LateUpdate()
