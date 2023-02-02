@@ -44,7 +44,10 @@ public class elevator : MonoBehaviour
     {
         enemies.Clear();
 
-        BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
-        enemies = botScripts.Select(t => t.transform.gameObject).ToList();
+        //Old method that used the BotInfo script to locate enemies
+        /*BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
+        enemies = botScripts.Select(t => t.transform.gameObject).ToList();*/
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
     }
 }
