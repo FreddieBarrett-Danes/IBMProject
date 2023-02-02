@@ -12,7 +12,7 @@ public class DRemainingBots : BT_Node
 
     public override NodeState Evaluate()
     {
-        switch (bot.bRemainingBots < bot.bBotCount / 2)
+        switch (bot.bRemainingBots <= bot.bBotCount / 2)
         {
             case true:
                 state = NodeState.SUCCESS;

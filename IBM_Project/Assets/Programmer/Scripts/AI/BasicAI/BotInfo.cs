@@ -140,7 +140,6 @@ public class BotInfo : MonoBehaviour
             bDetectionTimer = 0;
             bViewRadius = bDefaultViewRadius;
         }
-        
     }
     private void LateUpdate()
     {
