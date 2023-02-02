@@ -21,7 +21,7 @@ public class PlayerBehind : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
-        if (other == player.GetComponent<CapsuleCollider>())
+        if (other.gameObject.tag == player.tag)
         {
             if (other != null)
             {
@@ -43,7 +43,7 @@ public class PlayerBehind : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other == player.GetComponent<CapsuleCollider>())
+        if(other.gameObject.tag == player.tag)
         {
             pC.isBehindEnemy = false;
         }

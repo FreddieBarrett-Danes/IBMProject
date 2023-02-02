@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 //using UnityEditor.PackageManager;
-//using UnityEditor.SceneManagement;
+using UnityEditor.SceneManagement;
 //sing UnityEditor.AI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 //using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
@@ -60,6 +61,11 @@ public class PlayerController : MonoBehaviour
         //Melee();
         TakeControl();
         ControllingTimer();
+        //for testing builds
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
     void FixedUpdate()
     {
@@ -102,23 +108,23 @@ public class PlayerController : MonoBehaviour
         if (!isBehindEnemy) return;
         if (Input.GetKeyDown(KeyCode.E))
         {
-            
+            Debug.Log("trying to hack");
             this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
-            body.GetComponent<Renderer>().material.color = enemyControlled.transform.Find("Capsule").GetComponent<Renderer>().material.color;
-            visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.Find("Forward").GetComponent<Renderer>().material.color;
+            body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;
+            visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Forward").GetComponent<Renderer>().material.color;
             switch(threatLevel)
             {
                 //change these values when designers pull their finger out
                 
                 case 0:
-                    controlTimer = 0.0f;
+                    controlTimer = 10.0f;
                     break;
                 case 1:
-                    controlTimer = 0.0f;
+                    controlTimer = 10.0f;
                     break;
                 case 2:
-                    controlTimer = 0.0f;
+                    controlTimer = 10.0f;
                     break;
                 case 3:
                     controlTimer = 5.0f;
