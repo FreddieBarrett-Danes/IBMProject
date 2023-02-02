@@ -41,7 +41,7 @@ public class PlayerBehind : MonoBehaviour
         if (other.gameObject == player.gameObject)
         {
             playerClose = true;
-            player.transform.GetChild(0).transform.GetChild(0).GetComponent<Renderer>().material.color = Color.green;
+            //player.transform.GetChild(0).transform.GetChild(0).GetComponent<Renderer>().material.color = Color.green;
         }
     }
 
@@ -51,7 +51,7 @@ public class PlayerBehind : MonoBehaviour
         {
             //Debug.Log("exiting collider");
             playerClose = false;
-            player.transform.GetChild(0).transform.GetChild(0).GetComponent<Renderer>().material.color = Color.blue;
+            //player.transform.GetChild(0).transform.GetChild(0).GetComponent<Renderer>().material.color = Color.blue;
         }
     }
 }
