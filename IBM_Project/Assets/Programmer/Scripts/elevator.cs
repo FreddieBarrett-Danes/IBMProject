@@ -33,7 +33,7 @@ public class elevator : MonoBehaviour
     {
         FindEnemiesInScene();
 
-        if(other.gameObject == player && enemies.Count == 0)
+        if(other.gameObject.tag == player.tag && enemies.Count == 0)
         {
             reader.find = true;
             cam.GetComponent<Camera>().farClipPlane = 0.5f;
