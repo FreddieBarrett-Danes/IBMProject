@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerBehind : MonoBehaviour
@@ -5,6 +6,9 @@ public class PlayerBehind : MonoBehaviour
     private GameObject player;
     private bool playerClose = false;
     private PlayerController pC;
+
+    public TextMeshProUGUI text1;
+    public TextMeshProUGUI text2;
 
     // Start is called before the first frame update
     void Start()
@@ -32,20 +36,22 @@ public class PlayerBehind : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-
-        if (other.gameObject.tag == player.tag)
+        if (other.gameObject == player.gameObject)
         {
             playerClose = true;
+            player.transform.GetChild(0).transform.GetChild(0).GetComponent<Renderer>().material.color = Color.green;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == player.tag)
+        if (other.gameObject == player.gameObject)
         {
+            //Debug.Log("exiting collider");
             playerClose = false;
+            player.transform.GetChild(0).transform.GetChild(0).GetComponent<Renderer>().material.color = Color.blue;
         }
     }
 }
