@@ -90,10 +90,7 @@ MonoBehaviour:
   bCreatePoints: 0
   bPatrol: []
   bDestPoint: 0
-  bStart: 0
   bDirection: 1
-  bPointInArray: 0
-  bStopArray: 0
   bRecentlyChase: 0
   bWanderRadius: 0.75
   bWanderTimer: 7.5
@@ -102,11 +99,14 @@ MonoBehaviour:
   bWanderTarget: {x: 0, y: 0, z: 0}
   bTimer: 0
   bPlayer: {fileID: 0}
-  bViewRadius: 2
+  bViewRadius: 0
+  bDefaultViewRadius: 2
+  bSusViewRadius: 3
   bViewAngle: 90
   bViewAngleN: 0
   bViewAngleD: 0
   bDetectionTimer: 0
+  bTimeBeforeDetect: 2
   bEngaging: 0
   bSpeed: 3
   bRotationSpeed: 400

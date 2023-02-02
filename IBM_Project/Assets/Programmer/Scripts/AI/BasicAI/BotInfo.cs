@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -59,14 +60,16 @@ public class BotInfo : MonoBehaviour
     // LockOn
     [Header("Player Chase Settings")]
     public GameObject bPlayer;
+    [HideInInspector]
     public float bViewRadius;
+    public float bDefaultViewRadius;
+    public float bSusViewRadius;
     [Range(0, 360)] 
     public float bViewAngle;
     [HideInInspector] 
     public float bViewAngleN;
     [HideInInspector]
     public float bViewAngleD;
-    [HideInInspector]
     public float bDetectionTimer;
     public int bTimeBeforeDetect;
     [HideInInspector]
@@ -118,6 +121,7 @@ public class BotInfo : MonoBehaviour
         // Wander
         bTimer = bWanderTimer;
         // LockOn
+        bViewRadius = bDefaultViewRadius;
         bDetectionTimer = 0;
         bRecentChaseTimerN = bRecentChaseTimer;
         // Suspicious
@@ -126,11 +130,17 @@ public class BotInfo : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(bStatus);
         if (bDetectionTimer == 0) return;
         DateTime now = DateTime.Now;
         if (!bPlayerInView &&
-            GetComponent<Perception>().sensedRecord[0].timeLastSensed < now.Subtract(new TimeSpan(0, 0, bTimeBeforeDetect)))
+            GetComponent<Perception>().sensedRecord[0].timeLastSensed < now.Subtract(new TimeSpan(0, 0, bSearchTime)))
+        {
+            bStatus = GameController.Status.SAFE;
             bDetectionTimer = 0;
+            bViewRadius = bDefaultViewRadius;
+        }
+        
     }
     private void LateUpdate()
     {

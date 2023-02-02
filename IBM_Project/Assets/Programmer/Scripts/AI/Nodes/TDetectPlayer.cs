@@ -52,10 +52,11 @@ public class TDetectPlayer : BT_Node
                 perception.AddMemory(botInfo.bPlayer.transform.gameObject);
                 botInfo.bDebugLastKnownPos = botInfo.bPlayer.transform.position;
                 botInfo.bPlayerInView = true;
-                if (botInfo.bDetectionTimer >= 1.5)
+                if (botInfo.bDetectionTimer >= botInfo.bTimeBeforeDetect)
                 {
                     botInfo.bTimer = botInfo.bWanderTimer;
                     botInfo.bEngaging = true;
+                    botInfo.bStatus = GameController.Status.HUNTED;
                     state = NodeState.SUCCESS;
                     return state;
                 }

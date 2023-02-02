@@ -17,6 +17,7 @@ public class TSuspicious : BT_Node
 
     public override NodeState Evaluate()
     {
+        botInfo.bViewRadius = botInfo.bSusViewRadius;
         botInfo.bSusTimer += Time.deltaTime;
         if (botInfo.bSusTimer >= botInfo.bSuspiciousTimer)
         {
@@ -27,7 +28,7 @@ public class TSuspicious : BT_Node
             state = NodeState.SUCCESS;
             return state;
         }
-        state = NodeState.FAILURE;
+        state = NodeState.SUCCESS;
         return state;
     }
 }
