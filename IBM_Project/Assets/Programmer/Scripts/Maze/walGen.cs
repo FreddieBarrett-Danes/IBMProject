@@ -664,13 +664,13 @@ public class walGen : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown("r"))
+        /*if (Input.GetKeyDown("r"))
         {
             wallDestroyer.transform.position = new Vector3(2, 0, 4);
             //currentPos.transform.position = new Vector3(2, 0, -16);
             Debug.Log("Refreshing Maze, please wait");
             StartCoroutine(setGen());
-        }
+        } */
 
 
         if (Input.GetKeyDown("space") && mazeReady == true) //&& pressedPlay == false
