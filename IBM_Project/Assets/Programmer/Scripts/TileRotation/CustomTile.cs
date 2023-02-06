@@ -5,17 +5,17 @@ using UnityEngine;
 public class CustomTile
 {
     //public Vector2 Pos;
-    public bool[] Directions;
-    public bool Visited;
+    //////public bool[] Directions;
+    public bool Visited = false;
     //public string Type;
-    public tileType type;
+    public tileType type = tileType.UpDown;
 
     //Temp variabiles for easier testing of concept
     //To replace with bool array if successful
-    public bool n;
-    public bool s;
-    public bool e;
-    public bool w;
+    public bool n = false;
+    public bool s = false;
+    public bool e = false;
+    public bool w = false;
 
     public enum tileType
     {
@@ -51,5 +51,43 @@ public class CustomTile
         this.e = e;
         this.w = w;
         this.Visited = Visited;
+    }
+
+    public tileType ConvertIntoTile()
+    {
+        tileType rv = tileType.UpDown;
+        
+        switch (n, s, e, w)
+        {
+            case (true, true, false, false):
+                rv = tileType.UpDown;
+                break;
+            case (true, false, true, false):
+                rv = tileType.UpRight;
+                break;
+            case (true, false, false, false):
+                rv = tileType.UpLeft;
+                break;
+            //---
+            case (false, true, true, false):
+                rv = tileType.DownRight;
+                break;
+            case (false, true, false, true):
+                rv = tileType.DownLeft;
+                break;
+            //---
+            case (false, false, true, true):
+                rv = tileType.LeftRight;
+                break;
+            default:
+                Debug.Log("Error! This tile dosen't have exactly two directions!");
+                break;
+        }
+        if (n == true && s == true)
+        {
+            rv = tileType.UpDown;
+        }
+        
+        return rv;
     }
 }
