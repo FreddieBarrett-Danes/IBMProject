@@ -1,4 +1,4 @@
-                      using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -49,7 +49,13 @@ public class GameController : MonoBehaviour
     {
         if (!completedLevel)
         {
-            if(inMinigame)
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+
+            if (inMinigame)
             {
                 level.SetActive(false);
                 for(int i = 0; i < levelUI.Length; i++)

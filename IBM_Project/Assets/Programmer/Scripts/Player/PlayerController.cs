@@ -1,13 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.VisualScripting;
-//using UnityEditor.PackageManager;
-//using UnityEditor.SceneManagement;
-//sing UnityEditor.AI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-//using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {   
@@ -27,8 +18,7 @@ public class PlayerController : MonoBehaviour
 
     //variables for shooting, only placed in here to test how dynamic functions are.
     private Shooting shooting;
-/*    private Melee melee;
-    private LayerMask enemyLayer;*/
+
 
     public Transform attackPoint;
 
@@ -59,15 +49,8 @@ public class PlayerController : MonoBehaviour
     {
         Movement();
         PlayerShooting();
-        //Melee();
         TakeControl();
         ControllingTimer();
-        //for testing builds
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
     }
     void FixedUpdate()
     {
@@ -107,55 +90,52 @@ public class PlayerController : MonoBehaviour
     }
     private void TakeControl()
     {
-        //if (!isBehindEnemy) return;
-        
-            if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
+        if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("trying to hack");
+            this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
+            threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
+            body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;
+            visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Forward").GetComponent<Renderer>().material.color;
+            switch (threatLevel)
             {
-                Debug.Log("trying to hack");
-                this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
-                threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
-                body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;
-                visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Forward").GetComponent<Renderer>().material.color;
-                switch (threatLevel)
-                {
-                    //change these values when designers pull their finger out
+                //change these values when designers pull their finger out
 
-                    case 0:
-                        controlTimer = 10.0f;
-                        break;
-                    case 1:
-                        controlTimer = 10.0f;
-                        break;
-                    case 2:
-                        controlTimer = 10.0f;
-                        break;
-                    case 3:
-                        controlTimer = 5.0f;
-                        break;
+                case 0:
+                    controlTimer = 10.0f;
+                    break;
+                case 1:
+                    controlTimer = 10.0f;
+                    break;
+                case 2:
+                    controlTimer = 10.0f;
+                    break;
+                case 3:
+                    controlTimer = 5.0f;
+                    break;
 
 
-                }
-
-                //goes through abilities of each robot and adds them to character usiung switch statement. this needs to b eadded to another list so they can be removed after timer is up on controlling robots
-                foreach (Component t in enemyControlled.GetComponent<BotInfo>().bAbilitiesList)
-                {
-                    switch (t.GetType().ToString())
-                    {
-                        case "Shooting":
-                            shooting = this.gameObject.AddComponent<Shooting>();
-                            shooting.SetHost(visuals);
-                            shooting.bulletSpeed = modifyBulletSpeed;
-                            canShoot = true;
-                            //abilities.Add(shooting);
-                            break;
-
-                    }
-                }
-
-                Destroy(enemyControlled);
-                isBehindEnemy = false;
-                isControlling = true;
             }
-        
+
+            //goes through abilities of each robot and adds them to character usiung switch statement. this needs to b eadded to another list so they can be removed after timer is up on controlling robots
+            foreach (Component t in enemyControlled.GetComponent<BotInfo>().bAbilitiesList)
+            {
+                switch (t.GetType().ToString())
+                {
+                    case "Shooting":
+                        shooting = this.gameObject.AddComponent<Shooting>();
+                        shooting.SetHost(visuals);
+                        shooting.bulletSpeed = modifyBulletSpeed;
+                        canShoot = true;
+                        //abilities.Add(shooting);
+                        break;
+
+                }
+            }
+
+            Destroy(enemyControlled);
+            isBehindEnemy = false;
+            isControlling = true;
+        }
     }
 }
