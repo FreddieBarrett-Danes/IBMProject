@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
@@ -53,7 +54,7 @@ public class PlayerController : MonoBehaviour
         rBody = GetComponent<Rigidbody>();
         playerColor = body.GetComponent<Renderer>().material.color;
     }
-
+    
     void Update()
     {
         Movement();
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
         //for testing builds
         if(Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

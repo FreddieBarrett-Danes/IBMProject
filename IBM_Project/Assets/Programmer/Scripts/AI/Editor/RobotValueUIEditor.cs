@@ -12,19 +12,21 @@ public class RobotValueUIEditor : Editor
     }
     private void OnSceneGUI()
     {
-        GameObject robot = GameObject.FindGameObjectWithTag("Enemy");
+        GameObject robot = bot.gameObject;
         Vector3 position = robot.transform.position;
         Handles.color = Color.red;
-        Handles.DrawWireArc (position, Vector3.up, Vector3.forward, 360, bot.bViewRadius);
+        Handles.DrawWireArc (position, Vector3.up, Vector3.forward, 360, bot.bDefaultViewRadius);
         Handles.color = Color.white;
         Handles.DrawWireArc(position + bot.transform.forward * bot.bWanderDistance, Vector3.up, Vector3.forward, 360, bot.bWanderRadius);
         Handles.color = Color.blue;
         Vector3 viewAngleA = DirFromAngle (robot, -bot.bViewAngle / 2, false);
         Vector3 viewAngleB = DirFromAngle (robot, bot.bViewAngle / 2, false);
-        Handles.DrawLine (position, position + viewAngleA * bot.bViewRadius);
-        Handles.DrawLine (position, position + viewAngleB * bot.bViewRadius);
+        Handles.DrawLine (position, position + viewAngleA * bot.bDefaultViewRadius);
+        Handles.DrawLine (position, position + viewAngleB * bot.bDefaultViewRadius);
         Handles.color = Color.yellow;
         Handles.DrawWireArc(bot.bDebugLastKnownPos, Vector3.up, Vector3.forward, 360, bot.bSuspiciousRadius);
+        Handles.color = Color.magenta;
+        Handles.DrawWireArc (position, Vector3.up, Vector3.forward, 360, bot.bInnerViewRadius);
     }
 
     private static Vector3 DirFromAngle(GameObject robot, float angleInDegrees, bool angleIsGlobal) 

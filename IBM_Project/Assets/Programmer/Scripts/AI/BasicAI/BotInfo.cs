@@ -13,7 +13,7 @@ public class BotInfo : MonoBehaviour
     public int bThreatLevel;
     public int bBotCount;
     public int bRemainingBots;
-    public GameController.Status bStatus;
+    public GameController bGameControl;
     public LayerMask bObstacleLayer;
     public List<Component> bAbilitiesList;
     private bool bAbilityAdd;
@@ -62,6 +62,7 @@ public class BotInfo : MonoBehaviour
     public GameObject bPlayer;
     [HideInInspector]
     public float bViewRadius;
+    public float bInnerViewRadius;
     public float bDefaultViewRadius;
     public float bSusViewRadius;
     [Range(0, 360)] 
@@ -100,9 +101,10 @@ public class BotInfo : MonoBehaviour
     private void Start()
     {
         // Misc
+        bPlayer = GameObject.FindGameObjectWithTag("Player");
         bBotCount = BotCalc();
         bRemainingBots = BotCalc();
-        bStatus = GameObject.Find("Main Camera").GetComponent<GameController>().PlayerStatus;
+        bGameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         //bObstacleLayer = LayerMask.NameToLayer("Obstacle");
         bObstacleLayer = LayerMask.GetMask("Obstacle");
         bAbilitiesList = new List<Component>();
@@ -130,13 +132,12 @@ public class BotInfo : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(bStatus);
         if (bDetectionTimer == 0) return;
         DateTime now = DateTime.Now;
         if (!bPlayerInView &&
             GetComponent<Perception>().sensedRecord[0].timeLastSensed < now.Subtract(new TimeSpan(0, 0, bSearchTime)))
         {
-            bStatus = GameController.Status.SAFE;
+            bGameControl.PlayerStatus = GameController.Status.SAFE;
             bDetectionTimer = 0;
             bViewRadius = bDefaultViewRadius;
         }

@@ -39,7 +39,7 @@ public class ComputerInteraction : MonoBehaviour
                 int randomMinigame = Mathf.RoundToInt(Random.Range(0, minigameCount - 1));
                 chosenMinigame = minigameHolder.transform.GetChild(randomMinigame).gameObject;
 
-                if (!chosenMinigame.active)
+                if (!chosenMinigame.activeSelf)
                 {
                     gameController.inMinigame = true;
                     chosenMinigame.SetActive(true);
