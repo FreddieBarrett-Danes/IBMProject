@@ -1,7 +1,9 @@
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
-{   
+{
+    private MinigameController miniController;
+
     public float speed;
 
     public GameObject visuals;
@@ -40,6 +42,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         //controller set up
+        miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
+
         mainCamera = Camera.main;
         rBody = GetComponent<Rigidbody>();
         playerColor = body.GetComponent<Renderer>().material.color;
@@ -92,6 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
+
             Debug.Log("trying to hack");
             this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;

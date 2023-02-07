@@ -7,16 +7,14 @@ using Unity.IO;
 public class ComputerInteraction : MonoBehaviour
 {
     private GameObject player;
-    private GameObject minigameHolder;
-    private GameObject level;
+
 
     public GameObject[] enemies;
     public GameObject chosenMinigame;
 
     private GameController gameController;
-    private int minigameCount;
+    private MinigameController miniController;
 
-    public bool completedMinigame = false;
 
     private bool isTouching;
     // Start is called before the first frame update
@@ -24,32 +22,21 @@ public class ComputerInteraction : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        minigameHolder = GameObject.FindGameObjectWithTag("Minigames");
-        level = GameObject.FindGameObjectWithTag("Level");
-        gameController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>();
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
     }
 
     void Update()
     {
         if (isTouching && Input.GetKey(KeyCode.E))
         {
-            if (!completedMinigame)
+            if (!miniController.completedMinigame)
             {
-                minigameCount = minigameHolder.transform.childCount;
-                int randomMinigame = Mathf.RoundToInt(Random.Range(0, minigameCount - 1));
-                chosenMinigame = minigameHolder.transform.GetChild(randomMinigame).gameObject;
-
-                if (!chosenMinigame.activeSelf)
-                {
-                    gameController.inMinigame = true;
-                    chosenMinigame.SetActive(true);
-                    gameObject.GetComponent<Renderer>().enabled = false;
-
-                }
+                miniController.StartMinigame();
             }
 
         }
-        if (completedMinigame)
+        if (miniController.completedMinigame)
         {
             foreach (GameObject enemy in enemies)
             {
@@ -57,7 +44,7 @@ public class ComputerInteraction : MonoBehaviour
             }
             gameObject.GetComponent<Renderer>().enabled = true;
             enemies = null;
-            completedMinigame = false;
+            miniController.completedMinigame = false;
         }
 
     }
