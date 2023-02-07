@@ -43,7 +43,7 @@ public class MemoryRecord
     [SerializeField]
     public bool withinFoV;
     [SerializeField]
-    //public string timeLastSenseStr;
+    public string timeLastSenseStr;
 
     public MemoryRecord()
     {
@@ -57,6 +57,6 @@ public class MemoryRecord
         timeLastSensed = TTime;
         lastSensedPosition = TPos;
         withinFoV = TFoV;
-        //timeLastSenseStr = TTime.ToLongTimeString();
+        timeLastSenseStr = TTime.ToLongTimeString();
     }
 }

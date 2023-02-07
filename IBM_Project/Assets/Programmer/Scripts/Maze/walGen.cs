@@ -78,10 +78,9 @@ public class walGen : MonoBehaviour
     Vector2 currentPosGrid;
 
     //UI
-    public TextMeshProUGUI pregameText;
-    public TextMeshProUGUI pressStartText;
-    public TextMeshProUGUI ingameText;
-    public TextMeshProUGUI Timer;
+    public GameObject pregameText;
+    public GameObject pressStartText;
+    public GameObject Timer;
     public bool showIngameText;
     public bool showPregameTutorial;
 
@@ -89,7 +88,7 @@ public class walGen : MonoBehaviour
     Stack<Vector2> visitedStack;
 
 
-    public Vector3 cameraPosition;
+    //public Vector3 cameraPosition;
     Vector3 preGoalLocation;
     int goalLocationRng;
 
@@ -329,14 +328,18 @@ public class walGen : MonoBehaviour
         visitedStack = new Stack<Vector2>();
         mazeReady = false;
         Application.targetFrameRate = frameRate;
-        GameObject.FindGameObjectWithTag("MainCamera").transform.position = cameraPosition;
-        GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.white;
+        //GameObject.FindGameObjectWithTag("MainCamera").transform.position = cameraPosition;
+        //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.white;
         //pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
-        pregameText.GetComponent<TextMeshProUGUI>().enabled = showPregameTutorial; //for debugging and clearer demonstration of wall generation
-        GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().enabled = showPregameTutorial;
-        GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().transform.position = new Vector3(cameraPosition.x, cameraPosition.y-2, cameraPosition.z);
+        Debug.Log("Pregame enabled: " + pregameText.GetComponent<TextMeshProUGUI>().enabled);
+        pregameText.SetActive(true);
+        pressStartText.SetActive(true);
+        Timer.SetActive(true);
+        GameObject.Find("tutorialBackground").GetComponent<MeshRenderer>().enabled = showPregameTutorial;
+
+        //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().enabled = showPregameTutorial;
+        //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().transform.position = new Vector3(cameraPosition.x, cameraPosition.y-2, cameraPosition.z);
         pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
-        ingameText.GetComponent<TextMeshProUGUI>().enabled = false;
         Timer.GetComponent<TextMeshProUGUI>().enabled = false;
         preGoalLocation = new Vector3(0, 0, 0);
         goalLocationRng = Random.Range(Maze_Width*2, (Maze_Width * Maze_Height));
@@ -449,13 +452,16 @@ public class walGen : MonoBehaviour
 
     IEnumerator destroyWall()
     {
-        float delay = 0.035f; //0.035f;
+        float delay = 0.035f; //0.0175f; //0.035f;
+
+        //delay = (1 / frameRate) * 2;
+        Debug.Log(delay);
         //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
         //yield return new WaitForSeconds(delay);
 
         int cellCount = 0;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(delay);
 
         targetPosGrid = gridMovement(currentPosGrid);
         //targetPosWorld.transform.position = convertToWorld(targetPosGrid);
@@ -655,28 +661,30 @@ public class walGen : MonoBehaviour
         //currentPos.transform.position += (dir.normalized * 50) * Time.deltaTime;
         //currentPos.transform.rotation = Quaternion.Euler(90, 0, 0);
 
-        if (Input.GetKeyDown("r"))
+
+
+
+        /*if (Input.GetKeyDown("r"))
         {
             wallDestroyer.transform.position = new Vector3(2, 0, 4);
             //currentPos.transform.position = new Vector3(2, 0, -16);
             Debug.Log("Refreshing Maze, please wait");
             StartCoroutine(setGen());
-        }
+        } */
+
+
         if (Input.GetKeyDown("space") && mazeReady == true) //&& pressedPlay == false
         {
             OnMazeReady(true);
             mazePlayer.transform.position = new Vector3(2, 0, 0);
             goalLocation.transform.position = preGoalLocation;
             //goalLocation.transform.position = new Vector3(18, 0, 16);
-            GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
+            //GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
+            GameObject.Find("tutorialBackground").GetComponent<MeshRenderer>().enabled = false;
             pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
             Timer.GetComponent<TextMeshProUGUI>().enabled = true;
             pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
 
-            if (showIngameText == true)
-            {
-                ingameText.GetComponent<TextMeshProUGUI>().enabled = true;
-            }
             //pressedPlay = true;
         }
 

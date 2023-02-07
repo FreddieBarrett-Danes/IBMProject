@@ -376,7 +376,7 @@ public class ReadTSV : MonoBehaviour
             }
         }
 
-        Debug.Log(amountSelected);
+        //Debug.Log(amountSelected);
         
         if(amountSelected != 0) //allows submit to be clicked if something is selected //THIS IS'NT WORKING AS INTENDED
         {

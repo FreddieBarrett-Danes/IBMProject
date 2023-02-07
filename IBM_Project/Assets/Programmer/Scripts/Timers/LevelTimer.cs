@@ -9,6 +9,7 @@ public class LevelTimer : MonoBehaviour
     public float startTime;
     public float currentTime;
     public bool TimeUp = false;
+    private GameController gC;
 
     public TextMeshProUGUI countdownText;
 
@@ -16,6 +17,8 @@ public class LevelTimer : MonoBehaviour
     void Start()
     {
         currentTime = startTime;
+        gC = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>();
+        //countdownText.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -26,8 +29,15 @@ public class LevelTimer : MonoBehaviour
             if (currentTime > 0)
             {
                 //in play time
-                currentTime -= Time.deltaTime;
-                updateTimer(currentTime);
+                if (!gC.inMinigame)
+                {
+                    currentTime -= Time.deltaTime;
+                    updateTimer(currentTime);
+                }
+                else
+                {
+                    //countdownText.IsActiveAndEnabled(false)
+                }
             }
             else
             {

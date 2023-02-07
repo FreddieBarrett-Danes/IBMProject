@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,9 +9,11 @@ public class BotInfo : MonoBehaviour
 {
     // Misc
     [Header("Misc Settings")]
+    
     public int bThreatLevel;
     public int bBotCount;
     public int bRemainingBots;
+    public GameController.Status bStatus;
     public LayerMask bObstacleLayer;
     public List<Component> bAbilitiesList;
     private bool bAbilityAdd;
@@ -29,6 +33,7 @@ public class BotInfo : MonoBehaviour
 
     // Patrol
     [Header("Patrol Settings")] 
+    public GameObject bPaths;
     public bool bPointLoop;
     [HideInInspector]
     public bool bCreatePoints;
@@ -37,14 +42,8 @@ public class BotInfo : MonoBehaviour
     [HideInInspector]
     public int bDestPoint;
     [HideInInspector]
-    public bool bStart;
-    [HideInInspector]
-    public int bDirection = 1;
-    [HideInInspector]
-    public int bPointInArray;
-    [HideInInspector]
-    public int bStopArray;
-    
+    public bool bDirection;
+
     // Wander
     [Header("Wander Settings")] 
     [HideInInspector]
@@ -61,15 +60,18 @@ public class BotInfo : MonoBehaviour
     // LockOn
     [Header("Player Chase Settings")]
     public GameObject bPlayer;
+    [HideInInspector]
     public float bViewRadius;
+    public float bDefaultViewRadius;
+    public float bSusViewRadius;
     [Range(0, 360)] 
     public float bViewAngle;
     [HideInInspector] 
     public float bViewAngleN;
     [HideInInspector]
     public float bViewAngleD;
-    [HideInInspector]
     public float bDetectionTimer;
+    public int bTimeBeforeDetect;
     [HideInInspector]
     public bool bEngaging;
     public float bSpeed;
@@ -100,7 +102,9 @@ public class BotInfo : MonoBehaviour
         // Misc
         bBotCount = BotCalc();
         bRemainingBots = BotCalc();
-        bObstacleLayer = LayerMask.NameToLayer("Obstacle");
+        bStatus = GameObject.Find("Main Camera").GetComponent<GameController>().PlayerStatus;
+        //bObstacleLayer = LayerMask.NameToLayer("Obstacle");
+        bObstacleLayer = LayerMask.GetMask("Obstacle");
         bAbilitiesList = new List<Component>();
         bAbilityAdd = false;
         // Ranged Attack
@@ -112,18 +116,31 @@ public class BotInfo : MonoBehaviour
         bShotStart = gameObject.transform.GetChild(0).GetChild(2);
         bNextFire = bFireRate;
         // Patrol
-        bPointInArray = bDirection > 0 ? 0 : bPatrol.Length - 1; 
-        bStopArray = bDirection > 0 ? bPatrol.Length : -1;
+        bPaths = GameObject.Find("PatrolPaths");
         bDestPoint = 0;
         // Wander
         bTimer = bWanderTimer;
         // LockOn
+        bViewRadius = bDefaultViewRadius;
         bDetectionTimer = 0;
         bRecentChaseTimerN = bRecentChaseTimer;
         // Suspicious
         bSusTimer = bSuspiciousTimer;
     }
 
+    private void Update()
+    {
+        Debug.Log(bStatus);
+        if (bDetectionTimer == 0) return;
+        DateTime now = DateTime.Now;
+        if (!bPlayerInView &&
+            GetComponent<Perception>().sensedRecord[0].timeLastSensed < now.Subtract(new TimeSpan(0, 0, bSearchTime)))
+        {
+            bStatus = GameController.Status.SAFE;
+            bDetectionTimer = 0;
+            bViewRadius = bDefaultViewRadius;
+        }
+    }
     private void LateUpdate()
     {
         bRemainingBots = BotCalc();

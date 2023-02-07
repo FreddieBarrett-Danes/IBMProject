@@ -16,13 +16,20 @@ public class DTimeSense : BT_Node
     {
         if (!bot.bRecentlyChase)
         {
-            DateTime now = DateTime.Now;
-            if (percep.sensedRecord.Length != 0)
+            if (bot.bDetectionTimer >= bot.bDetectionTimer / 2)
             {
-                if (!bot.bPlayerInView &&
-                    percep.sensedRecord[0].timeLastSensed > now.Subtract(new TimeSpan(0, 0, bot.bSearchTime)))
+                DateTime now = DateTime.Now;
+                if (percep.sensedRecord.Length != 0)
                 {
-                    state = NodeState.SUCCESS;
+                    if (!bot.bPlayerInView &&
+                        percep.sensedRecord[0].timeLastSensed > now.Subtract(new TimeSpan(0, 0, bot.bSearchTime)))
+                    {
+                        bot.bStatus = GameController.Status.ALERTED;
+                        state = NodeState.SUCCESS;
+                        return state;
+                    }
+
+                    state = NodeState.FAILURE;
                     return state;
                 }
                 state = NodeState.FAILURE;

@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using BT;
+using UnityEngine.PlayerLoop;
 
 public class TDetectPlayer : BT_Node
 {
@@ -14,6 +16,14 @@ public class TDetectPlayer : BT_Node
 
     public override NodeState Evaluate()
     {
+        if (!botInfo.bPlayer)
+        {
+            perception.ClearFoV();
+            botInfo.bPlayerInView = false;
+            botInfo.bEngaging = false;
+            state = NodeState.FAILURE;
+            return state;
+        }
         if (botInfo.bRecentlyChase)
         {
             botInfo.bRecentChaseTimer--;
@@ -36,21 +46,23 @@ public class TDetectPlayer : BT_Node
 
             if (range < botInfo.bViewRadius && Vector3.Angle(botInfo.transform.forward, dirToTarget) < botInfo.bViewAngle / 2 && !Physics.Raycast(botInfo.transform.position, dirToTarget, toTarget.magnitude, botInfo.bObstacleLayer))
             {
+                Debug.Log("Detected Player");
                 botInfo.bDetectionTimer += Time.deltaTime;
                 perception.ClearFoV();
                 perception.AddMemory(botInfo.bPlayer.transform.gameObject);
                 botInfo.bDebugLastKnownPos = botInfo.bPlayer.transform.position;
                 botInfo.bPlayerInView = true;
-                if (botInfo.bDetectionTimer >= 1.5)
+                if (botInfo.bDetectionTimer >= botInfo.bTimeBeforeDetect)
                 {
                     botInfo.bTimer = botInfo.bWanderTimer;
                     botInfo.bEngaging = true;
+                    botInfo.bStatus = GameController.Status.HUNTED;
                     state = NodeState.SUCCESS;
                     return state;
                 }
                 botInfo.bPlayerInView = false;
                 botInfo.bEngaging = false;
-                state = NodeState.SUCCESS;
+                state = NodeState.FAILURE;
                 return state;
             }
             botInfo.bPlayerInView = false;
@@ -61,7 +73,7 @@ public class TDetectPlayer : BT_Node
         perception.ClearFoV();
         botInfo.bPlayerInView = false;
         botInfo.bEngaging = false;
-        state = NodeState.SUCCESS;
+        state = NodeState.FAILURE;
         return state;
     }
 

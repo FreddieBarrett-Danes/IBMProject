@@ -19,36 +19,13 @@ public class TPatrol : BT_Node
     {
         if (botInfo.bCreatePoints == false)
         {
-            patrolPoints = botInfo.transform.GetChild(1).gameObject;
+            patrolPoints = botInfo.bPaths.transform.GetChild(0).gameObject;
             Resize(ref botInfo.bPatrol, patrolPoints.transform.childCount);
             for (int i = 0; i < patrolPoints.transform.childCount; i++)
             {
                 botInfo.bPatrol[i] = patrolPoints.transform.GetChild(i).transform;
             }
             botInfo.bCreatePoints = true;
-        }
-        if (!botInfo.bStart)
-        {
-            if (!agent.pathPending && agent.remainingDistance < 0.25f)
-            {
-                agent.destination = botInfo.bPatrol[botInfo.bDestPoint].position;
-                switch (botInfo.bPointLoop)
-                {
-                    case true:
-                        botInfo.bDestPoint = (botInfo.bDestPoint + 1) % botInfo.bPatrol.Length;
-                        break;
-                    case false:
-                        if (botInfo.bPointInArray != botInfo.bStopArray)
-                        {
-                            botInfo.bDestPoint = botInfo.bPointInArray;
-                            botInfo.bPointInArray += botInfo.bDirection;
-                            Debug.Log(botInfo.bDestPoint);
-                            Debug.Log(botInfo.bPointInArray);
-                            Debug.Log(botInfo.bDirection);
-                        }
-                        break;
-                }
-            }
         }
         if (botInfo.bEngaging == false)
         {
@@ -67,13 +44,20 @@ public class TPatrol : BT_Node
                         botInfo.bDestPoint = (botInfo.bDestPoint + 1) % botInfo.bPatrol.Length;
                         break;
                     case false:
-                        if (botInfo.bPointInArray != botInfo.bStopArray)
+                        switch (botInfo.bDirection)
                         {
-                            botInfo.bDestPoint = botInfo.bPointInArray;
-                            botInfo.bPointInArray += botInfo.bDirection;
-                            Debug.Log(botInfo.bDestPoint);
-                            Debug.Log(botInfo.bPointInArray);
-                            Debug.Log(botInfo.bDirection);
+                            case true:
+                                if (botInfo.bDestPoint > 0)
+                                    botInfo.bDestPoint--;
+                                else if (botInfo.bDestPoint == 0)
+                                    botInfo.bDirection = false;
+                                break;
+                            case false:
+                                if (botInfo.bDestPoint < botInfo.bPatrol.Length - 1)
+                                    botInfo.bDestPoint++;
+                                else if (botInfo.bDestPoint == botInfo.bPatrol.Length - 1)
+                                    botInfo.bDirection = true;
+                                break;
                         }
                         break;
                 }

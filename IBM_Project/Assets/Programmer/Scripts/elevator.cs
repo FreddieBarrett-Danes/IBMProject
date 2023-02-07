@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class elevator : MonoBehaviour
 {
+    [SerializeField]
     private GameObject player;
+    [SerializeField]
     private GameObject quizMaster;
+    [SerializeField]
     private ReadTSV reader;
 
     public Vector3 debug;
+
+    private List<GameObject> enemies = new List<GameObject>();
 
     //OMG FOR THE LOVE OF GOD WE NEED TO CHANGE THIS LATER. UNLOAD THE SCENE OR SOMETHING. 
     private GameObject cam;
@@ -17,20 +23,31 @@ public class elevator : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        quizMaster = GameObject.Find("QuizMaster");
-        if (reader != null)
-        {
-            reader = quizMaster.GetComponent<ReadTSV>();
-        }
+        quizMaster = GameObject.FindGameObjectWithTag("QuizMaster");
+        reader = quizMaster.GetComponent<ReadTSV>();
+
         cam = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == player)
+        FindEnemiesInScene();
+
+        if(other.gameObject.tag == player.tag && enemies.Count == 0)
         {
             reader.find = true;
             cam.GetComponent<Camera>().farClipPlane = 0.5f;
         }
+    }
+
+    private void FindEnemiesInScene()
+    {
+        enemies.Clear();
+
+        //Old method that used the BotInfo script to locate enemies
+        /*BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
+        enemies = botScripts.Select(t => t.transform.gameObject).ToList();*/
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
     }
 }
