@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465791, g: 0.49641317, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465788, g: 0.49641258, b: 0.57481724, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -47722,25 +47722,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088477101}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2098330023 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6303411225816510374, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
-  m_PrefabInstance: {fileID: 2076605724003354801}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2098330026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2098330023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f0dafb6dd28f004b8752aac789dc79a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chosenMinigame: {fileID: 0}
-  completedMinigame: 0
 --- !u!1 &2100990712
 GameObject:
   m_ObjectHideFlags: 0
