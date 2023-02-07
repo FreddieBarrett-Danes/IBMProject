@@ -96,51 +96,58 @@ public class PlayerController : MonoBehaviour
     {
         if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
+            miniController.StartMinigame();
 
-            Debug.Log("trying to hack");
-            this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
-            threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
-            body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;
-            visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Forward").GetComponent<Renderer>().material.color;
-            switch (threatLevel)
+            if (miniController.completedMinigame)
             {
-                //change these values when designers pull their finger out
-
-                case 0:
-                    controlTimer = 10.0f;
-                    break;
-                case 1:
-                    controlTimer = 10.0f;
-                    break;
-                case 2:
-                    controlTimer = 10.0f;
-                    break;
-                case 3:
-                    controlTimer = 5.0f;
-                    break;
-
-
-            }
-
-            //goes through abilities of each robot and adds them to character usiung switch statement. this needs to b eadded to another list so they can be removed after timer is up on controlling robots
-            foreach (Component t in enemyControlled.GetComponent<BotInfo>().bAbilitiesList)
-            {
-                switch (t.GetType().ToString())
+                Debug.Log("trying to hack");
+                this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
+                threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
+                body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;
+                visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Forward").GetComponent<Renderer>().material.color;
+                switch (threatLevel)
                 {
-                    case "Shooting":
-                        shooting = this.gameObject.AddComponent<Shooting>();
-                        shooting.SetHost(visuals);
-                        shooting.bulletSpeed = modifyBulletSpeed;
-                        canShoot = true;
-                        //abilities.Add(shooting);
+                    //change these values when designers pull their finger out
+
+                    case 0:
+                        controlTimer = 10.0f;
+                        break;
+                    case 1:
+                        controlTimer = 10.0f;
+                        break;
+                    case 2:
+                        controlTimer = 10.0f;
+                        break;
+                    case 3:
+                        controlTimer = 5.0f;
                         break;
 
+
                 }
+
+                //goes through abilities of each robot and adds them to character usiung switch statement. this needs to b eadded to another list so they can be removed after timer is up on controlling robots
+                foreach (Component t in enemyControlled.GetComponent<BotInfo>().bAbilitiesList)
+                {
+                    switch (t.GetType().ToString())
+                    {
+                        case "Shooting":
+                            shooting = this.gameObject.AddComponent<Shooting>();
+                            shooting.SetHost(visuals);
+                            shooting.bulletSpeed = modifyBulletSpeed;
+                            canShoot = true;
+                            //abilities.Add(shooting);
+                            break;
+
+                    }
+                }
+
+                miniController.completedMinigame = false;
             }
 
             Destroy(enemyControlled);
             isBehindEnemy = false;
             isControlling = true;
+            
         }
     }
 }

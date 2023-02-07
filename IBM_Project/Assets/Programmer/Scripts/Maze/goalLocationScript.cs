@@ -6,7 +6,6 @@ public class goalLocationScript : MonoBehaviour
 {
     private GameController gC;
     private MinigameController mC;
-    private ComputerInteraction cI;
     public walGen wG;
     private void OnTriggerEnter(Collider other)
     {
@@ -23,7 +22,6 @@ public class goalLocationScript : MonoBehaviour
     private void Start()
     {
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        cI = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
     }
 
