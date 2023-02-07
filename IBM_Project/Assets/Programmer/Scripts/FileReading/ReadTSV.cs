@@ -1,14 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ReadTSV : MonoBehaviour
 {
+    private MinigameController mC;
+    private GameController gC;
+
+    public bool completedQuiz = false;
+
     private GameObject questionText;
     public GameObject submitText;
     public Button submitButton;
@@ -40,8 +42,8 @@ public class ReadTSV : MonoBehaviour
     private float waitTime;
     private bool waiting;
 
-    [SerializeField]
-    private int questionsInARow;
+    
+    public int questionsInARow;
     private int loopNumber;
     
     public GameObject panel;
@@ -161,6 +163,8 @@ public class ReadTSV : MonoBehaviour
 
     void Start()
     {
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
         canvasRectTransform = canvas.GetComponent<RectTransform>();
     }
@@ -361,18 +365,23 @@ public class ReadTSV : MonoBehaviour
 
         if (reloadSceneAtEnd) // okay maybe dont need this now then. cool.
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            
 
-            reloadSceneAtEnd = false;
+            /*SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            reloadSceneAtEnd = false;*/
         }
 
         amountSelected = 0;
 
         for (int i = 0; i < answersList.Count; i++) // finds how many buttons have been selected
         {
-            if (answersList[i].GetComponent<answersScript>().selected)
+            if (answersList[i] != null)
             {
-                amountSelected++;
+                if (answersList[i].GetComponent<answersScript>().selected)
+                {
+                    amountSelected++;
+                }
             }
         }
 
@@ -442,9 +451,17 @@ public class ReadTSV : MonoBehaviour
         
         else if(timer < 0 && waiting && loopNumber == questionsInARow)
         {
+            for (int i = 0; i < answersList.Count; i++)
+            {
+                Destroy(answersList[i]);
+            }
+            Destroy(questionText);
+            Destroy(submitText);
+            mC.completedQuiz = true;
+            gC.inMinigame = false;
             //find = true;
             //waiting = false;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         }
 
@@ -472,9 +489,12 @@ public class ReadTSV : MonoBehaviour
 
         for (int i = 0; i < answersList.Count; i++)
         {
-            if (answersList[i].GetComponentInChildren<TextMeshProUGUI>().fontSize < smallestFont)
+            if (answersList[i] != null)
             {
-                smallestFont = answersList[i].GetComponentInChildren<TextMeshProUGUI>().fontSize;
+                if (answersList[i].GetComponentInChildren<TextMeshProUGUI>().fontSize < smallestFont)
+                {
+                    smallestFont = answersList[i].GetComponentInChildren<TextMeshProUGUI>().fontSize;
+                }
             }
         }
 
@@ -482,8 +502,11 @@ public class ReadTSV : MonoBehaviour
 
         for (int i = 0; i < answersList.Count; i++)
         {
-            answersList[i].GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = false;
-            answersList[i].GetComponentInChildren<TextMeshProUGUI>().fontSize = smallestFont;
+            if (answersList[i] != null)
+            {
+                answersList[i].GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = false;
+                answersList[i].GetComponentInChildren<TextMeshProUGUI>().fontSize = smallestFont;
+            }
         }
     }
 }

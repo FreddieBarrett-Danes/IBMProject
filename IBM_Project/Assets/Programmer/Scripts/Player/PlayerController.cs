@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         //controller set up
         miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
-
+        
         mainCamera = Camera.main;
         rBody = GetComponent<Rigidbody>();
         playerColor = body.GetComponent<Renderer>().material.color;
@@ -96,12 +96,11 @@ public class PlayerController : MonoBehaviour
     {
         if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
-            miniController.StartMinigame();
-
-            if (miniController.completedMinigame)
+            miniController.StartQuiz(1);
+            if (miniController.completedQuiz)
             {
                 Debug.Log("trying to hack");
-                this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, 0, enemyControlled.transform.position.z);
+                this.gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, gameObject.transform.position.y, enemyControlled.transform.position.z);
                 threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
                 body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;
                 visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Forward").GetComponent<Renderer>().material.color;
@@ -142,11 +141,11 @@ public class PlayerController : MonoBehaviour
                 }
 
                 miniController.completedMinigame = false;
+                isControlling = true;
             }
 
             Destroy(enemyControlled);
             isBehindEnemy = false;
-            isControlling = true;
             
         }
     }

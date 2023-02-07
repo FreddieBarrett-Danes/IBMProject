@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class PlayerBehind : MonoBehaviour
 {
+    [SerializeField]
     private GameObject player;
+    [SerializeField]
     private bool playerClose = false;
+    [SerializeField]
     private PlayerController pC;
 
-    public TextMeshProUGUI text1;
-    public TextMeshProUGUI text2;
+    //public TextMeshProUGUI text1;
+    //public TextMeshProUGUI text2;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +54,7 @@ public class PlayerBehind : MonoBehaviour
         {
             //Debug.Log("exiting collider");
             playerClose = false;
+            pC.isBehindEnemy = false;
             //player.transform.GetChild(0).transform.GetChild(0).GetComponent<Renderer>().material.color = Color.blue;
         }
     }

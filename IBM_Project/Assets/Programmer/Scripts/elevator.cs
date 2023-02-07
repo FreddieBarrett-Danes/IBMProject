@@ -12,6 +12,8 @@ public class elevator : MonoBehaviour
     [SerializeField]
     private ReadTSV reader;
 
+    private MinigameController mC;
+
     public Vector3 debug;
 
     private List<GameObject> enemies = new List<GameObject>();
@@ -25,7 +27,7 @@ public class elevator : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         quizMaster = GameObject.FindGameObjectWithTag("QuizMaster");
         reader = quizMaster.GetComponent<ReadTSV>();
-
+        //mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<Mini>
         cam = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
@@ -35,6 +37,7 @@ public class elevator : MonoBehaviour
 
         if(other.gameObject.tag == player.tag && enemies.Count == 0)
         {
+            reader.questionsInARow = 5;
             reader.find = true;
             cam.GetComponent<Camera>().farClipPlane = 0.5f;
         }
