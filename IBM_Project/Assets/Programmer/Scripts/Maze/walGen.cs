@@ -177,6 +177,7 @@ public class walGen : MonoBehaviour
                 array1[3] = 4;
             }
         }
+        Debug.Log("Array values: " + array1[0] + "," + array1[1] + "," + array1[2] + "," + array1[3]);
 
         //Area of refinement: check if all values of array = 0
         if (array1[0] == 0 && array1[1] == 0 && array1[2] == 0 && array1[3] == 0)

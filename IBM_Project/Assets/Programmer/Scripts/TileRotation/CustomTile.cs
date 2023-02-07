@@ -31,7 +31,9 @@ public class CustomTile
         StartUp,
         StartDown,
         StartLeft,
-        StartRight
+        StartRight,
+        //---
+        Blank
     }
 
     //public CustomTile(bool[] Directions, bool Visited)
@@ -53,7 +55,16 @@ public class CustomTile
         this.Visited = Visited;
     }
 
-    public tileType ConvertIntoTile()
+    public CustomTile()
+    {
+        this.n = false;
+        this.s = false;
+        this.e = false;
+        this.w = false;
+        this.Visited = false;
+    }
+
+    public tileType ConvertIntoTile(short num1)
     {
         tileType rv = tileType.UpDown;
         
@@ -80,7 +91,7 @@ public class CustomTile
                 rv = tileType.LeftRight;
                 break;
             default:
-                Debug.Log("Error! This tile dosen't have exactly two directions!");
+                Debug.Log("[" + num1 + "]" + "Error! This tile dosen't have exactly two directions! " + n + "," + s + "," + e + "," + w);
                 break;
         }
         if (n == true && s == true)

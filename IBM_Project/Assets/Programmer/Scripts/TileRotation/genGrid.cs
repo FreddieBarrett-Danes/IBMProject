@@ -18,6 +18,7 @@ public class genGrid : MonoBehaviour
     Quaternion tileRotation;
     public Camera cam;
     public CustomTile[,] gridarray;
+    public CustomTile[] grid2;
     public bool[,] boolarraytest;
     public Vector2 cPos; // Current Position (within Grid array)
     public bool gridCompletion = false;
@@ -30,12 +31,28 @@ public class genGrid : MonoBehaviour
         tileRotation = tilePrefab.transform.rotation;
         tilePrefab2 = GameObject.Find("Tile_UpDown");
 
-        gridarray = new CustomTile[3, 3];
+        grid2 = new CustomTile[3];
+        gridarray = new CustomTile[gridWidth, gridHeight];
         //gridarray = new CustomTile[gridWidth, gridHeight];
+        //int[] array1 = new int[] { 0, 0, 0, 0, 0 };
+
+        CustomTile tile1 = new CustomTile(false,false,false,false, false);
+        tile1.n = true;
+        CustomTile tile2 = new CustomTile();
+
+
+        CustomTile[] grid3 = new CustomTile[] { tile1, tile2 };
 
         boolarraytest = new bool[3, 3];
 
         boolarraytest[1, 1] = true;
+
+        cPos = new Vector2(0, 0);
+        Debug.Log("start Cpos " + cPos.x + "," + cPos.y);
+        gridarray[0, 0].e = true;
+        gridarray[0, 0].Visited = true;
+        SetPrefab();
+        Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), Quaternion.identity);
 
 
         for (int x = 0; x < gridWidth; x++)
@@ -43,16 +60,18 @@ public class genGrid : MonoBehaviour
             for (int y = 0; y < gridHeight; y++)
             {
                 Debug.Log(x + "," + y);
-                gridarray[x, y].n = false;
-                gridarray[x, y].s = false;
-                gridarray[x, y].e = false;
-                gridarray[x, y].w = false;
-                gridarray[x, y].Visited = false;
-                gridarray[x, y].type = CustomTile.tileType.UpDown;
+                gridarray[x, y] = new CustomTile();
+                //gridarray[x, y].n = false;
+                //gridarray[x, y].s = false;
+                //gridarray[x, y].e = false;
+                //gridarray[x, y].w = false;
+                //gridarray[x, y].Visited = false;
+                //gridarray[x, y].type = CustomTile.tileType.UpDown;
             }
         }
-        gridarray[1, 1].type = CustomTile.tileType.StartLeft;
-        GridGeneration();
+        //gridarray[1, 1].type = CustomTile.tileType.StartLeft;
+        
+        //GridGeneration();
     }
 
     private void GridGeneration()
@@ -62,7 +81,7 @@ public class genGrid : MonoBehaviour
             for (int y = 0; y < gridHeight; y++)
             {
                 
-                Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity); //Instantiate needs Monobehaviour to function.
+                //Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity); //Instantiate needs Monobehaviour to function.
                                                                                     //Instantiate(tilePrefab, new Vector3(x / 2.0f, 0, y / 4.0f), Quaternion.identity);
                                                                                     //InstantiatedGameObject.name = "Tile (" + x + "," + y + ")";
 
@@ -70,38 +89,47 @@ public class genGrid : MonoBehaviour
                 
             }
         }
-        cPos = new Vector2(1, 1);
-        Debug.Log("test1");
+
         //Grid[(int)cPos.x, (int)cPos.y].e = true;
-        gridarray[1, 1].e = true;
+        //gridarray[0, 0].s = false;
+        //Instantiate(GameObject.Find("Tile_DownLeft"), new Vector3(cPos.x, cPos.y, 0), Quaternion.identity);
         Debug.Log("test2");
 
-        while (gridCompletion == false)
+        short counter = 0;
+
+        while (gridCompletion == false) //(counter >= 9)
         {
-            if (gridarray[(int)cPos.x - 1, (int)cPos.y].w == true)
-            { gridarray[(int)cPos.x, (int)cPos.y].e = true; }
-            if (gridarray[(int)cPos.x + 1, (int)cPos.y].e == true)
-            { gridarray[(int)cPos.x, (int)cPos.y].w = true; }
-            if (gridarray[(int)cPos.x, (int)cPos.y + 1].s == true)
-            { gridarray[(int)cPos.x, (int)cPos.y].n = true; }
-            if (gridarray[(int)cPos.x, (int)cPos.y - 1].n == true)
-            { gridarray[(int)cPos.x, (int)cPos.y].s = true; }
+
 
             GridMovement();
-            SetPrefab();
-            Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), Quaternion.identity);
+            if (gridCompletion == false)
+            {
+                SetPrefab();
+                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), Quaternion.identity);
+                counter++;
+                Debug.Log("Counter: " + counter);
+            }
+            //if (gridarray[(int)cPos.x - 1, (int)cPos.y].w == true)
+            //{ gridarray[(int)cPos.x, (int)cPos.y].e = true; }
+            //if (gridarray[(int)cPos.x + 1, (int)cPos.y].e == true)
+            //{ gridarray[(int)cPos.x, (int)cPos.y].w = true; }
+            //if (gridarray[(int)cPos.x, (int)cPos.y + 1].s == true)
+            //{ gridarray[(int)cPos.x, (int)cPos.y].n = true; }
+            //if (gridarray[(int)cPos.x, (int)cPos.y - 1].n == true)
+            //{ gridarray[(int)cPos.x, (int)cPos.y].s = true; }
+
         }
-        
+
     }
 
     private void SetPrefab()
     {
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile() == CustomTile.tileType.UpDown) { tilePrefab2 = GameObject.Find("Tile_UpDown"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile() == CustomTile.tileType.UpLeft) { tilePrefab2 = GameObject.Find("Tile_UpLeft"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile() == CustomTile.tileType.UpRight) { tilePrefab2 = GameObject.Find("Tile_UpRight"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile() == CustomTile.tileType.DownLeft) { tilePrefab2 = GameObject.Find("Tile_DownLeft"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile() == CustomTile.tileType.DownRight) { tilePrefab2 = GameObject.Find("Tile_DownRight"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile() == CustomTile.tileType.LeftRight) { tilePrefab2 = GameObject.Find("Tile_LeftRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(1) == CustomTile.tileType.UpDown) { tilePrefab2 = GameObject.Find("Tile_UpDown"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(2) == CustomTile.tileType.UpLeft) { tilePrefab2 = GameObject.Find("Tile_UpLeft"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(3) == CustomTile.tileType.UpRight) { tilePrefab2 = GameObject.Find("Tile_UpRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(4) == CustomTile.tileType.DownLeft) { tilePrefab2 = GameObject.Find("Tile_DownLeft"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(5) == CustomTile.tileType.DownRight) { tilePrefab2 = GameObject.Find("Tile_DownRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(6) == CustomTile.tileType.LeftRight) { tilePrefab2 = GameObject.Find("Tile_LeftRight"); }
     }
 
     private void GridMovement()
@@ -116,6 +144,8 @@ public class genGrid : MonoBehaviour
         int[] arrayvar = new int[] { 0, 0, 0, 0 };
         //n, s, e, w
 
+        Debug.Log(cPos.x + "," + cPos.y);   
+
         //check north
         if (cPos.y != (gridHeight - 1))
         {
@@ -126,21 +156,21 @@ public class genGrid : MonoBehaviour
         //check south
         if (cPos.y != 0)
         {
-            if (gridarray[(int)cPos.x, (int)cPos.y + 1].Visited == false)
+            if (gridarray[(int)cPos.x, (int)cPos.y - 1].Visited == false)
             { arrayvar[1] = 2; }
         }
 
         //check east
         if (cPos.x != (gridWidth - 1))
         {
-            if (gridarray[(int)cPos.x, (int)cPos.y + 1].Visited == false)
+            if (gridarray[(int)cPos.x + 1, (int)cPos.y].Visited == false)
             { arrayvar[2] = 3; }
         }
 
         //check west
         if (cPos.x != 0)
         {
-            if (gridarray[(int)cPos.x, (int)cPos.y + 1].Visited == false)
+            if (gridarray[(int)cPos.x - 1, (int)cPos.y].Visited == false)
             { arrayvar[3] = 4; }
         }
 
@@ -163,23 +193,35 @@ public class genGrid : MonoBehaviour
         {
             case 1:
                 //move north
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].n = true;
                 cPos.y += 1;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].s = true;
                 break;
             case 2:
                 //move south
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].s = true;
                 cPos.y -= 1;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].n = true;
                 break;
             case 3:
                 //move east
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].e = true;
                 cPos.x += 1;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].w = true;
                 break;
             case 4:
                 //move west
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].w = true;
                 cPos.x -= 1;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].e = true;
                 break;
             case 5:
                 //Mark grid path as complete
@@ -191,6 +233,7 @@ public class genGrid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //short counter;
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -200,6 +243,20 @@ public class genGrid : MonoBehaviour
                 obj.transform.Rotate(0, 0, -90);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GridMovement();
+            if (gridCompletion == false)
+            {
+                SetPrefab();
+                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), Quaternion.identity);
+                //counter++;
+                //Debug.Log("Counter: " + counter);
+            }
+        }
+
+        //Space input for debug, to be removed once generation is refined.
     }
 
     //How do you make an object respond to a click in Unity C#
