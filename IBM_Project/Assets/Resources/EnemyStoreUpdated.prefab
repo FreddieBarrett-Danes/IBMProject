@@ -75,7 +75,7 @@ MonoBehaviour:
   bThreatLevel: 0
   bBotCount: 0
   bRemainingBots: 0
-  bStatus: 0
+  bGameControl: {fileID: 0}
   bObstacleLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -113,7 +113,7 @@ MonoBehaviour:
   bRotationSpeed: 400
   bPreviousPos: {x: 0, y: 0, z: 0}
   bVelocity: {x: 0, y: 0, z: 0}
-  bPredictionTime: 1
+  bPredictionTime: 0.25
   bRecentChaseTimer: 500
   bRecentChaseTimerN: 0
   bSuspiciousRadius: 1.5
