@@ -44,9 +44,8 @@ public class TDetectPlayer : BT_Node
             Vector3 toTarget = playerPos - agentPos;
             Vector3 dirToTarget = toTarget.normalized;
 
-            if (range < botInfo.bViewRadius && Vector3.Angle(botInfo.transform.forward, dirToTarget) < botInfo.bViewAngle / 2 && !Physics.Raycast(botInfo.transform.position, dirToTarget, toTarget.magnitude, botInfo.bObstacleLayer))
+            if (((range < botInfo.bViewRadius && Vector3.Angle(botInfo.transform.forward, dirToTarget) < botInfo.bViewAngle / 2) || range < botInfo.bInnerViewRadius) && !Physics.Raycast(botInfo.transform.position, dirToTarget, toTarget.magnitude, botInfo.bObstacleLayer))
             {
-                Debug.Log("Detected Player");
                 botInfo.bDetectionTimer += Time.deltaTime;
                 perception.ClearFoV();
                 perception.AddMemory(botInfo.bPlayer.transform.gameObject);
@@ -56,7 +55,7 @@ public class TDetectPlayer : BT_Node
                 {
                     botInfo.bTimer = botInfo.bWanderTimer;
                     botInfo.bEngaging = true;
-                    botInfo.bStatus = GameController.Status.HUNTED;
+                    botInfo.bGameControl.PlayerStatus = GameController.Status.HUNTED;
                     state = NodeState.SUCCESS;
                     return state;
                 }

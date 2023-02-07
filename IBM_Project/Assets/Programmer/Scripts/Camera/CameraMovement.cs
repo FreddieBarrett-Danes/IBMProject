@@ -7,7 +7,7 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
-        gC = gameObject.GetComponent<GameController>();
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
     private void Update()

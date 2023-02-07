@@ -100,8 +100,9 @@ MonoBehaviour:
   bTimer: 0
   bPlayer: {fileID: 0}
   bViewRadius: 0
-  bDefaultViewRadius: 2
-  bSusViewRadius: 3
+  bInnerViewRadius: 1
+  bDefaultViewRadius: 3
+  bSusViewRadius: 2
   bViewAngle: 90
   bViewAngleN: 0
   bViewAngleD: 0
@@ -172,6 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16900ca15c380ee44b39538b3a9bf013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text1: {fileID: 0}
+  text2: {fileID: 0}
 --- !u!1 &792528037506277894
 GameObject:
   m_ObjectHideFlags: 0

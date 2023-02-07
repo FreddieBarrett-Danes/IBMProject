@@ -14,7 +14,6 @@ public class TPathToPlayer : BT_Node
 
     public override NodeState Evaluate()
     {
-        Debug.Log("Path To Player");
         Vector3 pVelocity = botInfo.bPlayer.GetComponent<Rigidbody>().velocity;
         Vector3 bTargetPos = botInfo.bPlayer.transform.position + pVelocity * botInfo.bPredictionTime;
         botInfo.bRecentlyChase = true;
