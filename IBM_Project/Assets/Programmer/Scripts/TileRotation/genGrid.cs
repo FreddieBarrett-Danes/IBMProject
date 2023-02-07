@@ -70,7 +70,23 @@ public class genGrid : MonoBehaviour
         //gridarray[0, 0].w = true;
         gridarray[0, 0].Visited = true;
         gridarray[0, 0].s = true;
-        GridMovement();
+        while (gridCompletion == false)
+        {
+            GridMovement();
+        }
+
+        //Replace every unvisited tile as blank
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int y = 0; y < gridHeight; y ++)
+            {
+                if (gridarray[x, y].Visited == false)
+                { 
+                    Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, 0), GameObject.Find("Tile_Blank").transform.rotation);
+                    Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, -20), GameObject.Find("Tile_Blank").transform.rotation);
+                }
+            }
+        }
         //vvv
         //SetPrefab();
         //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
@@ -149,6 +165,45 @@ public class genGrid : MonoBehaviour
         if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(9) == CustomTile.tileType.StartRight) { tilePrefab2 = GameObject.Find("Tile_StartRight"); }
         if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(10) == CustomTile.tileType.StartDown) { tilePrefab2 = GameObject.Find("Tile_StartDown"); }
     }
+    private void DoubleInstantiate()
+    {
+        int rng2 = Random.Range(0, 4);
+        Vector3 randRotation = new Vector3(0,0,0);
+        Quaternion quatRotation = new Quaternion(0,0,0,0);
+        switch (rng2)
+        {
+            case 1:
+                randRotation = new Vector3(0, 0, 0);
+                quatRotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f); //tilePrefab2.transform.rotation; //Quaternion.identity;
+                break;
+            case 2:
+                randRotation = new Vector3(0, 0, 90);
+                quatRotation = new Quaternion(0.0f, 0.0f, 0.7071068f, 0.7071068f);
+                break;
+            case 3:
+                randRotation = new Vector3(0, 0, 180);
+                quatRotation = new Quaternion(0.0f, 0.0f, 1.0f, 0.0f);
+                break;
+            case 4:
+                randRotation = new Vector3(0, 0, 270);
+                quatRotation = new Quaternion(0, 0, 0.7071068f, -0.7071068f);
+                break;
+            default:
+                randRotation = new Vector3(0, 0, 0);
+                quatRotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+                break;
+        }
+        //Generate correct path in front of the camera:
+        //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
+        
+        //Generate correct path behind the camera:
+        Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, -20), tilePrefab2.transform.rotation);
+
+
+        //Generate path in front of the camera with randomised rotations:
+        //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.Rotate(randRotation, Space.World));
+        Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation);
+    }
 
     private void GridMovement()
     {
@@ -214,7 +269,8 @@ public class genGrid : MonoBehaviour
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].n = true;
                 SetPrefab();
-                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
+                DoubleInstantiate();
+                //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.y += 1;
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].s = true;
@@ -224,7 +280,8 @@ public class genGrid : MonoBehaviour
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].s = true;
                 SetPrefab();
-                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
+                DoubleInstantiate();
+                //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.y -= 1;
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].n = true;
@@ -234,7 +291,8 @@ public class genGrid : MonoBehaviour
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].e = true;
                 SetPrefab();
-                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
+                DoubleInstantiate();
+                //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.x += 1;
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].w = true;
@@ -244,7 +302,8 @@ public class genGrid : MonoBehaviour
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].w = true;
                 SetPrefab();
-                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
+                DoubleInstantiate();
+                //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.x -= 1;
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].e = true;
@@ -252,6 +311,9 @@ public class genGrid : MonoBehaviour
             case 5:
                 //Mark grid path as complete
                 gridCompletion = true;
+                SetPrefab();
+                DoubleInstantiate();
+                //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 break;
         }
     }
