@@ -5,24 +5,26 @@ using UnityEngine;
 public class goalLocationScript : MonoBehaviour
 {
     private GameController gC;
+    private MinigameController mC;
     private ComputerInteraction cI;
     public walGen wG;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "mazePlayer")
+        if (other.gameObject.CompareTag("mazePlayer"))
         {
             Debug.Log("Maze Win");
             Debug.Log("Refer to goalLocationScript for Maze output");
             gC.inMinigame = false;
             wG.Timer.SetActive(false);
-            cI.completedMinigame = true;
+            mC.completedMinigame = true;
         }
     }
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        gC = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>();
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         cI = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
+        mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
     }
 
     // Update is called once per frame

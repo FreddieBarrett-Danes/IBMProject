@@ -22,8 +22,6 @@ public class BotInfo : MonoBehaviour
     [Header("Ranged Attack Settings")] 
     public float bFireRate = 0.5f;
     [HideInInspector]
-    public Transform bShotStart;
-    [HideInInspector]
     public float bProjectileSpeed;
     [HideInInspector]
     public float bNextFire;
@@ -67,20 +65,10 @@ public class BotInfo : MonoBehaviour
     public float bSusViewRadius;
     [Range(0, 360)] 
     public float bViewAngle;
-    [HideInInspector] 
-    public float bViewAngleN;
-    [HideInInspector]
-    public float bViewAngleD;
     public float bDetectionTimer;
     public int bTimeBeforeDetect;
     [HideInInspector]
     public bool bEngaging;
-    public float bSpeed;
-    public float bRotationSpeed;
-    [HideInInspector]
-    public Vector3 bPreviousPos;
-    [HideInInspector]
-    public Vector3 bVelocity;
     public float bPredictionTime;
     public float bRecentChaseTimer;
     [HideInInspector]
@@ -115,7 +103,6 @@ public class BotInfo : MonoBehaviour
         bShooting = gameObject.AddComponent<Shooting>();
         bShooting.SetHost(bVisuals);
         bShooting.bulletSpeed = bProjectileSpeed;
-        bShotStart = gameObject.transform.GetChild(0).GetChild(2);
         bNextFire = bFireRate;
         // Patrol
         bPaths = GameObject.Find("PatrolPaths");
@@ -134,13 +121,12 @@ public class BotInfo : MonoBehaviour
     {
         if (bDetectionTimer == 0) return;
         DateTime now = DateTime.Now;
-        if (!bPlayerInView &&
-            GetComponent<Perception>().sensedRecord[0].timeLastSensed < now.Subtract(new TimeSpan(0, 0, bSearchTime)))
-        {
-            bGameControl.PlayerStatus = GameController.Status.SAFE;
-            bDetectionTimer = 0;
-            bViewRadius = bDefaultViewRadius;
-        }
+        if (bPlayerInView ||
+            GetComponent<Perception>().sensedRecord[0].timeLastSensed >=
+            now.Subtract(new TimeSpan(0, 0, bSearchTime))) return;
+        bGameControl.PlayerStatus = GameController.Status.SAFE;
+        bDetectionTimer = 0;
+        bViewRadius = bDefaultViewRadius;
     }
     private void LateUpdate()
     {

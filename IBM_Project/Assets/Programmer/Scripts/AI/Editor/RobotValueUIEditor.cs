@@ -16,6 +16,8 @@ public class RobotValueUIEditor : Editor
         Vector3 position = robot.transform.position;
         Handles.color = Color.red;
         Handles.DrawWireArc (position, Vector3.up, Vector3.forward, 360, bot.bDefaultViewRadius);
+        Handles.color = Color.green;
+        Handles.DrawWireArc (position, Vector3.up, Vector3.forward, 360, bot.bViewRadius);
         Handles.color = Color.white;
         Handles.DrawWireArc(position + bot.transform.forward * bot.bWanderDistance, Vector3.up, Vector3.forward, 360, bot.bWanderRadius);
         Handles.color = Color.blue;
