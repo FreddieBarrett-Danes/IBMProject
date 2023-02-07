@@ -17,7 +17,7 @@ public class LevelTimer : MonoBehaviour
     void Start()
     {
         currentTime = startTime;
-        gC = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>();
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         //countdownText.gameObject.SetActive(true);
     }
 
