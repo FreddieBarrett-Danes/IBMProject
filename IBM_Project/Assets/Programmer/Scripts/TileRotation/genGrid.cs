@@ -28,7 +28,7 @@ public class genGrid : MonoBehaviour
     void Start()
     {
         //gridCompletion = false;
-        tileRotation = tilePrefab.transform.rotation;
+        //tileRotation = tilePrefab.transform.rotation;
         tilePrefab2 = GameObject.Find("Tile_UpDown");
 
         grid2 = new CustomTile[3];
@@ -47,19 +47,14 @@ public class genGrid : MonoBehaviour
 
         boolarraytest[1, 1] = true;
 
-        cPos = new Vector2(0, 0);
-        Debug.Log("start Cpos " + cPos.x + "," + cPos.y);
-        gridarray[0, 0].e = true;
-        gridarray[0, 0].Visited = true;
-        SetPrefab();
-        Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), Quaternion.identity);
+        
 
 
         for (int x = 0; x < gridWidth; x++)
         {
             for (int y = 0; y < gridHeight; y++)
             {
-                Debug.Log(x + "," + y);
+                //Debug.Log(x + "," + y);
                 gridarray[x, y] = new CustomTile();
                 //gridarray[x, y].n = false;
                 //gridarray[x, y].s = false;
@@ -69,8 +64,26 @@ public class genGrid : MonoBehaviour
                 //gridarray[x, y].type = CustomTile.tileType.UpDown;
             }
         }
-        //gridarray[1, 1].type = CustomTile.tileType.StartLeft;
+
+        cPos = new Vector2(0, 0);
+        Debug.Log("start Cpos " + cPos.x + "," + cPos.y);
+        //gridarray[0, 0].w = true;
+        gridarray[0, 0].Visited = true;
+        gridarray[0, 0].s = true;
+        GridMovement();
+        //vvv
+        //SetPrefab();
+        //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
+        //^^^
         
+        //GridMovement();
+        //SetPrefab();
+        //Debug.Log("Prefab: " + tilePrefab2);
+        //Instantiate(tilePrefab2, new Vector3(0, 0, 0), tilePrefab2.transform.rotation);//Quaternion.identity);
+        //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);//Quaternion.identity);
+
+        //gridarray[1, 1].type = CustomTile.tileType.StartLeft;
+
         //GridGeneration();
     }
 
@@ -105,7 +118,7 @@ public class genGrid : MonoBehaviour
             if (gridCompletion == false)
             {
                 SetPrefab();
-                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), Quaternion.identity);
+                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation); //Quaternion.identity);
                 counter++;
                 Debug.Log("Counter: " + counter);
             }
@@ -130,6 +143,11 @@ public class genGrid : MonoBehaviour
         if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(4) == CustomTile.tileType.DownLeft) { tilePrefab2 = GameObject.Find("Tile_DownLeft"); }
         if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(5) == CustomTile.tileType.DownRight) { tilePrefab2 = GameObject.Find("Tile_DownRight"); }
         if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(6) == CustomTile.tileType.LeftRight) { tilePrefab2 = GameObject.Find("Tile_LeftRight"); }
+
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(7) == CustomTile.tileType.StartUp) { tilePrefab2 = GameObject.Find("Tile_StartUp"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(8) == CustomTile.tileType.StartLeft) { tilePrefab2 = GameObject.Find("Tile_StartLeft"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(9) == CustomTile.tileType.StartRight) { tilePrefab2 = GameObject.Find("Tile_StartRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(10) == CustomTile.tileType.StartDown) { tilePrefab2 = GameObject.Find("Tile_StartDown"); }
     }
 
     private void GridMovement()
@@ -195,6 +213,8 @@ public class genGrid : MonoBehaviour
                 //move north
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].n = true;
+                SetPrefab();
+                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.y += 1;
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].s = true;
@@ -203,6 +223,8 @@ public class genGrid : MonoBehaviour
                 //move south
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].s = true;
+                SetPrefab();
+                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.y -= 1;
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].n = true;
@@ -211,6 +233,8 @@ public class genGrid : MonoBehaviour
                 //move east
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].e = true;
+                SetPrefab();
+                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.x += 1;
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].w = true;
@@ -219,6 +243,8 @@ public class genGrid : MonoBehaviour
                 //move west
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].w = true;
+                SetPrefab();
+                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.x -= 1;
                 gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
                 gridarray[(int)cPos.x, (int)cPos.y].e = true;
@@ -247,13 +273,13 @@ public class genGrid : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GridMovement();
-            if (gridCompletion == false)
-            {
-                SetPrefab();
-                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), Quaternion.identity);
-                //counter++;
-                //Debug.Log("Counter: " + counter);
-            }
+            //if (gridCompletion == false)
+            //{
+            //    SetPrefab();
+            //    Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation); // Quaternion.identity);
+            //    //counter++;
+            //    //Debug.Log("Counter: " + counter);
+            //}
         }
 
         //Space input for debug, to be removed once generation is refined.

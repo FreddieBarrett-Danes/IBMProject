@@ -67,16 +67,19 @@ public class CustomTile
     public tileType ConvertIntoTile(short num1)
     {
         tileType rv = tileType.UpDown;
+        Debug.Log("[" + num1 + "]" + "Before switch: " + n + "," + s + "," + e + "," + w);
+                                                        //up       down     right     left
         
         switch (n, s, e, w)
         {
+            //Double direction tiles:
             case (true, true, false, false):
                 rv = tileType.UpDown;
                 break;
             case (true, false, true, false):
                 rv = tileType.UpRight;
                 break;
-            case (true, false, false, false):
+            case (true, false, false, true):
                 rv = tileType.UpLeft;
                 break;
             //---
@@ -90,14 +93,30 @@ public class CustomTile
             case (false, false, true, true):
                 rv = tileType.LeftRight;
                 break;
+            //---
+            //---
+            //Single direction tiles:
+            case (true, false, false, false):
+                rv = tileType.StartUp;
+                break;
+            case (false, true, false, false):
+                rv = tileType.StartDown;
+                break;
+            case (false, false, true, false):
+                rv = tileType.StartRight;
+                break;
+            case (false, false, false, true):
+                rv = tileType.StartLeft;
+                break;
+
             default:
                 Debug.Log("[" + num1 + "]" + "Error! This tile dosen't have exactly two directions! " + n + "," + s + "," + e + "," + w);
                 break;
         }
-        if (n == true && s == true)
-        {
-            rv = tileType.UpDown;
-        }
+        //if (n == true && s == true)
+        //{
+        //    rv = tileType.UpDown;
+        //}
         
         return rv;
     }
