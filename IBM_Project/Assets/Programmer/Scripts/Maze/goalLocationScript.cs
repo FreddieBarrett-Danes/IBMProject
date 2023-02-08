@@ -15,7 +15,7 @@ public class goalLocationScript : MonoBehaviour
             Debug.Log("Refer to goalLocationScript for Maze output");
             gC.inMinigame = false;
             wG.Timer.SetActive(false);
-            mC.completedMinigame = true;
+            mC.completedMaze = true;
         }
     }
     // Start is called before the first frame update
@@ -23,11 +23,5 @@ public class goalLocationScript : MonoBehaviour
     {
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

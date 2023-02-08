@@ -81,8 +81,6 @@ public class PlayerController : MonoBehaviour
         if(isControlling)
         {
             miniController.completedQuiz = false;
-            Debug.Log("here");
-            //
             controlTimer -= Time.deltaTime;
             if(controlTimer <= 0)
             {                
@@ -104,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
         if (miniController.completedQuiz && enemyControlled != null)
         {
-            //gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, gameObject.transform.position.y, enemyControlled.transform.position.z);
+            gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
             body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;
             visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Forward").GetComponent<Renderer>().material.color;

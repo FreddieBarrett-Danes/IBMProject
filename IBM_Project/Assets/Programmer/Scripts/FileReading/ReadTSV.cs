@@ -6,45 +6,45 @@ using UnityEngine.UI;
 
 public class ReadTSV : MonoBehaviour
 {
-    private MinigameController mC;
-    private GameController gC;
+    public MinigameController mC;
+    public GameController gC;
 
     public bool completedQuiz = false;
 
-    private GameObject questionText;
+    public GameObject questionText;
     public GameObject submitText;
     public Button submitButton;
     [Range(0.1f, 1f)]
     public float submitButtonSizeMultiplier; //Multiplier of the Submit text-box 
     public List<GameObject> answersList;
     public TextAsset TSVFile;
-    private GameObject canvas;
-    private RectTransform canvasRectTransform;
+    public GameObject canvas;
+    public RectTransform canvasRectTransform;
 
     //[SerializeField]
     public int rightAnswers; //How many the player got right
     [SerializeField]
-    private int correctAnswers; // how may there are
-    private int amountSelected;
+    public int correctAnswers; // how may there are
+    public int amountSelected;
 
     [SerializeField]
-    private List<int> incorrectAnswersList; //list of questions the user answered wrong
+    public List<int> incorrectAnswersList; //list of questions the user answered wrong
     [SerializeField]
-    private List<int> askedList; //list of questions alreasasked
-    private int tempCorrect;
-    private int tempWrong;
+    public List<int> askedList; //list of questions alreasasked
+    public int tempCorrect;
+    public int tempWrong;
 
     public GameObject singleSelected;
-    private GameObject tempSingleSelected;
+    public GameObject tempSingleSelected;
 
-    private float timer;
+    public float timer;
     [SerializeField]
-    private float waitTime;
-    private bool waiting;
+    public float waitTime;
+    public bool waiting;
 
     
     public int questionsInARow;
-    private int loopNumber;
+    public int loopNumber;
     
     public GameObject panel;
     public Vector2 panelSize;
@@ -52,8 +52,8 @@ public class ReadTSV : MonoBehaviour
     [Range(0.1f, 1f)]
     public float fontSizeMultiplier;
 
-    private float startX;
-    private float startY;
+    public float startX;
+    public float startY;
 
     public int rangeOfQuestionsMax = 6; //find a way to set this automatically
     [Range(1, 6)]
@@ -63,9 +63,9 @@ public class ReadTSV : MonoBehaviour
     //[SerializeField]
     public bool find; //Use this to generate the row,column that you've selected using Row and Column
     [SerializeField]
-    private bool submit;
+    public bool submit;
     [SerializeField]
-    private bool reloadSceneAtEnd;
+    public bool reloadSceneAtEnd;
 
     List<int> Shuffle(int length)
     {
@@ -139,15 +139,16 @@ public class ReadTSV : MonoBehaviour
         return rv;
     }
 
-    private void submitClicked()
+    public void submitClicked()
     {
+        Debug.Log("submit clicked");
         submit = true;
         //DON'T WRITE ANYTHING UNDER HERE
         //UNITY UI WILL LAG YOU INTO NEXT SUNDAY
         //Caused by button hold for a couple of frames .... I think
     }
 
-    private void nonDuplicateRow()
+    public void nonDuplicateRow()
     {
         row = Random.Range(1, rangeOfQuestionsMax + 1);
 
@@ -451,17 +452,27 @@ public class ReadTSV : MonoBehaviour
         
         else if(timer < 0 && waiting && loopNumber == questionsInARow)
         {
-            for (int i = 0; i < answersList.Count; i++)
+            if (questionsInARow > 1)
             {
-                Destroy(answersList[i]);
+                //find = true;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-            Destroy(questionText);
-            Destroy(submitText);
-            mC.completedQuiz = true;
-            gC.inMinigame = false;
-            //find = true;
+            else
+            {
+                for (int i = 0; i < answersList.Count; i++)
+                {
+                    Destroy(answersList[i]);
+                }
+                Destroy(questionText);
+                Destroy(submitText);
+                mC.completedQuiz = true;
+                gC.inMinigame = false;
+                submit = false;
+                //completedQuiz = true;
+                waiting = false;
+            }
+
             //waiting = false;
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         }
 
