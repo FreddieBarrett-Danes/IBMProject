@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour
     {
         if(isControlling)
         {
+            
             Debug.Log("here");
             //
             controlTimer -= Time.deltaTime;
@@ -101,7 +102,7 @@ public class PlayerController : MonoBehaviour
             miniController.StartQuiz(1);    
         }
 
-        if (miniController.completedQuiz)
+        if (miniController.completedQuiz && enemyControlled != null)
         {
             //gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
@@ -117,10 +118,10 @@ public class PlayerController : MonoBehaviour
 
             controlTimer = 10.0f;
             isBehindEnemy = false;
+            Destroy(enemyControlled);
             isControlling = true;
-            //Destroy(enemyControlled);
-            enemyControlled.SetActive(enemyControlled);
             miniController.completedMinigame = false;
+            //enemyControlled.SetActive(enemyControlled);
             /*switch (threatLevel)
             {
                 //change these values when designers pull their finger out
@@ -152,8 +153,8 @@ public class PlayerController : MonoBehaviour
                 }
             }*/
             //enemyControlled.SetActive(enemyControlled.GetComponent<Collider>());
-            
-            
+
+
         }
     }
 }
