@@ -37,7 +37,7 @@ public class elevator : MonoBehaviour
 
         if(other.gameObject.tag == player.tag && enemies.Count == 0)
         {
-            reader.questionsInARow = 4;
+            reader.questionsInARow = 2;
             reader.find = true;
             cam.GetComponent<Camera>().farClipPlane = 0.5f;
         }

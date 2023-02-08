@@ -469,6 +469,7 @@ public class ReadTSV : MonoBehaviour
                 gC.inMinigame = false;
                 submit = false;
                 //completedQuiz = true;
+                loopNumber = 0;
                 waiting = false;
             }
 
