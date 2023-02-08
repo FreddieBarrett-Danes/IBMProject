@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
     {
         if(isControlling)
         {
-            
+            miniController.completedQuiz = false;
             Debug.Log("here");
             //
             controlTimer -= Time.deltaTime;
@@ -118,9 +118,8 @@ public class PlayerController : MonoBehaviour
 
             controlTimer = 10.0f;
             isBehindEnemy = false;
-            Destroy(enemyControlled);
             isControlling = true;
-            miniController.completedMinigame = false;
+            Destroy(enemyControlled);
             //enemyControlled.SetActive(enemyControlled);
             /*switch (threatLevel)
             {

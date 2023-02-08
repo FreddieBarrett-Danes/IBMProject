@@ -27,7 +27,7 @@ public class MinigameController : MonoBehaviour
     public void StartMazeMinigame()
     {
         chosenMinigame = mazeMinigame;
-        if (!completedMinigame)
+        if (!completedQuiz)
         {
             if (!chosenMinigame.activeSelf)
             {
