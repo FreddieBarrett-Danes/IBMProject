@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465788, g: 0.49641258, b: 0.57481724, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465791, g: 0.49641317, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4912,6 +4912,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 235401369}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &236888686 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 196104098631450659, guid: 2af86ddf7b40c7b4baffa59d3f68282f, type: 3}
+  m_PrefabInstance: {fileID: 1061725312}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &241473455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48220,6 +48225,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2098330026, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
+      propertyPath: mazeMinigame
+      value: 
+      objectReference: {fileID: 236888686}
     - target: {fileID: 1633922411735625584, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
       propertyPath: m_RootOrder
       value: 6

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085a771bef0da494aa47f392077fc3b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  completedQuiz: 0
   submitText: {fileID: 0}
   submitButton: {fileID: 0}
   submitButtonSizeMultiplier: 0.65
@@ -79,7 +80,7 @@ GameObject:
   - component: {fileID: 1661505819052020614}
   m_Layer: 0
   m_Name: uiTimer
-  m_TagString: Maze
+  m_TagString: MazeUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -515,7 +516,7 @@ GameObject:
   - component: {fileID: 622984917745443114}
   m_Layer: 0
   m_Name: MazeMinigame
-  m_TagString: Maze
+  m_TagString: MazeUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -624,7 +625,7 @@ GameObject:
   - component: {fileID: 5131384517373411988}
   m_Layer: 0
   m_Name: pregameInfo
-  m_TagString: Maze
+  m_TagString: MazeUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -771,7 +772,7 @@ GameObject:
   - component: {fileID: 4278964344338466368}
   m_Layer: 0
   m_Name: ingameInfo2
-  m_TagString: Maze
+  m_TagString: MazeUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

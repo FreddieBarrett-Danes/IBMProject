@@ -32,7 +32,7 @@ public class ComputerInteraction : MonoBehaviour
         {
             if (!miniController.completedMinigame)
             {
-                miniController.StartMinigame();
+                miniController.StartMazeMinigame();
             }
 
         }

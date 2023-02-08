@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
     //keeps track if in lavel/mingame or quiz
     //private LevelTimer levelTimer;
     public GameObject level;
-    private ComputerInteraction cI;
+    private MinigameController mC;
     public bool inMinigame = false;
 
     public GameObject[] levelUI;
@@ -37,7 +37,7 @@ public class GameController : MonoBehaviour
             maze.SetActive(false);
         }
 
-        cI = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
+        mC = gameObject.GetComponent<MinigameController>();
         PlayerStatus = Status.SAFE;
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
     }
@@ -78,9 +78,9 @@ public class GameController : MonoBehaviour
                 {
                     levelUI[i].SetActive(true);
                 }
-                if (cI.chosenMinigame != null)
+                if (mC.chosenMinigame != null)
                 {
-                    cI.chosenMinigame.SetActive(false);
+                    mC.chosenMinigame.SetActive(false);
                 }
                 /*foreach (GameObject maze in mazeUI)
                 {
