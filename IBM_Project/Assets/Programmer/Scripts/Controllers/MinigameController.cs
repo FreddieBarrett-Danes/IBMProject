@@ -15,7 +15,7 @@ public class MinigameController : MonoBehaviour
 
     private GameController gameController;
 
-    public bool completedMinigame = false;
+    //public bool completedMinigame = false;
     public bool completedQuiz = false;
     public bool completedMaze = false;
     // Start is called before the first frame update

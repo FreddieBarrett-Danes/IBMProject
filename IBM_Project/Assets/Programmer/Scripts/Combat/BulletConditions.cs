@@ -20,7 +20,7 @@ public class BulletConditions : MonoBehaviour
                    Destroy(other.gameObject);
                    Destroy(gameObject);
                }
-               else if (other.gameObject.tag == "Wall")
+               else if (other.gameObject.layer == 8)
                {
                    Destroy(gameObject);
                }
@@ -35,7 +35,7 @@ public class BulletConditions : MonoBehaviour
                 Destroy(other.gameObject);
                 Destroy(gameObject);
            }
-           else if (other.gameObject.tag == "Wall")
+           else if (other.gameObject.layer == 8)
            {
                 Destroy(gameObject);
            }

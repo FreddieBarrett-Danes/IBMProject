@@ -29,15 +29,16 @@ public class ComputerInteraction : MonoBehaviour
 
     void Update()
     {
+        
         if (isTouching && Input.GetKey(KeyCode.E))
         {
-            if (!miniController.completedMinigame)
+            if (!miniController.completedMaze)
             {
                 miniController.StartMazeMinigame();
             }
 
         }
-        if (miniController.completedMinigame)
+        if (miniController.completedMaze)
         {
             foreach (GameObject enemy in enemies)
             {
@@ -45,7 +46,7 @@ public class ComputerInteraction : MonoBehaviour
             }
             gameObject.GetComponent<Renderer>().enabled = true;
             enemies = null;
-            miniController.completedMinigame = false;
+            miniController.completedMaze = false;
         }
 
     }
