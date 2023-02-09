@@ -396,7 +396,7 @@ public class ReadTSV : MonoBehaviour
             submitButton.onClick.AddListener(submitClicked);
         }
 
-        if (submit)
+        if (submit && waiting == false)
         {
             //This segment resets all of the temp counter values
             //It is used to measure how many questions the user answered right/wrong. It is used for calculations later...
@@ -446,8 +446,8 @@ public class ReadTSV : MonoBehaviour
 
             //start timer here
             timer = waitTime;
-            submit = false;
         }
+        submit = false;
 
         if(waiting)
         {
