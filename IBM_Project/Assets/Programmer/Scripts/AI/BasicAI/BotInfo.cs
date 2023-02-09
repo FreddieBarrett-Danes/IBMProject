@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -89,7 +90,7 @@ public class BotInfo : MonoBehaviour
     private void Start()
     {
         // Misc
-        bPlayer = GameObject.FindGameObjectWithTag("Player");
+        bPlayer = FindObjectOfType(typeof(PlayerController)).GameObject();
         bBotCount = BotCalc();
         bRemainingBots = BotCalc();
         bGameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -115,12 +116,14 @@ public class BotInfo : MonoBehaviour
         bRecentChaseTimerN = bRecentChaseTimer;
         // Suspicious
         bSusTimer = bSuspiciousTimer;
+        bPlayerInView = false;
     }
 
     private void Update()
     {
         if (bDetectionTimer == 0) return;
         DateTime now = DateTime.Now;
+        if (gameObject.GetComponent<Perception>().sensedRecord.Length == 0) return;
         if (bPlayerInView ||
             GetComponent<Perception>().sensedRecord[0].timeLastSensed >=
             now.Subtract(new TimeSpan(0, 0, bSearchTime))) return;

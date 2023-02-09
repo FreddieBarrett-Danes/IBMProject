@@ -58,7 +58,9 @@ public class PlayerController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        rBody.MovePosition(rBody.position + velocity * Time.deltaTime);
+        //rBody.MovePosition(rBody.position + velocity * Time.deltaTime);
+        this.transform.position += velocity * Time.deltaTime;
+        //this.transform.Translate(velocity * Time.deltaTime);
     }
 
     private void Movement()
