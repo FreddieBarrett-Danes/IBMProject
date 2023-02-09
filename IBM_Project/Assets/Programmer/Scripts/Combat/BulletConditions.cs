@@ -20,7 +20,7 @@ public class BulletConditions : MonoBehaviour
                    Destroy(other.gameObject);
                    Destroy(gameObject);
                }
-               else if (other.gameObject == GameObject.FindGameObjectWithTag("Wall"))
+               else if (other.gameObject.tag == "Wall")
                {
                    Destroy(gameObject);
                }
@@ -30,12 +30,12 @@ public class BulletConditions : MonoBehaviour
        }
        else if (gameObject.CompareTag("Enemy"))
        {
-           if (other.gameObject == GameObject.FindGameObjectWithTag("Player"))
+           if (other.gameObject.tag == "Player")
            {
                 Destroy(other.gameObject);
                 Destroy(gameObject);
            }
-           else if (other.gameObject == GameObject.FindGameObjectWithTag("Wall"))
+           else if (other.gameObject.tag == "Wall")
            {
                 Destroy(gameObject);
            }

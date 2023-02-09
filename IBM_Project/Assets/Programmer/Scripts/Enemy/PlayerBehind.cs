@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBehind : MonoBehaviour
@@ -16,7 +17,7 @@ public class PlayerBehind : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = FindObjectOfType(typeof(PlayerController)).GameObject();
         pC = player.GetComponent<PlayerController>();
     }
     void Update()
@@ -41,7 +42,7 @@ public class PlayerBehind : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == player.gameObject)
+        if (other.gameObject == player)
         {
             playerClose = true;
             //player.transform.GetChild(0).transform.GetChild(0).GetComponent<Renderer>().material.color = Color.green;
@@ -50,7 +51,7 @@ public class PlayerBehind : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == player.gameObject)
+        if (other.gameObject == player)
         {
             //Debug.Log("exiting collider");
             playerClose = false;

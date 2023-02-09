@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Unity.IO;
+using Unity.VisualScripting;
 
 public class ComputerInteraction : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class ComputerInteraction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = FindObjectOfType(typeof(PlayerController)).GameObject();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
@@ -51,7 +52,7 @@ public class ComputerInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == player.tag)
+        if(other.gameObject == player)
         {
             isTouching = true;
         }
@@ -59,7 +60,7 @@ public class ComputerInteraction : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == player.tag)
+        if (other.gameObject == player)
         {
             isTouching = false;
         }
