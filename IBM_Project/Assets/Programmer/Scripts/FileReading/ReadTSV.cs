@@ -6,66 +6,69 @@ using UnityEngine.UI;
 
 public class ReadTSV : MonoBehaviour
 {
-    public MinigameController mC;
-    public GameController gC;
-
+    [Header("Game Controller Intergration")]
+    [Space]
     public bool completedQuiz = false;
+    private MinigameController mC;
+    private GameController gC;
 
-    public GameObject questionText;
-    public GameObject submitText;
-    public Button submitButton;
-    [Range(0.1f, 1f)]
+
+    [Header("Initialisation Parameters")]
+    [Space]
     public float submitButtonSizeMultiplier; //Multiplier of the Submit text-box 
     public List<GameObject> answersList;
     public TextAsset TSVFile;
-    public GameObject canvas;
-    public RectTransform canvasRectTransform;
-
-    //[SerializeField]
-    public int rightAnswers; //How many the player got right
-    [SerializeField]
-    public int correctAnswers; // how may there are
-    public int amountSelected;
-
-    [SerializeField]
-    public List<int> incorrectAnswersList; //list of questions the user answered wrong
-    [SerializeField]
-    public List<int> askedList; //list of questions alreasasked
-    public int tempCorrect;
-    public int tempWrong;
-
-    public GameObject singleSelected;
-    public GameObject tempSingleSelected;
-
-    public float timer;
-    [SerializeField]
-    public float waitTime;
-    public bool waiting;
-
-    
     public int questionsInARow;
     public int loopNumber;
-    
+    private GameObject questionText;
+    private GameObject submitText;
+    private Button submitButton;
+    [Range(0.1f, 1f)]
+    private GameObject canvas;
+    private RectTransform canvasRectTransform;
+    private float timer;
+    [SerializeField]
+    private float waitTime;
+    private bool waiting;
+    public int rangeOfQuestionsMax = 6; //find a way to set this automatically
+    //[Range(1, 6)]
+    public int row;
+
+    [Header("Quiz Stats")]
+    [Space]
+
+    public int rightAnswers; //How many the player got right
+    public int correctAnswers; // how may there are
+    private int amountSelected;
+
+    public List<int> incorrectAnswersList; //list of questions the user answered wrong
+    [SerializeField]
+    private List<int> askedList; //list of questions already asked
+    private int tempCorrect;
+    private int tempWrong;
+
+    [Header("Visuals")]
+    [Space]
+
+    public GameObject singleSelected;
+    private GameObject tempSingleSelected;
     public GameObject panel;
     public Vector2 panelSize;
     public float smallestFont;
     [Range(0.1f, 1f)]
     public float fontSizeMultiplier;
 
-    public float startX;
-    public float startY;
+    private float startX;
+    private float startY;
 
-    public int rangeOfQuestionsMax = 6; //find a way to set this automatically
-    [Range(1, 6)]
-    public int row;
+    [Header("Generation")]
+    [Space]
 
-
-    //[SerializeField]
     public bool find; //Use this to generate the row,column that you've selected using Row and Column
     [SerializeField]
-    public bool submit;
+    private bool submit;
     [SerializeField]
-    public bool reloadSceneAtEnd;
+    private bool reloadSceneAtEnd;
 
     List<int> Shuffle(int length)
     {
@@ -395,7 +398,7 @@ public class ReadTSV : MonoBehaviour
 
         if (submit)
         {
-            //This segment resets all of the temp counte values
+            //This segment resets all of the temp counter values
             //It is used to measure how many questions the user answered right/wrong. It is used for calculations later...
             tempCorrect = 0;
             tempWrong = 0;
@@ -430,6 +433,13 @@ public class ReadTSV : MonoBehaviour
             if(tempWrong > 0)
             {
                 incorrectAnswersList.Add(row);
+            }
+
+            //Reset asked list if all questions have already been asked
+            if (askedList.Count == rangeOfQuestionsMax) if (askedList.Count == rangeOfQuestionsMax)
+            {
+                //clear asked list so duplicates can be asked again
+                askedList.Clear();
             }
 
             waiting = true;
