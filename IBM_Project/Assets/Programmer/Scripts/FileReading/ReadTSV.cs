@@ -70,6 +70,9 @@ public class ReadTSV : MonoBehaviour
     [SerializeField]
     private bool reloadSceneAtEnd;
 
+    [Header("Debug")]
+    public bool debug;
+
     List<int> Shuffle(int length)
     {
         List<int> orderedList = new List<int>(4);
@@ -390,13 +393,13 @@ public class ReadTSV : MonoBehaviour
         }
 
         //Debug.Log(amountSelected);
-        
+
         if(amountSelected != 0) //allows submit to be clicked if something is selected //THIS IS'NT WORKING AS INTENDED
         {
             submitButton.onClick.AddListener(submitClicked);
         }
 
-        if (submit && waiting == false)
+        if (submit && amountSelected != 0 && waiting == false)
         {
             //This segment resets all of the temp counter values
             //It is used to measure how many questions the user answered right/wrong. It is used for calculations later...
