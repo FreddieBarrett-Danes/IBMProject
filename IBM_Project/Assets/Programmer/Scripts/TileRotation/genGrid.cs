@@ -8,6 +8,9 @@ using UnityEngine.UI;
 //"Generate 2D Isometric Grids By Code" (2021) https://www.youtube.com/watch?v=fmVJqt3aSdE
 
 
+//3D Rotation Converter: https://www.andre-gaschler.com/rotationconverter/
+
+
 public class genGrid : MonoBehaviour
 {
     public int gridHeight;
@@ -157,17 +160,17 @@ public class genGrid : MonoBehaviour
     private void SetPrefab()
     {
         /*
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(1) == CustomTile.tileType.UpDown) { gridarray[(int)cPos.x, (int)cPos.y].gameObject = GameObject.Find("Tile_UpDown"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(2) == CustomTile.tileType.UpLeft) { gridarray[(int)cPos.x, (int)cPos.y].gameObject = GameObject.Find("Tile_UpLeft"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(3) == CustomTile.tileType.UpRight) { gridarray[(int)cPos.x, (int)cPos.y].gameObject = GameObject.Find("Tile_UpRight"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(4) == CustomTile.tileType.DownLeft) { gridarray[(int)cPos.x, (int)cPos.y].gameObject = GameObject.Find("Tile_DownLeft"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(5) == CustomTile.tileType.DownRight) { gridarray[(int)cPos.x, (int)cPos.y].gameObject = GameObject.Find("Tile_DownRight"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(6) == CustomTile.tileType.LeftRight) { gridarray[(int)cPos.x, (int)cPos.y].gameObject = GameObject.Find("Tile_LeftRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(1) == CustomTile.tileType.UpDown) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = GameObject.Find("Tile_UpDown"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(2) == CustomTile.tileType.UpLeft) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = GameObject.Find("Tile_UpLeft"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(3) == CustomTile.tileType.UpRight) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = GameObject.Find("Tile_UpRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(4) == CustomTile.tileType.DownLeft) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = GameObject.Find("Tile_DownLeft"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(5) == CustomTile.tileType.DownRight) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = GameObject.Find("Tile_DownRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(6) == CustomTile.tileType.LeftRight) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = GameObject.Find("Tile_LeftRight"); }
 
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(7) == CustomTile.tileType.StartUp) { gridarray[(int)cPos.x, (int)cPos.y].gameObject = GameObject.Find("Tile_StartUp"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(8) == CustomTile.tileType.StartLeft) { gridarray[(int)cPos.x, (int)cPos.y].gameObject = GameObject.Find("Tile_StartLeft"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(9) == CustomTile.tileType.StartRight) { gridarray[(int)cPos.x, (int)cPos.y].gameObject = GameObject.Find("Tile_StartRight"); }
-        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(10) == CustomTile.tileType.StartDown) { gridarray[(int)cPos.x, (int)cPos.y].gameObject = GameObject.Find("Tile_StartDown"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(7) == CustomTile.tileType.StartUp) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = GameObject.Find("Tile_StartUp"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(8) == CustomTile.tileType.StartLeft) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = GameObject.Find("Tile_StartLeft"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(9) == CustomTile.tileType.StartRight) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = GameObject.Find("Tile_StartRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(10) == CustomTile.tileType.StartDown) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = GameObject.Find("Tile_StartDown"); }
         */
 
 
@@ -187,6 +190,9 @@ public class genGrid : MonoBehaviour
     }
     private void DoubleInstantiate()
     {
+        gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack = tilePrefab2;
+        gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.position = new Vector3(cPos.x, cPos.y, -20);
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = tilePrefab2;
         int rng2 = Random.Range(0, 4);
         Vector3 randRotation = new Vector3(0,0,0);
         Quaternion quatRotation = new Quaternion(0,0,0,0);
@@ -213,18 +219,43 @@ public class genGrid : MonoBehaviour
                 quatRotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
                 break;
         }
+        gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = tilePrefab2;
+        gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.position = new Vector3(cPos.x, cPos.y, 0);
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation = quatRotation; //For whatever reason, using quatRotation sets the randomised direction for the back set of tiles
+
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack;
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation = quatRotation;
+
+
+
         //Generate correct path in front of the camera:
+        //----------------------------------------------
         //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
-        
-        //Generate correct path behind the camera:
-        Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, -20), tilePrefab2.transform.rotation);
-        //Instantiate(gridarray[(int)cPos.x, (int)cPos.y].gameObject, new Vector3(cPos.x, cPos.y - 20), gridarray[(int)cPos.x, (int)cPos.y].gameObject.transform.rotation);
 
 
         //Generate path in front of the camera with randomised rotations:
-                                                                             //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.Rotate(randRotation, Space.World));
+        //----------------------------------------------------------------
+        //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.Rotate(randRotation, Space.World));
+
         Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation);
-        //Instantiate(gridarray[(int)cPos.x, (int)cPos.y].gameObject, new Vector3(cPos.x, cPos.y - 20), quatRotation);
+        //Instantiate(gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront, new Vector3(cPos.x, cPos.y - 20), quatRotation);
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation = quatRotation;
+        //Instantiate(gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront, new Vector3(cPos.x, cPos.y, 0), gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation);
+
+        //Generate correct path behind the camera:
+        //----------------------------------------
+        Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, -20), tilePrefab2.transform.rotation);
+        //Instantiate(gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack, new Vector3(cPos.x, cPos.y, -20), gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.rotation);
+
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation = tilePrefab2.transform.rotation;
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation = quatRotation;
+
+        //gridarray[(int)cPos.x, (int)cPos.y].FrontRotation = quatRotation;
+        //gridarray[(int)cPos.x, (int)cPos.y].BackRotation = tilePrefab2.transform.rotation;
+
+        //gridarray[(int)cPos.x, (int)cPos.y].BackRotationEuler = tilePrefab2.transform.rotation.eulerAngles;
+        //gridarray[(int)cPos.x, (int)cPos.y].FrontRotationEuler = quatRotation.eulerAngles;
+
     }
 
     private void OnDrawGizmos()
@@ -235,6 +266,20 @@ public class genGrid : MonoBehaviour
 
     private void tileCheck()
     {
+        //Debug.Log(gridarray[1, 1].FrontRotation + "," + gridarray[1, 1].BackRotation);
+        Debug.Log(gridarray[1, 1].FrontRotationEuler + "," + gridarray[1, 1].gameObjectBack.transform.rotation.eulerAngles);
+        for (int x = 0; x < (gridWidth); x++)
+        {
+            
+            for (int y = 0; y <= (gridHeight - 1); y++)
+            {
+
+                Debug.Log("(" + x + "," + y + ")" + gridarray[x, y].FrontRotationEuler + "," + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles);
+                //Debug.Log("(" + x + "," + y + ") " + gridarray[x, y].gameObjectFront.transform.rotation + "," + gridarray[x, y].gameObjectBack.transform.rotation);
+            }
+        }
+                //Debug.Log("(" + cPos.x + "," + cPos.y + ") " + gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation + "," + gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.rotation);
+        /*
         Debug.Log("tilecheck function");
         Collider[] testCollide1 = Physics.OverlapBox(new Vector3(gridWidth / 2, gridHeight / 2, 0), new Vector3(gridWidth / 2, gridHeight / 2, 1.0f / 4));//, Quaternion.identity);
         Collider[] testCollide2 = Physics.OverlapBox(new Vector3(gridWidth / 2, gridHeight / 2, -20), new Vector3(gridWidth / 2, gridHeight / 2, 1.0f / 4));//, Quaternion.identity);
@@ -252,7 +297,7 @@ public class genGrid : MonoBehaviour
         testCollide2[ij].transform.position += new Vector3(0, 0, 0.5f);
         Debug.Log(ij + " | " + testCollide1[ij].transform.position + "," + testCollide1[ij].transform.rotation + " , " + testCollide2[ij].transform.position + "," + testCollide2[ij].transform.rotation + ": " + correctRotation[ij]);
         ij++;
-
+        */
        
 
         /*
@@ -397,6 +442,17 @@ public class genGrid : MonoBehaviour
         }
     }
 
+    private void updateRotation()
+    {
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int y = 0; y < gridHeight; y++)
+            {
+
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -405,9 +461,14 @@ public class genGrid : MonoBehaviour
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit obj;
+            //Quaternion objRotation = 0;
             if (Physics.Raycast(ray, out obj))
             {
                 obj.transform.Rotate(0, 0, -90);
+                gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].FrontRotationEuler = obj.transform.rotation.eulerAngles;
+                //objRotation = obj.transform.rotation;
+                //gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].FrontRotation += Quaternion.Euler(0,0,0);
+
             }
         }
 

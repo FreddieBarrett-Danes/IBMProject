@@ -10,7 +10,13 @@ public class CustomTile
     //public string Type;
     public tileType type = tileType.UpDown;
 
-    public GameObject gameObject;
+    public GameObject gameObjectFront;
+    public GameObject gameObjectBack;
+
+    public Quaternion FrontRotation;
+    public Vector3 FrontRotationEuler;
+    public Quaternion BackRotation;
+    public Vector3 BackRotationEuler;
 
     //Temp variabiles for easier testing of concept
     //To replace with bool array if successful
@@ -67,7 +73,7 @@ public class CustomTile
         this.w = false;
         this.Visited = false;
         this.correctRotation = false;
-        this.gameObject = GameObject.Find("Tile_Blank");
+        this.gameObjectFront = GameObject.Find("Tile_Blank");
     }
 
     public tileType ConvertIntoTile(short num1)
