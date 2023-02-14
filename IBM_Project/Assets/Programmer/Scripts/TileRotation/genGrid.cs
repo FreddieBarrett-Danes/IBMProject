@@ -362,11 +362,12 @@ public class genGrid : MonoBehaviour
 
 
                 //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)
-                
-                
+
+
                 //If GameObject at front is equal to GameObject at back OR (If GameObject at back is UpDown AND GameObject rotation is inverted (180 difference in z rotation))                                 //gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles ||
                 //This is to account for the UpDown tile featuring two outputs but four rotations
-                if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0,0,180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180))))
+                if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown(Clone)" || gridarray[x,y].gameObjectBack.name == "Tile_LeftRight(Clone)" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0,0,180)) || (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)))
+                //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0, 0, 180)) || (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)))
                 {
                     gridarray[x, y].gameObjectFront.transform.position = new Vector3(gridarray[x, y].gameObjectFront.transform.position.x, gridarray[x, y].gameObjectFront.transform.position.y, 1);
                     //if (gridarray[x,y].gameObjectBack.name == "Tile_UpDown")
@@ -382,9 +383,11 @@ public class genGrid : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log(gridarray[x,y].gameObjectFront.name + "," + gridarray[x,y].gameObjectBack.name + " | " + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + " - " + (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0, 0, 180)) + " - " + (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)));
                     Debug.Log("INCORRECT ROTATION AT: " + x + "," + y + " | " + gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles + "," + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles);
                     finishLock = true;
                 }
+                
                 //if (gridarray[x, y].gameObjectFront.transform.rotation != gridarray[x, y].gameObjectBack.transform.rotation)
                 //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles != gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)
                 //{
