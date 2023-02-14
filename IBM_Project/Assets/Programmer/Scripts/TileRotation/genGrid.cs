@@ -359,19 +359,38 @@ public class genGrid : MonoBehaviour
                 //GameObject.Destroy(gridarray[x, y].gameObjectFront);
                 //Debug.Log(gridarray[x, y].gameObjectFront.transform.rotation + "," + gridarray[x, y].gameObjectBack.transform.rotation);
                 //if (gridarray[x, y].gameObjectFront.transform.rotation == gridarray[x, y].gameObjectBack.transform.rotation)
-                if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)
+
+
+                //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)
+                
+                
+                //If GameObject at front is equal to GameObject at back OR (If GameObject at back is UpDown AND GameObject rotation is inverted (180 difference in z rotation))                                 //gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles ||
+                //This is to account for the UpDown tile featuring two outputs but four rotations
+                if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0,0,180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180))))
                 {
                     gridarray[x, y].gameObjectFront.transform.position = new Vector3(gridarray[x, y].gameObjectFront.transform.position.x, gridarray[x, y].gameObjectFront.transform.position.y, 1);
+                    //if (gridarray[x,y].gameObjectBack.name == "Tile_UpDown")
+                    //{
+                    //    if (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == -gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles))
+                    //    {
+
+                    //    }
+                    //}
                     correctRotation[x, y] = true;
                     counter1++;
                     Debug.Log(x + "," + y + "|" + counter1);
                 }
-                //if (gridarray[x, y].gameObjectFront.transform.rotation != gridarray[x, y].gameObjectBack.transform.rotation)
-                if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles != gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)
+                else
                 {
-                    Debug.Log("INCORRECT ROTATION AT: " + x + "," + y + " | " + gridarray[x,y].gameObjectFront.transform.rotation.eulerAngles + "," + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles);
+                    Debug.Log("INCORRECT ROTATION AT: " + x + "," + y + " | " + gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles + "," + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles);
                     finishLock = true;
                 }
+                //if (gridarray[x, y].gameObjectFront.transform.rotation != gridarray[x, y].gameObjectBack.transform.rotation)
+                //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles != gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)
+                //{
+                //    Debug.Log("INCORRECT ROTATION AT: " + x + "," + y + " | " + gridarray[x,y].gameObjectFront.transform.rotation.eulerAngles + "," + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles);
+                //    finishLock = true;
+                //}
 
                 //Debug.Log("(" + x + "," + y + ")" + gridarray[x, y].FrontRotationEuler + "," + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles);
                 //Debug.Log("(" + x + "," + y + ") " + gridarray[x, y].gameObjectFront.transform.rotation + "," + gridarray[x, y].gameObjectBack.transform.rotation);
@@ -383,7 +402,7 @@ public class genGrid : MonoBehaviour
         }
         else
         {
-            Debug.Log(finishLock + "|" + " Incorrect rotation for at least one tile, try again");
+            Debug.Log(" Incorrect rotation for at least one tile, try again. finishLock: " + finishLock);
         }
 
                 //Debug.Log("(" + cPos.x + "," + cPos.y + ") " + gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation + "," + gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.rotation);
@@ -573,9 +592,10 @@ public class genGrid : MonoBehaviour
             if (Physics.Raycast(ray, out obj))
             {
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation);
-                Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
+                //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
                 obj.transform.Rotate(0, 0, -90);
-                Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
+                Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles + " | " + gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles);
+                //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation);
                 //gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation = obj.transform.rotation;
                 //gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].FrontRotationEuler = obj.transform.rotation.eulerAngles;
