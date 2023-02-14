@@ -14,7 +14,7 @@ public class BasicBT : BT_Tree
                     new TPathToPlayer(GetComponent<NavMeshAgent>(),GetComponent<BotInfo>()),
                     new TRangedAttack(GetComponent<NavMeshAgent>(), GetComponent<BotInfo>()) 
                 })),
-            new BT_Decorator(new DRemainingBots(GetComponent<BotInfo>()), new TSuspicious(GetComponent<NavMeshAgent>(),GetComponent<BotInfo>(),GetComponent<Perception>())),
+            new BT_Decorator(new DRemainingBots(GetComponent<BotInfo>()), new DViewChange(GetComponent<BotInfo>())),
             new BT_Sequence(new List<BT_Node>
             {
                 new TDetectPlayer(GetComponent<BotInfo>(), GetComponent<Perception>()),

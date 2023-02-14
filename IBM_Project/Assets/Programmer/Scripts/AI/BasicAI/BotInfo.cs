@@ -129,7 +129,8 @@ public class BotInfo : MonoBehaviour
             now.Subtract(new TimeSpan(0, 0, bSearchTime))) return;
         bGameControl.PlayerStatus = GameController.Status.SAFE;
         bDetectionTimer = 0;
-        bViewRadius = bDefaultViewRadius;
+        if(bRemainingBots !< bBotCount / 2)
+            bViewRadius = bDefaultViewRadius;
     }
     private void LateUpdate()
     {
