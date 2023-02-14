@@ -22,7 +22,6 @@ public class TRangedAttack : BT_Node
                 Vector3 playerPos = botInfo.bPlayer.transform.position;
                 Vector3 botPos = agent.transform.position;
                 float range = Vector3.Distance(playerPos, botPos);
-                Debug.Log(range);
                 Vector3 facing = (playerPos - botPos).normalized;
                 float dotProd = Vector3.Dot(facing, agent.transform.forward);
                 if (botInfo.bNextFire <= Time.time && dotProd > 0.95f && range < botInfo.bMaxFireDist)
