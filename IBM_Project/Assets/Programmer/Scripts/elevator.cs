@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class elevator : MonoBehaviour
@@ -24,7 +25,7 @@ public class elevator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = FindObjectOfType(typeof(PlayerController)).GameObject();
         quizMaster = GameObject.FindGameObjectWithTag("QuizMaster");
         reader = quizMaster.GetComponent<ReadTSV>();
         //mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<Mini>
@@ -37,7 +38,7 @@ public class elevator : MonoBehaviour
 
         if(other.gameObject.tag == player.tag && enemies.Count == 0)
         {
-            reader.questionsInARow = 5;
+            reader.questionsInARow = 4;
             reader.find = true;
             cam.GetComponent<Camera>().farClipPlane = 0.5f;
         }

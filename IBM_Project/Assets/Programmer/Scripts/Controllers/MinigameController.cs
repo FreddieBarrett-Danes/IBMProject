@@ -5,7 +5,7 @@ public class MinigameController : MonoBehaviour
 {
     //bools to check game status
 
-    public bool quizComplete = false;
+    //public bool quizComplete = false;
 
     private ReadTSV rTSV;
 
@@ -15,8 +15,9 @@ public class MinigameController : MonoBehaviour
 
     private GameController gameController;
 
-    public bool completedMinigame = false;
+    //public bool completedMinigame = false;
     public bool completedQuiz = false;
+    public bool completedMaze = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +28,7 @@ public class MinigameController : MonoBehaviour
     public void StartMazeMinigame()
     {
         chosenMinigame = mazeMinigame;
-        if (!completedMinigame)
+        if (!completedMaze)
         {
             if (!chosenMinigame.activeSelf)
             {
@@ -41,6 +42,7 @@ public class MinigameController : MonoBehaviour
         if (!completedQuiz)
         {
             rTSV.questionsInARow = numberofQuestions;
+            rTSV.loopNumber = 0;
             rTSV.find = true;
             gameController.inMinigame = true;
         }

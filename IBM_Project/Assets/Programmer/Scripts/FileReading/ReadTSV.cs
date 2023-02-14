@@ -6,46 +6,52 @@ using UnityEngine.UI;
 
 public class ReadTSV : MonoBehaviour
 {
+    [Header("Game Controller Intergration")]
+    [Space]
+    public bool completedQuiz = false;
     private MinigameController mC;
     private GameController gC;
 
-    public bool completedQuiz = false;
 
-    private GameObject questionText;
-    public GameObject submitText;
-    public Button submitButton;
-    [Range(0.1f, 1f)]
+    [Header("Initialisation Parameters")]
+    [Space]
     public float submitButtonSizeMultiplier; //Multiplier of the Submit text-box 
     public List<GameObject> answersList;
     public TextAsset TSVFile;
+    public int questionsInARow;
+    public int loopNumber;
+    private GameObject questionText;
+    private GameObject submitText;
+    private Button submitButton;
+    [Range(0.1f, 1f)]
     private GameObject canvas;
     private RectTransform canvasRectTransform;
-
-    //[SerializeField]
-    public int rightAnswers; //How many the player got right
-    [SerializeField]
-    private int correctAnswers; // how may there are
-    private int amountSelected;
-
-    [SerializeField]
-    private List<int> incorrectAnswersList; //list of questions the user answered wrong
-    [SerializeField]
-    private List<int> askedList; //list of questions alreasasked
-    private int tempCorrect;
-    private int tempWrong;
-
-    public GameObject singleSelected;
-    private GameObject tempSingleSelected;
-
     private float timer;
     [SerializeField]
     private float waitTime;
     private bool waiting;
+    public int rangeOfQuestionsMax = 6; //find a way to set this automatically
+    //[Range(1, 6)]
+    public int row;
 
-    
-    public int questionsInARow;
-    private int loopNumber;
-    
+    [Header("Quiz Stats")]
+    [Space]
+
+    public int rightAnswers; //How many the player got right
+    public int correctAnswers; // how may there are
+    private int amountSelected;
+
+    public List<int> incorrectAnswersList; //list of questions the user answered wrong
+    [SerializeField]
+    private List<int> askedList; //list of questions already asked
+    private int tempCorrect;
+    private int tempWrong;
+
+    [Header("Visuals")]
+    [Space]
+
+    public GameObject singleSelected;
+    private GameObject tempSingleSelected;
     public GameObject panel;
     public Vector2 panelSize;
     public float smallestFont;
@@ -55,17 +61,17 @@ public class ReadTSV : MonoBehaviour
     private float startX;
     private float startY;
 
-    public int rangeOfQuestionsMax = 6; //find a way to set this automatically
-    [Range(1, 6)]
-    public int row;
+    [Header("Generation")]
+    [Space]
 
-
-    //[SerializeField]
     public bool find; //Use this to generate the row,column that you've selected using Row and Column
     [SerializeField]
     private bool submit;
     [SerializeField]
     private bool reloadSceneAtEnd;
+
+    [Header("Debug")]
+    public bool debug;
 
     List<int> Shuffle(int length)
     {
@@ -139,15 +145,16 @@ public class ReadTSV : MonoBehaviour
         return rv;
     }
 
-    private void submitClicked()
+    public void submitClicked()
     {
+        Debug.Log("submit clicked");
         submit = true;
         //DON'T WRITE ANYTHING UNDER HERE
         //UNITY UI WILL LAG YOU INTO NEXT SUNDAY
         //Caused by button hold for a couple of frames .... I think
     }
 
-    private void nonDuplicateRow()
+    public void nonDuplicateRow()
     {
         row = Random.Range(1, rangeOfQuestionsMax + 1);
 
@@ -386,15 +393,15 @@ public class ReadTSV : MonoBehaviour
         }
 
         //Debug.Log(amountSelected);
-        
+
         if(amountSelected != 0) //allows submit to be clicked if something is selected //THIS IS'NT WORKING AS INTENDED
         {
             submitButton.onClick.AddListener(submitClicked);
         }
 
-        if (submit)
+        if (submit && amountSelected != 0 && waiting == false)
         {
-            //This segment resets all of the temp counte values
+            //This segment resets all of the temp counter values
             //It is used to measure how many questions the user answered right/wrong. It is used for calculations later...
             tempCorrect = 0;
             tempWrong = 0;
@@ -431,12 +438,19 @@ public class ReadTSV : MonoBehaviour
                 incorrectAnswersList.Add(row);
             }
 
+            //Reset asked list if all questions have already been asked
+            if (askedList.Count == rangeOfQuestionsMax) if (askedList.Count == rangeOfQuestionsMax)
+            {
+                //clear asked list so duplicates can be asked again
+                askedList.Clear();
+            }
+
             waiting = true;
 
             //start timer here
             timer = waitTime;
-            submit = false;
         }
+        submit = false;
 
         if(waiting)
         {
@@ -451,17 +465,28 @@ public class ReadTSV : MonoBehaviour
         
         else if(timer < 0 && waiting && loopNumber == questionsInARow)
         {
-            for (int i = 0; i < answersList.Count; i++)
+            if (questionsInARow > 1)
             {
-                Destroy(answersList[i]);
+                //find = true;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-            Destroy(questionText);
-            Destroy(submitText);
-            mC.completedQuiz = true;
-            gC.inMinigame = false;
-            //find = true;
+            else
+            {
+                for (int i = 0; i < answersList.Count; i++)
+                {
+                    Destroy(answersList[i]);
+                }
+                Destroy(questionText);
+                Destroy(submitText);
+                mC.completedQuiz = true;
+                gC.inMinigame = false;
+                submit = false;
+                //completedQuiz = true;
+                loopNumber = 0;
+                waiting = false;
+            }
+
             //waiting = false;
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         }
 

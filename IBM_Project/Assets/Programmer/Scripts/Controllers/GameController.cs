@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +8,7 @@ public class GameController : MonoBehaviour
     //keeps track if in lavel/mingame or quiz
     //private LevelTimer levelTimer;
     public GameObject level;
+    private GameObject player;
     private MinigameController mC;
     public bool inMinigame = false;
 
@@ -28,7 +30,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
 
         //dont use get component here
         
@@ -38,6 +40,7 @@ public class GameController : MonoBehaviour
         }
 
         mC = gameObject.GetComponent<MinigameController>();
+        player = FindObjectOfType<PlayerController>().GameObject();
         PlayerStatus = Status.SAFE;
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
     }
@@ -48,6 +51,12 @@ public class GameController : MonoBehaviour
         if (!completedLevel)
         {
             if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+
+            if(player == null)
             {
                 SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
