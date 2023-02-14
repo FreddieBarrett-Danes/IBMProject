@@ -34,6 +34,16 @@ public class ReadTSV : MonoBehaviour
     //[Range(1, 6)]
     public int row;
 
+    private const int _questionRow      = 0,
+                      _answer1          = 1,
+                      _answer2          = 2,
+                      _answer3          = 3,
+                      _answer4          = 4,
+                      _amountOfAnswers  = 5,
+                      _timeForQuestions = 6;
+
+    public int debuger;
+
     [Header("Quiz Stats")]
     [Space]
 
@@ -46,6 +56,11 @@ public class ReadTSV : MonoBehaviour
     private List<int> askedList; //list of questions already asked
     private int tempCorrect;
     private int tempWrong;
+
+    [SerializeField]
+    private float timeForQuestion;
+    [SerializeField]
+    private float fallbackTimeForQuestion;
 
     [Header("Visuals")]
     [Space]
@@ -67,8 +82,6 @@ public class ReadTSV : MonoBehaviour
     public bool find; //Use this to generate the row,column that you've selected using Row and Column
     [SerializeField]
     private bool submit;
-    [SerializeField]
-    private bool reloadSceneAtEnd;
 
     [Header("Debug")]
     public bool debug;
@@ -180,9 +193,31 @@ public class ReadTSV : MonoBehaviour
     {
         if (find) //File Reading / generate
         {
+            nonDuplicateRow(); //Generates a row number that is not on askedList.
+            
+            ////
+            /// This section checks if there is a declared limit time for the question being asked.
+            /// If not it will be set to fallbackTimeForQuestion
+            ////
+
+            timeForQuestion = fallbackTimeForQuestion;
+
+            float parseOutput = 0;
+
+            if(Find(row, 7) != "")
+            {
+                if(float.TryParse(Find(row, debuger), out parseOutput))
+                {
+                    timeForQuestion = parseOutput;
+                }
+                else
+                {
+                    timeForQuestion = fallbackTimeForQuestion;
+                }
+            }
+            Debug.Log(parseOutput);
 
             //row = Random.Range(1, rangeOfQuestionsMax);
-            nonDuplicateRow(); //Generates a row number that is not on askedList.
 
             if (answersList.Count != 0) //Reset list
             {
@@ -249,7 +284,7 @@ public class ReadTSV : MonoBehaviour
 
             if (Find(row, 4) == "")
             {
-                Debug.Log("question has 2nd answer");
+                Debug.Log("question has 2 answers");
                 //Instantiating answer boxes
                 for (int i = 0; i < 2; i++)
                 {
@@ -286,7 +321,7 @@ public class ReadTSV : MonoBehaviour
 
             else
             {
-                Debug.Log("question has 4th answer");
+                Debug.Log("question has 4 answers");
                 //Instantiating answer boxes
                 for (int i = 0; i < 2; i++)
                 {
@@ -370,15 +405,6 @@ public class ReadTSV : MonoBehaviour
             loopNumber++;
         }
 
-        if (reloadSceneAtEnd) // okay maybe dont need this now then. cool.
-        {
-            
-
-            /*SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-            reloadSceneAtEnd = false;*/
-        }
-
         amountSelected = 0;
 
         for (int i = 0; i < answersList.Count; i++) // finds how many buttons have been selected
@@ -399,7 +425,24 @@ public class ReadTSV : MonoBehaviour
             submitButton.onClick.AddListener(submitClicked);
         }
 
-        if (submit && amountSelected != 0 && waiting == false)
+        ////
+        /// This section is to make the timer tick down for the timeForQuestion
+        ////
+        
+        if(timeForQuestion < 0 && answersList.Count != 0)
+        {
+            //Question time is up
+            amountSelected = 1;
+            submit = true;
+        }
+
+        timeForQuestion -= Time.deltaTime;
+
+        ////
+        ///
+        ////
+
+        if (submit == true && amountSelected != 0 && waiting == false && answersList[0] != null)
         {
             //This segment resets all of the temp counter values
             //It is used to measure how many questions the user answered right/wrong. It is used for calculations later...
@@ -408,7 +451,8 @@ public class ReadTSV : MonoBehaviour
 
             for(int i = 0; i < answersList.Count; i++) //check to make sure correct answers were ticked and set colours
             {
-                Destroy(answersList[i].GetComponent<Button>());
+                //if(answersList[i] != null)
+                    Destroy(answersList[i].GetComponent<Button>());
 
                 if (answersList[i].GetComponent<answersScript>().isCorrect && answersList[i].GetComponent<answersScript>().selected) // selected is correct
                 {
@@ -451,6 +495,7 @@ public class ReadTSV : MonoBehaviour
             timer = waitTime;
         }
         submit = false;
+        amountSelected = 0;
 
         if(waiting)
         {

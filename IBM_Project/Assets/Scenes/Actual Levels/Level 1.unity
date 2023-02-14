@@ -26735,6 +26735,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742535006}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &767751232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7148243925155405778, guid: a8fc5e0654588d14792a5040124c5f75, type: 3}
+  m_PrefabInstance: {fileID: 1437125482}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &790873277
 GameObject:
   m_ObjectHideFlags: 0
@@ -27762,6 +27767,10 @@ PrefabInstance:
       propertyPath: text2
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 792528037477631411, guid: 774ce66426928954db110f2bbb44773e, type: 3}
+      propertyPath: bPath
+      value: 
+      objectReference: {fileID: 767751232}
     - target: {fileID: 792528037477631411, guid: 774ce66426928954db110f2bbb44773e, type: 3}
       propertyPath: bPlayer
       value: 
@@ -46962,6 +46971,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 792528037477631411, guid: 774ce66426928954db110f2bbb44773e, type: 3}
+      propertyPath: bPath
+      value: 
+      objectReference: {fileID: 767751232}
+    - target: {fileID: 792528037477631411, guid: 774ce66426928954db110f2bbb44773e, type: 3}
       propertyPath: bPlayer
       value: 
       objectReference: {fileID: 1456001240}
@@ -48115,6 +48128,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 659533780346353242, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
+      propertyPath: debuger
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 659533780346353242, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
+      propertyPath: fallbackTimeForQuestion
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1603438435958901733, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
