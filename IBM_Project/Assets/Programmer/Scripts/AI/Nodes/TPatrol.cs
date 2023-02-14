@@ -7,7 +7,6 @@ public class TPatrol : BT_Node
 {
     private readonly NavMeshAgent agent;
     private readonly BotInfo botInfo;
-    private GameObject patrolPoints;
 
     public TPatrol(NavMeshAgent pAgent, BotInfo pbotInfo)
     {
@@ -19,11 +18,10 @@ public class TPatrol : BT_Node
     {
         if (botInfo.bCreatePoints == false)
         {
-            patrolPoints = botInfo.bPaths.transform.GetChild(0).gameObject;
-            Resize(ref botInfo.bPatrol, patrolPoints.transform.childCount);
-            for (int i = 0; i < patrolPoints.transform.childCount; i++)
+            Resize(ref botInfo.bPatrol, botInfo.bPath.transform.childCount);
+            for (int i = 0; i < botInfo.bPath.transform.childCount; i++)
             {
-                botInfo.bPatrol[i] = patrolPoints.transform.GetChild(i).transform;
+                botInfo.bPatrol[i] = botInfo.bPath.transform.GetChild(i).transform;
             }
             botInfo.bCreatePoints = true;
         }

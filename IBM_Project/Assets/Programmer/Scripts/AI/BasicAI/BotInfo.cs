@@ -19,20 +19,21 @@ public class BotInfo : MonoBehaviour
     public List<Component> bAbilitiesList;
     private bool bAbilityAdd;
     
-    // Throwing
+    // Range Attack
     [Header("Ranged Attack Settings")] 
-    public float bFireRate = 0.5f;
+    public float bFireRate;
     [HideInInspector]
     public float bProjectileSpeed;
     [HideInInspector]
     public float bNextFire;
     [HideInInspector]
     public Shooting bShooting;
+    public float bMaxFireDist;
     private GameObject bVisuals;
 
     // Patrol
     [Header("Patrol Settings")] 
-    public GameObject bPaths;
+    public GameObject bPath;
     public bool bPointLoop;
     [HideInInspector]
     public bool bCreatePoints;
@@ -106,7 +107,6 @@ public class BotInfo : MonoBehaviour
         bShooting.bulletSpeed = bProjectileSpeed;
         bNextFire = bFireRate;
         // Patrol
-        bPaths = GameObject.Find("PatrolPaths");
         bDestPoint = 0;
         // Wander
         bTimer = bWanderTimer;
