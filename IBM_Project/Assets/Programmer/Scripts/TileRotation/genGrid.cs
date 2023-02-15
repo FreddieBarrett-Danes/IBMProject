@@ -20,12 +20,17 @@ public class genGrid : MonoBehaviour
     GameObject tilePrefab2;
     Quaternion tileRotation;
     public Camera cam;
-    public CustomTile[,] gridarray;
-    public CustomTile[] grid2;
-    public bool[,] boolarraytest;
-    public Vector2 cPos; // Current Position (within Grid array)
-    public bool gridCompletion = false;
-    public int ij = 0;
+    public GameObject pregameText;
+
+    public bool showTutorial;
+
+    //Following variables/objects used to be public
+    CustomTile[,] gridarray;
+    CustomTile[] grid2;
+    bool[,] boolarraytest;
+    Vector2 cPos; // Current Position (within Grid array)
+    bool gridCompletion = false;
+    int ij = 0;
 
 
     // Start is called before the first frame update
@@ -51,7 +56,8 @@ public class genGrid : MonoBehaviour
 
         boolarraytest[1, 1] = true;
 
-        
+        GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
+        pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
 
 
         for (int x = 0; x < gridWidth; x++)
@@ -610,6 +616,8 @@ public class genGrid : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
+            pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
             tileCheck();
             //GridMovement();
             //if (gridCompletion == false)

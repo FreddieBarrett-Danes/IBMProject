@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -40,6 +41,9 @@ public class Disc_Rotation : MonoBehaviour
     Vector3 R1startPosition;
     Vector3 R1startRotation;
 
+    public GameObject pregameText;
+    public bool showTutorial;
+
     // Start is called before the first frame update
 
     Vector3 RotationToDegrees(Vector3 v3)
@@ -53,6 +57,8 @@ public class Disc_Rotation : MonoBehaviour
 
     void Start()
     {
+        
+
         currentSelect = 1;
         numAligned = new bool[3];
         Disc1 = GameObject.Find("Disc1n");
@@ -75,6 +81,9 @@ public class Disc_Rotation : MonoBehaviour
         Disc1startRotation = Disc1.transform.rotation;
         Disc2startRotation = Disc2.transform.rotation;
         Disc3startRotation = Disc3.transform.rotation;
+
+        GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
+        pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
 
         //R1startPosition = R1.transform.position;
         //R1startRotation = R1.transform.eulerAngles;
@@ -188,6 +197,12 @@ public class Disc_Rotation : MonoBehaviour
             Disc2.transform.rotation = Disc2startRotation;
             Disc3.transform.rotation = Disc3startRotation;
             Debug.Log("[Updated] R1.transform.rotation | startRotationR1 " + Disc1.transform.rotation + " | " + Disc1startRotation);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
+            pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
         }
 
         //Testing example, to be set when paths align
