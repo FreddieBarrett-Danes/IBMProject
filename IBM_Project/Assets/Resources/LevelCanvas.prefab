@@ -188,10 +188,13 @@ MonoBehaviour:
   waitTime: 1
   rangeOfQuestionsMax: 4
   row: 1
+  debuger: 0
   rightAnswers: 0
   correctAnswers: 0
   incorrectAnswersList: 
   askedList: 
+  timeForQuestion: 0
+  fallbackTimeForQuestion: 0
   singleSelected: {fileID: 0}
   panel: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
   panelSize: {x: 0, y: 0}
@@ -199,7 +202,6 @@ MonoBehaviour:
   fontSizeMultiplier: 1
   find: 0
   submit: 0
-  reloadSceneAtEnd: 0
   debug: 0
 --- !u!1 &1097290388056956009
 GameObject:
@@ -599,7 +601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 0.35
+  m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0

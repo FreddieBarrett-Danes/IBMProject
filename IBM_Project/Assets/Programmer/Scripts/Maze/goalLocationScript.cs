@@ -6,6 +6,8 @@ public class goalLocationScript : MonoBehaviour
 {
     private GameController gC;
     private MinigameController mC;
+    private mazePlayerScript mPlayer;
+
     public walGen wG;
     private void OnTriggerEnter(Collider other)
     {
@@ -13,6 +15,7 @@ public class goalLocationScript : MonoBehaviour
         {
             Debug.Log("Maze Win");
             Debug.Log("Refer to goalLocationScript for Maze output");
+            mPlayer.timesHit = 0;
             gC.inMinigame = false;
             wG.Timer.SetActive(false);
             mC.completedMaze = true;
@@ -23,5 +26,16 @@ public class goalLocationScript : MonoBehaviour
     {
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
+    }
+    private void Update()
+    {
+        if(mPlayer != null && mPlayer.timesHit >= 3)
+        {
+            Debug.Log("hello");
+            gC.inMinigame = false;
+            wG.Timer.SetActive(false);
+            //mC.completedMaze = false;
+            mPlayer.timesHit = 0;
+        }
     }
 }

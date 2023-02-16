@@ -13,6 +13,7 @@ public class mazePlayerScript : MonoBehaviour
 
     bool mazeReadyPlayer;
 
+    public int timesHit;
 
     private void OnEnable()
     {
@@ -37,6 +38,7 @@ public class mazePlayerScript : MonoBehaviour
             //Debug.Log("Trigger Wall hit");
             if (returnToStartUponCollision == true) transform.position = new Vector3(2, 0, 0);
             touchWall = true;
+            timesHit++;
         }
         else if (other.gameObject.tag == "goalLocation")
         {
