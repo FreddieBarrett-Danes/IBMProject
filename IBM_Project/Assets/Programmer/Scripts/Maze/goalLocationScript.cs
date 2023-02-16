@@ -6,7 +6,7 @@ public class goalLocationScript : MonoBehaviour
 {
     private GameController gC;
     private MinigameController mC;
-    private mazePlayerScript mPlayer;
+    public mazePlayerScript mPlayer;
 
     public walGen wG;
     private void OnTriggerEnter(Collider other)
@@ -29,10 +29,12 @@ public class goalLocationScript : MonoBehaviour
     }
     private void Update()
     {
-        if(mPlayer != null && mPlayer.timesHit >= 3)
+        Debug.Log(mPlayer.timesHit);
+        if (mPlayer != null && mPlayer.timesHit >= 6)
         {
-            Debug.Log("hello");
+            mC.interactMaze = false;
             gC.inMinigame = false;
+            gC.PlayerStatus = GameController.Status.ALERTED;
             wG.Timer.SetActive(false);
             //mC.completedMaze = false;
             mPlayer.timesHit = 0;

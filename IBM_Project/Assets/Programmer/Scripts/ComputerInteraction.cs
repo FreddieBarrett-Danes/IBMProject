@@ -38,15 +38,26 @@ public class ComputerInteraction : MonoBehaviour
             }
 
         }
+
         if (miniController.completedMaze)
         {
             foreach (GameObject enemy in enemies)
             {
                 Destroy(enemy);
             }
-            gameObject.GetComponent<Renderer>().enabled = true;
             enemies = null;
             miniController.completedMaze = false;
+        }
+
+        if (gameController.inMinigame)
+        {
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+            gameObject.GetComponent<Renderer>().enabled = false;
+        }
+        else if(!gameController.inMinigame)
+        {
+            gameObject.GetComponent<BoxCollider>().enabled = true;
+            gameObject.GetComponent<Renderer>().enabled = true;
         }
 
     }

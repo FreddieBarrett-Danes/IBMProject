@@ -69,6 +69,14 @@ public class GameController : MonoBehaviour
                 {
                     levelUI[i].SetActive(false);
                 }
+                /*GameObject[] mazeWalls = GameObject.FindGameObjectsWithTag("mazeWall");
+                if (mazeWalls != null)
+                {
+                    for (int i = 0; i < mazeWalls.Length; i++)
+                    {
+                        mazeWalls[i].SetActive(true);
+                    }
+                }*/
                 /*foreach (GameObject maze in mazeUI)
                 {
                     maze.SetActive(true);
@@ -78,9 +86,12 @@ public class GameController : MonoBehaviour
             else
             {
                 GameObject[] mazeWalls = GameObject.FindGameObjectsWithTag("mazeWall");
-                for(int i = 0; i < mazeWalls.Length; i++)
+                if (mazeWalls != null)
                 {
-                    Destroy(mazeWalls[i]);
+                    for (int i = 0; i < mazeWalls.Length; i++)
+                    {
+                        Destroy(mazeWalls[i]);
+                    }
                 }
                 level.SetActive(true);
                 for (int i = 0; i < levelUI.Length; i++)

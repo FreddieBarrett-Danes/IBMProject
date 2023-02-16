@@ -18,6 +18,7 @@ public class MinigameController : MonoBehaviour
     //public bool completedMinigame = false;
     public bool completedQuiz = false;
     public bool completedMaze = false;
+    public bool interactMaze = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +29,7 @@ public class MinigameController : MonoBehaviour
     public void StartMazeMinigame()
     {
         chosenMinigame = mazeMinigame;
-        if (!completedMaze)
+        if (!completedMaze && interactMaze)
         {
             if (!chosenMinigame.activeSelf)
             {
