@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,7 +9,6 @@ public class BotInfo : MonoBehaviour
 {
     // Misc
     [Header("Misc Settings")]
-    
     public int bThreatLevel;
     public int bBotCount;
     public int bRemainingBots;
@@ -91,9 +89,19 @@ public class BotInfo : MonoBehaviour
     public float bSusTimer;
     [HideInInspector]
     public bool bPlayerInView;
+    
+    //ViewCone
+    [Header("ViewCone Settings")]
+    private GameObject bViewCone;
+    private Vector3 bViewConePos;
 
     private void Start()
     {
+        // ViewCone
+        bViewConePos = gameObject.transform.GetChild(0).GetChild(1).transform.position;
+        bViewCone = Instantiate(Resources.Load<GameObject>("ViewCone"), gameObject.transform.GetChild(0).GetChild(1), false);
+        bViewCone.transform.position = bViewConePos;
+        bViewCone.transform.forward = gameObject.transform.GetChild(0).GetChild(1).forward;
         // Misc
         bPlayer = FindObjectOfType(typeof(PlayerController)).GameObject();
         bBotCount = BotCalc();
@@ -122,10 +130,12 @@ public class BotInfo : MonoBehaviour
         // Suspicious
         bSusTimer = bSuspiciousTimer;
         bPlayerInView = false;
+        //
     }
 
     private void Update()
     {
+        bViewCone.GetComponent<Light>().range = bViewRadius;
         Vector3 movementDirection = GetComponent<NavMeshAgent>().velocity;
         if (movementDirection.magnitude > 0) {
             Quaternion targetRotation = Quaternion.LookRotation(movementDirection);
