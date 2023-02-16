@@ -90,37 +90,39 @@ public class mazePlayerScript : MonoBehaviour
 
 
 
-
-        if (Input.GetKey("d"))
+        if (mazeReadyPlayer)
         {
-            transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
-            if (touchWall == true)
+            if (Input.GetKey("d"))
             {
-                transform.position -= new Vector3(speed * Time.deltaTime, 0, 0) * 3;
+                transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+                if (touchWall == true)
+                {
+                    transform.position -= new Vector3(speed * Time.deltaTime, 0, 0) * 3;
+                }
             }
-        }
-        if (Input.GetKey("w"))
-        {
-            transform.position += new Vector3(0, 0, speed * Time.deltaTime);
-            if (touchWall == true)
+            if (Input.GetKey("w"))
             {
-                transform.position -= new Vector3(0, 0, speed * Time.deltaTime) * 3;
+                transform.position += new Vector3(0, 0, speed * Time.deltaTime);
+                if (touchWall == true)
+                {
+                    transform.position -= new Vector3(0, 0, speed * Time.deltaTime) * 3;
+                }
             }
-        }
-        if (Input.GetKey("a"))
-        {
-            transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
-            if (touchWall == true)
+            if (Input.GetKey("a"))
             {
-                transform.position += new Vector3(speed * Time.deltaTime, 0, 0) * 3;
+                transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
+                if (touchWall == true)
+                {
+                    transform.position += new Vector3(speed * Time.deltaTime, 0, 0) * 3;
+                }
             }
-        }
-        if (Input.GetKey("s"))
-        {
-            transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
-            if (touchWall == true)
+            if (Input.GetKey("s"))
             {
-                transform.position += new Vector3(0, 0, speed * Time.deltaTime) * 3;
+                transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
+                if (touchWall == true)
+                {
+                    transform.position += new Vector3(0, 0, speed * Time.deltaTime) * 3;
+                }
             }
         }
         if (Input.GetKeyDown("space") && mazeReadyPlayer == true)

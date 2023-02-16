@@ -30,7 +30,7 @@ public class ComputerInteraction : MonoBehaviour
     void Update()
     {
         
-        if (isTouching && Input.GetKey(KeyCode.E))
+        if (isTouching && !gameController.inMinigame && Input.GetKey(KeyCode.E ))
         {
             if (!miniController.completedMaze)
             {
@@ -51,12 +51,12 @@ public class ComputerInteraction : MonoBehaviour
 
         if (gameController.inMinigame)
         {
-            gameObject.GetComponent<BoxCollider>().enabled = false;
+            //gameObject.GetComponent<BoxCollider>().enabled = false;
             gameObject.GetComponent<Renderer>().enabled = false;
         }
         else if(!gameController.inMinigame)
         {
-            gameObject.GetComponent<BoxCollider>().enabled = true;
+            //gameObject.GetComponent<BoxCollider>().enabled = true;
             gameObject.GetComponent<Renderer>().enabled = true;
         }
 
