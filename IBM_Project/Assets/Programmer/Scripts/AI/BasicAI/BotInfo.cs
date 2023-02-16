@@ -18,7 +18,8 @@ public class BotInfo : MonoBehaviour
     public LayerMask bObstacleLayer;
     public List<Component> bAbilitiesList;
     private bool bAbilityAdd;
-    
+    public float bRotationSpeed;
+
     // Range Attack
     [Header("Ranged Attack Settings")] 
     public float bFireRate;
@@ -125,6 +126,12 @@ public class BotInfo : MonoBehaviour
 
     private void Update()
     {
+        Vector3 movementDirection = GetComponent<NavMeshAgent>().velocity;
+        if (movementDirection.magnitude > 0) {
+            Quaternion targetRotation = Quaternion.LookRotation(movementDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, bRotationSpeed * Time.deltaTime);
+        }
+        GetComponent<NavMeshAgent>().updateRotation = false;
         Vector3 bVelocity = GetComponent<NavMeshAgent>().velocity;
         Debug.Log("Velocity: " + bVelocity);
         if (bDetectionTimer == 0) return;

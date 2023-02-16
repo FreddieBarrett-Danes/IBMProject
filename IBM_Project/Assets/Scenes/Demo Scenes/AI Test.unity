@@ -515,6 +515,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1603438435958901735, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
+      propertyPath: m_ScaleFactor
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 1603438435958901737, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
       propertyPath: m_Name
       value: LevelCanvas
@@ -1308,7 +1312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 792528037477631410, guid: 774ce66426928954db110f2bbb44773e, type: 3}
       propertyPath: m_AngularSpeed
-      value: 1018.06
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 792528037477631411, guid: 774ce66426928954db110f2bbb44773e, type: 3}
       propertyPath: bPath
@@ -1320,7 +1324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 792528037477631411, guid: 774ce66426928954db110f2bbb44773e, type: 3}
       propertyPath: bRotationSpeed
-      value: 800
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 792528037477631411, guid: 774ce66426928954db110f2bbb44773e, type: 3}
       propertyPath: bSusViewRadius
