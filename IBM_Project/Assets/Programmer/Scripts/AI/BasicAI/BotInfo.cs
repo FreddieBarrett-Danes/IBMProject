@@ -62,9 +62,12 @@ public class BotInfo : MonoBehaviour
     public GameObject bPlayer;
     [HideInInspector]
     public float bViewRadius;
+    [HideInInspector]
     public float bInnerViewRadius;
     public float bDefaultViewRadius;
+    public float bDefaultInnerViewRadius;
     public float bSusViewRadius;
+    public float bSusInnerViewRadius;
     [Range(0, 360)] 
     public float bViewAngle;
     public float bDetectionTimer;
@@ -112,6 +115,7 @@ public class BotInfo : MonoBehaviour
         bTimer = bWanderTimer;
         // LockOn
         bViewRadius = bDefaultViewRadius;
+        bInnerViewRadius = bDefaultInnerViewRadius;
         bDetectionTimer = 0;
         bRecentChaseTimerN = bRecentChaseTimer;
         // Suspicious
@@ -121,6 +125,8 @@ public class BotInfo : MonoBehaviour
 
     private void Update()
     {
+        Vector3 bVelocity = GetComponent<NavMeshAgent>().velocity;
+        Debug.Log("Velocity: " + bVelocity);
         if (bDetectionTimer == 0) return;
         DateTime now = DateTime.Now;
         if (gameObject.GetComponent<Perception>().sensedRecord.Length == 0) return;
@@ -129,8 +135,9 @@ public class BotInfo : MonoBehaviour
             now.Subtract(new TimeSpan(0, 0, bSearchTime))) return;
         bGameControl.PlayerStatus = GameController.Status.SAFE;
         bDetectionTimer = 0;
-        if(bRemainingBots !< bBotCount / 2)
-            bViewRadius = bDefaultViewRadius;
+        if (bRemainingBots ! >= bBotCount / 2) return;
+        bViewRadius = bDefaultViewRadius;
+        bInnerViewRadius = bDefaultInnerViewRadius;
     }
     private void LateUpdate()
     {

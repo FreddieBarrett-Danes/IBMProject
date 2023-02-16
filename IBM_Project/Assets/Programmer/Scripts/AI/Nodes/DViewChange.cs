@@ -13,6 +13,7 @@ public class DViewChange : BT_Node
     public override NodeState Evaluate()
     {
         bot.bViewRadius = bot.bSusViewRadius;
+        bot.bInnerViewRadius = bot.bSusInnerViewRadius;
         state = NodeState.FAILURE;
         return state;
     }

@@ -18,8 +18,9 @@ public class TSuspicious : BT_Node
     public override NodeState Evaluate()
     {
         botInfo.bViewRadius = botInfo.bSusViewRadius;
+        botInfo.bInnerViewRadius = botInfo.bSusInnerViewRadius;
         botInfo.bSusTimer += Time.deltaTime;
-        if (botInfo.bSusTimer >= botInfo.bSuspiciousTimer)
+        if (botInfo.bSusTimer >= botInfo.bSuspiciousTimer || agent.remainingDistance < 0.05)
         {
             Vector3 randDir;
             if (percep.sensedRecord.Length != 0)
