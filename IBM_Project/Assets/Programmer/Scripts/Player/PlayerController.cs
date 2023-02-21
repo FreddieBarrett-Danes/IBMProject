@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private MinigameController miniController;
+    private ReadTSV readTSV;
 
     public float speed;
 
@@ -102,8 +103,9 @@ public class PlayerController : MonoBehaviour
             miniController.StartQuiz(1);    
         }
 
-        if (miniController.completedQuiz && enemyControlled != null)
+        if (miniController.completedQuiz && enemyControlled != null && readTSV.hackSuccessful == true)
         {
+            readTSV.hackSuccessful = false;
             gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
             body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;

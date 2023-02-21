@@ -11,6 +11,7 @@ public class ReadTSV : MonoBehaviour
     public bool completedQuiz = false;
     private MinigameController mC;
     private GameController gC;
+    public bool hackSuccessful;
 
 
     [Header("Initialisation Parameters")]
@@ -42,18 +43,16 @@ public class ReadTSV : MonoBehaviour
                       _amountOfAnswers  = 5,
                       _timeForQuestions = 6;
 
-    public int debuger;
-
     [Header("Quiz Stats")]
     [Space]
 
     public int rightAnswers; //How many the player got right
-    public int correctAnswers; // how may there are
+    public int correctAnswers; //How many correct answers there are
     private int amountSelected;
 
-    public List<int> incorrectAnswersList; //list of questions the user answered wrong
-    [SerializeField]
-    private List<int> askedList; //list of questions already asked
+    public List<int> incorrectAnswersList; //List of questions the user answered Wrong
+    public List<int> correctAnswersList; //List of questions the user answered Correct
+    public List<int> askedList; //List of questions already asked
     private int tempCorrect;
     private int tempWrong;
 
@@ -61,6 +60,12 @@ public class ReadTSV : MonoBehaviour
     private float timeForQuestion;
     [SerializeField]
     private float fallbackTimeForQuestion;
+
+    [Header("Points")]
+    [Space]
+
+    public int totalPoints;
+    public int points;
 
     [Header("Visuals")]
     [Space]
@@ -204,9 +209,9 @@ public class ReadTSV : MonoBehaviour
 
             float parseOutput = 0;
 
-            if(Find(row, 7) != "")
+            if(Find(row, _timeForQuestions) != "")
             {
-                if(float.TryParse(Find(row, debuger), out parseOutput))
+                if(float.TryParse(Find(row, _tim), out parseOutput))
                 {
                     timeForQuestion = parseOutput;
                 }
@@ -480,6 +485,23 @@ public class ReadTSV : MonoBehaviour
             if(tempWrong > 0)
             {
                 incorrectAnswersList.Add(row);
+            }
+
+            //Set this question as answered fully correct
+            else
+            {
+                correctAnswersList.Add(row);
+            }
+
+            //Update the user points for each correct answer
+            totalPoints += tempCorrect;
+
+            //Check if all of the answers were correct
+            if(tempCorrect == correctAnswers)
+            {
+                //FREDDIE
+                //THIS IS WHERE YOU CAN CHECK TO MAKE SURE BOT HACK IS SUCCESSFUL
+                hackSuccessful = true;
             }
 
             //Reset asked list if all questions have already been asked
