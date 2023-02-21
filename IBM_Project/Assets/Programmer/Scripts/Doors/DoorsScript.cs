@@ -49,10 +49,11 @@ public class DoorsScript : MonoBehaviour
 
     void Update()
     {
+        FindEnemiesInScene();
+        
         nearestEnemy = (this.transform.position - player.transform.position).magnitude;
         nearestEnemy = Mathf.Infinity;
 
-        FindEnemiesInScene();
 
         for (int i = 0; i < enemies.Count; i++)
         {
