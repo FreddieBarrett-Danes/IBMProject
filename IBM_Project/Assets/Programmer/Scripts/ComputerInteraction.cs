@@ -16,6 +16,8 @@ public class ComputerInteraction : MonoBehaviour
     private GameController gameController;
     private MinigameController miniController;
 
+    public bool mazeFailed = false;
+
 
     private bool isTouching;
     // Start is called before the first frame update

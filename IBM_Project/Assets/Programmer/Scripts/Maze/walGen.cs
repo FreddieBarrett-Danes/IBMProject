@@ -676,6 +676,7 @@ public class walGen : MonoBehaviour
 
         if (Input.GetKeyDown("space") && mazeReady == true) //&& pressedPlay == false
         {
+            Debug.Log("Press 'P' to complete maze instantly");
             OnMazeReady(true);
             mazePlayer.transform.position = new Vector3(2, 0, 0);
             goalLocation.transform.position = preGoalLocation;

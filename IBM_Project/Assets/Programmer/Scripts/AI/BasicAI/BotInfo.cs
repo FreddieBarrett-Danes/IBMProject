@@ -17,6 +17,7 @@ public class BotInfo : MonoBehaviour
     public List<Component> bAbilitiesList;
     private bool bAbilityAdd;
     public float bRotationSpeed;
+    public GameObject Computer;
 
     // Range Attack
     [Header("Ranged Attack Settings")] 
@@ -143,7 +144,7 @@ public class BotInfo : MonoBehaviour
         }
         GetComponent<NavMeshAgent>().updateRotation = false;
         Vector3 bVelocity = GetComponent<NavMeshAgent>().velocity;
-        Debug.Log("Velocity: " + bVelocity);
+        //Debug.Log("Velocity: " + bVelocity);
         if (bDetectionTimer == 0) return;
         DateTime now = DateTime.Now;
         if (gameObject.GetComponent<Perception>().sensedRecord.Length == 0) return;
