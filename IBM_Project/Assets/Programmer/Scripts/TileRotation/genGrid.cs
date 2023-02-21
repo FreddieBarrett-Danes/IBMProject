@@ -614,6 +614,23 @@ public class genGrid : MonoBehaviour
             }
         }
 
+        //For debugging, completes minigame instantly.
+        if (Input.GetKey("p"))
+        {
+            for (int x = 0; x < (gridWidth); x++)
+            {
+
+                for (int y = 0; y <= (gridHeight - 1); y++)
+                {
+                    gridarray[x, y].gameObjectFront.transform.rotation = gridarray[x, y].gameObjectBack.transform.rotation;
+                    GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
+                    pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
+                    tileCheck();
+
+                }
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
