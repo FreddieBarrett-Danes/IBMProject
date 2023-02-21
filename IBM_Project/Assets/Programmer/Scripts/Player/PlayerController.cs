@@ -170,10 +170,5 @@ public class PlayerController : MonoBehaviour
             //activate computer door minigame
             door.isComputer = false;
         }
-        else if(elevatorDoor && !isBehindEnemy && Input.GetKeyDown(KeyCode.E))
-        {
-            //activate computer elevator
-            door.isElevator = false;
-        }
     }
 }

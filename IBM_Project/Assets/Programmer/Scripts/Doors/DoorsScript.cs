@@ -25,7 +25,6 @@ public class DoorsScript : MonoBehaviour
     private bool wasOpen;
 
     public bool isComputer;    
-    public bool isElevator;
 
     
     //
@@ -65,7 +64,7 @@ public class DoorsScript : MonoBehaviour
 
         distToPlayer = (this.transform.position - player.transform.position).magnitude;
 
-        if (!isComputer && !isElevator)
+        if (!isComputer)
         {
             //try here
             //player.GetComponent<PlayerController>().computerDoor = false;
@@ -91,7 +90,7 @@ public class DoorsScript : MonoBehaviour
             ADoors.transform.localPosition = Vector3.Lerp(AOpen, AClosed, openAmount10);
             BDoors.transform.localPosition = Vector3.Lerp(BOpen, BClosed, openAmount10);
         }
-        else if(isComputer && !isElevator)
+        else if(isComputer)
         {
             if (distToPlayer < activateDistance || nearestEnemy < activateDistance)//close to computer door
             {
@@ -103,21 +102,6 @@ public class DoorsScript : MonoBehaviour
             else //not close to computer door
             {
                 player.GetComponent<PlayerController>().computerDoor = false;
-                player.GetComponent<PlayerController>().door = null;
-            }
-        }
-        else if(!isComputer && isElevator)
-        {
-            if (distToPlayer < activateDistance || nearestEnemy < activateDistance)//close to elevator door
-            {
-                player.GetComponent<PlayerController>().elevatorDoor = true;
-                player.GetComponent<PlayerController>().door = gameObject.GetComponent<DoorsScript>();
-                Debug.Log("close to Ele Door");
-            }
-
-            else //not close to elevator door
-            {
-                player.GetComponent<PlayerController>().elevatorDoor = false;
                 player.GetComponent<PlayerController>().door = null;
             }
         }
