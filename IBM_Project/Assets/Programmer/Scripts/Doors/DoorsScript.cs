@@ -24,6 +24,10 @@ public class DoorsScript : MonoBehaviour
     private bool isOpen;
     private bool wasOpen;
 
+    public bool isComputer;    
+    public bool isElevator;
+
+    
     //
 
     private float openAmount10;
@@ -50,7 +54,7 @@ public class DoorsScript : MonoBehaviour
 
         FindEnemiesInScene();
 
-        for(int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
             if ((this.transform.position - enemies[i].transform.position).magnitude < nearestEnemy)
             {
@@ -60,25 +64,60 @@ public class DoorsScript : MonoBehaviour
 
         distToPlayer = (this.transform.position - player.transform.position).magnitude;
 
-        if(distToPlayer < activateDistance || nearestEnemy < activateDistance) //open door
+        if (!isComputer && !isElevator)
         {
-            openAmount10 -= moveSpeed * Time.deltaTime;
-        }
+            //try here
+            player.GetComponent<PlayerController>().computerDoor = false;
+            player.GetComponent<PlayerController>().elevatorDoor = false;
 
-        else //close door
+            if (distToPlayer < activateDistance || nearestEnemy < activateDistance) //open door
+            {
+                openAmount10 -= moveSpeed * Time.deltaTime;
+            }
+
+            else //close door
+            {
+                openAmount10 += moveSpeed * Time.deltaTime;
+            }
+
+            openAmount10 = Mathf.Clamp01(openAmount10);
+
+            AOpen = ADoors.transform.localPosition = new Vector3(-openDistance, restingDoorPos.y, restingDoorPos.z);
+            AClosed = ADoors.transform.localPosition = restingDoorPos;
+            BOpen = BDoors.transform.localPosition = new Vector3(openDistance, restingDoorPos.y, restingDoorPos.z);
+            BClosed = BDoors.transform.localPosition = new Vector3(-restingDoorPos.x, restingDoorPos.y, restingDoorPos.z);
+
+            ADoors.transform.localPosition = Vector3.Lerp(AOpen, AClosed, openAmount10);
+            BDoors.transform.localPosition = Vector3.Lerp(BOpen, BClosed, openAmount10);
+        }
+        else if(isComputer && !isElevator)
         {
-            openAmount10 += moveSpeed * Time.deltaTime;
+            if (distToPlayer < activateDistance || nearestEnemy < activateDistance)//close to computer door
+            {
+                player.GetComponent<PlayerController>().computerDoor = true;
+                player.GetComponent<PlayerController>().door = gameObject.GetComponent<DoorsScript>();
+            }
+
+            else //not close to computer door
+            {
+                player.GetComponent<PlayerController>().computerDoor = false;
+                player.GetComponent<PlayerController>().door = null;
+            }
         }
+        else if(!isComputer && isElevator)
+        {
+            if (distToPlayer < activateDistance || nearestEnemy < activateDistance)//close to elevator door
+            {
+                player.GetComponent<PlayerController>().elevatorDoor = true;
+                player.GetComponent<PlayerController>().door = gameObject.GetComponent<DoorsScript>();
+            }
 
-        openAmount10 = Mathf.Clamp01(openAmount10);
-
-        AOpen = ADoors.transform.localPosition = new Vector3(-openDistance, restingDoorPos.y, restingDoorPos.z);
-        AClosed = ADoors.transform.localPosition = restingDoorPos;
-        BOpen = BDoors.transform.localPosition = new Vector3(openDistance, restingDoorPos.y, restingDoorPos.z);
-        BClosed = BDoors.transform.localPosition = new Vector3(-restingDoorPos.x, restingDoorPos.y, restingDoorPos.z);
-
-        ADoors.transform.localPosition = Vector3.Lerp(AOpen, AClosed, openAmount10);
-        BDoors.transform.localPosition = Vector3.Lerp(BOpen, BClosed, openAmount10);
+            else //not close to elevator door
+            {
+                player.GetComponent<PlayerController>().elevatorDoor = false;
+                player.GetComponent<PlayerController>().door = null;
+            }
+        }
     }
 
     private void FindEnemiesInScene()

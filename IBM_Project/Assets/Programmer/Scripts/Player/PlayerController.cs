@@ -4,6 +4,8 @@ public class PlayerController : MonoBehaviour
 {
     private MinigameController miniController;
 
+    public DoorsScript door;
+
     public float speed;
 
     public GameObject visuals;
@@ -33,6 +35,9 @@ public class PlayerController : MonoBehaviour
     private bool isControlling = false;
     private bool canShoot = false;
 
+    public bool computerDoor = false;
+    public bool elevatorDoor = false;
+
     //visual player representation will be changed when using sprites
     private Color playerColor;
 
@@ -55,6 +60,7 @@ public class PlayerController : MonoBehaviour
         PlayerShooting();
         TakeControl();
         ControllingTimer();
+        DoorInteract();
     }
     void FixedUpdate()
     {
@@ -154,6 +160,20 @@ public class PlayerController : MonoBehaviour
             //enemyControlled.SetActive(enemyControlled.GetComponent<Collider>());
 
 
+        }
+    }
+    private void DoorInteract()
+    {
+        if(computerDoor && !isBehindEnemy && Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("computer door");
+            //activate computer door minigame
+            door.isComputer = false;
+        }
+        else if(elevatorDoor && !isBehindEnemy && Input.GetKeyDown(KeyCode.E))
+        {
+            //activate computer elevator
+            door.isElevator = false;
         }
     }
 }

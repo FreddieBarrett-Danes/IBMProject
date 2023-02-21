@@ -6,6 +6,7 @@ public class goalLocationScript : MonoBehaviour
 {
     private GameController gC;
     private MinigameController mC;
+    private ComputerInteraction computerInteraction;
     public mazePlayerScript mPlayer;
 
     public walGen wG;
@@ -26,6 +27,7 @@ public class goalLocationScript : MonoBehaviour
     {
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
+        computerInteraction = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
     }
     private void Update()
     {
@@ -36,6 +38,7 @@ public class goalLocationScript : MonoBehaviour
             gC.inMinigame = false;
             gC.PlayerStatus = GameController.Status.ALERTED;
             wG.Timer.SetActive(false);
+            computerInteraction.mazeFailed = true;
             //mC.completedMaze = false;
             mPlayer.timesHit = 0;
         }
