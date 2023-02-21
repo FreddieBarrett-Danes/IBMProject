@@ -25,6 +25,7 @@ public class Disc_Rotation : MonoBehaviour
     private short currentSelect;
     private bool Selected;
     private bool[] numAligned;
+    private bool debugWin;
 
     GameObject Disc1; //Red (outline)
     GameObject Disc2; //green (middle)
@@ -84,6 +85,8 @@ public class Disc_Rotation : MonoBehaviour
 
         GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
         pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
+
+        debugWin = false;
 
         //R1startPosition = R1.transform.position;
         //R1startRotation = R1.transform.eulerAngles;
@@ -241,10 +244,16 @@ public class Disc_Rotation : MonoBehaviour
         }
         //Debug.Log(currentSelect);
 
-        if (R1.transform.position == new Vector3(-5,10,0) && R2.transform.position == new Vector3(0, 10, 0) && R3.transform.position == new Vector3(5, 10, 0))
+        if ( (R1.transform.position == new Vector3(-5,10,0) && R2.transform.position == new Vector3(0, 10, 0) && R3.transform.position == new Vector3(5, 10, 0)) || debugWin == true)
         {
             Debug.Log("You Win!");
         }
+
+        if (Input.GetKeyDown("p"))
+        {
+            debugWin = true;
+        }
+
         //GetComponent<Renderer>().material.color = Color.grey;
     }
 }

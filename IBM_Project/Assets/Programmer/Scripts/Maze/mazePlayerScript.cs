@@ -124,6 +124,10 @@ public class mazePlayerScript : MonoBehaviour
                     transform.position += new Vector3(0, 0, speed * Time.deltaTime) * 3;
                 }
             }
+            if (Input.GetKeyDown("p"))
+            {
+                transform.position = GameObject.FindGameObjectWithTag("goalLocation").transform.position;
+            }
         }
         if (Input.GetKeyDown("space") && mazeReadyPlayer == true)
         {
