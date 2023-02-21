@@ -31,6 +31,7 @@ public class Disc_Rotation : MonoBehaviour
     GameObject Disc2; //green (middle)
     GameObject Disc3; //White (center)
 
+    //Gameobjects used to check alignment. Moves position when a combonation of discs are aligned.
     GameObject R1;
     GameObject R2;
     GameObject R3;
@@ -212,15 +213,17 @@ public class Disc_Rotation : MonoBehaviour
         //1 - 85 to 105
         //2 - 80 to 110
         //3 - 70 to 120
-        if (transform.rotation.eulerAngles.x >= 85.0f && transform.rotation.eulerAngles.x <= 105.0f && ID == 1)
+        //if (transform.rotation.eulerAngles.x >= 85.0f && transform.rotation.eulerAngles.x <= 105.0f && ID == 1)
+            //If ID1.transform.rotation == ID2.transform.rotation with 10 degree leniance (5 degrees for going over or under target rotation)
+            if (Disc1.transform.rotation.eulerAngles.x >= Disc2.transform.rotation.eulerAngles.x - 5.0f || Disc1.transform.rotation.eulerAngles.x >= Disc2.transform.rotation.eulerAngles.x + 5.0f)
         {
             numAligned[ID - 1] = true; //numAligned[0] = true
-            Debug.Log("Disc 1 is in target position");
+            Debug.Log(Disc1.transform.rotation.eulerAngles.x + " , " + Disc2.transform.rotation.eulerAngles.x + " [Disc 1 is in target position]");
             R1.transform.position = new Vector3(-5, 10, 0);
         }
         else
         {
-            if (ID == 1) { numAligned[ID - 1] = false; R1.transform.position = new Vector3(-5, 15, 0); }
+            if (ID == 1) { numAligned[ID - 1] = false; R1.transform.position = new Vector3(-5, 15, 0); Debug.Log(Disc1.transform.rotation.eulerAngles.x + " , " + Disc2.transform.rotation.eulerAngles.x);  }
         }
         if (transform.rotation.eulerAngles.x >= 80.0f && transform.rotation.eulerAngles.x <= 110.0f && ID == 2)
         {
