@@ -47436,9 +47436,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 809208713, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 257
+      objectReference: {fileID: 0}
+    - target: {fileID: 809208713, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 460
+      objectReference: {fileID: 0}
     - target: {fileID: 659533780346353242, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
       propertyPath: debuger
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 659533780346353242, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
+      propertyPath: hackSuccessful
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659533780346353242, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
       propertyPath: fallbackTimeForQuestion

@@ -48,6 +48,8 @@ public class PlayerController : MonoBehaviour
         mainCamera = Camera.main;
         rBody = GetComponent<Rigidbody>();
         playerColor = body.GetComponent<Renderer>().material.color;
+
+        readTSV = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
     }
     
     void Update()
@@ -105,7 +107,6 @@ public class PlayerController : MonoBehaviour
 
         if (miniController.completedQuiz && enemyControlled != null && readTSV.hackSuccessful == true)
         {
-            readTSV.hackSuccessful = false;
             gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
             body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;
@@ -155,7 +156,7 @@ public class PlayerController : MonoBehaviour
             }*/
             //enemyControlled.SetActive(enemyControlled.GetComponent<Collider>());
 
-
+            readTSV.hackSuccessful = false;
         }
     }
 }

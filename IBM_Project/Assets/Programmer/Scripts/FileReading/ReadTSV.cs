@@ -13,7 +13,6 @@ public class ReadTSV : MonoBehaviour
     private GameController gC;
     public bool hackSuccessful;
 
-
     [Header("Initialisation Parameters")]
     [Space]
     public float submitButtonSizeMultiplier; //Multiplier of the Submit text-box 
@@ -65,7 +64,7 @@ public class ReadTSV : MonoBehaviour
     [Space]
 
     public int totalPoints;
-    public int points;
+    //public int points;
 
     [Header("Visuals")]
     [Space]
@@ -199,11 +198,13 @@ public class ReadTSV : MonoBehaviour
         if (find) //File Reading / generate
         {
             nonDuplicateRow(); //Generates a row number that is not on askedList.
-            
+
             ////
             /// This section checks if there is a declared limit time for the question being asked.
             /// If not it will be set to fallbackTimeForQuestion
             ////
+
+            Debug.Log(Find(row, 0));
 
             timeForQuestion = fallbackTimeForQuestion;
 
@@ -211,7 +212,7 @@ public class ReadTSV : MonoBehaviour
 
             if(Find(row, _timeForQuestions) != "")
             {
-                if(float.TryParse(Find(row, _tim), out parseOutput))
+                if(float.TryParse(Find(row, 7), out parseOutput))
                 {
                     timeForQuestion = parseOutput;
                 }
@@ -502,6 +503,13 @@ public class ReadTSV : MonoBehaviour
                 //FREDDIE
                 //THIS IS WHERE YOU CAN CHECK TO MAKE SURE BOT HACK IS SUCCESSFUL
                 hackSuccessful = true;
+            }
+
+            else
+            {
+                //LEWIS
+                //Set bots to a hunting state.
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().PlayerStatus = GameController.Status.HUNTED;
             }
 
             //Reset asked list if all questions have already been asked
