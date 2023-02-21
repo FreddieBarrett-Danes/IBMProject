@@ -17,6 +17,7 @@ public class BotInfo : MonoBehaviour
     public List<Component> bAbilitiesList;
     private bool bAbilityAdd;
     public float bRotationSpeed;
+    public GameObject Computer;
 
     // Range Attack
     [Header("Ranged Attack Settings")] 
