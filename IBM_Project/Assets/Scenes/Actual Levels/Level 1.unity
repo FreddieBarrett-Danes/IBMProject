@@ -4524,6 +4524,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9055653331049746304, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
   m_PrefabInstance: {fileID: 165753754}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &194995095 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5573394264866049714, guid: 8e4a213507d216b4a951100dc07fe004, type: 3}
+  m_PrefabInstance: {fileID: 551134802}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &209724451
 GameObject:
   m_ObjectHideFlags: 0
@@ -47258,6 +47263,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088477101}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2096276176 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2801816660198358619, guid: 459137e4621dce94eaa1bde8abc7d891, type: 3}
+  m_PrefabInstance: {fileID: 8446537760607944723}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2100990712
 GameObject:
   m_ObjectHideFlags: 0
@@ -47684,9 +47694,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2098330026, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
+      propertyPath: discMinigame
+      value: 
+      objectReference: {fileID: 2096276176}
+    - target: {fileID: 2098330026, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
       propertyPath: mazeMinigame
       value: 
       objectReference: {fileID: 236888686}
+    - target: {fileID: 2098330026, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
+      propertyPath: sliderMinigame
+      value: 
+      objectReference: {fileID: 194995095}
     - target: {fileID: 1633922411735625584, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
       propertyPath: m_RootOrder
       value: 6

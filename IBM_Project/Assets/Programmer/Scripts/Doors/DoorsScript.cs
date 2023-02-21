@@ -96,7 +96,7 @@ public class DoorsScript : MonoBehaviour
             {
                 player.GetComponent<PlayerController>().computerDoor = true;
                 player.GetComponent<PlayerController>().door = gameObject.GetComponent<DoorsScript>();
-                Debug.Log("close to PC Door");
+                //Debug.Log("close to PC Door");
             }
 
             else //not close to computer door
