@@ -67,8 +67,8 @@ public class DoorsScript : MonoBehaviour
         if (!isComputer && !isElevator)
         {
             //try here
-            player.GetComponent<PlayerController>().computerDoor = false;
-            player.GetComponent<PlayerController>().elevatorDoor = false;
+            //player.GetComponent<PlayerController>().computerDoor = false;
+            //player.GetComponent<PlayerController>().elevatorDoor = false;
 
             if (distToPlayer < activateDistance || nearestEnemy < activateDistance) //open door
             {
@@ -96,6 +96,7 @@ public class DoorsScript : MonoBehaviour
             {
                 player.GetComponent<PlayerController>().computerDoor = true;
                 player.GetComponent<PlayerController>().door = gameObject.GetComponent<DoorsScript>();
+                Debug.Log("close to PC Door");
             }
 
             else //not close to computer door
@@ -110,6 +111,7 @@ public class DoorsScript : MonoBehaviour
             {
                 player.GetComponent<PlayerController>().elevatorDoor = true;
                 player.GetComponent<PlayerController>().door = gameObject.GetComponent<DoorsScript>();
+                Debug.Log("close to Ele Door");
             }
 
             else //not close to elevator door

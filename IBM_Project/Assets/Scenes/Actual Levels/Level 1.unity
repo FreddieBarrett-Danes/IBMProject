@@ -28722,7 +28722,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9055653331049746318, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
       propertyPath: m_Name
-      value: DoubleDoor (9)
+      value: ElevatorDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 9055653331049746319, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
+      propertyPath: isElevator
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9055653331049746319, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
       propertyPath: openDistance
@@ -45134,6 +45138,10 @@ PrefabInstance:
     - target: {fileID: 9055653331049746318, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
       propertyPath: m_Name
       value: ComputerDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 9055653331049746319, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
+      propertyPath: isComputer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1cb5f518cbd36d439974cfb33a054d9, type: 3}
