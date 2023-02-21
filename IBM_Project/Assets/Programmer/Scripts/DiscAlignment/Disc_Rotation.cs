@@ -25,11 +25,13 @@ public class Disc_Rotation : MonoBehaviour
     private short currentSelect;
     private bool Selected;
     private bool[] numAligned;
+    private bool debugWin;
 
     GameObject Disc1; //Red (outline)
     GameObject Disc2; //green (middle)
     GameObject Disc3; //White (center)
 
+    //Gameobjects used to check alignment. Moves position when a combonation of discs are aligned.
     GameObject R1;
     GameObject R2;
     GameObject R3;
@@ -84,6 +86,8 @@ public class Disc_Rotation : MonoBehaviour
 
         GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
         pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
+
+        debugWin = false;
 
         //R1startPosition = R1.transform.position;
         //R1startRotation = R1.transform.eulerAngles;
@@ -209,17 +213,23 @@ public class Disc_Rotation : MonoBehaviour
         //1 - 85 to 105
         //2 - 80 to 110
         //3 - 70 to 120
-        if (transform.rotation.eulerAngles.x >= 85.0f && transform.rotation.eulerAngles.x <= 105.0f && ID == 1)
+        //if (transform.rotation.eulerAngles.x >= 85.0f && transform.rotation.eulerAngles.x <= 105.0f && ID == 1)
+        //If ID1.transform.rotation == ID2.transform.rotation with 10 degree leniance (5 degrees for going over or under target rotation)
+        //Disc1 and Disc2
+        if ((Disc1.transform.rotation.eulerAngles.x >= Disc2.transform.rotation.eulerAngles.x - 10.0f && Disc1.transform.rotation.eulerAngles.x <= Disc2.transform.rotation.eulerAngles.x + 10.0f) || debugWin == true)
         {
             numAligned[ID - 1] = true; //numAligned[0] = true
-            Debug.Log("Disc 1 is in target position");
+            Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc2.transform.rotation.eulerAngles.x + " [Disc 1 is in target position]");
             R1.transform.position = new Vector3(-5, 10, 0);
         }
         else
         {
-            if (ID == 1) { numAligned[ID - 1] = false; R1.transform.position = new Vector3(-5, 15, 0); }
+            if (ID == 1) { numAligned[ID - 1] = false; R1.transform.position = new Vector3(-5, 15, 0); Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc2.transform.rotation.eulerAngles.x);  }
         }
-        if (transform.rotation.eulerAngles.x >= 80.0f && transform.rotation.eulerAngles.x <= 110.0f && ID == 2)
+
+        //if (transform.rotation.eulerAngles.x >= 80.0f && transform.rotation.eulerAngles.x <= 110.0f && ID == 2)
+        //Disc1 and Disc3
+        if ((Disc1.transform.rotation.eulerAngles.x >= Disc3.transform.rotation.eulerAngles.x - 10.0f && Disc1.transform.rotation.eulerAngles.x <= Disc3.transform.rotation.eulerAngles.x + 10.0f) || debugWin == true)
         {
             numAligned[ID - 1] = true; //numAligned[1] = true
             Debug.Log("Disc 2 is in target position");
@@ -229,7 +239,9 @@ public class Disc_Rotation : MonoBehaviour
         {
             if (ID == 2) { numAligned[ID - 1] = false; R2.transform.position = new Vector3(0, 15, 0); }
         }
-        if (transform.rotation.eulerAngles.x >= 70.0f && transform.rotation.eulerAngles.x <= 120.0f && ID == 3)
+        //Disc2 and Disc3
+        //if (transform.rotation.eulerAngles.x >= 70.0f && transform.rotation.eulerAngles.x <= 120.0f && ID == 3)
+        if ((Disc2.transform.rotation.eulerAngles.x >= Disc3.transform.rotation.eulerAngles.x - 10.0f && Disc2.transform.rotation.eulerAngles.x <= Disc3.transform.rotation.eulerAngles.x + 10.0f) || debugWin == true)
         {
             numAligned[ID - 1] = true; //numAligned[2] = true
             Debug.Log("Disc 3 is in target position");
@@ -241,10 +253,21 @@ public class Disc_Rotation : MonoBehaviour
         }
         //Debug.Log(currentSelect);
 
-        if (R1.transform.position == new Vector3(-5,10,0) && R2.transform.position == new Vector3(0, 10, 0) && R3.transform.position == new Vector3(5, 10, 0))
+        if (R1.transform.position == new Vector3(-5,10,0) && R2.transform.position == new Vector3(0, 10, 0) && R3.transform.position == new Vector3(5, 10, 0))// || debugWin == true)
         {
             Debug.Log("You Win!");
         }
+
+        if (Input.GetKeyDown("p"))
+        {
+            R1.transform.position = new Vector3(-5, 10, 0);
+            R2.transform.position = new Vector3(0, 10, 0);
+            R3.transform.position = new Vector3(5, 10, 0);
+            //Disc1 = Disc 3; Disc2 = Disc3
+
+            debugWin = true;
+        }
+
         //GetComponent<Renderer>().material.color = Color.grey;
     }
 }
