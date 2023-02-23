@@ -80,7 +80,7 @@ MonoBehaviour:
     m_Bits: 256
   bAbilitiesList: []
   bRotationSpeed: 1000
-  Computer: {fileID: 0}
+  bComputer: {fileID: 0}
   bFireRate: 0
   bProjectileSpeed: 0
   bNextFire: 0
@@ -115,6 +115,7 @@ MonoBehaviour:
   bRecentChaseTimerN: 0
   bSuspiciousRadius: 0
   bSuspiciousTimer: 0
+  bComputerSusRadius: 0
   bSearchTime: 0
   bDebugLastKnownPos: {x: 0, y: 0, z: 0}
   bSusTimer: 0

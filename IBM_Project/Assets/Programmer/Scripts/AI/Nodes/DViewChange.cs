@@ -14,7 +14,7 @@ public class DViewChange : BT_Node
     {
         bot.bViewRadius = bot.bSusViewRadius;
         bot.bInnerViewRadius = bot.bSusInnerViewRadius;
-        state = NodeState.SUCCESS;
+        state = NodeState.FAILURE;
         return state;
     }
 }

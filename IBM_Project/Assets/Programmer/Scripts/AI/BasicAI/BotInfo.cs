@@ -17,7 +17,8 @@ public class BotInfo : MonoBehaviour
     public List<Component> bAbilitiesList;
     private bool bAbilityAdd;
     public float bRotationSpeed;
-    public GameObject Computer;
+    [HideInInspector]
+    public GameObject bComputer;
 
     // Range Attack
     [Header("Ranged Attack Settings")] 
@@ -83,6 +84,7 @@ public class BotInfo : MonoBehaviour
     [Header("Suspicious Settings")]
     public float bSuspiciousRadius;
     public float bSuspiciousTimer;
+    public float bComputerSusRadius;
     public int bSearchTime;
     [HideInInspector]
     public Vector3 bDebugLastKnownPos;
@@ -92,7 +94,6 @@ public class BotInfo : MonoBehaviour
     public bool bPlayerInView;
     
     //ViewCone
-    [Header("ViewCone Settings")]
     private GameObject bViewCone;
     private Vector3 bViewConePos;
 
@@ -105,6 +106,7 @@ public class BotInfo : MonoBehaviour
         bViewCone.transform.forward = gameObject.transform.GetChild(0).GetChild(1).forward;
         // Misc
         bPlayer = FindObjectOfType(typeof(PlayerController)).GameObject();
+        bComputer = FindObjectOfType(typeof(ComputerInteraction)).GameObject();
         bBotCount = BotCalc();
         bRemainingBots = BotCalc();
         bGameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -131,7 +133,6 @@ public class BotInfo : MonoBehaviour
         // Suspicious
         bSusTimer = bSuspiciousTimer;
         bPlayerInView = false;
-        //
     }
 
     private void Update()

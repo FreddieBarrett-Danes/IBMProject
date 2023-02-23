@@ -6,7 +6,7 @@ public class ScoutBT : BT_Tree
 {
     protected override BT_Node SetupTree()
     {
-        BT_Node root = new BT_Sequence(new List<BT_Node>
+        BT_Node root = new BT_Selector(new List<BT_Node>
         {
             new BT_Decorator(new DSuspiciousStateCheck(GetComponent<BotInfo>()), 
                 new DViewChange(GetComponent<BotInfo>())),
