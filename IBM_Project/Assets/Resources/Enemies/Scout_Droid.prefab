@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 792528037477631371}
   - component: {fileID: 792528037477631410}
   - component: {fileID: 792528037477631411}
-  - component: {fileID: 792528037477631372}
-  - component: {fileID: 792528037477631373}
+  - component: {fileID: 3511814723302334512}
   - component: {fileID: 792528037477631374}
   - component: {fileID: 792528037477631375}
   m_Layer: 3
@@ -81,11 +80,12 @@ MonoBehaviour:
     m_Bits: 256
   bAbilitiesList: []
   bRotationSpeed: 1000
-  bFireRate: 0.5
+  bComputer: {fileID: 0}
+  bFireRate: 0
   bProjectileSpeed: 0
   bNextFire: 0
   bShooting: {fileID: 0}
-  bMaxFireDist: 5
+  bMaxFireDist: 0
   bPath: {fileID: 0}
   bPointLoop: 0
   bCreatePoints: 0
@@ -93,33 +93,34 @@ MonoBehaviour:
   bDestPoint: 0
   bDirection: 1
   bRecentlyChase: 0
-  bWanderRadius: 0.75
-  bWanderTimer: 7.5
-  bWanderDistance: 1
-  bWanderJitter: 2
+  bWanderRadius: 0
+  bWanderTimer: 0
+  bWanderDistance: 0
+  bWanderJitter: 0
   bWanderTarget: {x: 0, y: 0, z: 0}
   bTimer: 0
   bPlayer: {fileID: 0}
   bViewRadius: 0
   bInnerViewRadius: 1
   bDefaultViewRadius: 3
-  bDefaultInnerViewRadius: 0.75
+  bDefaultInnerViewRadius: 1
   bSusViewRadius: 5
   bSusInnerViewRadius: 1.5
   bViewAngle: 90
   bDetectionTimer: 0
   bTimeBeforeDetect: 2
   bEngaging: 0
-  bPredictionTime: 0.1
-  bRecentChaseTimer: 500
+  bPredictionTime: 0
+  bRecentChaseTimer: 0
   bRecentChaseTimerN: 0
-  bSuspiciousRadius: 1.5
-  bSuspiciousTimer: 3
-  bSearchTime: 15
+  bSuspiciousRadius: 0
+  bSuspiciousTimer: 0
+  bComputerSusRadius: 0
+  bSearchTime: 0
   bDebugLastKnownPos: {x: 0, y: 0, z: 0}
   bSusTimer: 0
   bPlayerInView: 0
---- !u!114 &792528037477631372
+--- !u!114 &3511814723302334512
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,21 +129,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 792528037477631368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dbe347978785a14982327d9b637621f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensedObjects: []
-  sensedRecord: []
---- !u!114 &792528037477631373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792528037477631368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cac3a455852934bd58420354c7c24dc0, type: 3}
+  m_Script: {fileID: 11500000, guid: 29db244c072861f4fa0d1b7823f0d05e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!135 &792528037477631374

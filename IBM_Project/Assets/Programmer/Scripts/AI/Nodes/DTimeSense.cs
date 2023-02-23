@@ -14,6 +14,12 @@ public class DTimeSense : BT_Node
 
     public override NodeState Evaluate()
     {
+        if (bot.bComputer.GetComponent<ComputerInteraction>().mazeFailed)
+        {
+            bot.bGameControl.PlayerStatus = GameController.Status.ALERTED;
+            state = NodeState.SUCCESS;
+            return state;
+        }
         if (!bot.bRecentlyChase)
         {
             if (bot.bDetectionTimer >= bot.bDetectionTimer / 2)

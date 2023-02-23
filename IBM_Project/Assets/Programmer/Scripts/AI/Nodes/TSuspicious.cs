@@ -23,15 +23,23 @@ public class TSuspicious : BT_Node
         if (botInfo.bSusTimer >= botInfo.bSuspiciousTimer || agent.remainingDistance < 0.05)
         {
             Vector3 randDir;
-            if (percep.sensedRecord.Length != 0)
+            if (botInfo.bComputer.GetComponent<ComputerInteraction>().mazeFailed == false)
             {
-                randDir = Random.insideUnitSphere * botInfo.bSuspiciousRadius;
-                randDir += percep.sensedRecord[0].lastSensedPosition;
+                if (percep.sensedRecord.Length != 0)
+                {
+                    randDir = Random.insideUnitSphere * botInfo.bSuspiciousRadius;
+                    randDir += percep.sensedRecord[0].lastSensedPosition;
+                }
+                else
+                {
+                    randDir = Random.insideUnitSphere * botInfo.bSuspiciousRadius;
+                    randDir += botInfo.transform.position;
+                }
             }
             else
             {
-                randDir = Random.insideUnitSphere * botInfo.bSuspiciousRadius;
-                randDir += botInfo.transform.position;
+                randDir = Random.insideUnitSphere * botInfo.bComputerSusRadius;
+                randDir += botInfo.bComputer.transform.position;
             }
             agent.SetDestination(randDir);
             botInfo.bSusTimer = 0;
