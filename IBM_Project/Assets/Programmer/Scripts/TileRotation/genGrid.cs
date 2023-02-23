@@ -19,7 +19,7 @@ public class genGrid : MonoBehaviour
     public GameObject tilePrefab;
     GameObject tilePrefab2;
     Quaternion tileRotation;
-    public Camera cam;
+    private Camera cam;
     public GameObject pregameText;
 
     public bool showTutorial;
@@ -32,6 +32,7 @@ public class genGrid : MonoBehaviour
     bool gridCompletion = false;
     int ij = 0;
 
+    private GameController gC;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,9 @@ public class genGrid : MonoBehaviour
         //gridCompletion = false;
         //tileRotation = tilePrefab.transform.rotation;
         tilePrefab2 = GameObject.Find("Tile_UpDown");
+
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         grid2 = new CustomTile[3];
         gridarray = new CustomTile[gridWidth, gridHeight];
@@ -408,6 +412,8 @@ public class genGrid : MonoBehaviour
         if (finishLock == false)
         {
             Debug.Log("Grid has been rotated correctly. Tile Rotation minigame complete, refer to tileCheck() for output");
+            gC.mC.completedDoor = true;
+            gC.inMinigame = false;
         }
         else
         {

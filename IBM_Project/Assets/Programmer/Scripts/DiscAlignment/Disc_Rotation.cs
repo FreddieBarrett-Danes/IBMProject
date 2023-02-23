@@ -46,6 +46,7 @@ public class Disc_Rotation : MonoBehaviour
     public GameObject pregameText;
     public bool showTutorial;
 
+    private GameController gC;
     // Start is called before the first frame update
 
     Vector3 RotationToDegrees(Vector3 v3)
@@ -59,7 +60,7 @@ public class Disc_Rotation : MonoBehaviour
 
     void Start()
     {
-        
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         currentSelect = 1;
         numAligned = new bool[3];
@@ -255,6 +256,8 @@ public class Disc_Rotation : MonoBehaviour
 
         if (R1.transform.position == new Vector3(-5,10,0) && R2.transform.position == new Vector3(0, 10, 0) && R3.transform.position == new Vector3(5, 10, 0))// || debugWin == true)
         {
+            gC.mC.completedDoor = true;
+            gC.inMinigame = false;
             Debug.Log("You Win!");
         }
 

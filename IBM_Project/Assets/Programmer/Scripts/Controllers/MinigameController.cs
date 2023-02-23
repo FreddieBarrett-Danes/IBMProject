@@ -56,7 +56,8 @@ public class MinigameController : MonoBehaviour
     }
     public void StartDoorMinigame()
     {
-        int randNumber = Mathf.RoundToInt(Random.Range(0, 1));
+        int randNumber = Mathf.RoundToInt(Random.Range(0, 2));
+        Debug.Log(randNumber);
         GameObject minigameHolder = doorGame[randNumber];
         chosenMinigame = minigameHolder; 
         if(!completedDoor && interactDoor)

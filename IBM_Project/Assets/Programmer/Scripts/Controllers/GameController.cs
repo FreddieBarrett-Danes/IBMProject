@@ -91,6 +91,14 @@ public class GameController : MonoBehaviour
                         Destroy(mazeWalls[i]);
                     }
                 }
+                GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+                if (tiles != null)
+                {
+                    for (int i = 0; i < tiles.Length; i++)
+                    {
+                        Destroy(tiles[i]);
+                    }
+                }
                 mC.inMaze = false;
                 mC.inDoor = false;
                 level.SetActive(true);
