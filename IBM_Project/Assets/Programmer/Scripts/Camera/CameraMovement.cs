@@ -12,11 +12,15 @@ public class CameraMovement : MonoBehaviour
     }
     private void Update()
     {
-        if (gC.inMinigame)
+        if (gC.mC.inMaze)
         {
             Vector3 temp = new Vector3(20.0f, gameObject.transform.position.y, 20.0f);
             gameObject.transform.position = temp;
             gameObject.GetComponent<Camera>().orthographicSize = 25.0f;
+        }
+        else if(gC.mC.inDoor)
+        {
+
         }
         else
         {

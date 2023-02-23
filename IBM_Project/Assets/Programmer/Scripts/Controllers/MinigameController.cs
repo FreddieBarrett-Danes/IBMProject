@@ -17,22 +17,27 @@ public class MinigameController : MonoBehaviour
 
     private GameController gameController;
 
+    [SerializeField]
     private GameObject[] doorGame;
 
     //public bool completedMinigame = false;
     public bool completedQuiz = false;
     //maze bools
     public bool completedMaze = false;
+    public bool inMaze = false;
     public bool interactMaze = true;
     //door minigame bools
     public bool completedDoor = false;
+    public bool inDoor = false;
     public bool interactDoor = true;
+
     // Start is called before the first frame update
     void Start()
     {
         rTSV = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
         //mazeMinigame = GameObject.FindGameObjectWithTag("Maze");
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        doorGame = new GameObject[2];
         doorGame[0] = discMinigame;
         doorGame[1] = sliderMinigame;
     }
@@ -44,20 +49,22 @@ public class MinigameController : MonoBehaviour
             if (!chosenMinigame.activeSelf)
             {
                 chosenMinigame.SetActive(true);
+                inMaze = true;
                 gameController.inMinigame = true;
             }
         }
     }
     public void StartDoorMinigame()
     {
-        /*int randNumber = Random.Range(0, 1);
-        GameObject minigameHolder = doorGame[randNumber];*/
-        chosenMinigame = discMinigame; //change this to random
+        int randNumber = Mathf.RoundToInt(Random.Range(0, 1));
+        GameObject minigameHolder = doorGame[randNumber];
+        chosenMinigame = minigameHolder; 
         if(!completedDoor && interactDoor)
         {
             if(!chosenMinigame.activeSelf)
             {
                 chosenMinigame.SetActive(true);
+                inDoor = true;
                 gameController.inMinigame = true;
             }
         }

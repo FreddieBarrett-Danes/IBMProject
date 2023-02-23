@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("computer door");
             //activate computer door minigame
             miniController.StartDoorMinigame();
-            door.isComputer = false;
+            //door.isComputer = false;
         }
     }
 }
