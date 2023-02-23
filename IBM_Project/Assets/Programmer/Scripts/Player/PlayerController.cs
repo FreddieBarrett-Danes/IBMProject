@@ -167,13 +167,13 @@ public class PlayerController : MonoBehaviour
     }
     private void DoorInteract()
     {
-        if(computerDoor && !isBehindEnemy && Input.GetKeyDown(KeyCode.E))
+        if(computerDoor && !isBehindEnemy && Input.GetKeyDown(KeyCode.E) && !miniController.completedDoor)
         {
             Debug.Log("computer door");
             //activate computer door minigame
             miniController.StartDoorMinigame();
         }
-        if(miniController.completedDoor)
+        else if(miniController.completedDoor)
         {
             door.isComputer = false;
         }

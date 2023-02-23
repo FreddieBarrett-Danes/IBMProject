@@ -31,12 +31,14 @@ public class goalLocationScript : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(mPlayer.timesHit);
         if (mPlayer != null && mPlayer.timesHit >= 6)
         {
             mC.interactMaze = false;
             gC.inMinigame = false;
-            gC.PlayerStatus = GameController.Status.ALERTED;
+            if (gC.PlayerStatus == GameController.Status.HUNTED)
+                return;
+            else
+                gC.PlayerStatus = GameController.Status.ALERTED;
             wG.Timer.SetActive(false);
             computerInteraction.mazeFailed = true;
             //mC.completedMaze = false;
