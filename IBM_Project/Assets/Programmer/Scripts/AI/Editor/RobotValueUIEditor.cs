@@ -28,7 +28,7 @@ public class RobotValueUIEditor : Editor
         Handles.color = Color.yellow;
         Handles.DrawWireArc(bot.bDebugLastKnownPos, Vector3.up, Vector3.forward, 360, bot.bSuspiciousRadius);
         Handles.color = Color.magenta;
-        Handles.DrawWireArc (position, Vector3.up, Vector3.forward, 360, bot.bInnerViewRadius);
+        Handles.DrawWireArc (position, Vector3.up, Vector3.forward, 360, bot.bDefaultInnerViewRadius);
     }
 
     private static Vector3 DirFromAngle(GameObject robot, float angleInDegrees, bool angleIsGlobal) 
