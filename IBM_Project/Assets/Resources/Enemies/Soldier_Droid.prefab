@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 792528037477631410}
   - component: {fileID: 792528037477631411}
   - component: {fileID: 792528037477631372}
-  - component: {fileID: 792528037477631373}
+  - component: {fileID: 148816585466147217}
   - component: {fileID: 792528037477631374}
   - component: {fileID: 792528037477631375}
   m_Layer: 3
@@ -81,6 +81,7 @@ MonoBehaviour:
     m_Bits: 256
   bAbilitiesList: []
   bRotationSpeed: 1000
+  Computer: {fileID: 0}
   bFireRate: 0.5
   bProjectileSpeed: 0
   bNextFire: 0
@@ -133,7 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensedObjects: []
   sensedRecord: []
---- !u!114 &792528037477631373
+--- !u!114 &148816585466147217
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 792528037477631368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cac3a455852934bd58420354c7c24dc0, type: 3}
+  m_Script: {fileID: 11500000, guid: da1d2d8b8c78e474bac3055a1408fe3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!135 &792528037477631374

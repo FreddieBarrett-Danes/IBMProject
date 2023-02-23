@@ -101,7 +101,7 @@ public class BotInfo : MonoBehaviour
         // ViewCone
         bViewConePos = gameObject.transform.GetChild(0).GetChild(1).transform.position;
         bViewCone = Instantiate(Resources.Load<GameObject>("ViewCone"), gameObject.transform.GetChild(0).GetChild(1), false);
-        bViewCone.transform.position = bViewConePos;
+        bViewCone.transform.position = new Vector3(bViewConePos.x, bViewConePos.y, bViewConePos.z - 0.3f);
         bViewCone.transform.forward = gameObject.transform.GetChild(0).GetChild(1).forward;
         // Misc
         bPlayer = FindObjectOfType(typeof(PlayerController)).GameObject();
@@ -136,7 +136,7 @@ public class BotInfo : MonoBehaviour
 
     private void Update()
     {
-        bViewCone.GetComponent<Light>().range = bViewRadius;
+        bViewCone.GetComponent<Light>().range = bViewRadius + 0.5f;
         Vector3 movementDirection = GetComponent<NavMeshAgent>().velocity;
         if (movementDirection.magnitude > 0) {
             Quaternion targetRotation = Quaternion.LookRotation(movementDirection);
