@@ -9305,6 +9305,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DiscMinigame
       objectReference: {fileID: 0}
+    - target: {fileID: 2801816660198358619, guid: 459137e4621dce94eaa1bde8abc7d891, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 459137e4621dce94eaa1bde8abc7d891, type: 3}
 --- !u!4 &1348363468 stripped
@@ -17932,7 +17936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7209069689025269410, guid: a76570467da2d5e4692a7c858704beef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 7209069689025269410, guid: a76570467da2d5e4692a7c858704beef, type: 3}
       propertyPath: m_LocalPosition.y
@@ -17940,7 +17944,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7209069689025269410, guid: a76570467da2d5e4692a7c858704beef, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7209069689025269410, guid: a76570467da2d5e4692a7c858704beef, type: 3}
       propertyPath: m_LocalRotation.w
