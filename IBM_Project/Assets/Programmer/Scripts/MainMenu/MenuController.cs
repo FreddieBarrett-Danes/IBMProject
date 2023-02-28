@@ -17,7 +17,6 @@ public class MenuController : MonoBehaviour
     private GameObject buttonPrefab, sliderPrefab, tickboxPrefab, dropdownPrefab;
 
     private List<GameObject> MainButtonList = new List<GameObject>();
-    [SerializeField]
     private List<GameObject> SettingsButtonList = new List<GameObject>();
 
     [SerializeField]
