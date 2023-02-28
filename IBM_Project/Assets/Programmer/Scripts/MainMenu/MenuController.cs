@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
+using UnityEditor.SearchService;
 
 public class MenuController : MonoBehaviour
 {
@@ -156,7 +157,7 @@ public class MenuController : MonoBehaviour
     void PlayButtonPressed()
     {
         //Add the game start logic here
-
+        SceneManager.LoadScene(1);
         return;
     }
     
