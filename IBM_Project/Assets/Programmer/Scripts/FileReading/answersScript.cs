@@ -14,7 +14,7 @@ public class answersScript : MonoBehaviour
     void Start()
     {
         btn = GetComponent<Button>();
-        btn.onClick.AddListener(buttonClicked);
+        btn.onClick.AddListener(ButtonClicked);
         //panelColour = this.GetComponent<Color>();
         panelColour = Color.white;
     }
@@ -43,7 +43,7 @@ public class answersScript : MonoBehaviour
         }*/
     }
 
-    private void buttonClicked()
+    private void ButtonClicked()
     {
         selected = !selected;
 

@@ -321,11 +321,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonPrefab: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
   buttonWidth: 0.58
-  buttonHeight: 0.17
-  buttonSpacing: 50
-  startHeightFromStart: 50
+  buttonHeight: 0.1
+  buttonSpacing: 75
+  startHeightFromStart: 100
   textboxScalar: 1
-  amountOfButtons: 3
+  amountOfButtons: 4
+  menuButton1: Start
+  menuButton2: Settings
+  menuButton3: Credits
+  menuButton4: Exit
+  buttonColour: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &774266116
 GameObject:
   m_ObjectHideFlags: 0

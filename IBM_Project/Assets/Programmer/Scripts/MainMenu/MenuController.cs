@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
@@ -23,9 +27,15 @@ public class MenuController : MonoBehaviour
                 _credits =      2,
                 _quit =         3;
 
+    [SerializeField]
+    string      menuButton1 = "Start",
+                menuButton2 = "Settings",
+                menuButton3 = "Credits",
+                menuButton4 = "Exit";
 
+    [SerializeField]
+    private Color buttonColour;
 
-    // Start is called before the first frame update
     void Start()
     {
         buttonList.Clear();
@@ -35,6 +45,7 @@ public class MenuController : MonoBehaviour
         spawnButtons();
         setButtonPosition();
         setButtonSize();
+        
     }
 
     void OnGUI()
@@ -46,7 +57,7 @@ public class MenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void getCanvasSize()
@@ -67,6 +78,11 @@ public class MenuController : MonoBehaviour
             GameObject tempPrefab = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
             tempPrefab.transform.parent = canvas.transform;
             buttonList.Add(tempPrefab);
+            SetText(i);
+            SetButtonActions(i);
+            tempPrefab.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+            Destroy(tempPrefab.GetComponent<answersScript>());
+            tempPrefab.GetComponent<Image>().color = buttonColour;
         }
 
         return;
@@ -91,5 +107,79 @@ public class MenuController : MonoBehaviour
 
             buttonList[i].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
         }
+    }
+
+    void SetText(int buttonNumber)
+    {
+        switch (buttonNumber)
+        {
+            case 0:
+                buttonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton1;
+                break;
+            case 1:
+                buttonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton2;
+                break;
+            case 2:
+                buttonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton3;
+                break;
+            case 3:
+                buttonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton4;
+                break;
+            default:
+                Debug.Log("Unknown button");
+                break;
+        }
+    }
+
+    void SetButtonActions(int buttonNumber)
+    {
+        switch (buttonNumber)
+        {
+            case 0:
+                buttonList[buttonNumber].GetComponent<Button>().onClick.AddListener(PlayButtonPressed);
+                break;
+            case 1:
+                buttonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SettingsButtonPressed);
+                break;
+            case 2:
+                buttonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
+                break;
+            case 3:
+                buttonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                break;
+            default:
+                Debug.Log("Unknown button");
+                break;
+        }
+    }
+
+    void PlayButtonPressed()
+    {
+        //Add the game start logic here
+
+        return;
+    }
+    
+    void SettingsButtonPressed()
+    {
+        //Swap to settings menu
+
+        return;
+    }
+
+    void CreditsButtonPressed()
+    {
+        //Swap to credits menu
+
+        return;
+    }
+
+    void ExitButtonPressed()
+    {
+        //Force Quit Game..
+
+        Application.Quit();
+
+        return;
     }
 }
