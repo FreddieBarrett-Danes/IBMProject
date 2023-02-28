@@ -30,7 +30,8 @@ public class genGrid : MonoBehaviour
     bool[,] boolarraytest;
     Vector2 cPos; // Current Position (within Grid array)
     bool gridCompletion = false;
-    int ij = 0;
+    private Color startColor;
+    //int ij = 0;
 
     private GameController gC;
 
@@ -53,6 +54,8 @@ public class genGrid : MonoBehaviour
         tile1.n = true;
         CustomTile tile2 = new CustomTile();
 
+        startColor = tilePrefab2.GetComponent<Renderer>().material.color;
+
 
         CustomTile[] grid3 = new CustomTile[] { tile1, tile2 };
 
@@ -62,6 +65,8 @@ public class genGrid : MonoBehaviour
 
         GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
         pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
+
+
 
 
         for (int x = 0; x < gridWidth; x++)
@@ -610,6 +615,17 @@ public class genGrid : MonoBehaviour
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
                 obj.transform.Rotate(0, 0, -90);
                 Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles + " | " + gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles);
+                //Disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
+                if (gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles == gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles)
+                {
+                    gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
+                }
+                else
+                {
+                    gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = startColor;
+                }
+                
+
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation);
                 //gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation = obj.transform.rotation;
