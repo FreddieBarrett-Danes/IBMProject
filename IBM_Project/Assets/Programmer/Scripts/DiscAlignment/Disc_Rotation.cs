@@ -209,6 +209,9 @@ public class Disc_Rotation : MonoBehaviour
         {
             GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
             pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
+            Disc1.transform.rotation = Disc1startRotation;
+            Disc2.transform.rotation = Disc2startRotation;
+            Disc3.transform.rotation = Disc3startRotation;
         }
 
         //Testing example, to be set when paths align

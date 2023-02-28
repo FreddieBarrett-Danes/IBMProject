@@ -10,8 +10,8 @@ public class CustomTile
     //public string Type;
     public tileType type = tileType.UpDown;
 
-    public GameObject gameObjectFront;
-    public GameObject gameObjectBack;
+    public GameObject gameObjectFront; //The interactable tiles in front of the camera
+    public GameObject gameObjectBack; //A set of tiles out of the camera's view which references the correct solution
 
     public Quaternion FrontRotation;
     public Vector3 FrontRotationEuler;

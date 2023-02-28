@@ -21,7 +21,8 @@ public class genGrid : MonoBehaviour
     Quaternion tileRotation;
     private Camera cam;
     public GameObject pregameText;
-
+    
+    public bool showCorrectRotation;
     public bool showTutorial;
 
     //Following variables/objects used to be public
@@ -271,7 +272,8 @@ public class genGrid : MonoBehaviour
         //Generate path in front of the camera with randomised rotations:
         //----------------------------------------------------------------
         //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation);
-        gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation);
+        if (cPos == new Vector2(0, 0) || gridarray[(int)cPos.x, (int)cPos.y].type == CustomTile.tileType.StartUp) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation); }
+        else { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation); }
 
         //Generate correct path behind the camera:
         //----------------------------------------
@@ -385,6 +387,8 @@ public class genGrid : MonoBehaviour
                 //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0, 0, 180)) || (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)))
                 {
                     gridarray[x, y].gameObjectFront.transform.position = new Vector3(gridarray[x, y].gameObjectFront.transform.position.x, gridarray[x, y].gameObjectFront.transform.position.y, 1);
+                    if (showCorrectRotation == true) { gridarray[x, y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
+                    
                     //if (gridarray[x,y].gameObjectBack.name == "Tile_UpDown")
                     //{
                     //    if (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == -gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles))
@@ -614,11 +618,12 @@ public class genGrid : MonoBehaviour
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation);
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
                 obj.transform.Rotate(0, 0, -90);
-                Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles + " | " + gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles);
+                Debug.Log(obj.transform.position.x + "," + obj.transform.position.y);
+                //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles + " | " + gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles);
                 //Disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
                 if (gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles == gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles)
                 {
-                    gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
+                    if (showCorrectRotation == true) { gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
                 }
                 else
                 {
