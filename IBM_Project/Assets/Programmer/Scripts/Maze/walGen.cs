@@ -46,7 +46,7 @@ using UnityEngine.UI;
 
 public class walGen : MonoBehaviour
 {
-    public int frameRate;
+    //public int frameRate;
 
 
     public int Maze_Width; //Designer input to set maze Width (up to 100?)
@@ -328,7 +328,7 @@ public class walGen : MonoBehaviour
     {
         visitedStack = new Stack<Vector2>();
         mazeReady = false;
-        Application.targetFrameRate = frameRate;
+        //Application.targetFrameRate = frameRate;
         //GameObject.FindGameObjectWithTag("MainCamera").transform.position = cameraPosition;
         //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.white;
         //pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
@@ -676,6 +676,7 @@ public class walGen : MonoBehaviour
 
         if (Input.GetKeyDown("space") && mazeReady == true) //&& pressedPlay == false
         {
+            Debug.Log("Press 'P' to complete maze instantly");
             OnMazeReady(true);
             mazePlayer.transform.position = new Vector3(2, 0, 0);
             goalLocation.transform.position = preGoalLocation;

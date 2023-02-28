@@ -12,10 +12,12 @@ public class LevelTimer : MonoBehaviour
     private GameController gC;
 
     public TextMeshProUGUI countdownText;
+    public TextMeshProUGUI playerstatusText;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerstatusText.text = "SAFE";
         currentTime = startTime;
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         //countdownText.gameObject.SetActive(true);
@@ -33,6 +35,13 @@ public class LevelTimer : MonoBehaviour
                 {
                     currentTime -= Time.deltaTime;
                     updateTimer(currentTime);
+                    playerstatusText.text = gC.PlayerStatus switch
+                    {
+                        GameController.Status.SAFE => "SAFE",
+                        GameController.Status.HUNTED => "HUNTED",
+                        GameController.Status.ALERTED => "ALERT",
+                        _ => "SAFE"
+                    };
                 }
                 else
                 {

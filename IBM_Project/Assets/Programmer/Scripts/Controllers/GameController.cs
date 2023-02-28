@@ -9,11 +9,13 @@ public class GameController : MonoBehaviour
     //private LevelTimer levelTimer;
     public GameObject level;
     private GameObject player;
-    private MinigameController mC;
+    public MinigameController mC;
     public bool inMinigame = false;
 
     public GameObject[] levelUI;
     public GameObject[] mazeUI;
+    public GameObject[] discUI;
+    public GameObject[] tileUI;
 
     public float LevelTimeBank = 0.0f;
     public bool completedLevel = false;
@@ -37,6 +39,15 @@ public class GameController : MonoBehaviour
         foreach(GameObject maze in mazeUI)
         {
             maze.SetActive(false);
+        }
+
+        foreach (GameObject disc in discUI)
+        {
+            disc.SetActive(false);
+        }
+        foreach (GameObject tile in tileUI)
+        {
+            tile.SetActive(false);
         }
 
         mC = gameObject.GetComponent<MinigameController>();
@@ -65,23 +76,31 @@ public class GameController : MonoBehaviour
             if (inMinigame)
             {
                 level.SetActive(false);
-                for(int i = 0; i < levelUI.Length; i++)
+                for (int i = 0; i < levelUI.Length; i++)
                 {
                     levelUI[i].SetActive(false);
                 }
-                /*foreach (GameObject maze in mazeUI)
-                {
-                    maze.SetActive(true);
-                }*/
-
             }
             else
             {
                 GameObject[] mazeWalls = GameObject.FindGameObjectsWithTag("mazeWall");
-                for(int i = 0; i < mazeWalls.Length; i++)
+                if (mazeWalls != null)
                 {
-                    Destroy(mazeWalls[i]);
+                    for (int i = 0; i < mazeWalls.Length; i++)
+                    {
+                        Destroy(mazeWalls[i]);
+                    }
                 }
+                GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+                if (tiles != null)
+                {
+                    for (int i = 0; i < tiles.Length; i++)
+                    {
+                        Destroy(tiles[i]);
+                    }
+                }
+                mC.inMaze = false;
+                mC.inDoor = false;
                 level.SetActive(true);
                 for (int i = 0; i < levelUI.Length; i++)
                 {
@@ -91,10 +110,6 @@ public class GameController : MonoBehaviour
                 {
                     mC.chosenMinigame.SetActive(false);
                 }
-                /*foreach (GameObject maze in mazeUI)
-                {
-                    maze.SetActive(false);
-                }*/
             }
         }
         else

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,7 +9,6 @@ public class BotInfo : MonoBehaviour
 {
     // Misc
     [Header("Misc Settings")]
-    
     public int bThreatLevel;
     public int bBotCount;
     public int bRemainingBots;
@@ -18,21 +16,25 @@ public class BotInfo : MonoBehaviour
     public LayerMask bObstacleLayer;
     public List<Component> bAbilitiesList;
     private bool bAbilityAdd;
-    
-    // Throwing
+    public float bRotationSpeed;
+    [HideInInspector]
+    public GameObject bComputer;
+
+    // Range Attack
     [Header("Ranged Attack Settings")] 
-    public float bFireRate = 0.5f;
+    public float bFireRate;
     [HideInInspector]
     public float bProjectileSpeed;
     [HideInInspector]
     public float bNextFire;
     [HideInInspector]
     public Shooting bShooting;
+    public float bMaxFireDist;
     private GameObject bVisuals;
 
     // Patrol
     [Header("Patrol Settings")] 
-    public GameObject bPaths;
+    public GameObject bPath;
     public bool bPointLoop;
     [HideInInspector]
     public bool bCreatePoints;
@@ -61,9 +63,12 @@ public class BotInfo : MonoBehaviour
     public GameObject bPlayer;
     [HideInInspector]
     public float bViewRadius;
+    [HideInInspector]
     public float bInnerViewRadius;
     public float bDefaultViewRadius;
+    public float bDefaultInnerViewRadius;
     public float bSusViewRadius;
+    public float bSusInnerViewRadius;
     [Range(0, 360)] 
     public float bViewAngle;
     public float bDetectionTimer;
@@ -79,6 +84,7 @@ public class BotInfo : MonoBehaviour
     [Header("Suspicious Settings")]
     public float bSuspiciousRadius;
     public float bSuspiciousTimer;
+    public float bComputerSusRadius;
     public int bSearchTime;
     [HideInInspector]
     public Vector3 bDebugLastKnownPos;
@@ -86,11 +92,21 @@ public class BotInfo : MonoBehaviour
     public float bSusTimer;
     [HideInInspector]
     public bool bPlayerInView;
+    
+    //ViewCone
+    private GameObject bViewCone;
+    private Vector3 bViewConePos;
 
     private void Start()
     {
+        // ViewCone
+        bViewConePos = gameObject.transform.GetChild(0).GetChild(1).transform.position;
+        bViewCone = Instantiate(Resources.Load<GameObject>("ViewCone"), gameObject.transform.GetChild(0).GetChild(1), false);
+        bViewCone.transform.position = new Vector3(bViewConePos.x, bViewConePos.y, bViewConePos.z - 0.3f);
+        bViewCone.transform.forward = gameObject.transform.GetChild(0).GetChild(1).forward;
         // Misc
         bPlayer = FindObjectOfType(typeof(PlayerController)).GameObject();
+        bComputer = FindObjectOfType(typeof(ComputerInteraction)).GameObject();
         bBotCount = BotCalc();
         bRemainingBots = BotCalc();
         bGameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -106,12 +122,12 @@ public class BotInfo : MonoBehaviour
         bShooting.bulletSpeed = bProjectileSpeed;
         bNextFire = bFireRate;
         // Patrol
-        bPaths = GameObject.Find("PatrolPaths");
         bDestPoint = 0;
         // Wander
         bTimer = bWanderTimer;
         // LockOn
         bViewRadius = bDefaultViewRadius;
+        bInnerViewRadius = bDefaultInnerViewRadius;
         bDetectionTimer = 0;
         bRecentChaseTimerN = bRecentChaseTimer;
         // Suspicious
@@ -121,6 +137,15 @@ public class BotInfo : MonoBehaviour
 
     private void Update()
     {
+        bViewCone.GetComponent<Light>().range = bViewRadius + 0.5f;
+        Vector3 movementDirection = GetComponent<NavMeshAgent>().velocity;
+        if (movementDirection.magnitude > 0) {
+            Quaternion targetRotation = Quaternion.LookRotation(movementDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, bRotationSpeed * Time.deltaTime);
+        }
+        GetComponent<NavMeshAgent>().updateRotation = false;
+        Vector3 bVelocity = GetComponent<NavMeshAgent>().velocity;
+        //Debug.Log("Velocity: " + bVelocity);
         if (bDetectionTimer == 0) return;
         DateTime now = DateTime.Now;
         if (gameObject.GetComponent<Perception>().sensedRecord.Length == 0) return;
@@ -129,7 +154,9 @@ public class BotInfo : MonoBehaviour
             now.Subtract(new TimeSpan(0, 0, bSearchTime))) return;
         bGameControl.PlayerStatus = GameController.Status.SAFE;
         bDetectionTimer = 0;
+        if (bRemainingBots ! >= bBotCount / 2) return;
         bViewRadius = bDefaultViewRadius;
+        bInnerViewRadius = bDefaultInnerViewRadius;
     }
     private void LateUpdate()
     {

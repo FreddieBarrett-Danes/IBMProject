@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using Unity.IO;
 using Unity.VisualScripting;
 
 public class ComputerInteraction : MonoBehaviour
@@ -15,6 +11,8 @@ public class ComputerInteraction : MonoBehaviour
 
     private GameController gameController;
     private MinigameController miniController;
+
+    public bool mazeFailed = false;
 
 
     private bool isTouching;
@@ -30,7 +28,7 @@ public class ComputerInteraction : MonoBehaviour
     void Update()
     {
         
-        if (isTouching && Input.GetKey(KeyCode.E))
+        if (isTouching && !gameController.inMinigame && Input.GetKey(KeyCode.E ))
         {
             if (!miniController.completedMaze)
             {
@@ -38,15 +36,26 @@ public class ComputerInteraction : MonoBehaviour
             }
 
         }
+
         if (miniController.completedMaze)
         {
             foreach (GameObject enemy in enemies)
             {
                 Destroy(enemy);
             }
-            gameObject.GetComponent<Renderer>().enabled = true;
             enemies = null;
             miniController.completedMaze = false;
+        }
+
+        if (gameController.inMinigame)
+        {
+            //gameObject.GetComponent<BoxCollider>().enabled = false;
+            gameObject.GetComponent<Renderer>().enabled = false;
+        }
+        else if(!gameController.inMinigame)
+        {
+            //gameObject.GetComponent<BoxCollider>().enabled = true;
+            gameObject.GetComponent<Renderer>().enabled = true;
         }
 
     }

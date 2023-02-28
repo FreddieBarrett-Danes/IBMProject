@@ -3,6 +3,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private MinigameController miniController;
+    private ReadTSV readTSV;
+
+    public DoorsScript door;
 
     public float speed;
 
@@ -33,6 +36,9 @@ public class PlayerController : MonoBehaviour
     private bool isControlling = false;
     private bool canShoot = false;
 
+    public bool computerDoor = false;
+    public bool elevatorDoor = false;
+
     //visual player representation will be changed when using sprites
     private Color playerColor;
 
@@ -47,6 +53,8 @@ public class PlayerController : MonoBehaviour
         mainCamera = Camera.main;
         rBody = GetComponent<Rigidbody>();
         playerColor = body.GetComponent<Renderer>().material.color;
+
+        readTSV = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
     }
     
     void Update()
@@ -55,6 +63,7 @@ public class PlayerController : MonoBehaviour
         PlayerShooting();
         TakeControl();
         ControllingTimer();
+        DoorInteract();
     }
     void FixedUpdate()
     {
@@ -102,7 +111,7 @@ public class PlayerController : MonoBehaviour
             miniController.StartQuiz(1);    
         }
 
-        if (miniController.completedQuiz && enemyControlled != null)
+        if (miniController.completedQuiz && enemyControlled != null && readTSV.hackSuccessful == true)
         {
             gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
@@ -153,7 +162,20 @@ public class PlayerController : MonoBehaviour
             }*/
             //enemyControlled.SetActive(enemyControlled.GetComponent<Collider>());
 
-
+            readTSV.hackSuccessful = false;
+        }
+    }
+    private void DoorInteract()
+    {
+        if(computerDoor && !isBehindEnemy && Input.GetKeyDown(KeyCode.E) && !miniController.completedDoor)
+        {
+            Debug.Log("computer door");
+            //activate computer door minigame
+            miniController.StartDoorMinigame();
+        }
+        else if(miniController.completedDoor)
+        {
+            door.isComputer = false;
         }
     }
 }

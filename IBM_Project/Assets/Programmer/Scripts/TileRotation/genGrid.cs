@@ -19,14 +19,20 @@ public class genGrid : MonoBehaviour
     public GameObject tilePrefab;
     GameObject tilePrefab2;
     Quaternion tileRotation;
-    public Camera cam;
-    public CustomTile[,] gridarray;
-    public CustomTile[] grid2;
-    public bool[,] boolarraytest;
-    public Vector2 cPos; // Current Position (within Grid array)
-    public bool gridCompletion = false;
-    public int ij = 0;
+    private Camera cam;
+    public GameObject pregameText;
 
+    public bool showTutorial;
+
+    //Following variables/objects used to be public
+    CustomTile[,] gridarray;
+    CustomTile[] grid2;
+    bool[,] boolarraytest;
+    Vector2 cPos; // Current Position (within Grid array)
+    bool gridCompletion = false;
+    int ij = 0;
+
+    private GameController gC;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +40,9 @@ public class genGrid : MonoBehaviour
         //gridCompletion = false;
         //tileRotation = tilePrefab.transform.rotation;
         tilePrefab2 = GameObject.Find("Tile_UpDown");
+
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         grid2 = new CustomTile[3];
         gridarray = new CustomTile[gridWidth, gridHeight];
@@ -51,7 +60,8 @@ public class genGrid : MonoBehaviour
 
         boolarraytest[1, 1] = true;
 
-        
+        GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
+        pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
 
 
         for (int x = 0; x < gridWidth; x++)
@@ -85,13 +95,23 @@ public class genGrid : MonoBehaviour
             for (int y = 0; y < gridHeight; y ++)
             {
                 if (gridarray[x, y].Visited == false)
-                { 
-                    Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, 0), GameObject.Find("Tile_Blank").transform.rotation);
-                    Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, -20), GameObject.Find("Tile_Blank").transform.rotation);
+                {
+                    gridarray[x, y].gameObjectBack = Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, 0), GameObject.Find("Tile_Blank").transform.rotation);
+                    gridarray[x, y].gameObjectFront = Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, 0), GameObject.Find("Tile_Blank").transform.rotation);
+                    //Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, 0), GameObject.Find("Tile_Blank").transform.rotation);
+                    //Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, -20), GameObject.Find("Tile_Blank").transform.rotation);
+                    //gridarray[x, y].gameObjectBack = GameObject.Find("Tile_Blank");
+                    //gridarray[x, y].gameObjectBack.transform.position = new Vector3(x, y, -20);
+
+                    //gridarray[x, y].gameObjectFront = GameObject.Find("Tile_Blank");
+                    //gridarray[x, y].gameObjectFront.transform.position = new Vector3(x, y, 0);
+                    //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack = tilePrefab2;
+                    //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.position = new Vector3(cPos.x, cPos.y, -20);
+
                 }
             }
         }
-        Debug.Log("before tileCheck");
+        //Debug.Log("before tileCheck");
         //tileCheck();
         //vvv
         //SetPrefab();
@@ -190,9 +210,16 @@ public class genGrid : MonoBehaviour
     }
     private void DoubleInstantiate()
     {
-        gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack = tilePrefab2;
-        gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.position = new Vector3(cPos.x, cPos.y, -20);
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack = tilePrefab2;
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.position = new Vector3(cPos.x, cPos.y, -20);
+
+
         //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = tilePrefab2;
+
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack = tilePrefab2;
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.position = new Vector3(cPos.x, cPos.y, -20);
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = tilePrefab2;
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.position = new Vector3(cPos.x, cPos.y, 0);
         int rng2 = Random.Range(0, 4);
         Vector3 randRotation = new Vector3(0,0,0);
         Quaternion quatRotation = new Quaternion(0,0,0,0);
@@ -219,8 +246,72 @@ public class genGrid : MonoBehaviour
                 quatRotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
                 break;
         }
-        gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = tilePrefab2;
-        gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.position = new Vector3(cPos.x, cPos.y, 0);
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation = quatRotation;
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = tilePrefab2;
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.position = new Vector3(cPos.x, cPos.y, 0);
+
+
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation = quatRotation; //For whatever reason, using quatRotation sets the randomised direction for the back set of tiles
+
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack;
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation = quatRotation;
+
+
+
+        //Generate correct path in front of the camera:
+        //----------------------------------------------
+        //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
+
+
+        //Generate path in front of the camera with randomised rotations:
+        //----------------------------------------------------------------
+        //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation);
+        gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation);
+
+        //Generate correct path behind the camera:
+        //----------------------------------------
+        //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, -20), tilePrefab2.transform.rotation);
+        gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, -20), tilePrefab2.transform.rotation);
+
+    }
+
+    private void OldDoubleInstantiate() //For reference and as a backup
+    {
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack = tilePrefab2;
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.position = new Vector3(cPos.x, cPos.y, -20);
+
+
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = tilePrefab2;
+        int rng2 = Random.Range(0, 4);
+        Vector3 randRotation = new Vector3(0, 0, 0);
+        Quaternion quatRotation = new Quaternion(0, 0, 0, 0);
+        switch (rng2)
+        {
+            case 1:
+                randRotation = new Vector3(0, 0, 0);
+                quatRotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f); //tilePrefab2.transform.rotation; //Quaternion.identity;
+                break;
+            case 2:
+                randRotation = new Vector3(0, 0, 90);
+                quatRotation = new Quaternion(0.0f, 0.0f, 0.7071068f, 0.7071068f);
+                break;
+            case 3:
+                randRotation = new Vector3(0, 0, 180);
+                quatRotation = new Quaternion(0.0f, 0.0f, 1.0f, 0.0f);
+                break;
+            case 4:
+                randRotation = new Vector3(0, 0, 270);
+                quatRotation = new Quaternion(0, 0, 0.7071068f, -0.7071068f);
+                break;
+            default:
+                randRotation = new Vector3(0, 0, 0);
+                quatRotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+                break;
+        }
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = tilePrefab2;
+        //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.position = new Vector3(cPos.x, cPos.y, 0);
+
+
         //gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation = quatRotation; //For whatever reason, using quatRotation sets the randomised direction for the back set of tiles
 
         //gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack;
@@ -255,7 +346,6 @@ public class genGrid : MonoBehaviour
 
         //gridarray[(int)cPos.x, (int)cPos.y].BackRotationEuler = tilePrefab2.transform.rotation.eulerAngles;
         //gridarray[(int)cPos.x, (int)cPos.y].FrontRotationEuler = quatRotation.eulerAngles;
-
     }
 
     private void OnDrawGizmos()
@@ -266,18 +356,70 @@ public class genGrid : MonoBehaviour
 
     private void tileCheck()
     {
+        bool[,] correctRotation = new bool[100,100];
+        short counter1 = 0;
+        bool finishLock = false;
         //Debug.Log(gridarray[1, 1].FrontRotation + "," + gridarray[1, 1].BackRotation);
-        Debug.Log(gridarray[1, 1].FrontRotationEuler + "," + gridarray[1, 1].gameObjectBack.transform.rotation.eulerAngles);
+        //Debug.Log(gridarray[1, 1].FrontRotationEuler + "," + gridarray[1, 1].gameObjectBack.transform.rotation.eulerAngles);
         for (int x = 0; x < (gridWidth); x++)
         {
             
             for (int y = 0; y <= (gridHeight - 1); y++)
             {
+                //GameObject.Destroy(gridarray[x, y].gameObjectFront);
+                //Debug.Log(gridarray[x, y].gameObjectFront.transform.rotation + "," + gridarray[x, y].gameObjectBack.transform.rotation);
+                //if (gridarray[x, y].gameObjectFront.transform.rotation == gridarray[x, y].gameObjectBack.transform.rotation)
 
-                Debug.Log("(" + x + "," + y + ")" + gridarray[x, y].FrontRotationEuler + "," + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles);
+
+                //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)
+
+
+                //If GameObject at front is equal to GameObject at back OR (If GameObject at back is UpDown AND GameObject rotation is inverted (180 difference in z rotation))                                 //gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles ||
+                //This is to account for the UpDown tile featuring two outputs but four rotations
+                if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown(Clone)" || gridarray[x,y].gameObjectBack.name == "Tile_LeftRight(Clone)" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0,0,180)) || (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)))
+                //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0, 0, 180)) || (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)))
+                {
+                    gridarray[x, y].gameObjectFront.transform.position = new Vector3(gridarray[x, y].gameObjectFront.transform.position.x, gridarray[x, y].gameObjectFront.transform.position.y, 1);
+                    //if (gridarray[x,y].gameObjectBack.name == "Tile_UpDown")
+                    //{
+                    //    if (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == -gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles))
+                    //    {
+
+                    //    }
+                    //}
+                    correctRotation[x, y] = true;
+                    counter1++;
+                    Debug.Log(x + "," + y + "|" + counter1);
+                }
+                else
+                {
+                    Debug.Log(gridarray[x,y].gameObjectFront.name + "," + gridarray[x,y].gameObjectBack.name + " | " + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + " - " + (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0, 0, 180)) + " - " + (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)));
+                    Debug.Log("INCORRECT ROTATION AT: " + x + "," + y + " | " + gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles + "," + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles);
+                    finishLock = true;
+                }
+                
+                //if (gridarray[x, y].gameObjectFront.transform.rotation != gridarray[x, y].gameObjectBack.transform.rotation)
+                //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles != gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)
+                //{
+                //    Debug.Log("INCORRECT ROTATION AT: " + x + "," + y + " | " + gridarray[x,y].gameObjectFront.transform.rotation.eulerAngles + "," + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles);
+                //    finishLock = true;
+                //}
+
+                //Debug.Log("(" + x + "," + y + ")" + gridarray[x, y].FrontRotationEuler + "," + gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles);
                 //Debug.Log("(" + x + "," + y + ") " + gridarray[x, y].gameObjectFront.transform.rotation + "," + gridarray[x, y].gameObjectBack.transform.rotation);
             }
         }
+        if (finishLock == false)
+        {
+            Debug.Log("Grid has been rotated correctly. Tile Rotation minigame complete, refer to tileCheck() for output");
+            gC.mC.completedDoor = true;
+            gC.inMinigame = false;
+        }
+        else
+        {
+            Debug.Log(" Incorrect rotation for at least one tile, try again. finishLock: " + finishLock);
+        }
+
                 //Debug.Log("(" + cPos.x + "," + cPos.y + ") " + gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation + "," + gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.rotation);
         /*
         Debug.Log("tilecheck function");
@@ -464,16 +606,41 @@ public class genGrid : MonoBehaviour
             //Quaternion objRotation = 0;
             if (Physics.Raycast(ray, out obj))
             {
+                //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation);
+                //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
                 obj.transform.Rotate(0, 0, -90);
-                gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].FrontRotationEuler = obj.transform.rotation.eulerAngles;
+                Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles + " | " + gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles);
+                //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
+                //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation);
+                //gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation = obj.transform.rotation;
+                //gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].FrontRotationEuler = obj.transform.rotation.eulerAngles;
                 //objRotation = obj.transform.rotation;
                 //gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].FrontRotation += Quaternion.Euler(0,0,0);
 
             }
         }
 
+        //For debugging, completes minigame instantly.
+        if (Input.GetKey("p"))
+        {
+            for (int x = 0; x < (gridWidth); x++)
+            {
+
+                for (int y = 0; y <= (gridHeight - 1); y++)
+                {
+                    gridarray[x, y].gameObjectFront.transform.rotation = gridarray[x, y].gameObjectBack.transform.rotation;
+                    GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
+                    pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
+                    tileCheck();
+
+                }
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
+            pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
             tileCheck();
             //GridMovement();
             //if (gridCompletion == false)

@@ -11,7 +11,7 @@ public class ReadTSV : MonoBehaviour
     public bool completedQuiz = false;
     private MinigameController mC;
     private GameController gC;
-
+    public bool hackSuccessful;
 
     [Header("Initialisation Parameters")]
     [Space]
@@ -34,18 +34,37 @@ public class ReadTSV : MonoBehaviour
     //[Range(1, 6)]
     public int row;
 
+    private const int _questionRow      = 0,
+                      _answer1          = 1,
+                      _answer2          = 2,
+                      _answer3          = 3,
+                      _answer4          = 4,
+                      _amountOfAnswers  = 5,
+                      _timeForQuestions = 6;
+
     [Header("Quiz Stats")]
     [Space]
 
     public int rightAnswers; //How many the player got right
-    public int correctAnswers; // how may there are
+    public int correctAnswers; //How many correct answers there are
     private int amountSelected;
 
-    public List<int> incorrectAnswersList; //list of questions the user answered wrong
-    [SerializeField]
-    private List<int> askedList; //list of questions already asked
+    public List<int> incorrectAnswersList; //List of questions the user answered Wrong
+    public List<int> correctAnswersList; //List of questions the user answered Correct
+    public List<int> askedList; //List of questions already asked
     private int tempCorrect;
     private int tempWrong;
+
+    [SerializeField]
+    private float timeForQuestion;
+    [SerializeField]
+    private float fallbackTimeForQuestion;
+
+    [Header("Points")]
+    [Space]
+
+    public int totalPoints;
+    //public int points;
 
     [Header("Visuals")]
     [Space]
@@ -67,8 +86,6 @@ public class ReadTSV : MonoBehaviour
     public bool find; //Use this to generate the row,column that you've selected using Row and Column
     [SerializeField]
     private bool submit;
-    [SerializeField]
-    private bool reloadSceneAtEnd;
 
     [Header("Debug")]
     public bool debug;
@@ -180,9 +197,33 @@ public class ReadTSV : MonoBehaviour
     {
         if (find) //File Reading / generate
         {
+            nonDuplicateRow(); //Generates a row number that is not on askedList.
+
+            ////
+            /// This section checks if there is a declared limit time for the question being asked.
+            /// If not it will be set to fallbackTimeForQuestion
+            ////
+
+            Debug.Log(Find(row, 0));
+
+            timeForQuestion = fallbackTimeForQuestion;
+
+            float parseOutput = 0;
+
+            if(Find(row, _timeForQuestions) != "")
+            {
+                if(float.TryParse(Find(row, 7), out parseOutput))
+                {
+                    timeForQuestion = parseOutput;
+                }
+                else
+                {
+                    timeForQuestion = fallbackTimeForQuestion;
+                }
+            }
+            Debug.Log(parseOutput);
 
             //row = Random.Range(1, rangeOfQuestionsMax);
-            nonDuplicateRow(); //Generates a row number that is not on askedList.
 
             if (answersList.Count != 0) //Reset list
             {
@@ -249,7 +290,7 @@ public class ReadTSV : MonoBehaviour
 
             if (Find(row, 4) == "")
             {
-                Debug.Log("question has 2nd answer");
+                Debug.Log("question has 2 answers");
                 //Instantiating answer boxes
                 for (int i = 0; i < 2; i++)
                 {
@@ -286,7 +327,7 @@ public class ReadTSV : MonoBehaviour
 
             else
             {
-                Debug.Log("question has 4th answer");
+                Debug.Log("question has 4 answers");
                 //Instantiating answer boxes
                 for (int i = 0; i < 2; i++)
                 {
@@ -370,15 +411,6 @@ public class ReadTSV : MonoBehaviour
             loopNumber++;
         }
 
-        if (reloadSceneAtEnd) // okay maybe dont need this now then. cool.
-        {
-            
-
-            /*SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-            reloadSceneAtEnd = false;*/
-        }
-
         amountSelected = 0;
 
         for (int i = 0; i < answersList.Count; i++) // finds how many buttons have been selected
@@ -399,7 +431,24 @@ public class ReadTSV : MonoBehaviour
             submitButton.onClick.AddListener(submitClicked);
         }
 
-        if (submit && amountSelected != 0 && waiting == false)
+        ////
+        /// This section is to make the timer tick down for the timeForQuestion
+        ////
+        
+        if(timeForQuestion < 0 && answersList.Count != 0)
+        {
+            //Question time is up
+            amountSelected = 1;
+            submit = true;
+        }
+
+        timeForQuestion -= Time.deltaTime;
+
+        ////
+        ///
+        ////
+
+        if (submit == true && amountSelected != 0 && waiting == false && answersList[0] != null)
         {
             //This segment resets all of the temp counter values
             //It is used to measure how many questions the user answered right/wrong. It is used for calculations later...
@@ -408,7 +457,8 @@ public class ReadTSV : MonoBehaviour
 
             for(int i = 0; i < answersList.Count; i++) //check to make sure correct answers were ticked and set colours
             {
-                Destroy(answersList[i].GetComponent<Button>());
+                //if(answersList[i] != null)
+                    Destroy(answersList[i].GetComponent<Button>());
 
                 if (answersList[i].GetComponent<answersScript>().isCorrect && answersList[i].GetComponent<answersScript>().selected) // selected is correct
                 {
@@ -438,6 +488,30 @@ public class ReadTSV : MonoBehaviour
                 incorrectAnswersList.Add(row);
             }
 
+            //Set this question as answered fully correct
+            else
+            {
+                correctAnswersList.Add(row);
+            }
+
+            //Update the user points for each correct answer
+            totalPoints += tempCorrect;
+
+            //Check if all of the answers were correct
+            if(tempCorrect == correctAnswers)
+            {
+                //FREDDIE
+                //THIS IS WHERE YOU CAN CHECK TO MAKE SURE BOT HACK IS SUCCESSFUL
+                hackSuccessful = true;
+            }
+
+            else
+            {
+                //LEWIS
+                //Set bots to a hunting state.
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().PlayerStatus = GameController.Status.HUNTED;
+            }
+
             //Reset asked list if all questions have already been asked
             if (askedList.Count == rangeOfQuestionsMax) if (askedList.Count == rangeOfQuestionsMax)
             {
@@ -451,6 +525,7 @@ public class ReadTSV : MonoBehaviour
             timer = waitTime;
         }
         submit = false;
+        amountSelected = 0;
 
         if(waiting)
         {

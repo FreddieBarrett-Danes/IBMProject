@@ -10,7 +10,4 @@ public class ViewingPlaneInit : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
-    // Update is called once per frame
-
 }

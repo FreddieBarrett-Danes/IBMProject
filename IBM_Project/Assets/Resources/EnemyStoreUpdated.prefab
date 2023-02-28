@@ -51,7 +51,7 @@ NavMeshAgent:
   m_Speed: 0.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 500
+  m_AngularSpeed: 0
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
@@ -80,12 +80,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   bAbilitiesList: []
+  bRotationSpeed: 1000
   bFireRate: 0.5
-  bShotStart: {fileID: 0}
   bProjectileSpeed: 0
   bNextFire: 0
   bShooting: {fileID: 0}
-  bPaths: {fileID: 0}
+  bMaxFireDist: 5
+  bPath: {fileID: 0}
   bPointLoop: 0
   bCreatePoints: 0
   bPatrol: []
@@ -102,18 +103,14 @@ MonoBehaviour:
   bViewRadius: 0
   bInnerViewRadius: 1
   bDefaultViewRadius: 3
-  bSusViewRadius: 2
+  bDefaultInnerViewRadius: 0.75
+  bSusViewRadius: 5
+  bSusInnerViewRadius: 1.5
   bViewAngle: 90
-  bViewAngleN: 0
-  bViewAngleD: 0
   bDetectionTimer: 0
   bTimeBeforeDetect: 2
   bEngaging: 0
-  bSpeed: 3
-  bRotationSpeed: 400
-  bPreviousPos: {x: 0, y: 0, z: 0}
-  bVelocity: {x: 0, y: 0, z: 0}
-  bPredictionTime: 0.25
+  bPredictionTime: 0.1
   bRecentChaseTimer: 500
   bRecentChaseTimerN: 0
   bSuspiciousRadius: 1.5
@@ -173,8 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16900ca15c380ee44b39538b3a9bf013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text1: {fileID: 0}
-  text2: {fileID: 0}
+  player: {fileID: 0}
+  playerClose: 0
+  pC: {fileID: 0}
 --- !u!1 &792528037506277894
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ public class TPathToPlayer : BT_Node
             return state;
         }
         Vector3 pVelocity = botInfo.bPlayer.GetComponent<PlayerController>().velocity;
+        Debug.Log(pVelocity);
         Vector3 bTargetPos = botInfo.bPlayer.transform.position + pVelocity * botInfo.bPredictionTime;
         botInfo.bRecentlyChase = true;
         agent.SetDestination(bTargetPos);
