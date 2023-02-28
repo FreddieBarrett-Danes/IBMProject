@@ -43,6 +43,7 @@ public class Disc_Rotation : MonoBehaviour
     Vector3 R1startPosition;
     Vector3 R1startRotation;
 
+    //Commentted out code with '!REMOVE!' needs to be de-commented after testing in demo scene
     public GameObject pregameText;
     public bool showTutorial;
 
