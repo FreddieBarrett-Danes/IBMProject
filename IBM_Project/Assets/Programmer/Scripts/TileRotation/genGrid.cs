@@ -21,6 +21,7 @@ public class genGrid : MonoBehaviour
     Quaternion tileRotation;
     private Camera cam;
     public GameObject pregameText;
+    private bool StartTileCheck;
     
     public bool showCorrectRotation;
     public bool showTutorial;
@@ -39,13 +40,16 @@ public class genGrid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         //gridCompletion = false;
         //tileRotation = tilePrefab.transform.rotation;
         tilePrefab2 = GameObject.Find("Tile_UpDown");
 
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-
+        
+        StartTileCheck = true;
+        
         grid2 = new CustomTile[3];
         gridarray = new CustomTile[gridWidth, gridHeight];
         //gridarray = new CustomTile[gridWidth, gridHeight];
@@ -117,6 +121,7 @@ public class genGrid : MonoBehaviour
                 }
             }
         }
+        Debug.Log("StartTileCheck1: " + StartTileCheck);
         //Debug.Log("before tileCheck");
         //tileCheck();
         //vvv
@@ -368,6 +373,7 @@ public class genGrid : MonoBehaviour
         bool finishLock = false;
         //Debug.Log(gridarray[1, 1].FrontRotation + "," + gridarray[1, 1].BackRotation);
         //Debug.Log(gridarray[1, 1].FrontRotationEuler + "," + gridarray[1, 1].gameObjectBack.transform.rotation.eulerAngles);
+        Debug.Log("StartTileCheck2: " + StartTileCheck);
         for (int x = 0; x < (gridWidth); x++)
         {
             
@@ -387,7 +393,7 @@ public class genGrid : MonoBehaviour
                 //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0, 0, 180)) || (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)))
                 {
                     gridarray[x, y].gameObjectFront.transform.position = new Vector3(gridarray[x, y].gameObjectFront.transform.position.x, gridarray[x, y].gameObjectFront.transform.position.y, 1);
-                    if (showCorrectRotation == true) { gridarray[x, y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
+                    if (showCorrectRotation == true && StartTileCheck == false) { gridarray[x, y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
                     
                     //if (gridarray[x,y].gameObjectBack.name == "Tile_UpDown")
                     //{
@@ -407,6 +413,8 @@ public class genGrid : MonoBehaviour
                     finishLock = true;
                 }
                 
+                
+
                 //if (gridarray[x, y].gameObjectFront.transform.rotation != gridarray[x, y].gameObjectBack.transform.rotation)
                 //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles != gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)
                 //{
@@ -478,6 +486,8 @@ public class genGrid : MonoBehaviour
                 //Physics.OverlapBox
             }
         }
+        StartTileCheck = false;
+        Debug.Log("StartTileCheck3: " + StartTileCheck);
     }
 
     private void GridMovement()
@@ -623,7 +633,7 @@ public class genGrid : MonoBehaviour
                 //Disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
                 if (gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles == gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles)
                 {
-                    if (showCorrectRotation == true) { gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
+                    //if (showCorrectRotation == true) { gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
                 }
                 else
                 {
@@ -639,6 +649,10 @@ public class genGrid : MonoBehaviour
                 //gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].FrontRotation += Quaternion.Euler(0,0,0);
 
             }
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.Log("StartTileCheck U : " + StartTileCheck);
         }
 
         //For debugging, completes minigame instantly.
