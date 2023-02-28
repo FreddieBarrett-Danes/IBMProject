@@ -222,8 +222,8 @@ Transform:
   m_GameObject: {fileID: 2801816658880572624}
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: -0.5}
   m_LocalPosition: {x: 33.891514, y: -15.07758, z: 5.9181595}
-  m_LocalScale: {x: 1.6274, y: 1, z: 1.8651}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 4.41, y: 2.7098439, z: 5.05413}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2801816660198358616}
   m_RootOrder: 22
@@ -1028,6 +1028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2801816660198358616}
+  - component: {fileID: 9101554595744635609}
   m_Layer: 0
   m_Name: DiscMinigame
   m_TagString: Untagged
@@ -1042,8 +1043,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2801816660198358619}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -55.691513, y: 16.87758, z: -47.19816}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 37, y: 17, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1073,6 +1074,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9101554595744635609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2801816660198358619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b129392c5c57ee44bb8216099838dc2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UI: []
 --- !u!1 &2801816660439775259
 GameObject:
   m_ObjectHideFlags: 0

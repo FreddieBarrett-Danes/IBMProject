@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using Unity.IO;
 using Unity.VisualScripting;
 
 public class ComputerInteraction : MonoBehaviour
