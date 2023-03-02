@@ -131,7 +131,7 @@ public class genGrid : MonoBehaviour
             }
         }
 
-        //Instantiate(GameObject.Find("Tile_StartDown"), new Vector3)
+        Instantiate(GameObject.Find("Tile_StartUp"), new Vector3(0, -1, 1), GameObject.Find("Tile_StartUp").transform.rotation);
         Debug.Log("StartTileCheck1: " + StartTileCheck);
         //Debug.Log("before tileCheck");
         //tileCheck();
