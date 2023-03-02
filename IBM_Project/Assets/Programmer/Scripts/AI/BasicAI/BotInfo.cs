@@ -19,6 +19,8 @@ public class BotInfo : MonoBehaviour
     public float bRotationSpeed;
     [HideInInspector]
     public GameObject bComputer;
+    public Animator bAnimator;
+    public bool bIsDead;
 
     // Range Attack
     [Header("Ranged Attack Settings")] 
@@ -137,15 +139,23 @@ public class BotInfo : MonoBehaviour
 
     private void Update()
     {
+        bAnimator.SetFloat("Horizontal", GetComponent<NavMeshAgent>().velocity.x);
+        bAnimator.SetFloat("Vertical", GetComponent<NavMeshAgent>().velocity.z);
+        bAnimator.SetFloat("Speed", GetComponent<NavMeshAgent>().velocity.sqrMagnitude);
+        if (bIsDead)
+        {
+            bAnimator.SetBool("isDead", true);
+            GetComponent<NavMeshAgent>().SetDestination(transform.position);
+        }
+
         bViewCone.GetComponent<Light>().range = bViewRadius + 0.5f;
         Vector3 movementDirection = GetComponent<NavMeshAgent>().velocity;
         if (movementDirection.magnitude > 0) {
             Quaternion targetRotation = Quaternion.LookRotation(movementDirection);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, bRotationSpeed * Time.deltaTime);
         }
+
         GetComponent<NavMeshAgent>().updateRotation = false;
-        Vector3 bVelocity = GetComponent<NavMeshAgent>().velocity;
-        //Debug.Log("Velocity: " + bVelocity);
         if (bDetectionTimer == 0) return;
         DateTime now = DateTime.Now;
         if (gameObject.GetComponent<Perception>().sensedRecord.Length == 0) return;
