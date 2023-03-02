@@ -17,7 +17,7 @@ public class BulletConditions : MonoBehaviour
                if (other.gameObject == enemy)
                {
 
-                   Destroy(other.gameObject);
+                   other.GetComponent<BotInfo>().bIsDead = true;
                    Destroy(gameObject);
                }
                else if (other.gameObject.layer == 8)
