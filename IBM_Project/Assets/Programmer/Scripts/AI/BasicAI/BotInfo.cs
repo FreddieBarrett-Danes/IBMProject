@@ -21,6 +21,7 @@ public class BotInfo : MonoBehaviour
     public GameObject bComputer;
     public Animator bAnimator;
     public bool bIsDead;
+    public int bMoveDirection;
 
     // Range Attack
     [Header("Ranged Attack Settings")] 
@@ -142,6 +143,36 @@ public class BotInfo : MonoBehaviour
         bAnimator.SetFloat("Horizontal", GetComponent<NavMeshAgent>().velocity.x);
         bAnimator.SetFloat("Vertical", GetComponent<NavMeshAgent>().velocity.z);
         bAnimator.SetFloat("Speed", GetComponent<NavMeshAgent>().velocity.sqrMagnitude);
+        if (GetComponent<NavMeshAgent>().velocity.sqrMagnitude == 0)
+        {
+            bMoveDirection = 0;
+        }
+
+        if (Mathf.Abs(GetComponent<NavMeshAgent>().velocity.x) < Mathf.Abs(GetComponent<NavMeshAgent>().velocity.z) &&
+            GetComponent<NavMeshAgent>().velocity.sqrMagnitude > 0)
+        {
+            if (GetComponent<NavMeshAgent>().velocity.z > 0)
+            {
+                bMoveDirection = 1;
+            }
+            else if (GetComponent<NavMeshAgent>().velocity.z < 0)
+            {
+                bMoveDirection = 3;
+            }
+        }
+        if (Mathf.Abs(GetComponent<NavMeshAgent>().velocity.x) > Mathf.Abs(GetComponent<NavMeshAgent>().velocity.z) &&
+            GetComponent<NavMeshAgent>().velocity.sqrMagnitude > 0)
+        {
+            if (GetComponent<NavMeshAgent>().velocity.x > 0)
+            {
+                bMoveDirection = 2;
+            }
+            else if (GetComponent<NavMeshAgent>().velocity.x < 0)
+            {
+                bMoveDirection = 4;
+            }
+        }
+        bAnimator.SetInteger("MoveDir", bMoveDirection);
         if (bIsDead)
         {
             bAnimator.SetBool("isDead", true);
