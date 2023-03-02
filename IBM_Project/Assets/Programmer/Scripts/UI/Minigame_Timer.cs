@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 //Inheriting from Lewis' Timer if custom functionality needs to be added
-public class mazeTimer : UITimer
+public class Minigame_Timer : UITimer
 {
     private void OnEnable()
     {
@@ -16,9 +16,9 @@ public class mazeTimer : UITimer
         walGen.OnMazeReady -= timerReady;
     }
 
-    void timerReady(bool mazeReady)
+    void timerReady(bool timerReady)
     {
-        playing = mazeReady;
+        playing = timerReady;
     }
     private void Start()
     {
