@@ -18,11 +18,14 @@ public class genGrid : MonoBehaviour
     //public float tileSize;
     public GameObject tilePrefab;
     GameObject tilePrefab2;
+
     Quaternion tileRotation;
     private Camera cam;
     public GameObject pregameText;
     private bool StartTileCheck;
     
+    public GameObject Timer;
+
     public bool showCorrectRotation;
     public bool showTutorial;
 
@@ -34,6 +37,9 @@ public class genGrid : MonoBehaviour
     bool gridCompletion = false;
     private Color startColor;
     //int ij = 0;
+
+    public delegate void DelType1(bool TileRotationReady);
+    public static event DelType1 OnTileRotationReady;
 
     private GameController gC;
 
@@ -47,7 +53,10 @@ public class genGrid : MonoBehaviour
 
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        
+
+        Timer.SetActive(true);
+        Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+
         StartTileCheck = true;
         
         grid2 = new CustomTile[3];
@@ -121,6 +130,8 @@ public class genGrid : MonoBehaviour
                 }
             }
         }
+
+        //Instantiate(GameObject.Find("Tile_StartDown"), new Vector3)
         Debug.Log("StartTileCheck1: " + StartTileCheck);
         //Debug.Log("before tileCheck");
         //tileCheck();
@@ -674,6 +685,8 @@ public class genGrid : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Timer.GetComponent<TextMeshProUGUI>().enabled = true;
+            OnTileRotationReady(true);
             GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
             pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
             tileCheck();
