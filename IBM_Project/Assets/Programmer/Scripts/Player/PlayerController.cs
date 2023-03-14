@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
     //maybe be unesscary see what comes from development
     //private List<Ability> abilities;
+    public Animator animator;
 
     private void Start()
     {
@@ -52,7 +53,7 @@ public class PlayerController : MonoBehaviour
         
         mainCamera = Camera.main;
         rBody = GetComponent<Rigidbody>();
-        playerColor = body.GetComponent<Renderer>().material.color;
+        //playerColor = body.GetComponent<Renderer>().material.color;
 
         readTSV = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
     }
@@ -64,6 +65,10 @@ public class PlayerController : MonoBehaviour
         TakeControl();
         ControllingTimer();
         DoorInteract();
+        
+        animator.SetFloat("Horizontal", velocity.x);
+        animator.SetFloat("Vertical", velocity.z);
+        animator.SetFloat("Speed", velocity.sqrMagnitude);
     }
     void FixedUpdate()
     {

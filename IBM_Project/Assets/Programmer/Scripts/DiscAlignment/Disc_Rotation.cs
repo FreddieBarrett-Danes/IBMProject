@@ -43,6 +43,7 @@ public class Disc_Rotation : MonoBehaviour
     Vector3 R1startPosition;
     Vector3 R1startRotation;
 
+    //Commentted out code with '!REMOVE!' needs to be de-commented after testing in demo scene
     public GameObject pregameText;
     public bool showTutorial;
 
@@ -110,6 +111,7 @@ public class Disc_Rotation : MonoBehaviour
             //My aim is to make this system easily expandable if more/less discs were to be added
             switch (currentSelect)
             {
+                
                 case 1:
                     Disc2.GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
                     Disc3.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
@@ -130,6 +132,7 @@ public class Disc_Rotation : MonoBehaviour
                     Disc3.GetComponent<Renderer>().material.color = Color.black;
                     //Debug.Log(currentSelect + " 1~ " + transform.rotation.eulerAngles.x + " 2~ " + transform.rotation.eulerAngles.x + " 3~ " + transform.rotation.eulerAngles.x);
                     break;
+                
             }
 
             //switch (currentSelect)
@@ -208,6 +211,9 @@ public class Disc_Rotation : MonoBehaviour
         {
             GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
             pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
+            Disc1.transform.rotation = Disc1startRotation;
+            Disc2.transform.rotation = Disc2startRotation;
+            Disc3.transform.rotation = Disc3startRotation;
         }
 
         //Testing example, to be set when paths align
@@ -222,6 +228,7 @@ public class Disc_Rotation : MonoBehaviour
             numAligned[ID - 1] = true; //numAligned[0] = true
             Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc2.transform.rotation.eulerAngles.x + " [Disc 1 is in target position]");
             R1.transform.position = new Vector3(-5, 10, 0);
+            Disc1.GetComponent<Renderer>().material.color = Color.green;
         }
         else
         {
@@ -253,12 +260,14 @@ public class Disc_Rotation : MonoBehaviour
             if (ID == 3) { numAligned[ID - 1] = false; R3.transform.position = new Vector3(5, 15, 0); }
         }
         //Debug.Log(currentSelect);
-
-        if (R1.transform.position == new Vector3(-5,10,0) && R2.transform.position == new Vector3(0, 10, 0) && R3.transform.position == new Vector3(5, 10, 0))// || debugWin == true)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            gC.mC.completedDoor = true;
-            gC.inMinigame = false;
-            Debug.Log("You Win!");
+            if (R1.transform.position == new Vector3(-5, 10, 0) && R2.transform.position == new Vector3(0, 10, 0) && R3.transform.position == new Vector3(5, 10, 0))// || debugWin == true)
+            {
+                gC.mC.completedDoor = true;
+                gC.inMinigame = false;
+                Debug.Log("You Win!");
+            }
         }
 
         if (Input.GetKeyDown("p"))

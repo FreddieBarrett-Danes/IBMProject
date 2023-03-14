@@ -18,10 +18,15 @@ public class genGrid : MonoBehaviour
     //public float tileSize;
     public GameObject tilePrefab;
     GameObject tilePrefab2;
+
     Quaternion tileRotation;
     private Camera cam;
     public GameObject pregameText;
+    private bool StartTileCheck;
+    
+    public GameObject Timer;
 
+    public bool showCorrectRotation;
     public bool showTutorial;
 
     //Following variables/objects used to be public
@@ -30,13 +35,19 @@ public class genGrid : MonoBehaviour
     bool[,] boolarraytest;
     Vector2 cPos; // Current Position (within Grid array)
     bool gridCompletion = false;
-    int ij = 0;
+    private Color startColor;
+    //int ij = 0;
+    private short failCounter; //Amount of times the player has checked the tile grid (space) but the rotations weren't set correctly.
+
+    public delegate void DelType1(bool TileRotationReady);
+    public static event DelType1 OnTileRotationReady;
 
     private GameController gC;
 
     // Start is called before the first frame update
     void Start()
     {
+
         //gridCompletion = false;
         //tileRotation = tilePrefab.transform.rotation;
         tilePrefab2 = GameObject.Find("Tile_UpDown");
@@ -44,6 +55,13 @@ public class genGrid : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
+        
+
+        Timer.SetActive(true);
+        Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+
+        StartTileCheck = true;
+        
         grid2 = new CustomTile[3];
         gridarray = new CustomTile[gridWidth, gridHeight];
         //gridarray = new CustomTile[gridWidth, gridHeight];
@@ -53,6 +71,8 @@ public class genGrid : MonoBehaviour
         tile1.n = true;
         CustomTile tile2 = new CustomTile();
 
+        startColor = tilePrefab2.GetComponent<Renderer>().material.color;
+
 
         CustomTile[] grid3 = new CustomTile[] { tile1, tile2 };
 
@@ -60,8 +80,12 @@ public class genGrid : MonoBehaviour
 
         boolarraytest[1, 1] = true;
 
+        failCounter = -1; //Set to -1 to account for pressing space to start minigame
+
         GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
         pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
+
+
 
 
         for (int x = 0; x < gridWidth; x++)
@@ -111,6 +135,10 @@ public class genGrid : MonoBehaviour
                 }
             }
         }
+
+        GameObject startTile = Instantiate(GameObject.Find("Tile_StartUp"), new Vector3(0, -1, 1), GameObject.Find("Tile_StartUp").transform.rotation);
+        startTile.GetComponent<BoxCollider>().enabled = false;
+        Debug.Log("StartTileCheck1: " + StartTileCheck);
         //Debug.Log("before tileCheck");
         //tileCheck();
         //vvv
@@ -266,7 +294,8 @@ public class genGrid : MonoBehaviour
         //Generate path in front of the camera with randomised rotations:
         //----------------------------------------------------------------
         //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation);
-        gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation);
+        if (cPos == new Vector2(0, 0) || gridarray[(int)cPos.x, (int)cPos.y].type == CustomTile.tileType.StartUp) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation); }
+        else { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation); }
 
         //Generate correct path behind the camera:
         //----------------------------------------
@@ -361,6 +390,7 @@ public class genGrid : MonoBehaviour
         bool finishLock = false;
         //Debug.Log(gridarray[1, 1].FrontRotation + "," + gridarray[1, 1].BackRotation);
         //Debug.Log(gridarray[1, 1].FrontRotationEuler + "," + gridarray[1, 1].gameObjectBack.transform.rotation.eulerAngles);
+        Debug.Log("StartTileCheck2: " + StartTileCheck);
         for (int x = 0; x < (gridWidth); x++)
         {
             
@@ -376,10 +406,20 @@ public class genGrid : MonoBehaviour
 
                 //If GameObject at front is equal to GameObject at back OR (If GameObject at back is UpDown AND GameObject rotation is inverted (180 difference in z rotation))                                 //gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles ||
                 //This is to account for the UpDown tile featuring two outputs but four rotations
-                if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown(Clone)" || gridarray[x,y].gameObjectBack.name == "Tile_LeftRight(Clone)" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0,0,180)) || (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)))
-                //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0, 0, 180)) || (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)))
+                if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || 
+                    (gridarray[x, y].gameObjectBack.name == "Tile_UpDown(Clone)" || gridarray[x,y].gameObjectBack.name == "Tile_LeftRight(Clone)") && 
+                    (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0,0,180)) || 
+                    (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || 
+                    gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles))
+                
+                    
+                    
+                    
+                    //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0, 0, 180)) || (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)))
                 {
                     gridarray[x, y].gameObjectFront.transform.position = new Vector3(gridarray[x, y].gameObjectFront.transform.position.x, gridarray[x, y].gameObjectFront.transform.position.y, 1);
+                    if (showCorrectRotation == true && StartTileCheck == false) { gridarray[x, y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
+                    
                     //if (gridarray[x,y].gameObjectBack.name == "Tile_UpDown")
                     //{
                     //    if (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == -gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles))
@@ -398,6 +438,8 @@ public class genGrid : MonoBehaviour
                     finishLock = true;
                 }
                 
+                
+
                 //if (gridarray[x, y].gameObjectFront.transform.rotation != gridarray[x, y].gameObjectBack.transform.rotation)
                 //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles != gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)
                 //{
@@ -412,12 +454,22 @@ public class genGrid : MonoBehaviour
         if (finishLock == false)
         {
             Debug.Log("Grid has been rotated correctly. Tile Rotation minigame complete, refer to tileCheck() for output");
+            Timer.SetActive(false);
             gC.mC.completedDoor = true;
             gC.inMinigame = false;
         }
         else
         {
             Debug.Log(" Incorrect rotation for at least one tile, try again. finishLock: " + finishLock);
+            failCounter++;
+            Debug.Log("FAIL COUNTER: " + failCounter);
+            if (failCounter >= 3)
+            {
+                Debug.Log("Failed 3 times, exit minigame and set droids to alert state");
+                //gC.inMinigame = false;
+                //OnTileRotationReady(false);
+                //Timer.SetActive(false);
+            }
         }
 
                 //Debug.Log("(" + cPos.x + "," + cPos.y + ") " + gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation + "," + gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.rotation);
@@ -469,6 +521,8 @@ public class genGrid : MonoBehaviour
                 //Physics.OverlapBox
             }
         }
+        StartTileCheck = false;
+        Debug.Log("StartTileCheck3: " + StartTileCheck);
     }
 
     private void GridMovement()
@@ -609,7 +663,19 @@ public class genGrid : MonoBehaviour
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation);
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
                 obj.transform.Rotate(0, 0, -90);
-                Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles + " | " + gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles);
+                Debug.Log(obj.transform.position.x + "," + obj.transform.position.y);
+                //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles + " | " + gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles);
+                //Disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
+                if (gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles == gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles)
+                {
+                    //if (showCorrectRotation == true) { gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
+                }
+                else
+                {
+                    gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = startColor;
+                }
+                
+
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles);
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation);
                 //gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation = obj.transform.rotation;
@@ -618,6 +684,10 @@ public class genGrid : MonoBehaviour
                 //gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].FrontRotation += Quaternion.Euler(0,0,0);
 
             }
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.Log("StartTileCheck U : " + StartTileCheck);
         }
 
         //For debugging, completes minigame instantly.
@@ -639,6 +709,8 @@ public class genGrid : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Timer.GetComponent<TextMeshProUGUI>().enabled = true;
+            OnTileRotationReady(true);
             GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
             pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
             tileCheck();

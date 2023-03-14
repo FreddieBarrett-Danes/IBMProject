@@ -19,6 +19,9 @@ public class BotInfo : MonoBehaviour
     public float bRotationSpeed;
     [HideInInspector]
     public GameObject bComputer;
+    public Animator bAnimator;
+    public bool bIsDead;
+    public int bMoveDirection;
 
     // Range Attack
     [Header("Ranged Attack Settings")] 
@@ -137,15 +140,53 @@ public class BotInfo : MonoBehaviour
 
     private void Update()
     {
+        bAnimator.SetFloat("Horizontal", GetComponent<NavMeshAgent>().velocity.x);
+        bAnimator.SetFloat("Vertical", GetComponent<NavMeshAgent>().velocity.z);
+        bAnimator.SetFloat("Speed", GetComponent<NavMeshAgent>().velocity.sqrMagnitude);
+        if (GetComponent<NavMeshAgent>().velocity.sqrMagnitude == 0)
+        {
+            bMoveDirection = 0;
+        }
+
+        if (Mathf.Abs(GetComponent<NavMeshAgent>().velocity.x) < Mathf.Abs(GetComponent<NavMeshAgent>().velocity.z) &&
+            GetComponent<NavMeshAgent>().velocity.sqrMagnitude > 0)
+        {
+            if (GetComponent<NavMeshAgent>().velocity.z > 0)
+            {
+                bMoveDirection = 1;
+            }
+            else if (GetComponent<NavMeshAgent>().velocity.z < 0)
+            {
+                bMoveDirection = 3;
+            }
+        }
+        if (Mathf.Abs(GetComponent<NavMeshAgent>().velocity.x) > Mathf.Abs(GetComponent<NavMeshAgent>().velocity.z) &&
+            GetComponent<NavMeshAgent>().velocity.sqrMagnitude > 0)
+        {
+            if (GetComponent<NavMeshAgent>().velocity.x > 0)
+            {
+                bMoveDirection = 2;
+            }
+            else if (GetComponent<NavMeshAgent>().velocity.x < 0)
+            {
+                bMoveDirection = 4;
+            }
+        }
+        bAnimator.SetInteger("MoveDir", bMoveDirection);
+        if (bIsDead)
+        {
+            bAnimator.SetBool("isDead", true);
+            GetComponent<NavMeshAgent>().SetDestination(transform.position);
+        }
+
         bViewCone.GetComponent<Light>().range = bViewRadius + 0.5f;
         Vector3 movementDirection = GetComponent<NavMeshAgent>().velocity;
         if (movementDirection.magnitude > 0) {
             Quaternion targetRotation = Quaternion.LookRotation(movementDirection);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, bRotationSpeed * Time.deltaTime);
         }
+
         GetComponent<NavMeshAgent>().updateRotation = false;
-        Vector3 bVelocity = GetComponent<NavMeshAgent>().velocity;
-        //Debug.Log("Velocity: " + bVelocity);
         if (bDetectionTimer == 0) return;
         DateTime now = DateTime.Now;
         if (gameObject.GetComponent<Perception>().sensedRecord.Length == 0) return;
