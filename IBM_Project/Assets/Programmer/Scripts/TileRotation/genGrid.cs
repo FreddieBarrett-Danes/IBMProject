@@ -37,6 +37,7 @@ public class genGrid : MonoBehaviour
     bool gridCompletion = false;
     private Color startColor;
     //int ij = 0;
+    private short failCounter; //Amount of times the player has checked the tile grid (space) but the rotations weren't set correctly.
 
     public delegate void DelType1(bool TileRotationReady);
     public static event DelType1 OnTileRotationReady;
@@ -53,6 +54,8 @@ public class genGrid : MonoBehaviour
 
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+
+        
 
         Timer.SetActive(true);
         Timer.GetComponent<TextMeshProUGUI>().enabled = false;
@@ -76,6 +79,8 @@ public class genGrid : MonoBehaviour
         boolarraytest = new bool[3, 3];
 
         boolarraytest[1, 1] = true;
+
+        failCounter = -1; //Set to -1 to account for pressing space to start minigame
 
         GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
         pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
@@ -131,7 +136,8 @@ public class genGrid : MonoBehaviour
             }
         }
 
-        Instantiate(GameObject.Find("Tile_StartUp"), new Vector3(0, -1, 1), GameObject.Find("Tile_StartUp").transform.rotation);
+        GameObject startTile = Instantiate(GameObject.Find("Tile_StartUp"), new Vector3(0, -1, 1), GameObject.Find("Tile_StartUp").transform.rotation);
+        startTile.GetComponent<BoxCollider>().enabled = false;
         Debug.Log("StartTileCheck1: " + StartTileCheck);
         //Debug.Log("before tileCheck");
         //tileCheck();
@@ -440,12 +446,22 @@ public class genGrid : MonoBehaviour
         if (finishLock == false)
         {
             Debug.Log("Grid has been rotated correctly. Tile Rotation minigame complete, refer to tileCheck() for output");
+            Timer.SetActive(false);
             gC.mC.completedDoor = true;
             gC.inMinigame = false;
         }
         else
         {
             Debug.Log(" Incorrect rotation for at least one tile, try again. finishLock: " + finishLock);
+            failCounter++;
+            Debug.Log("FAIL COUNTER: " + failCounter);
+            if (failCounter >= 3)
+            {
+                Debug.Log("Failed 3 times, exit minigame and set droids to alert state");
+                //gC.inMinigame = false;
+                //OnTileRotationReady(false);
+                //Timer.SetActive(false);
+            }
         }
 
                 //Debug.Log("(" + cPos.x + "," + cPos.y + ") " + gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront.transform.rotation + "," + gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack.transform.rotation);
