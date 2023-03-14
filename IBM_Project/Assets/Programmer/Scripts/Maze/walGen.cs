@@ -121,7 +121,7 @@ public class walGen : MonoBehaviour
     Vector2 convertToGrid(Vector3 v3) //WorldSpace -> GridSpace
     {
         v3 -= new Vector3(-2, 0, 0);
-        v3 *= 4;
+        v3 /= 4;
 
         return new Vector2(v3.x, v3.z);
     }
@@ -270,6 +270,7 @@ public class walGen : MonoBehaviour
         currentPosWorld.transform.position = convertToWorld(currentPosGrid);
         targetPosWorld.transform.position = convertToWorld(cgp);
         currentPosWorld.transform.position = convertToWorld(cgp);
+        //GameObject.Find("Tracker").transform.position = convertToWorld(cgp);
         if (backtracking == false) { wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(cgp), 0.5f); }
         //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(cgp), 0.5f);
         currentPosGrid = cgp;
@@ -379,14 +380,23 @@ public class walGen : MonoBehaviour
         //Debug.Log(a + "," + b);
 
         //Generate grid in world space (instigate wall gameobject)
-        for (int i = 0; i < ((int)Maze_Size.x * 4); i += 4)
+        for (int i = 24; i < (24 + (int)Maze_Size.x * 4); i += 4)
+        {
+            for (int j = 24; j < (24 + (int)Maze_Size.y * 4); j += 4)
+            {
+                //Debug.Log("(" + i + "," + j + "," + ")");
+                genGrid(new Vector3(i, 0, j), new Vector2(1, 1));
+            }
+        }
+
+        /*for (int i = 0; i < ((int)Maze_Size.x * 4); i += 4)
         {
             for (int j = 0; j < ((int)Maze_Size.y * 4); j += 4)
             {
                 //Debug.Log("(" + i + "," + j + "," + ")");
                 genGrid(new Vector3(i, 0, j), new Vector2(a, b));
             }
-        }
+        }*/
 
 
         mazePlayer = GameObject.FindGameObjectWithTag("mazePlayer");
@@ -406,8 +416,10 @@ public class walGen : MonoBehaviour
 
 
         //Setting Start Position: 1,1
-        currentPosGrid = new Vector2(0, 0);
-        targetPosGrid = new Vector2(0, 0);
+        currentPosGrid = convertToGrid(new Vector3(24, 0, 24));//= new Vector2(24, 24);
+        targetPosGrid = convertToGrid(new Vector3(24, 0, 24));
+        //GameObject.Find("Tracker").transform.position = convertToWorld(currentPosGrid);
+        Debug.Log(currentPosGrid);
         //currentPosWorld.transform.position = new Vector3(2, 0, 0);
         //targetPosWorld.transform.position = new Vector3(4, 0, 0);
         //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
@@ -688,6 +700,18 @@ public class walGen : MonoBehaviour
             pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
 
             //pressedPlay = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            for (int i = 24; i < (24 + (int)Maze_Size.x * 4); i += 4)
+            {
+                for (int j = 24; j < (24 + (int)Maze_Size.y * 4); j += 4)
+                {
+                    //Debug.Log("(" + i + "," + j + "," + ")");
+                    genGrid(new Vector3(i, 0, j), new Vector2(1, 1));
+                }
+            }
         }
 
 
