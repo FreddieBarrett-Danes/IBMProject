@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         //controller set up
         miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         
-        mainCamera = Camera.main;
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rBody = GetComponent<Rigidbody>();
         //playerColor = body.GetComponent<Renderer>().material.color;
 
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         Movement();
         PlayerShooting();
-        TakeControl();
+        Interact();
         ControllingTimer();
         DoorInteract();
         
@@ -109,11 +109,23 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    private void TakeControl()
+    private void Interact()
     {
+        
         if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
-            miniController.StartQuiz(1);    
+            miniController.StartQuiz(1);
+        }
+        else if (!isBehindEnemy && Input.GetKeyDown(KeyCode.E))
+        {
+            RaycastHit objectHit;
+            if (Physics.Raycast(visuals.transform.position, visuals.transform.forward, out objectHit, 5))
+            {
+                if(objectHit.collider.CompareTag("BreakableBox"))
+                {
+                    Destroy(objectHit.transform.gameObject);
+                }
+            }
         }
 
         if (miniController.completedQuiz && enemyControlled != null && readTSV.hackSuccessful == true)
