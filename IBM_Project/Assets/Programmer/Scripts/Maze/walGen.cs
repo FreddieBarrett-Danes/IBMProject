@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
+//Camera position is handled as cameraMaze(bool inMaze)
+//-----------------------------------------------------
 
 
 //Generation
@@ -84,6 +86,8 @@ public class walGen : MonoBehaviour
     public bool showIngameText;
     public bool showPregameTutorial;
 
+    //public Camera camera;
+
 
     Stack<Vector2> visitedStack;
 
@@ -120,17 +124,32 @@ public class walGen : MonoBehaviour
 
     Vector2 convertToGrid(Vector3 v3) //WorldSpace -> GridSpace
     {
-        v3 -= new Vector3(-2, 0, 0);
+        v3 -= new Vector3(24, 0, 22);
+        v3 -= new Vector3(2, 0, 0);
         v3 /= 4;
 
         return new Vector2(v3.x, v3.z);
     }
 
-    Vector3 convertToWorld(Vector2 v2) //GridSpace -> WorldSpace
+
+    /* Original convertToWorld
+     Vector3 convertToWorld(Vector2 v2) //GridSpace -> WorldSpace
     {
         Vector3 rv = new Vector3(v2.x, 0, v2.y);
         rv *= 4;
         rv += new Vector3(2, 0, 0);
+        //Debug.Log("Grid , World" + " " + v2 + "," + rv);
+        return rv;
+    }
+    */
+
+
+    Vector3 convertToWorld(Vector2 v2) //GridSpace -> WorldSpace
+    {
+        Vector3 rv = new Vector3(v2.x, 0, v2.y);
+        rv *= 4;
+        //rv += new Vector3(2, 0, 0);
+        rv += new Vector3(26, 0, 24); //+new Vector3(24, 0, 22) for updated/moved maze position | + new Vector3(2,0,0) for world maze calibration
         //Debug.Log("Grid , World" + " " + v2 + "," + rv);
         return rv;
     }
@@ -320,6 +339,19 @@ public class walGen : MonoBehaviour
         }
     }
 
+    //void cameraMaze(bool inMaze)
+    //{
+    //    if (inMaze == true)
+    //    {
+    //        camera.transform.position += new Vector3(24, 0, 22);
+    //        //new Vector3(24, 0, 22)
+    //    }
+    //    else
+    //    {
+    //        camera.transform.position -= new Vector3(24, 0, 22);
+    //    }
+    //}
+
 
 
 
@@ -380,6 +412,8 @@ public class walGen : MonoBehaviour
         //Debug.Log(a + "," + b);
 
         //Generate grid in world space (instigate wall gameobject)
+        
+        
         for (int i = 24; i < (24 + (int)Maze_Size.x * 4); i += 4)
         {
             for (int j = 24; j < (24 + (int)Maze_Size.y * 4); j += 4)
@@ -416,8 +450,16 @@ public class walGen : MonoBehaviour
 
 
         //Setting Start Position: 1,1
-        currentPosGrid = convertToGrid(new Vector3(24, 0, 24));//= new Vector2(24, 24);
-        targetPosGrid = convertToGrid(new Vector3(24, 0, 24));
+        currentPosGrid = new Vector2(0, 0);
+        targetPosGrid = new Vector2(0, 0);
+
+        //CameraMaze call - Sets position of the camera
+        //cameraMaze(true);
+
+        //--debug--//
+         //currentPosGrid = convertToGrid(new Vector3(24, 0, 22));//= new Vector2(24, 24);
+         //targetPosGrid = convertToGrid(new Vector3(24, 0, 22));
+        //--debug//
         //GameObject.Find("Tracker").transform.position = convertToWorld(currentPosGrid);
         Debug.Log(currentPosGrid);
         //currentPosWorld.transform.position = new Vector3(2, 0, 0);
@@ -429,6 +471,8 @@ public class walGen : MonoBehaviour
         //targetPosGrid = gridMovement(currentPosGrid);
         //Debug.Log("currentPosGrid , targetPosGrid" + " " + currentPosGrid + "," + targetPosGrid);
         //visitedStack.Push(currentPosGrid);
+        
+        
         StartCoroutine(destroyWall());
 
         //targetPosWorld.transform.position = convertToWorld(targetPosGrid);
@@ -465,7 +509,7 @@ public class walGen : MonoBehaviour
 
     IEnumerator destroyWall()
     {
-        float delay = 0.035f; //0.0175f; //0.035f;
+        float delay = 0.035f; //0.035f; //0.0175f; //0.035f;
 
         //delay = (1 / frameRate) * 2;
         Debug.Log(delay);
@@ -487,6 +531,9 @@ public class walGen : MonoBehaviour
         Debug.Log("UPDATE " + targetPosGrid.x + "," + targetPosGrid.y);
 
         yield return new WaitForSeconds(delay);
+
+        //--Debug--//
+        //yield return new WaitForSeconds(120.0f);
 
         while (visitedStack.Count != 0) //Looping 100 times for demonstration
         {
@@ -690,7 +737,7 @@ public class walGen : MonoBehaviour
         {
             Debug.Log("Press 'P' to complete maze instantly");
             OnMazeReady(true);
-            mazePlayer.transform.position = new Vector3(2, 0, 0);
+            mazePlayer.transform.position = new Vector3(26, 0, 24); //new Vector3(2, 0, 0);
             goalLocation.transform.position = preGoalLocation;
             //goalLocation.transform.position = new Vector3(18, 0, 16);
             //GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
