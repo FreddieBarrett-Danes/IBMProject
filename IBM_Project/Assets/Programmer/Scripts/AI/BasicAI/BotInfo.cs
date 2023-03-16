@@ -143,6 +143,7 @@ public class BotInfo : MonoBehaviour
         bAnimator.SetFloat("Horizontal", GetComponent<NavMeshAgent>().velocity.x);
         bAnimator.SetFloat("Vertical", GetComponent<NavMeshAgent>().velocity.z);
         bAnimator.SetFloat("Speed", GetComponent<NavMeshAgent>().velocity.sqrMagnitude);
+        bAnimator.SetBool("isDead", bIsDead);
         if (GetComponent<NavMeshAgent>().velocity.sqrMagnitude == 0)
         {
             bMoveDirection = 0;

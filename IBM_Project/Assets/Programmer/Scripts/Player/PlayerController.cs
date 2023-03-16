@@ -1,8 +1,10 @@
+using System.IO.Compression;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private MinigameController miniController;
+    private GameController gc;
     private ReadTSV readTSV;
 
     public DoorsScript door;
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour
     {
         //controller set up
         miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
+        gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rBody = GetComponent<Rigidbody>();
@@ -60,15 +63,24 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        Movement();
-        PlayerShooting();
-        Interact();
-        ControllingTimer();
-        DoorInteract();
-        
-        animator.SetFloat("Horizontal", velocity.x);
-        animator.SetFloat("Vertical", velocity.z);
-        animator.SetFloat("Speed", velocity.sqrMagnitude);
+        if(miniController.completedQuiz)
+            gc.Deactivate = false;
+        if (!gc.Deactivate)
+        {
+            Movement();
+            PlayerShooting();
+            Interact();
+            ControllingTimer();
+            DoorInteract();
+
+            animator.SetFloat("Horizontal", velocity.x);
+            animator.SetFloat("Vertical", velocity.z);
+            animator.SetFloat("Speed", velocity.sqrMagnitude);
+        }
+        else
+        {
+            velocity = new Vector3(0, 0, 0);
+        }
     }
     void FixedUpdate()
     {
@@ -83,7 +95,6 @@ public class PlayerController : MonoBehaviour
         transform.LookAt(mousePos + Vector3.up * transform.position.y);
         velocity = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * speed;
         mainCamera.transform.position = new Vector3(transform.position.x, 5, transform.position.z);
-
     }
     private void PlayerShooting()
     {
@@ -99,9 +110,9 @@ public class PlayerController : MonoBehaviour
             miniController.completedQuiz = false;
             controlTimer -= Time.deltaTime;
             if(controlTimer <= 0)
-            {                
-                body.GetComponent<Renderer>().material.color = playerColor;
-                visuals.GetComponent<Renderer>().material.color = playerColor;
+            {
+                transform.root.GetChild(1).gameObject.SetActive(true);
+                transform.root.GetChild(2).gameObject.SetActive(false);
                 controlTimer = 0;
                 gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
@@ -115,6 +126,7 @@ public class PlayerController : MonoBehaviour
         if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
             miniController.StartQuiz(1);
+            gc.Deactivate = true;
         }
         else if (!isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
@@ -132,8 +144,6 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
-            body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;
-            visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Forward").GetComponent<Renderer>().material.color;
             if (shooting == null)
             {
                 shooting = gameObject.AddComponent<Shooting>();
@@ -141,7 +151,6 @@ public class PlayerController : MonoBehaviour
                 shooting.bulletSpeed = modifyBulletSpeed;
                 canShoot = true;
             }
-
             controlTimer = 10.0f;
             isBehindEnemy = false;
             isControlling = true;
@@ -178,7 +187,6 @@ public class PlayerController : MonoBehaviour
                 }
             }*/
             //enemyControlled.SetActive(enemyControlled.GetComponent<Collider>());
-
             readTSV.hackSuccessful = false;
         }
     }

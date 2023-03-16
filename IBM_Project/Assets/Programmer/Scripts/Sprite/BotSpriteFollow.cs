@@ -6,6 +6,7 @@ public class BotSpriteFollow : MonoBehaviour
     public GameObject ToFollow;
     private void Update()
     {
-        transform.position = ToFollow.transform.position;
+        if(ToFollow)
+            transform.position = ToFollow.transform.position;
     }
 }
