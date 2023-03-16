@@ -145,6 +145,7 @@ public class GameController : MonoBehaviour
                             bot.SetActive(true);
                         }
 
+                        if (!player) return;
                         if (player.GetComponent<PlayerController>().threatLevel == 0)
                             player.transform.root.GetChild(1).gameObject.SetActive(true);
                         if (player.GetComponent<PlayerController>().threatLevel == 2)

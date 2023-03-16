@@ -191,6 +191,8 @@ public class ReadTSV : MonoBehaviour
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
         canvasRectTransform = canvas.GetComponent<RectTransform>();
+        
+        Debug.Log((panelSize));
     }
 
     void Update()
