@@ -97,7 +97,7 @@ public class BotInfo : MonoBehaviour
     public bool bPlayerInView;
     
     //ViewCone
-    private GameObject bViewCone;
+    public GameObject bViewCone;
     private Vector3 bViewConePos;
 
     private void Start()
@@ -107,6 +107,7 @@ public class BotInfo : MonoBehaviour
         bViewCone = Instantiate(Resources.Load<GameObject>("ViewCone"), gameObject.transform.GetChild(0).GetChild(1), false);
         bViewCone.transform.position = new Vector3(bViewConePos.x, bViewConePos.y, bViewConePos.z - 0.3f);
         bViewCone.transform.forward = gameObject.transform.GetChild(0).GetChild(1).forward;
+        bViewCone.GetComponent<Light>().color = Color.white;
         // Misc
         bPlayer = FindObjectOfType(typeof(PlayerController)).GameObject();
         bComputer = FindObjectOfType(typeof(ComputerInteraction)).GameObject();
@@ -198,6 +199,7 @@ public class BotInfo : MonoBehaviour
         bDetectionTimer = 0;
         if (bRemainingBots ! >= bBotCount / 2) return;
         bViewRadius = bDefaultViewRadius;
+        bViewCone.GetComponent<Light>().color = Color.white;
         bInnerViewRadius = bDefaultInnerViewRadius;
     }
     private void LateUpdate()
