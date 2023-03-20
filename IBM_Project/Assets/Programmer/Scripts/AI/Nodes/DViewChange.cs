@@ -1,5 +1,6 @@
 using System;
 using BT;
+using UnityEngine;
 
 public class DViewChange : BT_Node
 {
@@ -14,6 +15,7 @@ public class DViewChange : BT_Node
     {
         bot.bViewRadius = bot.bSusViewRadius;
         bot.bInnerViewRadius = bot.bSusInnerViewRadius;
+        bot.bViewCone.GetComponent<Light>().color = Color.yellow;
         state = NodeState.FAILURE;
         return state;
     }

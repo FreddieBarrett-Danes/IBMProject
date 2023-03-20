@@ -21,6 +21,9 @@ public class DHuntedState : BT_Node
                 state = NodeState.FAILURE;
                 return state;
             case GameController.Status.HUNTED:
+                bot.bViewCone.GetComponent<Light>().color = Color.red;
+                bot.bViewRadius = bot.bSusViewRadius;
+                bot.bInnerViewRadius = bot.bSusInnerViewRadius;
                 state = NodeState.SUCCESS;
                 return state;
             default:

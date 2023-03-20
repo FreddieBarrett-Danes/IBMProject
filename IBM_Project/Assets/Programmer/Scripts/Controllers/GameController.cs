@@ -124,10 +124,10 @@ public class GameController : MonoBehaviour
                 {
                     if (bots != null)
                     {
-                        bots = GameObject.FindGameObjectsWithTag("Enemy");
+                        bots = GameObject.FindGameObjectsWithTag("Sprite");
                         foreach (GameObject bot in bots)
                         {
-                            bot.SetActive(false);
+                            bot.transform.root.gameObject.SetActive(false);
                         }
 
                         player.transform.root.GetChild(1).gameObject.SetActive(false);
@@ -139,10 +139,10 @@ public class GameController : MonoBehaviour
                 {
                     if(bots != null)
                     {
-                        bots = GameObject.FindGameObjectsWithTag("Enemy");
+                        bots = GameObject.FindGameObjectsWithTag("Sprite");
                         foreach (GameObject bot in bots)
                         {
-                            bot.SetActive(true);
+                            bot.transform.root.gameObject.SetActive(true);
                         }
 
                         if (!player) return;
