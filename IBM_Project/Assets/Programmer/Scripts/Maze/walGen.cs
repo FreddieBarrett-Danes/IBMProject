@@ -1,4 +1,4 @@
- using System.Collections;
+  using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -93,12 +93,12 @@ public class walGen : MonoBehaviour
 
 
     //public Vector3 cameraPosition;
-    Vector3 preGoalLocation;
+    public Vector3 preGoalLocation;
     int goalLocationRng;
 
 
-    public delegate void DelType1(bool mazeReady); //Delegate type
-    public static event DelType1 OnMazeReady; //Event variable
+    //public delegate void DelType1(bool mazeReady); //Delegate type
+    //public static event DelType1 OnMazeReady; //Event variable
 
 
 
@@ -743,8 +743,8 @@ public class walGen : MonoBehaviour
 
         if (mazeReady == true) //&& pressedPlay == false
         {
-            mazePlayer.transform.position = new Vector3(64, 0, 62); //new Vector3(2, 0, 0);
-            goalLocation.transform.position = preGoalLocation;
+            //mazePlayer.transform.position = new Vector3(64, 0, 62); //new Vector3(2, 0, 0);
+            //goalLocation.transform.position = preGoalLocation;
 
             //Debug.Log("Press 'P' to complete maze instantly");
             //OnMazeReady(true); //Activate maze minigame timer
