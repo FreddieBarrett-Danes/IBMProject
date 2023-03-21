@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -124,7 +124,7 @@ public class walGen : MonoBehaviour
 
     Vector2 convertToGrid(Vector3 v3) //WorldSpace -> GridSpace
     {
-        v3 -= new Vector3(24, 0, 22);
+        v3 -= new Vector3(62, 0, 60);
         v3 -= new Vector3(2, 0, 0);
         v3 /= 4;
 
@@ -149,7 +149,10 @@ public class walGen : MonoBehaviour
         Vector3 rv = new Vector3(v2.x, 0, v2.y);
         rv *= 4;
         //rv += new Vector3(2, 0, 0);
-        rv += new Vector3(26, 0, 24); //+new Vector3(24, 0, 22) for updated/moved maze position | + new Vector3(2,0,0) for world maze calibration
+        rv += new Vector3(64, 0, 62); //+new Vector3(24, 0, 22) for updated/moved maze position | + new Vector3(2,0,2) for world maze calibration
+        //rv _- new Vector3(2, 0, 2);
+        //rv += new Vector3(2, 0, 0);
+        //rv += new Vector3(64, 0, 60)
         //Debug.Log("Grid , World" + " " + v2 + "," + rv);
         return rv;
     }
@@ -414,9 +417,9 @@ public class walGen : MonoBehaviour
         //Generate grid in world space (instigate wall gameobject)
         
         
-        for (int i = 24; i < (24 + (int)Maze_Size.x * 4); i += 4)
+        for (int i = 62; i < (62 + (int)Maze_Size.x * 4); i += 4)
         {
-            for (int j = 24; j < (24 + (int)Maze_Size.y * 4); j += 4)
+            for (int j = 62; j < (62 + (int)Maze_Size.y * 4); j += 4)
             {
                 //Debug.Log("(" + i + "," + j + "," + ")");
                 genGrid(new Vector3(i, 0, j), new Vector2(1, 1));
@@ -737,7 +740,7 @@ public class walGen : MonoBehaviour
         {
             Debug.Log("Press 'P' to complete maze instantly");
             OnMazeReady(true);
-            mazePlayer.transform.position = new Vector3(26, 0, 24); //new Vector3(2, 0, 0);
+            mazePlayer.transform.position = new Vector3(64, 0, 62); //new Vector3(2, 0, 0);
             goalLocation.transform.position = preGoalLocation;
             //goalLocation.transform.position = new Vector3(18, 0, 16);
             //GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
@@ -751,9 +754,9 @@ public class walGen : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            for (int i = 24; i < (24 + (int)Maze_Size.x * 4); i += 4)
+            for (int i = 62; i < (62 + (int)Maze_Size.x * 4); i += 4)
             {
-                for (int j = 24; j < (24 + (int)Maze_Size.y * 4); j += 4)
+                for (int j = 62; j < (62 + (int)Maze_Size.y * 4); j += 4)
                 {
                     //Debug.Log("(" + i + "," + j + "," + ")");
                     genGrid(new Vector3(i, 0, j), new Vector2(1, 1));
