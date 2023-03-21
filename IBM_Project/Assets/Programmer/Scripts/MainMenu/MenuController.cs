@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Threading;
-using System;
 
 public class MenuController : MonoBehaviour
 {
@@ -18,6 +15,7 @@ public class MenuController : MonoBehaviour
     private GameObject buttonPrefab, sliderPrefab, tickboxPrefab, dropdownPrefab;
 
     private List<GameObject> MainButtonList = new List<GameObject>();
+    [SerializeField]
     private List<GameObject> SettingsButtonList = new List<GameObject>();
 
     [SerializeField]
@@ -36,12 +34,9 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     string      menuButton1 = "Start",
                 menuButton2 = "Settings",
-                menuButton3 = "Credits",
-                menuButton4 = "Exit";
-
-    [SerializeField]
-    string      settingButton1 =    "", 
-                settingButton2 =    "";
+                menuButton3 = "IBM Skills Build",
+                menuButton4 = "Credits",
+                menuButton5 = "Exit";
 
     [SerializeField]
     private Color buttonColour;
@@ -57,6 +52,9 @@ public class MenuController : MonoBehaviour
 
     [SerializeField]
     private List<Vector2> resOptions;
+
+    [SerializeField]
+    private string hyperlink = "https://google.com/";
 
     public float debug;
 
@@ -90,7 +88,6 @@ public class MenuController : MonoBehaviour
         StateChanged();
         FullscreenState();
         ResolutionState();
-
     }
 
     void OnGUI()
@@ -118,10 +115,13 @@ public class MenuController : MonoBehaviour
 
         lastframeFullscreen = fullscreen;
 
-        int dropdownInt = dropdownPrefab.GetComponent<Dropdown>().value;
-        string temp = "Tempo";
+        //Debug.Log(SettingsButtonList[2].GetComponent<TMP_Dropdown>());
 
-        thisFrameResolution = (Resolution)Enum.Parse(typeof(Resolution),temp);
+        int dropdownInt = SettingsButtonList[2].GetComponent<TMP_Dropdown>().value;
+        //string temp = "Tempo";
+
+        thisFrameResolution = (Resolution)dropdownInt;
+        Debug.Log(thisFrameResolution);
 
         if(lastframeResolution != thisFrameResolution)
         {
@@ -182,6 +182,11 @@ public class MenuController : MonoBehaviour
         {
             SettingsButtonList[i].gameObject.SetActive(showHide);
         }
+    }
+
+    void OpenHyperlink()
+    {
+        Application.OpenURL(hyperlink);
     }
 
     void getCanvasSize()
@@ -302,7 +307,7 @@ public class MenuController : MonoBehaviour
             float resSize = Mathf.Min(canvasWidth, canvasHeight) * (resScaler / 100f);
             SettingsButtonList[2].transform.localScale = new Vector2(resSize, resSize);
             //SettingsButtonList[2].transform.GetChild(0).GetComponent<TextMeshProUGUI>
-            SettingsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(160, 30);
+            SettingsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(160 * 0.8f, 30 * 0.8f);
 
             SettingsButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
             SettingsButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
@@ -318,16 +323,19 @@ public class MenuController : MonoBehaviour
         switch (buttonNumber)
         {
             case 0:
-                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton1;
+                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton1; // start
                 break;
             case 1:
-                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton2;
+                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton2; // settings
                 break;
             case 2:
-                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton3;
+                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton3; // settings
                 break;
             case 3:
-                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton4;
+                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton4; // credits
+                break;
+            case 4:
+                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton5; // exit
                 break;
             default:
                 Debug.Log("Unknown button");
@@ -346,9 +354,12 @@ public class MenuController : MonoBehaviour
                 MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SettingsButtonPressed);
                 break;
             case 2:
-                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
+                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(OpenHyperlink);
                 break;
             case 3:
+                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
+                break;
+            case 4:
                 MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
                 break;
             default:

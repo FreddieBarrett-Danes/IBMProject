@@ -206,13 +206,13 @@ public class ReadTSV : MonoBehaviour
             /// If not it will be set to fallbackTimeForQuestion
             ////
 
-            Debug.Log(Find(row, 0));
+            //Debug.Log(Find(row, 0));
 
             timeForQuestion = fallbackTimeForQuestion;
 
             float parseOutput = 0;
 
-            Debug.Log("Value is :" + Find(row, 7) + ":");
+           // Debug.Log("Value is :" + Find(row, 7) + ":");
 
             if(Find(row, 7) != "")
             {
@@ -228,7 +228,7 @@ public class ReadTSV : MonoBehaviour
                 timeForQuestion = fallbackTimeForQuestion;
             }
 
-            Debug.Log(parseOutput);
+            //Debug.Log(parseOutput);
 
             //row = Random.Range(1, rangeOfQuestionsMax);
 
