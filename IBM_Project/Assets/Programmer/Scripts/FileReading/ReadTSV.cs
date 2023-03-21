@@ -212,17 +212,22 @@ public class ReadTSV : MonoBehaviour
 
             float parseOutput = 0;
 
-            if(Find(row, _timeForQuestions) != "")
+            Debug.Log("Value is :" + Find(row, 7) + ":");
+
+            if(Find(row, 7) != "")
             {
-                if(float.TryParse(Find(row, 7), out parseOutput))
-                {
-                    timeForQuestion = parseOutput;
-                }
-                else
-                {
-                    timeForQuestion = fallbackTimeForQuestion;
-                }
+                timeForQuestion = fallbackTimeForQuestion;
             }
+
+            if(float.TryParse(Find(row, 7), out parseOutput))
+            {
+                timeForQuestion = parseOutput;
+            }
+            else
+            {
+                timeForQuestion = fallbackTimeForQuestion;
+            }
+
             Debug.Log(parseOutput);
 
             //row = Random.Range(1, rangeOfQuestionsMax);

@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     private GameObject player;
     public MinigameController mC;
     public bool inMinigame = false;
-
+    public bool inQuiz = false;
     public GameObject[] levelUI;
     public GameObject[] mazeUI;
     public GameObject[] discUI;

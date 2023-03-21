@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465791, g: 0.49641317, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657832, g: 0.49641258, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -21580,7 +21580,7 @@ Transform:
   - {fileID: 461881119}
   - {fileID: 1241678292}
   - {fileID: 1422732672}
-  - {fileID: 911777916}
+  - {fileID: 792528039207628368}
   - {fileID: 149977196}
   - {fileID: 1570122776}
   - {fileID: 860531485}
@@ -26854,11 +26854,6 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 1
---- !u!4 &911777916 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 792528037477631371, guid: 774ce66426928954db110f2bbb44773e, type: 3}
-  m_PrefabInstance: {fileID: 1877322715}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &922060110
 GameObject:
   m_ObjectHideFlags: 0
@@ -27451,6 +27446,10 @@ PrefabInstance:
     - target: {fileID: 792528037477631368, guid: 774ce66426928954db110f2bbb44773e, type: 3}
       propertyPath: m_Name
       value: EnemyStoreUpdated
+      objectReference: {fileID: 0}
+    - target: {fileID: 792528037477631368, guid: 774ce66426928954db110f2bbb44773e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 792528037477631371, guid: 774ce66426928954db110f2bbb44773e, type: 3}
       propertyPath: m_RootOrder
@@ -28852,7 +28851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2054899259319685450, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.44
+      value: -19.04
       objectReference: {fileID: 0}
     - target: {fileID: 2054899259319685450, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -28860,7 +28859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2054899259319685450, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.12
+      value: 11.34
       objectReference: {fileID: 0}
     - target: {fileID: 2054899259319685450, guid: b2a3a4d3d7e75674baefe3d8a6d423d8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -46891,6 +46890,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyStoreUpdated (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 792528037477631368, guid: 774ce66426928954db110f2bbb44773e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 792528037477631371, guid: 774ce66426928954db110f2bbb44773e, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -48270,6 +48273,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129225354}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &792528039207628368 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 792528037477631371, guid: 774ce66426928954db110f2bbb44773e, type: 3}
+  m_PrefabInstance: {fileID: 1877322715}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1301473915682179765
 PrefabInstance:
   m_ObjectHideFlags: 0
