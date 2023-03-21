@@ -22,6 +22,7 @@ public class BotInfo : MonoBehaviour
     public Animator bAnimator;
     public bool bIsDead;
     public int bMoveDirection;
+    public bool bInPlayerView;
 
     // Range Attack
     [Header("Ranged Attack Settings")] 
@@ -197,7 +198,7 @@ public class BotInfo : MonoBehaviour
             now.Subtract(new TimeSpan(0, 0, bSearchTime))) return;
         bGameControl.PlayerStatus = GameController.Status.SAFE;
         bDetectionTimer = 0;
-        if (bRemainingBots ! >= bBotCount / 2) return;
+        if (bRemainingBots < bBotCount / 2) return;
         bViewRadius = bDefaultViewRadius;
         bViewCone.GetComponent<Light>().color = Color.white;
         bInnerViewRadius = bDefaultInnerViewRadius;

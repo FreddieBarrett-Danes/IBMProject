@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 792528037477631410}
   - component: {fileID: 792528037477631411}
   - component: {fileID: 3511814723302334512}
+  - component: {fileID: 2207172591740079791}
   - component: {fileID: 792528037477631374}
   - component: {fileID: 792528037477631375}
   m_Layer: 3
@@ -81,6 +82,9 @@ MonoBehaviour:
   bAbilitiesList: []
   bRotationSpeed: 1000
   bComputer: {fileID: 0}
+  bAnimator: {fileID: 0}
+  bIsDead: 0
+  bMoveDirection: 0
   bFireRate: 0
   bProjectileSpeed: 0
   bNextFire: 0
@@ -120,6 +124,7 @@ MonoBehaviour:
   bDebugLastKnownPos: {x: 0, y: 0, z: 0}
   bSusTimer: 0
   bPlayerInView: 0
+  bViewCone: {fileID: 0}
 --- !u!114 &3511814723302334512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +137,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29db244c072861f4fa0d1b7823f0d05e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2207172591740079791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792528037477631368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbe347978785a14982327d9b637621f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensedObjects: []
+  sensedRecord: []
 --- !u!135 &792528037477631374
 SphereCollider:
   m_ObjectHideFlags: 0
