@@ -7,6 +7,15 @@ public class PlayerController : MonoBehaviour
     private GameController gc;
     private ReadTSV readTSV;
 
+    [SerializeField]
+    private AudioSource startHack;
+    [SerializeField]
+    private AudioSource winHack;
+    [SerializeField]
+    private AudioSource loseHack;
+    [SerializeField]
+    private AudioSource breakBox;
+
     public DoorsScript door;
 
     public float speed;
@@ -128,10 +137,11 @@ public class PlayerController : MonoBehaviour
 
     private void Interact()
     {
-
+        bool playOnce = false;
         if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
             miniController.StartQuiz(1);
+            startHack.Play();
             gc.Deactivate = true;
         }
         else if (!isBehindEnemy && Input.GetKeyDown(KeyCode.E))
@@ -141,13 +151,25 @@ public class PlayerController : MonoBehaviour
             {
                 if (objectHit.collider.CompareTag("BreakableBox"))
                 {
-                    Destroy(objectHit.transform.gameObject);
+                    bool breakBoxOnce = false;
+                    if (!breakBoxOnce)
+                    {
+                        breakBox.Play();
+                        breakBoxOnce = true;
+                    }
+                        Destroy(objectHit.transform.gameObject);
                 }
             }
         }
 
         if (miniController.completedQuiz && enemyControlled != null && readTSV.hackSuccessful == true)
         {
+            bool playwinOnce = false;
+            if (!playwinOnce)
+            {
+                winHack.Play();
+                playwinOnce = true;
+            }
             gameObject.transform.position = new Vector3(enemyControlled.transform.position.x,
                 gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
@@ -196,6 +218,14 @@ public class PlayerController : MonoBehaviour
             }*/
             //enemyControlled.SetActive(enemyControlled.GetComponent<Collider>());
             readTSV.hackSuccessful = false;
+        }
+        else if(miniController.completedQuiz && enemyControlled != null && readTSV.hackSuccessful == false)
+        {
+            if (!playOnce)
+            {
+                loseHack.Play();
+                playOnce = true;
+            }
         }
     }
 
