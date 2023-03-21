@@ -304,7 +304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 398, y: 240}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &659124217
@@ -324,10 +324,10 @@ MonoBehaviour:
   tickboxPrefab: {fileID: 2526034962566033833, guid: 919ba4e0a7f368545833af2f65475817, type: 3}
   dropdownPrefab: {fileID: 3166809461652847562, guid: 42fd4126613de1c4f833a700ffc401f3, type: 3}
   menuState: 0
-  buttonWidth: 0.58
+  buttonWidth: 0.3
   buttonHeight: 0.1
-  buttonSpacing: 75
-  startHeightFromStart: 100
+  buttonSpacing: 0.2
+  startHeightFromStart: 190
   textboxScalar: 1
   amountOfButtons: 4
   menuButton1: Start
@@ -336,7 +336,19 @@ MonoBehaviour:
   menuButton4: Exit
   settingButton1: 
   settingButton2: 
-  buttonColour: {r: 1, g: 1, b: 1, a: 1}
+  buttonColour: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 0.89411765}
+  tickboxScaler: 0.4
+  sliderScaler: 0.2
+  resScaler: 0.32
+  fullscreen: 0
+  lastframeFullscreen: 0
+  thisFrameResolution: 0
+  lastframeResolution: 0
+  resOptions:
+  - {x: 500, y: 500}
+  - {x: 1920, y: 1080}
+  - {x: 720, y: 480}
+  debug: 0.99
 --- !u!1 &774266116
 GameObject:
   m_ObjectHideFlags: 0

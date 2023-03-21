@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 412511645}
   m_Layer: 0
   m_Name: Scout_Sprite
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1347,6 +1347,30 @@ PrefabInstance:
       propertyPath: bPath
       value: 
       objectReference: {fileID: 2123827740}
+    - target: {fileID: 792528037477631411, guid: 6de99c665ac5f624093a17ecaeb4c630, type: 3}
+      propertyPath: bAnimator
+      value: 
+      objectReference: {fileID: 412511647}
+    - target: {fileID: 792528037477631411, guid: 6de99c665ac5f624093a17ecaeb4c630, type: 3}
+      propertyPath: bSearchTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 792528037477631411, guid: 6de99c665ac5f624093a17ecaeb4c630, type: 3}
+      propertyPath: bThreatLevel
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 792528037477631411, guid: 6de99c665ac5f624093a17ecaeb4c630, type: 3}
+      propertyPath: bSuspiciousTimer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 792528037477631411, guid: 6de99c665ac5f624093a17ecaeb4c630, type: 3}
+      propertyPath: bSuspiciousRadius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 792528037477631411, guid: 6de99c665ac5f624093a17ecaeb4c630, type: 3}
+      propertyPath: bComputerSusRadius
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3347051695607859866, guid: 6de99c665ac5f624093a17ecaeb4c630, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1469,6 +1493,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Soldier_New
       objectReference: {fileID: 0}
+    - target: {fileID: 2007421536515430700, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2007421536515430701, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -1512,6 +1540,10 @@ PrefabInstance:
     - target: {fileID: 2007421536515430701, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931073928246156588, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
+      propertyPath: m_TagString
+      value: Sprite
       objectReference: {fileID: 0}
     - target: {fileID: 3866576163384660831, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
       propertyPath: m_IsActive

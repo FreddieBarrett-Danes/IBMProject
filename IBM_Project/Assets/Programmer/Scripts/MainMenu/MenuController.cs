@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Threading;
+using System;
 
 public class MenuController : MonoBehaviour
 {
@@ -45,11 +46,32 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     private Color buttonColour;
 
+    [SerializeField]
+    private float tickboxScaler, sliderScaler, resScaler;
+
+    [SerializeField]
+    bool fullscreen, lastframeFullscreen;
+
+    [SerializeField]
+    Resolution thisFrameResolution, lastframeResolution;
+
+    [SerializeField]
+    private List<Vector2> resOptions;
+
+    public float debug;
+
     public enum MenuState
     {
         Main,
         Settings,
         Credits
+    }
+
+    public enum Resolution
+    {
+        Default,
+        FHD,
+        LHD
     }
 
     void Start()
@@ -63,14 +85,19 @@ public class MenuController : MonoBehaviour
         setButtonSize();
 
         menuState = MenuState.Main;
+        thisFrameResolution = Resolution.Default;
 
         StateChanged();
+        FullscreenState();
+        ResolutionState();
+
     }
 
     void OnGUI()
     {
         setButtonPosition();
         setButtonSize();
+        PositionMenu();
     }
 
     // Update is called once per frame
@@ -81,6 +108,41 @@ public class MenuController : MonoBehaviour
             StateChanged();
         }
         lastFrameMenuState = menuState;
+
+        fullscreen = SettingsButtonList[1].transform.GetChild(1).GetComponent<Toggle>().isOn;
+
+        if(lastframeFullscreen == fullscreen)
+        {
+            FullscreenState();
+        }
+
+        lastframeFullscreen = fullscreen;
+
+        int dropdownInt = dropdownPrefab.GetComponent<Dropdown>().value;
+        string temp = "Tempo";
+
+        thisFrameResolution = (Resolution)Enum.Parse(typeof(Resolution),temp);
+
+        if(lastframeResolution != thisFrameResolution)
+        {
+            ResolutionState();
+        }
+
+        lastframeResolution = thisFrameResolution;
+    }
+
+    void FullscreenState()
+    {
+        Screen.fullScreen = fullscreen;
+
+        return;
+    }
+
+    void ResolutionState()
+    {
+        Screen.SetResolution((int)resOptions[thisFrameResolution.GetHashCode()].x, (int)resOptions[thisFrameResolution.GetHashCode()].y, true);
+
+        return;
     }
 
     void StateChanged()
@@ -192,7 +254,7 @@ public class MenuController : MonoBehaviour
         {
             for (int i = 0; i < MainButtonList.Count; i++)
             {
-                Vector3 pos = new Vector3(0, startHeightFromStart - (buttonSpacing * i), 0);
+                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
                 MainButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
@@ -201,7 +263,7 @@ public class MenuController : MonoBehaviour
         {
             for (int i = 0; i < SettingsButtonList.Count; i++)
             {
-                Vector3 pos = new Vector3(0, startHeightFromStart - (buttonSpacing * i), 0);
+                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
                 SettingsButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
@@ -224,11 +286,30 @@ public class MenuController : MonoBehaviour
 
         else if(menuState == MenuState.Settings)
         {
-            SettingsButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
-            SettingsButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            //SettingsButtonList[0].GetComponent<RectTransform>().sizeDelta = canvasWidth * debug/*new Vector2(buttonWidth * canvasWidth, /*buttonHeight * canvasHeight * debug)*/;
+            //SettingsButtonList[0].GetComponent<RectTransform>().sizeDelta *= new Vector2(debug, debug);
+            
+            float sliderSize = Mathf.Min(canvasWidth, canvasHeight) * (sliderScaler / 100f);
+            //SettingsButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, ((buttonWidth / 500) * 30) * canvasHeight);
+            SettingsButtonList[0].transform.localScale = new Vector2(sliderSize, sliderSize);
 
-            SettingsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(((buttonWidth * canvasWidth) * textboxScalar) * 0.5f, ((buttonHeight * canvasHeight) * textboxScalar) * 0.5f); //This is scaling funny and idk why
+            float checkboxSize = Mathf.Min(canvasWidth, canvasHeight) * (tickboxScaler / 100f);
+            SettingsButtonList[1].transform.localScale = new Vector2(checkboxSize, checkboxSize);
+
+            /*SettingsButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            SettingsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(((buttonWidth * canvasWidth) * textboxScalar) * 0.5f, ((buttonHeight * canvasHeight) * textboxScalar) * 0.5f);*/ //This is scaling funny and idk why
+
+            float resSize = Mathf.Min(canvasWidth, canvasHeight) * (resScaler / 100f);
+            SettingsButtonList[2].transform.localScale = new Vector2(resSize, resSize);
+            //SettingsButtonList[2].transform.GetChild(0).GetComponent<TextMeshProUGUI>
+            SettingsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(160, 30);
+
+            SettingsButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
             SettingsButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+
+            /*float resSize = Mathf.Min(canvasWidth, canvasHeight) * (resScaler / 100f);
+            SettingsButtonList[3].transform.localScale = new Vector2(resSize, resSize);*/
+
         }
     }
 
@@ -273,6 +354,41 @@ public class MenuController : MonoBehaviour
             default:
                 Debug.Log("Unknown button");
                 break;
+        }
+    }
+
+    void PositionMenu()
+    {
+        float averageHeight = 0;
+
+        if(menuState == MenuState.Main)
+        {
+            for (int i = 0; i < MainButtonList.Count; i++)
+            {
+                averageHeight += MainButtonList[i].GetComponent<RectTransform>().localPosition.y;
+            }
+            averageHeight /= MainButtonList.Count;
+            Debug.Log(averageHeight);
+
+            for (int i = 0; i < MainButtonList.Count; i++)
+            {
+                MainButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+            }
+        }
+
+        else if(menuState == MenuState.Settings)
+        {
+            for (int i = 0; i < SettingsButtonList.Count; i++)
+            {
+                averageHeight += SettingsButtonList[i].GetComponent<RectTransform>().localPosition.y;
+            }
+            averageHeight /= SettingsButtonList.Count;
+            Debug.Log(averageHeight);
+
+            for (int i = 0; i < SettingsButtonList.Count; i++)
+            {
+                SettingsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+            }
         }
     }
 
