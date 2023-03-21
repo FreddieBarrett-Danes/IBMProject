@@ -20,6 +20,7 @@ public class goalLocationScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("mazePlayer"))
         {
+            Debug.Log(mPlayer.transform.position + "," + transform.position);
             Debug.Log("Maze Win");
             Debug.Log("Refer to goalLocationScript for Maze output");
             //CameraMaze call - Sets position of the camera
@@ -36,7 +37,7 @@ public class goalLocationScript : MonoBehaviour
     {
         if (setCameraPosition == true)
         {
-            Debug.Log("repositioned camera for maze, refer to goalLocation to disable");
+            //Debug.Log("repositioned camera for maze, refer to goalLocation to disable");
             if (inMaze == true)
             {
                 camera.GetComponent<Camera>().transform.position += new Vector3(62, 0, 60);

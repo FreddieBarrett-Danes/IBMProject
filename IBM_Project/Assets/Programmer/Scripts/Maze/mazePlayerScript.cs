@@ -10,24 +10,25 @@ public class mazePlayerScript : MonoBehaviour
     public bool returnToStartUponCollision;
     bool touchWall;
     public TextMeshProUGUI Timer;
-
+    [SerializeField]
+    private AudioSource wallHitSound;
     bool mazeReadyPlayer;
 
     public int timesHit;
 
     private void OnEnable()
     {
-        walGen.OnMazeReady += applyReady;
+        //walGen.OnMazeReady += applyReady;
     }
 
     private void OnDisable()
     {
-        walGen.OnMazeReady -= applyReady;
+        //walGen.OnMazeReady -= applyReady;
     }
 
     void applyReady(bool mazeReady)
     {
-        mazeReadyPlayer = mazeReady;
+        //mazeReadyPlayer = mazeReady;
     }
 
 
@@ -38,6 +39,7 @@ public class mazePlayerScript : MonoBehaviour
             //Debug.Log("Trigger Wall hit");
             if (returnToStartUponCollision == true) transform.position = new Vector3(64, 0, 62);//(2, 0, 0);
             touchWall = true;
+            wallHitSound.Play();
             timesHit++;
         }
         else if (other.gameObject.tag == "goalLocation")
@@ -95,6 +97,7 @@ public class mazePlayerScript : MonoBehaviour
             if (Input.GetKey("d"))
             {
                 transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+                gameObject.GetComponent<AudioSource>().mute = false;
                 if (touchWall == true)
                 {
                     transform.position -= new Vector3(speed * Time.deltaTime, 0, 0) * 3;
@@ -103,6 +106,7 @@ public class mazePlayerScript : MonoBehaviour
             if (Input.GetKey("w"))
             {
                 transform.position += new Vector3(0, 0, speed * Time.deltaTime);
+                gameObject.GetComponent<AudioSource>().mute = false;
                 if (touchWall == true)
                 {
                     transform.position -= new Vector3(0, 0, speed * Time.deltaTime) * 3;
@@ -111,6 +115,7 @@ public class mazePlayerScript : MonoBehaviour
             if (Input.GetKey("a"))
             {
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
+                gameObject.GetComponent<AudioSource>().mute = false;
                 if (touchWall == true)
                 {
                     transform.position += new Vector3(speed * Time.deltaTime, 0, 0) * 3;
@@ -119,18 +124,37 @@ public class mazePlayerScript : MonoBehaviour
             if (Input.GetKey("s"))
             {
                 transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
+                gameObject.GetComponent<AudioSource>().mute = false;
                 if (touchWall == true)
                 {
                     transform.position += new Vector3(0, 0, speed * Time.deltaTime) * 3;
                 }
             }
+            if (Input.GetKeyUp("w"))
+            {
+                gameObject.GetComponent<AudioSource>().mute = true;
+            }
+            if (Input.GetKeyUp("a"))
+            {
+                gameObject.GetComponent<AudioSource>().mute = true;
+            }
+            if (Input.GetKeyUp("s"))
+            {
+                gameObject.GetComponent<AudioSource>().mute = true;
+            }
+            if (Input.GetKeyUp("d"))
+            {
+                gameObject.GetComponent<AudioSource>().mute = true;
+            }
+
             if (Input.GetKeyDown("p"))
             {
                 transform.position = GameObject.FindGameObjectWithTag("goalLocation").transform.position;
             }
         }
-        if (Input.GetKeyDown("space") && mazeReadyPlayer == true)
+        if (Input.GetKeyDown("space"))// && mazeReadyPlayer == true)
         {
+            mazeReadyPlayer = true;
             //transform.position = new Vector3(62, 0, 60);
             transform.position = new Vector3(64, 0, 62);
             //returnToStart(true);
