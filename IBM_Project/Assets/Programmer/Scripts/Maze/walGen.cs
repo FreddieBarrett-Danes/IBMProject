@@ -369,18 +369,22 @@ public class walGen : MonoBehaviour
         //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.white;
         //pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
         Debug.Log("Pregame enabled: " + pregameText.GetComponent<TextMeshProUGUI>().enabled);
-        pregameText.SetActive(true);
-        pressStartText.SetActive(true);
-        Timer.SetActive(true);
-        GameObject.Find("tutorialBackground").GetComponent<MeshRenderer>().enabled = showPregameTutorial;
-
-        //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().enabled = showPregameTutorial;
-        //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().transform.position = new Vector3(cameraPosition.x, cameraPosition.y-2, cameraPosition.z);
-        pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
-        Timer.GetComponent<TextMeshProUGUI>().enabled = false;
         preGoalLocation = new Vector3(0, 0, 0);
         goalLocationRng = Random.Range(Maze_Width*2, (Maze_Width * Maze_Height));
 
+        //--------------------------------------
+        //UI:
+        ////pregameText.SetActive(true);
+        ////pressStartText.SetActive(true);
+        ////Timer.SetActive(true);
+        ////GameObject.Find("tutorialBackground").GetComponent<MeshRenderer>().enabled = showPregameTutorial;
+
+        //////GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().enabled = showPregameTutorial;
+        //////GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().transform.position = new Vector3(cameraPosition.x, cameraPosition.y-2, cameraPosition.z);
+        ////pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
+        ////Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+
+        //---------------------------------------
 
         mazeGrid = new bool[100, 100];
 
@@ -736,21 +740,41 @@ public class walGen : MonoBehaviour
         } */
 
 
-        if (Input.GetKeyDown("space") && mazeReady == true) //&& pressedPlay == false
+
+        if (mazeReady == true) //&& pressedPlay == false
         {
-            Debug.Log("Press 'P' to complete maze instantly");
-            OnMazeReady(true);
             mazePlayer.transform.position = new Vector3(64, 0, 62); //new Vector3(2, 0, 0);
             goalLocation.transform.position = preGoalLocation;
-            //goalLocation.transform.position = new Vector3(18, 0, 16);
+
+            //Debug.Log("Press 'P' to complete maze instantly");
+            //OnMazeReady(true); //Activate maze minigame timer
+
+
             //GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
-            GameObject.Find("tutorialBackground").GetComponent<MeshRenderer>().enabled = false;
-            pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
-            Timer.GetComponent<TextMeshProUGUI>().enabled = true;
-            pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
+            //GameObject.Find("tutorialBackground").GetComponent<MeshRenderer>().enabled = false;
+            //pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
+            //Timer.GetComponent<TextMeshProUGUI>().enabled = true;
+            //pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
 
             //pressedPlay = true;
         }
+
+
+        //if (Input.GetKeyDown("space") && mazeReady == true) //&& pressedPlay == false
+        //{
+        //    Debug.Log("Press 'P' to complete maze instantly");
+        //    OnMazeReady(true);
+        //    mazePlayer.transform.position = new Vector3(64, 0, 62); //new Vector3(2, 0, 0);
+        //    goalLocation.transform.position = preGoalLocation;
+        //    //goalLocation.transform.position = new Vector3(18, 0, 16);
+        //    //GameObject.FindGameObjectWithTag("preGame").GetComponent<MeshRenderer>().enabled = false;
+        //    GameObject.Find("tutorialBackground").GetComponent<MeshRenderer>().enabled = false;
+        //    pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
+        //    Timer.GetComponent<TextMeshProUGUI>().enabled = true;
+        //    pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
+
+        //    //pressedPlay = true;
+        //}
 
         if (Input.GetKeyDown(KeyCode.U))
         {

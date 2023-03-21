@@ -86,14 +86,14 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                GameObject[] mazeWalls = GameObject.FindGameObjectsWithTag("mazeWall");
-                if (mazeWalls != null)
-                {
-                    for (int i = 0; i < mazeWalls.Length; i++)
-                    {
-                        Destroy(mazeWalls[i]);
-                    }
-                }
+                //GameObject[] mazeWalls = GameObject.FindGameObjectsWithTag("mazeWall");
+                //if (mazeWalls != null)
+                //{
+                //    for (int i = 0; i < mazeWalls.Length; i++)
+                //    {
+                //        Destroy(mazeWalls[i]);
+                //    }
+                //}
 
                 GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
                 if (tiles != null)

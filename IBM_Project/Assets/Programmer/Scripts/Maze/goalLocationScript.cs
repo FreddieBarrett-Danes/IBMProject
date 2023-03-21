@@ -9,7 +9,7 @@ public class goalLocationScript : MonoBehaviour
     private ComputerInteraction computerInteraction;
     public mazePlayerScript mPlayer;
 
-    public walGen wG;
+    public walGen wG; //Re-reference the gameobject with the walGen script
 
     private Vector3 originalCameraPos;
 

@@ -789,7 +789,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mPlayer: {fileID: 111617444598303539}
-  wG: {fileID: 111617444553197667}
+  wG: {fileID: 0}
+  camera: {fileID: 0}
+  setCameraPosition: 0
 --- !u!1 &111617444553197677
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,7 +804,6 @@ GameObject:
   - component: {fileID: 111617444553197664}
   - component: {fileID: 111617444553197679}
   - component: {fileID: 111617444553197678}
-  - component: {fileID: 111617444553197667}
   m_Layer: 0
   m_Name: wallGeneration
   m_TagString: Untagged
@@ -888,30 +889,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &111617444553197667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 111617444553197677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d851b201ed4bd204496ede78e4381739, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frameRate: 60
-  Maze_Width: 10
-  Maze_Height: 10
-  wallDestroyer: {fileID: 111617443245947006}
-  wallPrefab: {fileID: 111617443978040625}
-  targetPosWorld: {fileID: 111617442953139126}
-  currentPosWorld: {fileID: 111617442599560561}
-  pregameText: {fileID: 0}
-  pressStartText: {fileID: 0}
-  Timer: {fileID: 0}
-  showIngameText: 0
-  showPregameTutorial: 0
 --- !u!1 &111617444598303549
 GameObject:
   m_ObjectHideFlags: 0
