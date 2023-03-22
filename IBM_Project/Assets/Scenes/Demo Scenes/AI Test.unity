@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4482453, g: 0.49827206, b: 0.5755818, a: 1}
+  m_IndirectSpecularColor: {r: 0.4482451, g: 0.49827182, b: 0.57558125, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 412511645}
   m_Layer: 0
   m_Name: Scout_Sprite
-  m_TagString: Sprite
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -701,7 +701,7 @@ GameObject:
   - component: {fileID: 544131495}
   m_Layer: 0
   m_Name: Scout_New
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1501,6 +1501,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2007421536515430700, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
+      propertyPath: m_TagString
+      value: Sprite
+      objectReference: {fileID: 0}
     - target: {fileID: 2007421536515430701, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -1547,7 +1551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2931073928246156588, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
       propertyPath: m_TagString
-      value: Sprite
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3866576163384660831, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
       propertyPath: m_IsActive
@@ -1608,7 +1612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517615, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Player1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}

@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.AI;
 using BT;
 using static System.Array;

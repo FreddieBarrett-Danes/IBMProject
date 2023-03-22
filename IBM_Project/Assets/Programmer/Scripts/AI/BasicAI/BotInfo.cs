@@ -23,7 +23,8 @@ public class BotInfo : MonoBehaviour
     public bool bIsDead;
     public int bMoveDirection;
     public bool bInPlayerView;
-
+    public bool bSpriteTrigger;
+    
     // Range Attack
     [Header("Ranged Attack Settings")] 
     public float bFireRate;

@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using BT;
-using UnityEngine.PlayerLoop;
 
 public class TDetectPlayer : BT_Node
 {

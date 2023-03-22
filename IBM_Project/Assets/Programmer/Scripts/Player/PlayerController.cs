@@ -1,4 +1,3 @@
-using System.IO.Compression;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -73,7 +72,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (miniController.completedQuiz)
+        {
             gc.Deactivate = false;
+        }
+
         if (!gc.Deactivate)
         {
             Movement();
@@ -157,7 +159,7 @@ public class PlayerController : MonoBehaviour
                         breakBox.Play();
                         breakBoxOnce = true;
                     }
-                        Destroy(objectHit.transform.gameObject);
+                    Destroy(objectHit.transform.gameObject);
                 }
             }
         }
@@ -245,27 +247,27 @@ public class PlayerController : MonoBehaviour
 
     private void DetectEnemy()
     {
-        Vector3 enemyPos = new();
         if (gc.bots.Length <= 0) return;
         foreach (GameObject bot in gc.bots)
         {
-            enemyPos = bot.transform.root.position;
+            Vector3 enemyPos = bot.transform.GetChild(0).position;
             Vector3 playerPos = transform.position;
             float range = Vector3.Distance(enemyPos, playerPos);
             Vector3 toTarget = enemyPos - playerPos;
             Vector3 dirToTarget = toTarget.normalized;
 
-            if ((range < transform.gameObject.GetComponent<FieldOfView>().viewRadius &&
+            if ((range < transform.gameObject.GetComponent<FieldOfView>().viewRadius - 0.05f &&
                  Vector3.Angle(transform.forward, dirToTarget) <
-                 transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2) && !Physics.Raycast(transform.position,
-                    dirToTarget,
-                    toTarget.magnitude, transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
+                 transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2) 
+                && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude, transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
             {
                 bot.transform.root.GetChild(0).GetComponent<BotInfo>().bInPlayerView = true;
+                bot.transform.root.GetChild(1).gameObject.SetActive(true);
             }
             else
             {
                 bot.transform.root.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
+                bot.transform.root.GetChild(1).gameObject.SetActive(false);
             }
         }
     }
