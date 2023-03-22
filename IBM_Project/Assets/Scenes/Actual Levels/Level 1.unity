@@ -45914,6 +45914,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1603438435958901733, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
   m_PrefabInstance: {fileID: 1603438436686117983}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1759134003 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4622127977447963199, guid: 9731f9a4edb7870418ba4de31195f500, type: 3}
+  m_PrefabInstance: {fileID: 2557817911596285792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1773167156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47968,7 +47973,10 @@ PrefabInstance:
         WASD
         - Movement
 
-        Space - Return to Start'
+        Space - Return to Start
+
+
+        Press Space to begin'
       objectReference: {fileID: 0}
     - target: {fileID: 5633705172751337995, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
       propertyPath: m_RootOrder
@@ -47985,6 +47993,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1097290388056956009, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
   m_PrefabInstance: {fileID: 1603438436686117983}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1836014028820308025 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1832543869839962804, guid: e7cae164f01c714429f02bfb63f176c9, type: 3}
+  m_PrefabInstance: {fileID: 1603438436686117983}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836014028820308022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2076605724003354801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48110,6 +48129,14 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 1446970743}
+    - target: {fileID: 2518561881499603155, guid: 9731f9a4edb7870418ba4de31195f500, type: 3}
+      propertyPath: Timer
+      value: 
+      objectReference: {fileID: 1836014028820308025}
+    - target: {fileID: 2518561881499603155, guid: 9731f9a4edb7870418ba4de31195f500, type: 3}
+      propertyPath: wallHitSound
+      value: 
+      objectReference: {fileID: 1759134003}
     - target: {fileID: 2557817911138836252, guid: 9731f9a4edb7870418ba4de31195f500, type: 3}
       propertyPath: Timer
       value: 
