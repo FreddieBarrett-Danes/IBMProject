@@ -12,6 +12,7 @@ public class DoorsScript : MonoBehaviour
     public GameObject openDoor;
     public GameObject closeDoor;
 
+    [SerializeField]
     private Vector3 restingDoorPos;
 
     private GameObject player;
@@ -28,16 +29,16 @@ public class DoorsScript : MonoBehaviour
     private bool isOpen;
     private bool wasOpen;
 
-    public bool isComputer;    
+    public bool isComputer;
 
-    
+
     //
 
     private float openAmount10;
     [SerializeField]
     private float moveSpeed;
 
-    private Vector3 AOpen,AClosed,BOpen,BClosed;
+    private Vector3 AOpen, AClosed, BOpen, BClosed;
 
     void Start()
     {
@@ -47,13 +48,14 @@ public class DoorsScript : MonoBehaviour
 
         FindEnemiesInScene();
 
-        restingDoorPos = ADoors.localPosition;
+        //restingDoorPos = ADoors.localPosition;
+        restingDoorPos = new Vector3(-0.75f, 0.5f, 0f);
     }
 
     void Update()
     {
         FindEnemiesInScene();
-        
+
         nearestEnemy = (this.transform.position - player.transform.position).magnitude;
         nearestEnemy = Mathf.Infinity;
 
@@ -76,8 +78,6 @@ public class DoorsScript : MonoBehaviour
 
             if (distToPlayer < activateDistance || nearestEnemy < activateDistance) //open door
             {
-                GameObject sound = Instantiate(openDoor, transform.position, Quaternion.identity);
-                Destroy(sound, 1f);
                 openAmount10 -= moveSpeed * Time.deltaTime;
 
                 isOpen = true;
@@ -85,8 +85,6 @@ public class DoorsScript : MonoBehaviour
 
             else //close door
             {
-                GameObject sound = Instantiate(closeDoor, transform.position, Quaternion.identity);
-                Destroy(sound, 1f);
                 openAmount10 += moveSpeed * Time.deltaTime;
                 isOpen = false;
             }
@@ -101,7 +99,7 @@ public class DoorsScript : MonoBehaviour
             ADoors.transform.localPosition = Vector3.Lerp(AOpen, AClosed, openAmount10);
             BDoors.transform.localPosition = Vector3.Lerp(BOpen, BClosed, openAmount10);
         }
-        else if(isComputer)
+        else if (isComputer)
         {
             if (distToPlayer < activateDistance || nearestEnemy < activateDistance)//close to computer door
             {
@@ -117,7 +115,7 @@ public class DoorsScript : MonoBehaviour
             }
         }
 
-        if(isOpen != wasOpen)
+        if (isOpen != wasOpen)
         {
             DoorStateChanged();
         }
@@ -137,11 +135,15 @@ public class DoorsScript : MonoBehaviour
     {
         if (isOpen)
         {
+            GameObject sound = Instantiate(openDoor, transform.position, Quaternion.identity);
+            Destroy(sound, 1f);
             //Spawn open sound in here
         }
 
         else
         {
+            GameObject sound = Instantiate(closeDoor, transform.position, Quaternion.identity);
+            Destroy(sound, 1f);
             //Spawn close sound in here
         }
     }

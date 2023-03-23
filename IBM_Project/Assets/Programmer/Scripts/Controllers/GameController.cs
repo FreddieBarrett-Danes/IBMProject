@@ -148,27 +148,27 @@ public class GameController : MonoBehaviour
                         if (!player) return;
                         if (player.GetComponent<PlayerController>().threatLevel == 0)
                         {
-                            player.transform.root.GetChild(1).gameObject.SetActive(true);
-                            player.transform.root.GetChild(2).gameObject.SetActive(false);
-                            player.transform.root.GetChild(3).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(1).gameObject.SetActive(true);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(false);
                         }
                         else if (player.GetComponent<PlayerController>().threatLevel == 2)
                         {
-                            player.transform.root.GetChild(1).gameObject.SetActive(false);
-                            player.transform.root.GetChild(2).gameObject.SetActive(true);
-                            player.transform.root.GetChild(3).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(1).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(true);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(false);
                         }
                         else if (player.GetComponent<PlayerController>().threatLevel == 3)
                         {
-                            player.transform.root.GetChild(1).gameObject.SetActive(false);
-                            player.transform.root.GetChild(2).gameObject.SetActive(false);
-                            player.transform.root.GetChild(3).gameObject.SetActive(true);
+                            player.transform.parent.GetChild(1).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(true);
                         }
                         else
                         {
-                            player.transform.root.GetChild(1).gameObject.SetActive(true);
-                            player.transform.root.GetChild(2).gameObject.SetActive(false);
-                            player.transform.root.GetChild(3).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(1).gameObject.SetActive(true);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(false);
                         }
                     }
 
