@@ -135,9 +135,7 @@ public class PlayerController : MonoBehaviour
             controlTimer -= Time.deltaTime;
             if (controlTimer <= 0)
             {
-                transform.parent.GetChild(1).gameObject.SetActive(true);
-                transform.parent.GetChild(2).gameObject.SetActive(false);
-                transform.parent.GetChild(3).gameObject.SetActive(false);
+                threatLevel = 0;
                 controlTimer = 0;
                 gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
