@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DoorsScript : MonoBehaviour
@@ -78,6 +79,8 @@ public class DoorsScript : MonoBehaviour
                 GameObject sound = Instantiate(openDoor, transform.position, Quaternion.identity);
                 Destroy(sound, 1f);
                 openAmount10 -= moveSpeed * Time.deltaTime;
+
+                isOpen = true;
             }
 
             else //close door
@@ -85,6 +88,7 @@ public class DoorsScript : MonoBehaviour
                 GameObject sound = Instantiate(closeDoor, transform.position, Quaternion.identity);
                 Destroy(sound, 1f);
                 openAmount10 += moveSpeed * Time.deltaTime;
+                isOpen = false;
             }
 
             openAmount10 = Mathf.Clamp01(openAmount10);
@@ -112,6 +116,13 @@ public class DoorsScript : MonoBehaviour
                 player.GetComponent<PlayerController>().door = null;
             }
         }
+
+        if(isOpen != wasOpen)
+        {
+            DoorStateChanged();
+        }
+
+        wasOpen = isOpen;
     }
 
     private void FindEnemiesInScene()
@@ -120,5 +131,18 @@ public class DoorsScript : MonoBehaviour
 
         BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
         enemies = botScripts.Select(t => t.transform.gameObject).ToList();
+    }
+
+    private void DoorStateChanged()
+    {
+        if (isOpen)
+        {
+            //Spawn open sound in here
+        }
+
+        else
+        {
+            //Spawn close sound in here
+        }
     }
 }
