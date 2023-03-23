@@ -261,13 +261,13 @@ public class PlayerController : MonoBehaviour
                  transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2) 
                 && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude, transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
             {
-                bot.transform.root.GetChild(0).GetComponent<BotInfo>().bInPlayerView = true;
-                bot.transform.root.GetChild(1).gameObject.SetActive(true);
+                bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = true;
+                bot.transform.GetChild(1).gameObject.SetActive(true);
             }
             else
             {
-                bot.transform.root.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
-                bot.transform.root.GetChild(1).gameObject.SetActive(false);
+                bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
+                bot.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
     }
