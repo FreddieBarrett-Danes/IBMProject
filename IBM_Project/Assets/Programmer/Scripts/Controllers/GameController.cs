@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     private GameObject player;
     public MinigameController mC;
     public bool inMinigame = false;
-
+    public bool inQuiz = false;
     public GameObject[] levelUI;
     public GameObject[] mazeUI;
     public GameObject[] discUI;
@@ -19,6 +19,9 @@ public class GameController : MonoBehaviour
 
     public float LevelTimeBank = 0.0f;
     public bool completedLevel = false;
+
+    public bool Deactivate;
+    public GameObject[] bots;
 
     public enum Status
     {
@@ -67,7 +70,7 @@ public class GameController : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
 
-            if(player == null)
+            if (player == null)
             {
                 SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -83,14 +86,15 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                GameObject[] mazeWalls = GameObject.FindGameObjectsWithTag("mazeWall");
-                if (mazeWalls != null)
-                {
-                    for (int i = 0; i < mazeWalls.Length; i++)
-                    {
-                        Destroy(mazeWalls[i]);
-                    }
-                }
+                //GameObject[] mazeWalls = GameObject.FindGameObjectsWithTag("mazeWall");
+                //if (mazeWalls != null)
+                //{
+                //    for (int i = 0; i < mazeWalls.Length; i++)
+                //    {
+                //        Destroy(mazeWalls[i]);
+                //    }
+                //}
+
                 GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
                 if (tiles != null)
                 {
@@ -99,6 +103,7 @@ public class GameController : MonoBehaviour
                         Destroy(tiles[i]);
                     }
                 }
+
                 mC.inMaze = false;
                 mC.inDoor = false;
                 level.SetActive(true);
@@ -106,9 +111,48 @@ public class GameController : MonoBehaviour
                 {
                     levelUI[i].SetActive(true);
                 }
+
                 if (mC.chosenMinigame != null)
                 {
                     mC.chosenMinigame.SetActive(false);
+                }
+            }
+
+            switch (Deactivate)
+            {
+                case true:
+                {
+                    if (bots != null)
+                    {
+                        bots = GameObject.FindGameObjectsWithTag("Sprite");
+                        foreach (GameObject bot in bots)
+                        {
+                            bot.transform.gameObject.SetActive(false);
+                        }
+
+                        player.transform.root.GetChild(1).gameObject.SetActive(false);
+                        player.transform.root.GetChild(2).gameObject.SetActive(false);
+                    }
+                    break;
+                }
+                case false:
+                {
+                    if(bots != null)
+                    {
+                        bots = GameObject.FindGameObjectsWithTag("Sprite");
+                        foreach (GameObject bot in bots)
+                        {
+                            bot.transform.gameObject.SetActive(true);
+                        }
+
+                        if (!player) return;
+                        if (player.GetComponent<PlayerController>().threatLevel == 0)
+                            player.transform.root.GetChild(1).gameObject.SetActive(true);
+                        if (player.GetComponent<PlayerController>().threatLevel == 2)
+                            player.transform.root.GetChild(2).gameObject.SetActive(true);
+                    }
+
+                    break;
                 }
             }
         }

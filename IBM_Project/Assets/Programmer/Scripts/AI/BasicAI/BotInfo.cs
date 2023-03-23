@@ -22,7 +22,9 @@ public class BotInfo : MonoBehaviour
     public Animator bAnimator;
     public bool bIsDead;
     public int bMoveDirection;
-
+    public bool bInPlayerView;
+    public bool bSpriteTrigger;
+    
     // Range Attack
     [Header("Ranged Attack Settings")] 
     public float bFireRate;
@@ -97,7 +99,7 @@ public class BotInfo : MonoBehaviour
     public bool bPlayerInView;
     
     //ViewCone
-    private GameObject bViewCone;
+    public GameObject bViewCone;
     private Vector3 bViewConePos;
 
     private void Start()
@@ -107,6 +109,7 @@ public class BotInfo : MonoBehaviour
         bViewCone = Instantiate(Resources.Load<GameObject>("ViewCone"), gameObject.transform.GetChild(0).GetChild(1), false);
         bViewCone.transform.position = new Vector3(bViewConePos.x, bViewConePos.y, bViewConePos.z - 0.3f);
         bViewCone.transform.forward = gameObject.transform.GetChild(0).GetChild(1).forward;
+        bViewCone.GetComponent<Light>().color = Color.white;
         // Misc
         bPlayer = FindObjectOfType(typeof(PlayerController)).GameObject();
         bComputer = FindObjectOfType(typeof(ComputerInteraction)).GameObject();
@@ -143,6 +146,7 @@ public class BotInfo : MonoBehaviour
         bAnimator.SetFloat("Horizontal", GetComponent<NavMeshAgent>().velocity.x);
         bAnimator.SetFloat("Vertical", GetComponent<NavMeshAgent>().velocity.z);
         bAnimator.SetFloat("Speed", GetComponent<NavMeshAgent>().velocity.sqrMagnitude);
+        bAnimator.SetBool("isDead", bIsDead);
         if (GetComponent<NavMeshAgent>().velocity.sqrMagnitude == 0)
         {
             bMoveDirection = 0;
@@ -195,8 +199,9 @@ public class BotInfo : MonoBehaviour
             now.Subtract(new TimeSpan(0, 0, bSearchTime))) return;
         bGameControl.PlayerStatus = GameController.Status.SAFE;
         bDetectionTimer = 0;
-        if (bRemainingBots ! >= bBotCount / 2) return;
+        if (bRemainingBots < bBotCount / 2) return;
         bViewRadius = bDefaultViewRadius;
+        bViewCone.GetComponent<Light>().color = Color.white;
         bInnerViewRadius = bDefaultInnerViewRadius;
     }
     private void LateUpdate()

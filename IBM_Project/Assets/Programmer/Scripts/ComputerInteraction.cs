@@ -41,7 +41,7 @@ public class ComputerInteraction : MonoBehaviour
         {
             foreach (GameObject enemy in enemies)
             {
-                Destroy(enemy);
+                enemy.GetComponent<BotInfo>().bIsDead = true;
             }
             enemies = null;
             miniController.completedMaze = false;

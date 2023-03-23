@@ -3,7 +3,17 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private MinigameController miniController;
+    private GameController gc;
     private ReadTSV readTSV;
+
+    [SerializeField]
+    private AudioSource startHack;
+    [SerializeField]
+    private AudioSource winHack;
+    [SerializeField]
+    private AudioSource loseHack;
+    [SerializeField]
+    private AudioSource breakBox;
 
     public DoorsScript door;
 
@@ -50,26 +60,41 @@ public class PlayerController : MonoBehaviour
     {
         //controller set up
         miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
-        
-        mainCamera = Camera.main;
+        gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rBody = GetComponent<Rigidbody>();
         //playerColor = body.GetComponent<Renderer>().material.color;
 
         readTSV = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
     }
-    
+
     void Update()
     {
-        Movement();
-        PlayerShooting();
-        TakeControl();
-        ControllingTimer();
-        DoorInteract();
-        
-        animator.SetFloat("Horizontal", velocity.x);
-        animator.SetFloat("Vertical", velocity.z);
-        animator.SetFloat("Speed", velocity.sqrMagnitude);
+        if (miniController.completedQuiz)
+        {
+            gc.Deactivate = false;
+        }
+
+        if (!gc.Deactivate)
+        {
+            Movement();
+            PlayerShooting();
+            Interact();
+            ControllingTimer();
+            DoorInteract();
+            DetectEnemy();
+
+            animator.SetFloat("Horizontal", velocity.x);
+            animator.SetFloat("Vertical", velocity.z);
+            animator.SetFloat("Speed", velocity.sqrMagnitude);
+        }
+        else
+        {
+            velocity = new Vector3(0, 0, 0);
+        }
     }
+
     void FixedUpdate()
     {
         rBody.MovePosition(rBody.position + velocity * Time.deltaTime);
@@ -79,12 +104,13 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
-        Vector3 mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.transform.position.y));
+        Vector3 mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,
+            mainCamera.transform.position.y));
         transform.LookAt(mousePos + Vector3.up * transform.position.y);
         velocity = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * speed;
         mainCamera.transform.position = new Vector3(transform.position.x, 5, transform.position.z);
-
     }
+
     private void PlayerShooting()
     {
         if (Input.GetMouseButtonDown(0) && canShoot)
@@ -92,16 +118,17 @@ public class PlayerController : MonoBehaviour
             shooting.Execute();
         }
     }
+
     private void ControllingTimer()
     {
-        if(isControlling)
+        if (isControlling)
         {
             miniController.completedQuiz = false;
             controlTimer -= Time.deltaTime;
-            if(controlTimer <= 0)
-            {                
-                body.GetComponent<Renderer>().material.color = playerColor;
-                visuals.GetComponent<Renderer>().material.color = playerColor;
+            if (controlTimer <= 0)
+            {
+                transform.root.GetChild(1).gameObject.SetActive(true);
+                transform.root.GetChild(2).gameObject.SetActive(false);
                 controlTimer = 0;
                 gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
@@ -109,19 +136,45 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    private void TakeControl()
+
+    private void Interact()
     {
+        bool playOnce = false;
         if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
-            miniController.StartQuiz(1);    
+            miniController.StartQuiz(1);
+            startHack.Play();
+            gc.Deactivate = true;
+        }
+        else if (!isBehindEnemy && Input.GetKeyDown(KeyCode.E))
+        {
+            RaycastHit objectHit;
+            if (Physics.Raycast(visuals.transform.position, visuals.transform.forward, out objectHit, 5))
+            {
+                if (objectHit.collider.CompareTag("BreakableBox"))
+                {
+                    bool breakBoxOnce = false;
+                    if (!breakBoxOnce)
+                    {
+                        breakBox.Play();
+                        breakBoxOnce = true;
+                    }
+                    Destroy(objectHit.transform.gameObject);
+                }
+            }
         }
 
         if (miniController.completedQuiz && enemyControlled != null && readTSV.hackSuccessful == true)
         {
-            gameObject.transform.position = new Vector3(enemyControlled.transform.position.x, gameObject.transform.position.y, enemyControlled.transform.position.z);
+            bool playwinOnce = false;
+            if (!playwinOnce)
+            {
+                winHack.Play();
+                playwinOnce = true;
+            }
+            gameObject.transform.position = new Vector3(enemyControlled.transform.position.x,
+                gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
-            body.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Capsule").GetComponent<Renderer>().material.color;
-            visuals.GetComponent<Renderer>().material.color = enemyControlled.transform.GetChild(0).Find("Forward").GetComponent<Renderer>().material.color;
             if (shooting == null)
             {
                 shooting = gameObject.AddComponent<Shooting>();
@@ -166,21 +219,56 @@ public class PlayerController : MonoBehaviour
                 }
             }*/
             //enemyControlled.SetActive(enemyControlled.GetComponent<Collider>());
-
             readTSV.hackSuccessful = false;
         }
+        else if(miniController.completedQuiz && enemyControlled != null && readTSV.hackSuccessful == false)
+        {
+            if (!playOnce)
+            {
+                loseHack.Play();
+                playOnce = true;
+            }
+        }
     }
+
     private void DoorInteract()
     {
-        if(computerDoor && !isBehindEnemy && Input.GetKeyDown(KeyCode.E) && !miniController.completedDoor)
+        if (computerDoor && !isBehindEnemy && Input.GetKeyDown(KeyCode.E) && !miniController.completedDoor)
         {
             Debug.Log("computer door");
             //activate computer door minigame
             miniController.StartDoorMinigame();
         }
-        else if(miniController.completedDoor)
+        else if (miniController.completedDoor)
         {
             door.isComputer = false;
+        }
+    }
+
+    private void DetectEnemy()
+    {
+        if (gc.bots.Length <= 0) return;
+        foreach (GameObject bot in gc.bots)
+        {
+            Vector3 enemyPos = bot.transform.GetChild(0).position;
+            Vector3 playerPos = transform.position;
+            float range = Vector3.Distance(enemyPos, playerPos);
+            Vector3 toTarget = enemyPos - playerPos;
+            Vector3 dirToTarget = toTarget.normalized;
+
+            if ((range < transform.gameObject.GetComponent<FieldOfView>().viewRadius - 0.05f &&
+                 Vector3.Angle(transform.forward, dirToTarget) <
+                 transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2) 
+                && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude, transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
+            {
+                bot.transform.root.GetChild(0).GetComponent<BotInfo>().bInPlayerView = true;
+                bot.transform.root.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                bot.transform.root.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
+                bot.transform.root.GetChild(1).gameObject.SetActive(false);
+            }
         }
     }
 }

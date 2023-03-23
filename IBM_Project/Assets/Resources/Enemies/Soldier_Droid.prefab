@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9797dd348566f419c0fc9ab6095f09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bThreatLevel: 0
+  bThreatLevel: 2
   bBotCount: 0
   bRemainingBots: 0
   bGameControl: {fileID: 0}
@@ -82,7 +82,9 @@ MonoBehaviour:
   bAbilitiesList: []
   bRotationSpeed: 1000
   bComputer: {fileID: 0}
-  animator: {fileID: 0}
+  bAnimator: {fileID: 0}
+  bIsDead: 0
+  bMoveDirection: 0
   bFireRate: 0.5
   bProjectileSpeed: 0
   bNextFire: 0

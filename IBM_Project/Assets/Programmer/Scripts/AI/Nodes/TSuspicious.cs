@@ -19,6 +19,7 @@ public class TSuspicious : BT_Node
     {
         botInfo.bViewRadius = botInfo.bSusViewRadius;
         botInfo.bInnerViewRadius = botInfo.bSusInnerViewRadius;
+        botInfo.bViewCone.GetComponent<Light>().color = Color.yellow;
         botInfo.bSusTimer += Time.deltaTime;
         if (botInfo.bSusTimer >= botInfo.bSuspiciousTimer || agent.remainingDistance < 0.05)
         {

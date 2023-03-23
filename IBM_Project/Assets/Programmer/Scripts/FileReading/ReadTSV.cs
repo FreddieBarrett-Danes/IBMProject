@@ -191,6 +191,8 @@ public class ReadTSV : MonoBehaviour
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
         canvasRectTransform = canvas.GetComponent<RectTransform>();
+        
+        Debug.Log((panelSize));
     }
 
     void Update()
@@ -204,24 +206,29 @@ public class ReadTSV : MonoBehaviour
             /// If not it will be set to fallbackTimeForQuestion
             ////
 
-            Debug.Log(Find(row, 0));
+            //Debug.Log(Find(row, 0));
 
             timeForQuestion = fallbackTimeForQuestion;
 
             float parseOutput = 0;
 
-            if(Find(row, _timeForQuestions) != "")
+           // Debug.Log("Value is :" + Find(row, 7) + ":");
+
+            if(Find(row, 7) != "")
             {
-                if(float.TryParse(Find(row, 7), out parseOutput))
-                {
-                    timeForQuestion = parseOutput;
-                }
-                else
-                {
-                    timeForQuestion = fallbackTimeForQuestion;
-                }
+                timeForQuestion = fallbackTimeForQuestion;
             }
-            Debug.Log(parseOutput);
+
+            if(float.TryParse(Find(row, 7), out parseOutput))
+            {
+                timeForQuestion = parseOutput;
+            }
+            else
+            {
+                timeForQuestion = fallbackTimeForQuestion;
+            }
+
+            //Debug.Log(parseOutput);
 
             //row = Random.Range(1, rangeOfQuestionsMax);
 

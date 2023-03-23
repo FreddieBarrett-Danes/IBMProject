@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using BT;
-using UnityEngine.PlayerLoop;
 
 public class TDetectPlayer : BT_Node
 {
@@ -26,6 +24,7 @@ public class TDetectPlayer : BT_Node
         }
         if (botInfo.bRecentlyChase)
         {
+            Debug.Log("That");
             botInfo.bRecentChaseTimer--;
             if (botInfo.bRecentChaseTimer <= 0)
             {
@@ -55,6 +54,7 @@ public class TDetectPlayer : BT_Node
                 {
                     botInfo.bTimer = botInfo.bWanderTimer;
                     botInfo.bEngaging = true;
+                    botInfo.bViewCone.GetComponent<Light>().color = Color.red;
                     botInfo.bGameControl.PlayerStatus = GameController.Status.HUNTED;
                     state = NodeState.SUCCESS;
                     return state;

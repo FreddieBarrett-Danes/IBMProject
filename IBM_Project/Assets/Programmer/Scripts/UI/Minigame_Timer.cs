@@ -10,14 +10,16 @@ public class Minigame_Timer : UITimer
 
     private void OnEnable()
     {
-        walGen.OnMazeReady += timerReady; //Maze script
+        //walGen.OnMazeReady += timerReady; //Maze script
+        mazeHandler.OnMazeReady += timerReady;
         Updated_Disc_Rotation.OnDiscAlignmentReady += timerReady; //Disc Alignment script
         genGrid.OnTileRotationReady += timerReady; //Tile Rotation script
     }
 
     private void OnDisable()
     {
-        walGen.OnMazeReady -= timerReady;
+        //walGen.OnMazeReady -= timerReady;
+        mazeHandler.OnMazeReady -= timerReady;
         Updated_Disc_Rotation.OnDiscAlignmentReady -= timerReady;
         genGrid.OnTileRotationReady -= timerReady;
     }
