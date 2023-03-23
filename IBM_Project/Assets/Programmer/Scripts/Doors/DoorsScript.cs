@@ -8,6 +8,9 @@ public class DoorsScript : MonoBehaviour
     private Transform ADoors;
     private Transform BDoors;
 
+    public GameObject openDoor;
+    public GameObject closeDoor;
+
     private Vector3 restingDoorPos;
 
     private GameObject player;
@@ -72,11 +75,15 @@ public class DoorsScript : MonoBehaviour
 
             if (distToPlayer < activateDistance || nearestEnemy < activateDistance) //open door
             {
+                GameObject sound = Instantiate(openDoor, transform.position, Quaternion.identity);
+                Destroy(sound, 1f);
                 openAmount10 -= moveSpeed * Time.deltaTime;
             }
 
             else //close door
             {
+                GameObject sound = Instantiate(closeDoor, transform.position, Quaternion.identity);
+                Destroy(sound, 1f);
                 openAmount10 += moveSpeed * Time.deltaTime;
             }
 
