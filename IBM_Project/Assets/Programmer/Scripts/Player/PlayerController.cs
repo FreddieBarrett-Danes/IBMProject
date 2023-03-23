@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
     //maybe be unesscary see what comes from development
     //private List<Ability> abilities;
     public Animator animator;
+    public Animator animator2;
+    public Animator animator3;
 
     private void Start()
     {
@@ -88,6 +90,12 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("Horizontal", velocity.x);
             animator.SetFloat("Vertical", velocity.z);
             animator.SetFloat("Speed", velocity.sqrMagnitude);
+            animator2.SetFloat("Horizontal", velocity.x);
+            animator2.SetFloat("Vertical", velocity.z);
+            animator2.SetFloat("Speed", velocity.sqrMagnitude);
+            animator3.SetFloat("Horizontal", velocity.x);
+            animator3.SetFloat("Vertical", velocity.z);
+            animator3.SetFloat("Speed", velocity.sqrMagnitude);
         }
         else
         {
@@ -127,8 +135,9 @@ public class PlayerController : MonoBehaviour
             controlTimer -= Time.deltaTime;
             if (controlTimer <= 0)
             {
-                transform.root.GetChild(1).gameObject.SetActive(true);
-                transform.root.GetChild(2).gameObject.SetActive(false);
+                transform.parent.GetChild(1).gameObject.SetActive(true);
+                transform.parent.GetChild(2).gameObject.SetActive(false);
+                transform.parent.GetChild(3).gameObject.SetActive(false);
                 controlTimer = 0;
                 gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
@@ -186,7 +195,7 @@ public class PlayerController : MonoBehaviour
             controlTimer = 10.0f;
             isBehindEnemy = false;
             isControlling = true;
-            Destroy(enemyControlled);
+            Destroy(enemyControlled.transform.parent.gameObject);
             //enemyControlled.SetActive(enemyControlled);
             /*switch (threatLevel)
             {
@@ -250,6 +259,7 @@ public class PlayerController : MonoBehaviour
         if (gc.bots.Length <= 0) return;
         foreach (GameObject bot in gc.bots)
         {
+            if (!bot) return;
             Vector3 enemyPos = bot.transform.GetChild(0).position;
             Vector3 playerPos = transform.position;
             float range = Vector3.Distance(enemyPos, playerPos);
