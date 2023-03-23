@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DoorsScript : MonoBehaviour
@@ -8,32 +9,37 @@ public class DoorsScript : MonoBehaviour
     private Transform ADoors;
     private Transform BDoors;
 
+    public GameObject openDoor;
+    public GameObject closeDoor;
+
+    [SerializeField]
     private Vector3 restingDoorPos;
 
     private GameObject player;
-    private float distToPlayer;
+    private float distToPlayer = 100f;
 
     private List<GameObject> enemies = new List<GameObject>();
-    private float nearestEnemy;
+    private float nearestEnemy = 100f;
 
     [SerializeField]
     private float activateDistance;     // Distance between player and door to open
     [SerializeField]
     private float openDistance;         // How far doors should open
 
-    private bool isOpen;
-    private bool wasOpen;
+    public bool isOpen;
+    public bool wasOpen;
 
-    public bool isComputer;    
+    public bool isComputer;
 
-    
+
     //
 
     private float openAmount10;
     [SerializeField]
     private float moveSpeed;
 
-    private Vector3 AOpen,AClosed,BOpen,BClosed;
+    private Vector3 AOpen, AClosed, BOpen, BClosed;
+
 
     void Start()
     {
@@ -43,13 +49,17 @@ public class DoorsScript : MonoBehaviour
 
         FindEnemiesInScene();
 
-        restingDoorPos = ADoors.localPosition;
+        //restingDoorPos = ADoors.localPosition;
+        restingDoorPos = new Vector3(-0.75f, 0.5f, 0f);
+
+        openAmount10 = 1;
+        wasOpen = isOpen;
     }
 
     void Update()
     {
         FindEnemiesInScene();
-        
+
         nearestEnemy = (this.transform.position - player.transform.position).magnitude;
         nearestEnemy = Mathf.Infinity;
 
@@ -73,11 +83,14 @@ public class DoorsScript : MonoBehaviour
             if (distToPlayer < activateDistance || nearestEnemy < activateDistance) //open door
             {
                 openAmount10 -= moveSpeed * Time.deltaTime;
+
+                isOpen = true;
             }
 
             else //close door
             {
                 openAmount10 += moveSpeed * Time.deltaTime;
+                isOpen = false;
             }
 
             openAmount10 = Mathf.Clamp01(openAmount10);
@@ -90,7 +103,7 @@ public class DoorsScript : MonoBehaviour
             ADoors.transform.localPosition = Vector3.Lerp(AOpen, AClosed, openAmount10);
             BDoors.transform.localPosition = Vector3.Lerp(BOpen, BClosed, openAmount10);
         }
-        else if(isComputer)
+        else if (isComputer)
         {
             if (distToPlayer < activateDistance || nearestEnemy < activateDistance)//close to computer door
             {
@@ -105,6 +118,13 @@ public class DoorsScript : MonoBehaviour
                 player.GetComponent<PlayerController>().door = null;
             }
         }
+
+        if (isOpen != wasOpen)
+        {
+            DoorStateChanged();
+        }
+
+        wasOpen = isOpen;
     }
 
     private void FindEnemiesInScene()
@@ -113,5 +133,22 @@ public class DoorsScript : MonoBehaviour
 
         BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
         enemies = botScripts.Select(t => t.transform.gameObject).ToList();
+    }
+
+    private void DoorStateChanged()
+    {
+        if (isOpen)
+        {
+            GameObject sound = Instantiate(openDoor, transform.position, Quaternion.identity);
+            Destroy(sound, 2f);
+            //Spawn open sound in here
+        }
+
+        else
+        {
+            GameObject sound = Instantiate(closeDoor, transform.position, Quaternion.identity);
+            Destroy(sound, 2f);
+            //Spawn close sound in here
+        }
     }
 }

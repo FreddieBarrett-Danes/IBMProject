@@ -38,6 +38,7 @@ public class genGrid : MonoBehaviour
     private Color startColor;
     //int ij = 0;
     private short failCounter; //Amount of times the player has checked the tile grid (space) but the rotations weren't set correctly.
+    public ScoreSystem ScoreSystemGameObject;
 
     public delegate void DelType1(bool TileRotationReady);
     public static event DelType1 OnTileRotationReady;
@@ -51,6 +52,8 @@ public class genGrid : MonoBehaviour
         //gridCompletion = false;
         //tileRotation = tilePrefab.transform.rotation;
         tilePrefab2 = GameObject.Find("Tile_UpDown");
+
+        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ScoreSystem>();
 
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -135,9 +138,10 @@ public class genGrid : MonoBehaviour
                 }
             }
         }
-
+        //Here
         GameObject startTile = Instantiate(GameObject.Find("Tile_StartUp"), new Vector3(0, -1, 1), GameObject.Find("Tile_StartUp").transform.rotation);
         startTile.GetComponent<BoxCollider>().enabled = false;
+        startTile.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
         Debug.Log("StartTileCheck1: " + StartTileCheck);
         //Debug.Log("before tileCheck");
         //tileCheck();
@@ -454,6 +458,7 @@ public class genGrid : MonoBehaviour
         if (finishLock == false)
         {
             Debug.Log("Grid has been rotated correctly. Tile Rotation minigame complete, refer to tileCheck() for output");
+            ScoreSystemGameObject.SendMessage("CompletedMinigame", 3); //3 = TileRotation
             Timer.SetActive(false);
             gC.mC.completedDoor = true;
             gC.inMinigame = false;

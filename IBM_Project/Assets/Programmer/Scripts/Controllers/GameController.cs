@@ -56,6 +56,7 @@ public class GameController : MonoBehaviour
         mC = gameObject.GetComponent<MinigameController>();
         player = FindObjectOfType<PlayerController>().GameObject();
         PlayerStatus = Status.SAFE;
+        bots = GameObject.FindGameObjectsWithTag("Sprite");
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
     }
 
@@ -117,21 +118,20 @@ public class GameController : MonoBehaviour
                     mC.chosenMinigame.SetActive(false);
                 }
             }
-
             switch (Deactivate)
             {
                 case true:
                 {
                     if (bots != null)
                     {
-                        bots = GameObject.FindGameObjectsWithTag("Sprite");
                         foreach (GameObject bot in bots)
                         {
                             bot.transform.gameObject.SetActive(false);
                         }
 
-                        player.transform.root.GetChild(1).gameObject.SetActive(false);
-                        player.transform.root.GetChild(2).gameObject.SetActive(false);
+                        player.transform.parent.GetChild(1).gameObject.SetActive(false);
+                        player.transform.parent.GetChild(2).gameObject.SetActive(false);
+                        player.transform.parent.GetChild(3).gameObject.SetActive(false);
                     }
                     break;
                 }
@@ -139,19 +139,39 @@ public class GameController : MonoBehaviour
                 {
                     if(bots != null)
                     {
-                        bots = GameObject.FindGameObjectsWithTag("Sprite");
                         foreach (GameObject bot in bots)
                         {
-                            bot.transform.gameObject.SetActive(true);
+                            if (bot)
+                                bot.transform.gameObject.SetActive(true);
                         }
 
                         if (!player) return;
                         if (player.GetComponent<PlayerController>().threatLevel == 0)
-                            player.transform.root.GetChild(1).gameObject.SetActive(true);
-                        if (player.GetComponent<PlayerController>().threatLevel == 2)
-                            player.transform.root.GetChild(2).gameObject.SetActive(true);
+                        {
+                            player.transform.parent.GetChild(1).gameObject.SetActive(true);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(false);
+                        }
+                        else if (player.GetComponent<PlayerController>().threatLevel == 2)
+                        {
+                            player.transform.parent.GetChild(1).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(true);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(false);
+                        }
+                        else if (player.GetComponent<PlayerController>().threatLevel == 3)
+                        {
+                            player.transform.parent.GetChild(1).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            player.transform.parent.GetChild(1).gameObject.SetActive(true);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(false);
+                        }
                     }
-
+                
                     break;
                 }
             }

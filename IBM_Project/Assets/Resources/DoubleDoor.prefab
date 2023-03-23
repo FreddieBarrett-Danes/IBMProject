@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9055653330007547490}
   - component: {fileID: 9055653330007547489}
   - component: {fileID: 9055653330007547488}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 9055653330007547502}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.75, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.5, y: 1, z: 1}
+  m_LocalScale: {x: -1.5, y: 1, z: -0.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9055653331049746304}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b94d3f42a3934054da87413987d81fce, type: 2}
+  - {fileID: 2100000, guid: a19d3d5ba030d6b428f630e5fca7ffc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -143,8 +143,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c22a321ae0c3b4fba5e9ac46d93d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openDoor: {fileID: 1589914209113971151, guid: 61a938013fb42654f845c8d04fbc7b11, type: 3}
+  closeDoor: {fileID: 1304491368120862100, guid: 220d9788008947b489ae1cc1d1bc65fb, type: 3}
+  restingDoorPos: {x: 0, y: 0, z: 0}
   activateDistance: 2.5
   openDistance: 2.25
+  isOpen: 0
+  wasOpen: 0
+  isComputer: 0
   moveSpeed: 7.5
 --- !u!1 &9055653331080350199
 GameObject:
@@ -158,7 +164,7 @@ GameObject:
   - component: {fileID: 9055653331080349707}
   - component: {fileID: 9055653331080349706}
   - component: {fileID: 9055653331080349705}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ADoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +180,7 @@ Transform:
   m_GameObject: {fileID: 9055653331080350199}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.75, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.5, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9055653331049746304}
@@ -208,7 +214,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a79bae84e1f1e4b4186e5622b2fcc3ce, type: 2}
+  - {fileID: 2100000, guid: a19d3d5ba030d6b428f630e5fca7ffc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

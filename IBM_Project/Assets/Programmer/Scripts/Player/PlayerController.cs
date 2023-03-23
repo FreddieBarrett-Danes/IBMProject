@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
     //maybe be unesscary see what comes from development
     //private List<Ability> abilities;
     public Animator animator;
+    public Animator animator2;
+    public Animator animator3;
 
     private void Start()
     {
@@ -88,6 +90,12 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("Horizontal", velocity.x);
             animator.SetFloat("Vertical", velocity.z);
             animator.SetFloat("Speed", velocity.sqrMagnitude);
+            animator2.SetFloat("Horizontal", velocity.x);
+            animator2.SetFloat("Vertical", velocity.z);
+            animator2.SetFloat("Speed", velocity.sqrMagnitude);
+            animator3.SetFloat("Horizontal", velocity.x);
+            animator3.SetFloat("Vertical", velocity.z);
+            animator3.SetFloat("Speed", velocity.sqrMagnitude);
         }
         else
         {
@@ -127,8 +135,7 @@ public class PlayerController : MonoBehaviour
             controlTimer -= Time.deltaTime;
             if (controlTimer <= 0)
             {
-                transform.root.GetChild(1).gameObject.SetActive(true);
-                transform.root.GetChild(2).gameObject.SetActive(false);
+                threatLevel = 0;
                 controlTimer = 0;
                 gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
@@ -186,7 +193,7 @@ public class PlayerController : MonoBehaviour
             controlTimer = 10.0f;
             isBehindEnemy = false;
             isControlling = true;
-            Destroy(enemyControlled);
+            Destroy(enemyControlled.transform.parent.gameObject);
             //enemyControlled.SetActive(enemyControlled);
             /*switch (threatLevel)
             {
@@ -250,24 +257,28 @@ public class PlayerController : MonoBehaviour
         if (gc.bots.Length <= 0) return;
         foreach (GameObject bot in gc.bots)
         {
-            Vector3 enemyPos = bot.transform.GetChild(0).position;
-            Vector3 playerPos = transform.position;
-            float range = Vector3.Distance(enemyPos, playerPos);
-            Vector3 toTarget = enemyPos - playerPos;
-            Vector3 dirToTarget = toTarget.normalized;
+            if (bot)
+            {
+                Vector3 enemyPos = bot.transform.GetChild(0).position;
+                Vector3 playerPos = transform.position;
+                float range = Vector3.Distance(enemyPos, playerPos);
+                Vector3 toTarget = enemyPos - playerPos;
+                Vector3 dirToTarget = toTarget.normalized;
 
-            if ((range < transform.gameObject.GetComponent<FieldOfView>().viewRadius - 0.05f &&
-                 Vector3.Angle(transform.forward, dirToTarget) <
-                 transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2) 
-                && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude, transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
-            {
-                bot.transform.root.GetChild(0).GetComponent<BotInfo>().bInPlayerView = true;
-                bot.transform.root.GetChild(1).gameObject.SetActive(true);
-            }
-            else
-            {
-                bot.transform.root.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
-                bot.transform.root.GetChild(1).gameObject.SetActive(false);
+                if ((range < transform.gameObject.GetComponent<FieldOfView>().viewRadius - 0.05f &&
+                     Vector3.Angle(transform.forward, dirToTarget) <
+                     transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2)
+                    && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude,
+                        transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
+                {
+                    bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = true;
+                    bot.transform.GetChild(1).gameObject.SetActive(true);
+                }
+                else
+                {
+                    bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
+                    bot.transform.GetChild(1).gameObject.SetActive(false);
+                }
             }
         }
     }
