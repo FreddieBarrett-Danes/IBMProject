@@ -15,18 +15,21 @@ public class ScoreSystem : MonoBehaviour
     float TimerUp; //Timer counting up (aka TimeTaken)
     float TimeBonus;
     
-    float BonusThreshold = 180;
-    float BonusModifier = 1;
+    public float TimeBonusThreshold = 180;
+    public float TimeScoreModifier = 1;
     
     float QuizScore;
+
+    public Vector3 PointsX_MazeY_DiscZ_Tile;
+    private Vector3 MinigamePoints;
     //LevelTimer.currentTime counts down starting from LevelTimer.startTime
     //public LevelTimeBank TimeBank;
 
     void AddBonus()
     {
-        if (LevelTimer.currentTime >= BonusThreshold)
+        if (LevelTimer.currentTime >= TimeBonusThreshold)
         {
-            TimeBonus = (LevelTimer.startTime - TimerUp) * BonusModifier;
+            TimeBonus = (LevelTimer.startTime - TimerUp) * TimeScoreModifier;
         }
         else
         {
@@ -52,23 +55,44 @@ public class ScoreSystem : MonoBehaviour
         switch (num)
         {
             case 1:
-                Score += 12;
+                Score += MinigamePoints.x;
                 break;
             case 2:
-                Score += 6;
+                Score += MinigamePoints.y;
                 break;
             case 3:
-                Score += 6;
+                Score += MinigamePoints.z;
                 break;
             default:
                 Debug.LogError("CompletedMinigame() num is " + num + " which isn't a registered minigame number");
                 break;
         }
     }
-    
+
+    void LevelFinished()
+    {
+        //Original formula from confluence
+
+        //if (LevelTimer.currentTime >= TimeBonusThreshold)
+        //{
+        //    TimeBonus = (LevelTimer.startTime - TimerUp) * BonusModifier;
+        //}
+        //else
+        //{
+        //    TimeBonus = 0;
+        //}
+        ////Score = (LevelTimer.currentTime + TimeBonus /* + QuizTimer + MiscBonus*/);
+        //Score = (LevelTimer.currentTime + TimeBonus);
+
+
+        Score += LevelTimer.currentTime * TimeScoreModifier;
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        MinigamePoints = PointsX_MazeY_DiscZ_Tile;
         //CompletedMinigame(1);
         //QuizScore = Quiz.rightAnswers * BonusThreshold; //Quiz timer * quiz bonus * modifier
         //LevelTimer.currentTime
@@ -82,25 +106,25 @@ public class ScoreSystem : MonoBehaviour
         TimerUp += Time.deltaTime;
         //TimerUp = (int)TimerUp;
 
-        //if (LevelTimer.currentTime >= BonusThreshold)
-        //{
-        //    TimeBonus = LevelTimer.startTime - TimerUp;
-        //}
-        //else
-        //{
-        //    TimeBonus = 0;
-        //}
+        if (LevelTimer.currentTime >= TimeBonusThreshold)
+        {
+            TimeBonus = LevelTimer.startTime - TimerUp;
+        }
+        else
+        {
+            TimeBonus = 0;
+        }
 
         //At the end of level
-        
+
 
         //Score = (LevelTimer.currentTime + TimeBonus /* + QuizTimer + MiscBonus*/);
-        
+
         ScoreText.text = Score.ToString("000");
         Debug.Log("Score: " + Score);
 
-        if (Quiz.completedQuiz == true) { }
-
+        if (Quiz.completedQuiz == true) { Score += Quiz.totalPoints; }
+        //if (Quiz.hackSuccessful == true) {  }
         //if (Hit against target == true) { Score += 4; }
 
         //if (Hit by a target == true) { Score -= 12; }
