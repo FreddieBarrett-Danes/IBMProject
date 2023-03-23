@@ -121,59 +121,59 @@ public class GameController : MonoBehaviour
             switch (Deactivate)
             {
                 case true:
+                {
+                    if (bots != null)
                     {
-                        if (bots != null)
+                        foreach (GameObject bot in bots)
                         {
-                            foreach (GameObject bot in bots)
-                            {
-                                bot.transform.gameObject.SetActive(false);
-                            }
+                            bot.transform.gameObject.SetActive(false);
+                        }
 
-                            player.transform.parent.GetChild(1).gameObject.SetActive(false);
+                        player.transform.parent.GetChild(1).gameObject.SetActive(false);
+                        player.transform.parent.GetChild(2).gameObject.SetActive(false);
+                        player.transform.parent.GetChild(3).gameObject.SetActive(false);
+                    }
+                    break;
+                }
+                case false:
+                {
+                    if(bots != null)
+                    {
+                        foreach (GameObject bot in bots)
+                        {
+                            if (bot)
+                                bot.transform.gameObject.SetActive(true);
+                        }
+
+                        if (!player) return;
+                        if (player.GetComponent<PlayerController>().threatLevel == 0)
+                        {
+                            player.transform.parent.GetChild(1).gameObject.SetActive(true);
                             player.transform.parent.GetChild(2).gameObject.SetActive(false);
                             player.transform.parent.GetChild(3).gameObject.SetActive(false);
                         }
-                        break;
-                    }
-                case false:
-                    {
-                        if (bots != null)
+                        else if (player.GetComponent<PlayerController>().threatLevel == 2)
                         {
-                            foreach (GameObject bot in bots)
-                            {
-                                if (bot)
-                                    bot.transform.gameObject.SetActive(true);
-                            }
-
-                            if (!player) return;
-                            if (player.GetComponent<PlayerController>().threatLevel == 0)
-                            {
-                                player.transform.parent.GetChild(1).gameObject.SetActive(true);
-                                player.transform.parent.GetChild(2).gameObject.SetActive(false);
-                                player.transform.parent.GetChild(3).gameObject.SetActive(false);
-                            }
-                            else if (player.GetComponent<PlayerController>().threatLevel == 2)
-                            {
-                                player.transform.parent.GetChild(1).gameObject.SetActive(false);
-                                player.transform.parent.GetChild(2).gameObject.SetActive(true);
-                                player.transform.parent.GetChild(3).gameObject.SetActive(false);
-                            }
-                            else if (player.GetComponent<PlayerController>().threatLevel == 3)
-                            {
-                                player.transform.parent.GetChild(1).gameObject.SetActive(false);
-                                player.transform.parent.GetChild(2).gameObject.SetActive(false);
-                                player.transform.parent.GetChild(3).gameObject.SetActive(true);
-                            }
-                            else
-                            {
-                                player.transform.parent.GetChild(1).gameObject.SetActive(true);
-                                player.transform.parent.GetChild(2).gameObject.SetActive(false);
-                                player.transform.parent.GetChild(3).gameObject.SetActive(false);
-                            }
+                            player.transform.parent.GetChild(1).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(true);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(false);
                         }
-
-                        break;
+                        else if (player.GetComponent<PlayerController>().threatLevel == 3)
+                        {
+                            player.transform.parent.GetChild(1).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            player.transform.parent.GetChild(1).gameObject.SetActive(true);
+                            player.transform.parent.GetChild(2).gameObject.SetActive(false);
+                            player.transform.parent.GetChild(3).gameObject.SetActive(false);
+                        }
                     }
+                
+                    break;
+                }
             }
         }
         else
