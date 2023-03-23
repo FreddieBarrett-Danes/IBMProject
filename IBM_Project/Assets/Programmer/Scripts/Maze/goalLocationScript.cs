@@ -23,6 +23,10 @@ public class goalLocationScript : MonoBehaviour
             Debug.Log(mPlayer.transform.position + "," + transform.position);
             Debug.Log("Maze Win");
             Debug.Log("Refer to goalLocationScript for Maze output");
+
+            //GameObject.Find("LevelCanvas").SendMessage("QuizLoaded");
+            GameObject.Find("LevelCanvas").SendMessage("CompletedMinigame", 1); //1 = Maze minigame
+            
             //CameraMaze call - Sets position of the camera
             if (setCameraPosition == false) { cameraMaze(false); };
 
