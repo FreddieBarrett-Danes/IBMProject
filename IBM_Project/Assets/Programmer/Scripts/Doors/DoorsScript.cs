@@ -16,18 +16,18 @@ public class DoorsScript : MonoBehaviour
     private Vector3 restingDoorPos;
 
     private GameObject player;
-    private float distToPlayer;
+    private float distToPlayer = 100f;
 
     private List<GameObject> enemies = new List<GameObject>();
-    private float nearestEnemy;
+    private float nearestEnemy = 100f;
 
     [SerializeField]
     private float activateDistance;     // Distance between player and door to open
     [SerializeField]
     private float openDistance;         // How far doors should open
 
-    private bool isOpen;
-    private bool wasOpen;
+    public bool isOpen;
+    public bool wasOpen;
 
     public bool isComputer;
 
@@ -40,6 +40,7 @@ public class DoorsScript : MonoBehaviour
 
     private Vector3 AOpen, AClosed, BOpen, BClosed;
 
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -50,6 +51,9 @@ public class DoorsScript : MonoBehaviour
 
         //restingDoorPos = ADoors.localPosition;
         restingDoorPos = new Vector3(-0.75f, 0.5f, 0f);
+
+        openAmount10 = 1;
+        wasOpen = isOpen;
     }
 
     void Update()
@@ -136,14 +140,14 @@ public class DoorsScript : MonoBehaviour
         if (isOpen)
         {
             GameObject sound = Instantiate(openDoor, transform.position, Quaternion.identity);
-            Destroy(sound, 1f);
+            Destroy(sound, 2f);
             //Spawn open sound in here
         }
 
         else
         {
             GameObject sound = Instantiate(closeDoor, transform.position, Quaternion.identity);
-            Destroy(sound, 1f);
+            Destroy(sound, 2f);
             //Spawn close sound in here
         }
     }
