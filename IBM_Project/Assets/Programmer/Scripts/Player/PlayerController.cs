@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
     private void Interact()
     {
-        bool playOnce = false;
+
         if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
             miniController.StartQuiz(1);
@@ -194,42 +194,12 @@ public class PlayerController : MonoBehaviour
             isBehindEnemy = false;
             isControlling = true;
             Destroy(enemyControlled.transform.parent.gameObject);
-            //enemyControlled.SetActive(enemyControlled);
-            /*switch (threatLevel)
-            {
-                //change these values when designers pull their finger out
 
-                case 0:
-                    controlTimer = 10.0f;
-                    break;
-                case 1:
-                    controlTimer = 10.0f;
-                    break;
-                case 2:
-                    controlTimer = 10.0f;
-                    break;
-                case 3:
-                    controlTimer = 5.0f;
-                    break;
-
-
-            }*/
-
-            /*//goes through abilities of each robot and adds them to character usiung switch statement. this needs to b eadded to another list so they can be removed after timer is up on controlling robots
-            foreach (Component t in enemyControlled.GetComponent<BotInfo>().bAbilitiesList)
-            {
-                switch (t.GetType().ToString())
-                {
-                    case "Shooting":
-                        
-
-                }
-            }*/
-            //enemyControlled.SetActive(enemyControlled.GetComponent<Collider>());
             readTSV.hackSuccessful = false;
         }
         else if(miniController.completedQuiz && enemyControlled != null && readTSV.hackSuccessful == false)
         {
+            bool playOnce = false;
             if (!playOnce)
             {
                 loseHack.Play();
