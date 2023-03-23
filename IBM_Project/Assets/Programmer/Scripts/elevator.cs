@@ -35,6 +35,7 @@ public class elevator : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         FindEnemiesInScene();
+        GameObject.Find("LevelCanvas").SendMessage("QuizLoaded"); //For Score System
 
         if(other.gameObject.tag == player.tag && enemies.Count == 0)
         {

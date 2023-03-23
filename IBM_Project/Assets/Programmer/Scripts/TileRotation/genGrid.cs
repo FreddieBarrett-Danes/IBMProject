@@ -454,6 +454,7 @@ public class genGrid : MonoBehaviour
         if (finishLock == false)
         {
             Debug.Log("Grid has been rotated correctly. Tile Rotation minigame complete, refer to tileCheck() for output");
+            GameObject.Find("LevelCanvas").SendMessage("CompletedMinigame", 3); //3 = TileRotation minigame
             Timer.SetActive(false);
             gC.mC.completedDoor = true;
             gC.inMinigame = false;
