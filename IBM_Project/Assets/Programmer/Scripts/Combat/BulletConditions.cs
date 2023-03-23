@@ -3,10 +3,12 @@ using UnityEngine;
 public class BulletConditions : MonoBehaviour
 {
     private GameObject[] enemies;
+    private AudioSource breakbox;
 
     private void Start()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        breakbox = gameObject.GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -20,11 +22,21 @@ public class BulletConditions : MonoBehaviour
                    other.GetComponent<BotInfo>().bIsDead = true;
                    Destroy(gameObject);
                }
-               else if (other.gameObject.layer == 8)
+               else if (other.gameObject.CompareTag("Wall"))
                {
-                   Destroy(gameObject);
+                    Destroy(gameObject);
+
                }
-           }
+               else if(other.gameObject.CompareTag("BreakableBox"))
+               {
+
+                    Destroy(other.gameObject);
+                    breakbox.enabled = true;
+
+                    
+                    //Destroy(gameObject);
+               }
+            }
             
 
        }
@@ -35,8 +47,9 @@ public class BulletConditions : MonoBehaviour
                 Destroy(other.gameObject);
                 Destroy(gameObject);
            }
-           else if (other.gameObject.layer == 8)
+           else if (other.gameObject.CompareTag("Wall"))
            {
+                Debug.Log("wall hit");
                 Destroy(gameObject);
            }
        }
