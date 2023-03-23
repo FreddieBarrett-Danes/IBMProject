@@ -46,7 +46,7 @@ public class MenuController : MonoBehaviour
     private Color buttonColour;
 
     [SerializeField]
-    private float tickboxScaler, sliderScaler, resScaler;
+    private float tickboxScaler, sliderScaler, resScaler, creditsScaler;
 
     [SerializeField]
     bool fullscreen, lastframeFullscreen;
@@ -285,9 +285,9 @@ public class MenuController : MonoBehaviour
         //Spawn Credits
         //
 
-        GameObject ibmSkillText = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
-        ibmSkillText.transform.parent = canvas.transform;
-        CreditsButtonList.Add(ibmSkillText);
+        GameObject creditsText = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
+        creditsText.transform.parent = canvas.transform;
+        CreditsButtonList.Add(creditsText);
 
         //back button
         GameObject creditsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
@@ -323,7 +323,10 @@ public class MenuController : MonoBehaviour
         Destroy(skillsLink.GetComponent<answersScript>());
         skillsLink.GetComponent<Image>().color = buttonColour;
 
-
+        //text for ibm
+        GameObject ibmText = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
+        ibmText.transform.parent = canvas.transform;
+        CreditsButtonList.Add(ibmText);
 
         //back button
         GameObject skillsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
@@ -358,7 +361,7 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        else if (menuState == MenuState.Settings)
+        else if (menuState == MenuState.Credits)
         {
             for (int i = 0; i < CreditsButtonList.Count; i++)
             {
@@ -422,6 +425,9 @@ public class MenuController : MonoBehaviour
 
         else if(menuState == MenuState.Credits)
         {
+            float creditsSize = Mathf.Min(canvasWidth, canvasHeight) * (creditsScaler / 100f);
+            CreditsButtonList[0].transform.localScale = new Vector2(creditsSize, creditsSize);
+
             CreditsButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
             CreditsButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
         }
