@@ -12,11 +12,15 @@ public class MenuController : MonoBehaviour
     private float canvasHeight, canvasWidth;
 
     [SerializeField]
-    private GameObject buttonPrefab, sliderPrefab, tickboxPrefab, dropdownPrefab;
+    private GameObject buttonPrefab, sliderPrefab, tickboxPrefab, dropdownPrefab, skillsText;
 
     private List<GameObject> MainButtonList = new List<GameObject>();
     [SerializeField]
     private List<GameObject> SettingsButtonList = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> SkillsButtonList = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> CreditsButtonList = new List<GameObject>();
 
     [SerializeField]
     private MenuState menuState;
@@ -62,6 +66,7 @@ public class MenuController : MonoBehaviour
     {
         Main,
         Settings,
+        SkillsBuild,
         Credits
     }
 
@@ -151,12 +156,16 @@ public class MenuController : MonoBehaviour
         {
             ShowHideMainMenuComponents      (true);
             ShowHideSettingsMenuComponents  (false);
+            ShowHideCreditsMenuComponents   (false);
+            ShowHideSkillsMenuComponents    (false);
         }
 
         if(menuState == MenuState.Settings)
         {
             ShowHideMainMenuComponents      (false);
             ShowHideSettingsMenuComponents  (true);
+            ShowHideCreditsMenuComponents   (false);
+            ShowHideSkillsMenuComponents    (false);
             
         }
 
@@ -164,7 +173,17 @@ public class MenuController : MonoBehaviour
         {
             ShowHideMainMenuComponents      (false);
             ShowHideSettingsMenuComponents  (false);
+            ShowHideCreditsMenuComponents   (true);
+            ShowHideSkillsMenuComponents    (false);
 
+        }
+
+        if(menuState == MenuState.SkillsBuild)
+        {
+            ShowHideMainMenuComponents      (false);
+            ShowHideSettingsMenuComponents  (false);
+            ShowHideCreditsMenuComponents   (false);
+            ShowHideSkillsMenuComponents    (true);
         }
     }
 
@@ -181,6 +200,22 @@ public class MenuController : MonoBehaviour
         for (int i = 0; i < SettingsButtonList.Count; i++)
         {
             SettingsButtonList[i].gameObject.SetActive(showHide);
+        }
+    }
+
+    void ShowHideCreditsMenuComponents(bool showHide)
+    {
+        for (int i = 0; i < CreditsButtonList.Count; i++)
+        {
+            CreditsButtonList[i].gameObject.SetActive(showHide);
+        }
+    }
+
+    void ShowHideSkillsMenuComponents(bool showHide)
+    {
+        for (int i = 0; i < SkillsButtonList.Count; i++)
+        {
+            SkillsButtonList[i].gameObject.SetActive(showHide);
         }
     }
 
@@ -250,6 +285,56 @@ public class MenuController : MonoBehaviour
         //Spawn Credits
         //
 
+        GameObject ibmSkillText = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
+        ibmSkillText.transform.parent = canvas.transform;
+        CreditsButtonList.Add(ibmSkillText);
+
+        //back button
+        GameObject creditsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        creditsBack.transform.parent = canvas.transform;
+        CreditsButtonList.Add(creditsBack);
+        creditsBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
+        creditsBack.GetComponent<Button>().onClick.AddListener(BackButtonPressed);
+        creditsBack.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(creditsBack.GetComponent<answersScript>());
+        creditsBack.GetComponent<Image>().color = buttonColour;
+
+        //
+        //Spawn Skills build
+        //
+
+        //Start button
+        GameObject skillsPlay = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        skillsPlay.transform.parent = canvas.transform;
+        SkillsButtonList.Add(skillsPlay);
+        skillsPlay.GetComponentInChildren<TextMeshProUGUI>().text = "Start";
+        skillsPlay.GetComponent<Button>().onClick.AddListener(PlayButtonPressed);
+        skillsPlay.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(skillsPlay.GetComponent<answersScript>());
+        skillsPlay.GetComponent<Image>().color = buttonColour;
+
+        //link to ibm
+        GameObject skillsLink = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        skillsLink.transform.parent = canvas.transform;
+        SkillsButtonList.Add(skillsLink);
+        skillsLink.GetComponentInChildren<TextMeshProUGUI>().text = "IBM Skills Build";
+        skillsLink.GetComponent<Button>().onClick.AddListener(OpenHyperlink);
+        skillsLink.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(skillsLink.GetComponent<answersScript>());
+        skillsLink.GetComponent<Image>().color = buttonColour;
+
+
+
+        //back button
+        GameObject skillsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        skillsBack.transform.parent = canvas.transform;
+        SkillsButtonList.Add(skillsBack);
+        skillsBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
+        skillsBack.GetComponent<Button>().onClick.AddListener(BackButtonPressed);
+        skillsBack.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(skillsBack.GetComponent<answersScript>());
+        skillsBack.GetComponent<Image>().color = buttonColour;
+
         return;
     }
 
@@ -270,6 +355,24 @@ public class MenuController : MonoBehaviour
             {
                 Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
                 SettingsButtonList[i].transform.position = canvas.transform.position + pos;
+            }
+        }
+
+        else if (menuState == MenuState.Settings)
+        {
+            for (int i = 0; i < CreditsButtonList.Count; i++)
+            {
+                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
+                CreditsButtonList[i].transform.position = canvas.transform.position + pos;
+            }
+        }
+
+        else if(menuState == MenuState.SkillsBuild)
+        {
+            for (int i = 0; i < SkillsButtonList.Count; i++)
+            {
+                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
+                SkillsButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
     }
@@ -316,6 +419,22 @@ public class MenuController : MonoBehaviour
             SettingsButtonList[3].transform.localScale = new Vector2(resSize, resSize);*/
 
         }
+
+        else if(menuState == MenuState.Credits)
+        {
+            CreditsButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            CreditsButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+        }
+
+        else if(menuState == MenuState.SkillsBuild)
+        {
+            for (int i = 0; i < SkillsButtonList.Count; i++)
+            {
+                SkillsButtonList[i].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+
+                SkillsButtonList[i].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+            }
+        }
     }
 
     void SetText(int buttonNumber)
@@ -348,16 +467,16 @@ public class MenuController : MonoBehaviour
         switch (buttonNumber)
         {
             case 0:
-                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(PlayButtonPressed);
+                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SkillsButtonPressed);
                 break;
             case 1:
                 MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SettingsButtonPressed);
                 break;
             case 2:
-                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(OpenHyperlink);
+                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
                 break;
             case 3:
-                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
+                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
                 break;
             case 4:
                 MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
@@ -417,10 +536,17 @@ public class MenuController : MonoBehaviour
         return;
     }
 
+    void SkillsButtonPressed()
+    {
+        //swap to skills build
+        menuState = MenuState.SkillsBuild;
+        return;
+    }
+
     void CreditsButtonPressed()
     {
         //Swap to credits menu
-
+        menuState = MenuState.Credits;
         return;
     }
 
