@@ -11,7 +11,7 @@ public class goalLocationScript : MonoBehaviour
 
     public walGen wG; //Re-reference the gameobject with the walGen script
 
-    public GameObject ScoreSystemGameObject;
+    public ScoreSystem ScoreSystemGameObject;
 
     private Vector3 originalCameraPos;
 
@@ -61,6 +61,9 @@ public class goalLocationScript : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ScoreSystem>();
+
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         computerInteraction = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();

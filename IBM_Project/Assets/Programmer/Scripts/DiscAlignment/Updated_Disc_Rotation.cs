@@ -30,9 +30,11 @@ public class Updated_Disc_Rotation : MonoBehaviour
     private bool Selected;
     private bool[] numAligned;
     private bool debugWin;
-
+    [SerializeField]
     GameObject Disc1; //Red (outline)
+    [SerializeField]
     GameObject Disc2; //green (middle)
+    [SerializeField]
     GameObject Disc3; //White (center)
 
     //Gameobjects used to check alignment. Moves position when a combonation of discs are aligned.
@@ -54,6 +56,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
     public bool randomiseRotations;
 
     public GameObject Timer;
+    public ScoreSystem ScoreSystemGameObject;
 
     private GameController gC;
     // Start is called before the first frame update
@@ -73,7 +76,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
     void Start()
     {
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-
+        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ScoreSystem>();
         Timer.SetActive(true);
         Timer.GetComponent<TextMeshProUGUI>().enabled = false;
 
@@ -81,9 +84,6 @@ public class Updated_Disc_Rotation : MonoBehaviour
         //Timer.SetActive(true);
         //Timer.GetComponent<MeshRenderer>().enabled = true;
         Debug.Log("start test");
-        Disc1 = GameObject.Find("Disc1n");
-        Disc2 = GameObject.Find("Disc2n");
-        Disc3 = GameObject.Find("Disc3n");
 
         numAligned = new bool[3];
 
@@ -452,7 +452,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
                 Timer.GetComponent<TextMeshProUGUI>().enabled = false;
             //OnDiscAlignmentReady(false);
 
-            GameObject.Find("LevelCanvas").SendMessage("CompletedMinigame", 2); //2 = DiscAlignment minigame
+            ScoreSystemGameObject.SendMessage("CompletedMinigame", 2); //2 = DiscAlignment minigame
             gC.mC.completedDoor = true;
                 gC.inMinigame = false;
                 Debug.Log("You Win!");
