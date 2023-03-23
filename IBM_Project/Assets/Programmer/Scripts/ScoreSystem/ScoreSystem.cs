@@ -11,12 +11,15 @@ public class ScoreSystem : MonoBehaviour
     public TextMeshProUGUI ScoreText;
     public elevator elevatortest;
 
+    private GameController Gc;
+
     float Score; //Overall score
     float TimerUp; //Timer counting up (aka TimeTaken)
     float TimeBonus;
     
     public float TimeBonusThreshold = 180;
     public float TimeScoreModifier = 1;
+    public float QuizScoreModifier = 1;
     
     float QuizScore;
 
@@ -69,7 +72,7 @@ public class ScoreSystem : MonoBehaviour
         }
     }
 
-    void LevelFinished()
+    void CompletedLevel()
     {
         //Original formula from confluence
 
@@ -89,9 +92,15 @@ public class ScoreSystem : MonoBehaviour
 
     }
 
+    void CompletedQuiz()
+    {
+        Score += Quiz.totalPoints * QuizScoreModifier;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("push test");
         MinigamePoints = PointsX_MazeY_DiscZ_Tile;
         //CompletedMinigame(1);
         //QuizScore = Quiz.rightAnswers * BonusThreshold; //Quiz timer * quiz bonus * modifier
@@ -102,7 +111,7 @@ public class ScoreSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(LevelTimer.currentTime);
+        //Debug.Log(LevelTimer.currentTime);
         TimerUp += Time.deltaTime;
         //TimerUp = (int)TimerUp;
 
@@ -123,7 +132,7 @@ public class ScoreSystem : MonoBehaviour
         ScoreText.text = Score.ToString("000");
         Debug.Log("Score: " + Score);
 
-        if (Quiz.completedQuiz == true) { Score += Quiz.totalPoints; }
+        if (Quiz.completedQuiz == true) { CompletedQuiz();  } //Score += Quiz.totalPoints;
         //if (Quiz.hackSuccessful == true) {  }
         //if (Hit against target == true) { Score += 4; }
 
