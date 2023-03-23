@@ -11,6 +11,8 @@ public class goalLocationScript : MonoBehaviour
 
     public walGen wG; //Re-reference the gameobject with the walGen script
 
+    public GameObject ScoreSystemGameObject;
+
     private Vector3 originalCameraPos;
 
     public Camera camera;
@@ -23,9 +25,10 @@ public class goalLocationScript : MonoBehaviour
             Debug.Log(mPlayer.transform.position + "," + transform.position);
             Debug.Log("Maze Win");
             Debug.Log("Refer to goalLocationScript for Maze output");
+            ScoreSystemGameObject.SendMessage("CompletedMinigame", 1); //1 = Maze
 
             //GameObject.Find("LevelCanvas").SendMessage("QuizLoaded");
-            GameObject.Find("LevelCanvas").SendMessage("CompletedMinigame", 1); //1 = Maze minigame
+            //GameObject.Find("LevelCanvas").SendMessage("CompletedMinigame", 1);
             
             //CameraMaze call - Sets position of the camera
             if (setCameraPosition == false) { cameraMaze(false); };
