@@ -115,8 +115,8 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         Vector3 mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-            mainCamera.transform.position.y));
-        transform.LookAt(mousePos + Vector3.up * transform.position.y);
+        mainCamera.transform.position.y));
+        visuals.transform.LookAt(mousePos + Vector3.up * transform.position.y);
         velocity = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * speed;
         mainCamera.transform.position = new Vector3(transform.position.x, 5, transform.position.z);
     }
