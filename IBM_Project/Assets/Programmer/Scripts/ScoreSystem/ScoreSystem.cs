@@ -100,7 +100,7 @@ public class ScoreSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("push test");
+        //Debug.Log("push test");
         MinigamePoints = PointsX_MazeY_DiscZ_Tile;
         //CompletedMinigame(1);
         //QuizScore = Quiz.rightAnswers * BonusThreshold; //Quiz timer * quiz bonus * modifier
@@ -130,7 +130,7 @@ public class ScoreSystem : MonoBehaviour
         //Score = (LevelTimer.currentTime + TimeBonus /* + QuizTimer + MiscBonus*/);
 
         ScoreText.text = Score.ToString("000");
-        Debug.Log("Score: " + Score);
+        //Debug.Log("Score: " + Score);
 
         if (Quiz.completedQuiz == true) { CompletedQuiz();  } //Score += Quiz.totalPoints;
         //if (Quiz.hackSuccessful == true) {  }

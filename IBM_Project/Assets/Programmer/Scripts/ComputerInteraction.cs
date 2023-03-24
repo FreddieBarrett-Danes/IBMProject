@@ -19,7 +19,7 @@ public class ComputerInteraction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType(typeof(PlayerController)).GameObject();
+        player = GameObject.FindGameObjectWithTag("Player");
         enemies = GameObject.FindGameObjectsWithTag("EnemyScript");
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();

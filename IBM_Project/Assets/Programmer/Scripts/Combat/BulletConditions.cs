@@ -42,7 +42,7 @@ public class BulletConditions : MonoBehaviour
        }
        else if (gameObject.CompareTag("Enemy"))
        {
-           if (other.gameObject.tag == "Player")
+           if (other.gameObject.CompareTag("Player"))
            {
                 //reduce level timer
                 Destroy(other.gameObject);
@@ -54,6 +54,14 @@ public class BulletConditions : MonoBehaviour
                 Destroy(gameObject);
            }
        }
+       else
+        {
+           if (other.gameObject.CompareTag("Wall"))
+           {
+
+                Destroy(gameObject);
+           }
+        }
         
         /*else
         {

@@ -45,7 +45,7 @@ public class SoundTrack_Controller : MonoBehaviour
     {
         if(gC.PlayerStatus == GameController.Status.SAFE && !gC.inMinigame && !gC.inQuiz)
         {
-            Debug.Log("player safe");
+            //Debug.Log("player safe");
             safeState.mute = false;
             alertState.mute = true;
             huntedState.mute = true;
@@ -54,7 +54,7 @@ public class SoundTrack_Controller : MonoBehaviour
         }
         else if (gC.PlayerStatus == GameController.Status.ALERTED && !gC.inMinigame && !gC.inQuiz)
         {
-            Debug.Log("player alert");
+            //Debug.Log("player alert");
             safeState.mute = true;
             alertState.mute = false;
             huntedState.mute = true;
@@ -63,7 +63,7 @@ public class SoundTrack_Controller : MonoBehaviour
         }
         else if (gC.PlayerStatus == GameController.Status.HUNTED && !gC.inMinigame && !gC.inQuiz)
         {
-            Debug.Log("player hunted");
+            //Debug.Log("player hunted");
             safeState.mute = true;
             alertState.mute = true;
             huntedState.mute = false;

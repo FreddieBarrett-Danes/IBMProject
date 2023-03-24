@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+
     private MinigameController miniController;
     private GameController gc;
     private ReadTSV readTSV;
@@ -250,7 +252,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!playOnce)
             {
-                loseHack.Play();
+                //loseHack.Play();
                 playOnce = true;
             }
         }
@@ -258,9 +260,8 @@ public class PlayerController : MonoBehaviour
 
     private void DoorInteract()
     {
-        if (computerDoor && !isBehindEnemy && Input.GetKeyDown(KeyCode.E) && !miniController.completedDoor)
+        if (computerDoor && Input.GetKeyDown(KeyCode.E) && !miniController.completedDoor)
         {
-            Debug.Log("computer door");
             //activate computer door minigame
             miniController.StartDoorMinigame();
         }
