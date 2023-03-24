@@ -34,7 +34,7 @@ public class LevelTimer : MonoBehaviour
                 if (!gC.inMinigame)
                 {
                     currentTime -= Time.deltaTime;
-                    updateTimer(currentTime);
+                    UpdateTimer(currentTime);
                     playerstatusText.text = gC.PlayerStatus switch
                     {
                         GameController.Status.SAFE => "SAFE",
@@ -52,11 +52,11 @@ public class LevelTimer : MonoBehaviour
             {
                 //time has run out
                 currentTime = 0;
-                TimeUp = false;
+                TimeUp = true;
             }
         }
     }
-    void updateTimer(float currentTime)
+    void UpdateTimer(float currentTime)
     {
         currentTime += 1;
 
