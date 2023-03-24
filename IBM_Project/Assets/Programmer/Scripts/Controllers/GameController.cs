@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     public float LevelTimeBank = 0.0f;
     public bool completedLevel = false;
     public bool GameOver = false;
+    public bool newScene = false;
 
     public bool playerHit = false;
 
@@ -57,7 +58,8 @@ public class GameController : MonoBehaviour
         {
             tile.SetActive(false);
         }
-        DontDestroyOnLoad(levelTimer);
+        levelUI = GameObject.FindGameObjectsWithTag("LevelUI");
+        levelTimer = GameObject.FindGameObjectWithTag("LevelTimer");
         level = GameObject.FindGameObjectWithTag("LevelObject");
         mC = gameObject.GetComponent<MinigameController>();
         player = FindObjectOfType<PlayerController>().GameObject();
@@ -85,6 +87,8 @@ public class GameController : MonoBehaviour
             {
                 //transistion to losing scene
                 Destroy(levelTimer);
+                //this is the correct way of doing this lol
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - SceneManager.GetActiveScene().buildIndex);
             }
 
             if (inMinigame)
@@ -189,6 +193,8 @@ public class GameController : MonoBehaviour
         else if (completedLevel)
         {
             Destroy(levelTimer);
+            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
             //LevelTimeBank += levelTimer.currentTime;
         }
     }

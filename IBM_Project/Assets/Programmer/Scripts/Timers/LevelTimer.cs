@@ -14,21 +14,42 @@ public class LevelTimer : MonoBehaviour
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI playerstatusText;
     private int i = 0;
+
+    private static LevelTimer timerInstance;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        DontDestroyOnLoad(this);
+        if (timerInstance == null) 
+        { 
+            timerInstance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+
+    }
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
-        i++;
-        Debug.Log("iteration " + i);
         playerstatusText.text = "SAFE";
         currentTime = startTime;
-        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         //countdownText.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
-    {   
+    {
+        if(countdownText == null)
+        {
+            playerstatusText.text = "SAFE";
+            countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        }
         if (!TimeUp)
         {
             if (currentTime > 0)

@@ -43,23 +43,14 @@ public class elevator : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameObject.Find("LevelCanvas").SendMessage("QuizLoaded"); //For Score System
-        if(other.gameObject.tag == player.tag)
-        {
-            //Debug.Log("playerinside ele");
-        }
 
         if (other.gameObject.tag == player.tag && (enemies.Count == 0 || enemiesDead))
         {
-            Debug.Log("playerinside ele");
             gC.inQuiz = true;
             reader.questionsInARow = 4;
             reader.find = true;
             cam.GetComponent<Camera>().farClipPlane = 0.5f;
         }
-/*        else
-        {
-            Debug.Log("lol fuck u freddie");
-        }*/
     }
 
     private void FindEnemiesInScene()
