@@ -27,7 +27,7 @@ public class MenuController : MonoBehaviour
     private MenuState lastFrameMenuState;
 
     [SerializeField]
-    float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, creditsHeightFrom, playHeightFrom, textboxScalar;
+    float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, creditsHeightFrom, creditsSpacing, playHeightFrom, textboxScalar;
     public int amountOfButtons;
 
     const int   _start =        0,
@@ -131,7 +131,7 @@ public class MenuController : MonoBehaviour
         //string temp = "Tempo";
 
         thisFrameResolution = (Resolution)dropdownInt;
-        Debug.Log(thisFrameResolution);
+        //Debug.Log(thisFrameResolution);
 
         if(lastframeResolution != thisFrameResolution)
         {
@@ -370,7 +370,7 @@ public class MenuController : MonoBehaviour
         {
             for (int i = 0; i < CreditsButtonList.Count; i++)
             {
-                Vector3 pos = new Vector3(0, creditsHeightFrom - ((buttonSpacing * canvasHeight) * i), 0);
+                Vector3 pos = new Vector3(0, creditsHeightFrom - ((creditsSpacing * canvasHeight) * i), 0);
                 CreditsButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
