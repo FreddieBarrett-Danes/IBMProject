@@ -53,6 +53,7 @@ public class GameController : MonoBehaviour
             tile.SetActive(false);
         }
 
+        level = GameObject.FindGameObjectWithTag("LevelObject");
         mC = gameObject.GetComponent<MinigameController>();
         player = FindObjectOfType<PlayerController>().GameObject();
         PlayerStatus = Status.SAFE;
