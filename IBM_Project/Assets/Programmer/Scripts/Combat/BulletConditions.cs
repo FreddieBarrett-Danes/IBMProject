@@ -3,11 +3,13 @@ using UnityEngine;
 public class BulletConditions : MonoBehaviour
 {
     private GameObject[] enemies;
+    private GameController gC;
     private AudioSource breakbox;
 
     private void Start()
     {
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = GameObject.FindGameObjectsWithTag("EnemyScript");
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         breakbox = gameObject.GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
@@ -42,9 +44,10 @@ public class BulletConditions : MonoBehaviour
        }
        else if (gameObject.CompareTag("Enemy"))
        {
-           if (other.gameObject.tag == "Player")
+           if (other.gameObject.CompareTag("Player"))
            {
-                Destroy(other.gameObject);
+                //reduce level timer
+                gC.playerHit = true;
                 Destroy(gameObject);
            }
            else if (other.gameObject.CompareTag("Wall"))
@@ -53,6 +56,14 @@ public class BulletConditions : MonoBehaviour
                 Destroy(gameObject);
            }
        }
+       else
+        {
+           if (other.gameObject.CompareTag("Wall"))
+           {
+
+                Destroy(gameObject);
+           }
+        }
         
         /*else
         {
