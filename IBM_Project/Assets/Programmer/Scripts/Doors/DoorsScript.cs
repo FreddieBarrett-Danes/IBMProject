@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DoorsScript : MonoBehaviour
 {
@@ -43,7 +44,7 @@ public class DoorsScript : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = FindObjectOfType(typeof(PlayerController)).GameObject();
         ADoors = this.gameObject.transform.Find("ADoor");
         BDoors = this.gameObject.transform.Find("BDoor");
 
@@ -105,17 +106,19 @@ public class DoorsScript : MonoBehaviour
         }
         else if (isComputer)
         {
+            
             if (distToPlayer < activateDistance || nearestEnemy < activateDistance)//close to computer door
             {
                 player.GetComponent<PlayerController>().computerDoor = true;
                 player.GetComponent<PlayerController>().door = gameObject.GetComponent<DoorsScript>();
-                //Debug.Log("close to PC Door");
+                
             }
 
             else //not close to computer door
             {
                 player.GetComponent<PlayerController>().computerDoor = false;
                 player.GetComponent<PlayerController>().door = null;
+                
             }
         }
 
