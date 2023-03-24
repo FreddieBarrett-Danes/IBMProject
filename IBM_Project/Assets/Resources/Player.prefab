@@ -282,7 +282,7 @@ MonoBehaviour:
   loseHack: {fileID: 5226137432426054200}
   breakBox: {fileID: 2872523968688022929}
   door: {fileID: 0}
-  speed: 2
+  speed: 5
   visuals: {fileID: 2054899258900365622}
   body: {fileID: 2054899258714693484}
   isBehindEnemy: 0
@@ -295,6 +295,8 @@ MonoBehaviour:
   computerDoor: 0
   elevatorDoor: 0
   animator: {fileID: 0}
+  animator2: {fileID: 0}
+  animator3: {fileID: 0}
 --- !u!54 &378670207
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class ComputerInteraction : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType(typeof(PlayerController)).GameObject();
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = GameObject.FindGameObjectsWithTag("EnemyScript");
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
     }
@@ -45,17 +45,6 @@ public class ComputerInteraction : MonoBehaviour
             }
             enemies = null;
             miniController.completedMaze = false;
-        }
-
-        if (gameController.inMinigame)
-        {
-            //gameObject.GetComponent<BoxCollider>().enabled = false;
-            gameObject.GetComponent<Renderer>().enabled = false;
-        }
-        else if(!gameController.inMinigame)
-        {
-            //gameObject.GetComponent<BoxCollider>().enabled = true;
-            gameObject.GetComponent<Renderer>().enabled = true;
         }
 
     }

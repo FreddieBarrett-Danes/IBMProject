@@ -11,11 +11,11 @@ public class goalLocationScript : MonoBehaviour
 
     public walGen wG; //Re-reference the gameobject with the walGen script
 
-    public ScoreSystem ScoreSystemGameObject;
+    private ScoreSystem ScoreSystemGameObject;
 
     private Vector3 originalCameraPos;
 
-    public Camera camera;
+    private Camera camera;
     public bool setCameraPosition;
 
     private void OnTriggerEnter(Collider other)

@@ -38,7 +38,7 @@ public class genGrid : MonoBehaviour
     private Color startColor;
     //int ij = 0;
     private short failCounter; //Amount of times the player has checked the tile grid (space) but the rotations weren't set correctly.
-    public ScoreSystem ScoreSystemGameObject;
+    private ScoreSystem ScoreSystemGameObject;
 
     public delegate void DelType1(bool TileRotationReady);
     public static event DelType1 OnTileRotationReady;
@@ -86,7 +86,7 @@ public class genGrid : MonoBehaviour
         failCounter = -1; //Set to -1 to account for pressing space to start minigame
 
         GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
-        pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
+        pregameText.SetActive(showTutorial);
 
 
 

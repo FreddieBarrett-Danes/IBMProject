@@ -56,7 +56,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
     public bool randomiseRotations;
 
     public GameObject Timer;
-    public ScoreSystem ScoreSystemGameObject;
+    private ScoreSystem ScoreSystemGameObject;
 
     private GameController gC;
     // Start is called before the first frame update
@@ -127,7 +127,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
         }
 
         GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
-        pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
+        pregameText.SetActive(showTutorial);
 
         currentSelect = 1;
         ColourUpdate();

@@ -15,9 +15,12 @@ public class elevator : MonoBehaviour
 
     private GameController gC;
 
+    private ComputerInteraction PC;
+
     public Vector3 debug;
 
-    private List<GameObject> enemies = new List<GameObject>();
+    public GameObject[] enemies;
+    public List<GameObject> enemiesShutdown = new List<GameObject>();
 
     //OMG FOR THE LOVE OF GOD WE NEED TO CHANGE THIS LATER. UNLOAD THE SCENE OR SOMETHING. 
     private GameObject cam;
@@ -29,31 +32,63 @@ public class elevator : MonoBehaviour
         quizMaster = GameObject.FindGameObjectWithTag("QuizMaster");
         reader = quizMaster.GetComponent<ReadTSV>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        PC= GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
+        enemies = GameObject.FindGameObjectsWithTag("EnemyScript");
         cam = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
         FindEnemiesInScene();
-        GameObject.Find("LevelCanvas").SendMessage("QuizLoaded"); //For Score System
-
-        if(other.gameObject.tag == player.tag && enemies.Count == 0)
+        if (PC.enemies == null)
         {
+            Debug.Log("can leave");
+
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        GameObject.Find("LevelCanvas").SendMessage("QuizLoaded"); //For Score System
+        if(other.gameObject.tag == player.tag)
+        {
+            //Debug.Log("playerinside ele");
+        }
+
+
+        if (other.gameObject.tag == player.tag && PC.enemies == null)
+        {
+            Debug.Log("playerinside ele");
             gC.inQuiz = true;
             reader.questionsInARow = 4;
             reader.find = true;
             cam.GetComponent<Camera>().farClipPlane = 0.5f;
         }
+/*        else
+        {
+            Debug.Log("lol fuck u freddie");
+        }*/
     }
 
     private void FindEnemiesInScene()
     {
-        enemies.Clear();
+        //enemies.Clear();
 
         //Old method that used the BotInfo script to locate enemies
         /*BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
         enemies = botScripts.Select(t => t.transform.gameObject).ToList();*/
 
-        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i] = PC.enemies[i];
+        }
+/*        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (enemies[i].GetComponent<BotInfo>().bIsDead)
+            {
+                enemiesShutdown.Add(enemies[i]);
+            }
+        }*/
+
+
     }
 }

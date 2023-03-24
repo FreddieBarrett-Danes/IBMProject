@@ -89,15 +89,11 @@ public class mazePlayerScript : MonoBehaviour
     void Update()
     {
         transform.rotation = Quaternion.Euler(0, 0, 0);
-
-
-
         if (mazeReadyPlayer)
         {
             if (Input.GetKey("d"))
             {
                 transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
-                gameObject.GetComponent<AudioSource>().mute = false;
                 if (touchWall == true)
                 {
                     transform.position -= new Vector3(speed * Time.deltaTime, 0, 0) * 3;
@@ -106,7 +102,6 @@ public class mazePlayerScript : MonoBehaviour
             if (Input.GetKey("w"))
             {
                 transform.position += new Vector3(0, 0, speed * Time.deltaTime);
-                gameObject.GetComponent<AudioSource>().mute = false;
                 if (touchWall == true)
                 {
                     transform.position -= new Vector3(0, 0, speed * Time.deltaTime) * 3;
@@ -115,7 +110,6 @@ public class mazePlayerScript : MonoBehaviour
             if (Input.GetKey("a"))
             {
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
-                gameObject.GetComponent<AudioSource>().mute = false;
                 if (touchWall == true)
                 {
                     transform.position += new Vector3(speed * Time.deltaTime, 0, 0) * 3;
@@ -124,27 +118,10 @@ public class mazePlayerScript : MonoBehaviour
             if (Input.GetKey("s"))
             {
                 transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
-                gameObject.GetComponent<AudioSource>().mute = false;
                 if (touchWall == true)
                 {
                     transform.position += new Vector3(0, 0, speed * Time.deltaTime) * 3;
                 }
-            }
-            if (Input.GetKeyUp("w"))
-            {
-                gameObject.GetComponent<AudioSource>().mute = true;
-            }
-            if (Input.GetKeyUp("a"))
-            {
-                gameObject.GetComponent<AudioSource>().mute = true;
-            }
-            if (Input.GetKeyUp("s"))
-            {
-                gameObject.GetComponent<AudioSource>().mute = true;
-            }
-            if (Input.GetKeyUp("d"))
-            {
-                gameObject.GetComponent<AudioSource>().mute = true;
             }
 
             if (Input.GetKeyDown("p"))
