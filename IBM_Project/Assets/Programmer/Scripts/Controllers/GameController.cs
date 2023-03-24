@@ -79,7 +79,7 @@ public class GameController : MonoBehaviour
             if(playerHit)
             {
                 //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
             }
             if (GameOver)
             {
