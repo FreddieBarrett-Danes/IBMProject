@@ -191,7 +191,9 @@ public class ReadTSV : MonoBehaviour
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
         canvasRectTransform = canvas.GetComponent<RectTransform>();
+
         
+
         Debug.Log((panelSize));
     }
 
@@ -199,6 +201,7 @@ public class ReadTSV : MonoBehaviour
     {
         if (find) //File Reading / generate
         {
+            gC.inMinigame = true;
             nonDuplicateRow(); //Generates a row number that is not on askedList.
 
             ////
@@ -550,8 +553,8 @@ public class ReadTSV : MonoBehaviour
             if (questionsInARow > 1)
             {
                 //find = true;
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                gC.completedLevel = true;
+                gC.inMinigame = false;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             else
             {
