@@ -3,11 +3,13 @@ using UnityEngine;
 public class BulletConditions : MonoBehaviour
 {
     private GameObject[] enemies;
+    private GameController gC;
     private AudioSource breakbox;
 
     private void Start()
     {
         enemies = GameObject.FindGameObjectsWithTag("EnemyScript");
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         breakbox = gameObject.GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
@@ -45,7 +47,7 @@ public class BulletConditions : MonoBehaviour
            if (other.gameObject.CompareTag("Player"))
            {
                 //reduce level timer
-                Destroy(other.gameObject);
+                gC.playerHit = true;
                 Destroy(gameObject);
            }
            else if (other.gameObject.CompareTag("Wall"))

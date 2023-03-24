@@ -7,16 +7,19 @@ using UnityEngine.UI;
 public class LevelTimer : MonoBehaviour
 {
     public float startTime;
-    public float currentTime;
+    public static float currentTime;
     public bool TimeUp = false;
     private GameController gC;
 
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI playerstatusText;
-
+    private int i = 0;
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+        i++;
+        Debug.Log("iteration " + i);
         playerstatusText.text = "SAFE";
         currentTime = startTime;
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -54,6 +57,10 @@ public class LevelTimer : MonoBehaviour
                 currentTime = 0;
                 TimeUp = true;
             }
+        }
+        else if(TimeUp)
+        {
+            gC.GameOver = true;
         }
     }
     void UpdateTimer(float currentTime)

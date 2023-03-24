@@ -550,7 +550,8 @@ public class ReadTSV : MonoBehaviour
             if (questionsInARow > 1)
             {
                 //find = true;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                gC.completedLevel = true;
             }
             else
             {

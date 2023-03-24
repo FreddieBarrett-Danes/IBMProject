@@ -17,8 +17,13 @@ public class GameController : MonoBehaviour
     public GameObject[] discUI;
     public GameObject[] tileUI;
 
+    public GameObject levelTimer;
+
     public float LevelTimeBank = 0.0f;
     public bool completedLevel = false;
+    public bool GameOver = false;
+
+    public bool playerHit = false;
 
     public bool Deactivate;
     public GameObject[] bots;
@@ -52,7 +57,7 @@ public class GameController : MonoBehaviour
         {
             tile.SetActive(false);
         }
-
+        DontDestroyOnLoad(levelTimer);
         level = GameObject.FindGameObjectWithTag("LevelObject");
         mC = gameObject.GetComponent<MinigameController>();
         player = FindObjectOfType<PlayerController>().GameObject();
@@ -71,11 +76,15 @@ public class GameController : MonoBehaviour
                 SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-
-            if (player == null)
+            if(playerHit)
             {
-                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            if (GameOver)
+            {
+                //transistion to losing scene
+                Destroy(levelTimer);
             }
 
             if (inMinigame)
@@ -177,8 +186,9 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-        else
+        else if (completedLevel)
         {
+            Destroy(levelTimer);
             //LevelTimeBank += levelTimer.currentTime;
         }
     }
