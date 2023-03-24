@@ -26,7 +26,7 @@ public class PlayerBehind : MonoBehaviour
         {
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             Vector3 toOther = player.transform.position - transform.position;
-            if (Vector3.Dot(forward, toOther) < 0)
+            if (Vector3.Dot(forward, toOther) < 0 && GetComponent<BotInfo>().bIsDead == false)
             {
                 pC.isBehindEnemy = true;
                 //this needs to check if there are more than one enemy -- this is probably sorted
