@@ -7,7 +7,7 @@ public class BulletConditions : MonoBehaviour
 
     private void Start()
     {
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = GameObject.FindGameObjectsWithTag("EnemyScript");
         breakbox = gameObject.GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
@@ -44,6 +44,7 @@ public class BulletConditions : MonoBehaviour
        {
            if (other.gameObject.tag == "Player")
            {
+                //reduce level timer
                 Destroy(other.gameObject);
                 Destroy(gameObject);
            }
