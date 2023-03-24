@@ -379,7 +379,7 @@ public class MenuController : MonoBehaviour
         {
             for (int i = 0; i < SkillsButtonList.Count; i++)
             {
-                Vector3 pos = new Vector3(0, playHeightFrom - ((buttonSpacing * canvasHeight) * i), 0);
+                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
                 SkillsButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
@@ -538,6 +538,36 @@ public class MenuController : MonoBehaviour
             for (int i = 0; i < SettingsButtonList.Count; i++)
             {
                 SettingsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+            }
+        }
+
+        else if(menuState == MenuState.Credits)
+        {
+            for (int i = 0; i < CreditsButtonList.Count; i++)
+            {
+                averageHeight += CreditsButtonList[i].GetComponent<RectTransform>().localPosition.y;
+            }
+            averageHeight /= CreditsButtonList.Count;
+            Debug.Log(averageHeight);
+
+            for (int i = 0; i < CreditsButtonList.Count; i++)
+            {
+                CreditsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+            }
+        }
+
+        else if (menuState == MenuState.SkillsBuild)
+        {
+            for (int i = 0; i < SkillsButtonList.Count; i++)
+            {
+                averageHeight += SkillsButtonList[i].GetComponent<RectTransform>().localPosition.y;
+            }
+            averageHeight /= SkillsButtonList.Count;
+            Debug.Log(averageHeight);
+
+            for (int i = 0; i < SkillsButtonList.Count; i++)
+            {
+                SkillsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
             }
         }
     }
