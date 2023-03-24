@@ -445,10 +445,15 @@ public class MenuController : MonoBehaviour
             SkillsButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
             SkillsButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
 
-            SkillsButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(0.8f * canvasWidth, 1);
+            SkillsButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(0.8f * canvasWidth, buttonHeight * canvasHeight);
             SkillsButtonList[2].GetComponent<TextMeshProUGUI>().text = SkillsText;
-            SkillsButtonList[2].GetComponent<TextMeshProUGUI>().enableAutoSizing = true;
             SkillsButtonList[2].GetComponent<TextMeshProUGUI>().color = textColour;
+            SkillsButtonList[2].GetComponent<TextMeshProUGUI>().enableAutoSizing = true;
+
+            float skillsSize = Mathf.Min(canvasWidth, canvasHeight) * (resScaler / 100f);
+            SettingsButtonList[2].transform.localScale = new Vector2(skillsSize, skillsSize);
+            //SettingsButtonList[2].transform.GetChild(0).GetComponent<TextMeshProUGUI>
+            SettingsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(160 * 0.8f, 30 * 0.8f);
 
             //SkillsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
 
