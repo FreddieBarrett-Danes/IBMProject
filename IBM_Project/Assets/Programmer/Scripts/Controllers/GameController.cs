@@ -17,8 +17,14 @@ public class GameController : MonoBehaviour
     public GameObject[] discUI;
     public GameObject[] tileUI;
 
+    public GameObject levelTimer;
+
     public float LevelTimeBank = 0.0f;
     public bool completedLevel = false;
+    public bool GameOver = false;
+    public bool newScene = false;
+
+    public bool playerHit = false;
 
     public bool Deactivate;
     public GameObject[] bots;
@@ -52,7 +58,8 @@ public class GameController : MonoBehaviour
         {
             tile.SetActive(false);
         }
-
+        levelUI = GameObject.FindGameObjectsWithTag("LevelUI");
+        levelTimer = GameObject.FindGameObjectWithTag("LevelTimer");
         level = GameObject.FindGameObjectWithTag("LevelObject");
         mC = gameObject.GetComponent<MinigameController>();
         player = FindObjectOfType<PlayerController>().GameObject();
@@ -71,11 +78,17 @@ public class GameController : MonoBehaviour
                 SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-
-            if (player == null)
+            if(playerHit)
             {
-                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
+            }
+            if (GameOver)
+            {
+                //transistion to losing scene
+                Destroy(levelTimer);
+                //this is the correct way of doing this lol
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - SceneManager.GetActiveScene().buildIndex);
             }
 
             if (inMinigame)
@@ -177,8 +190,11 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-        else
+        else if (completedLevel)
         {
+            Destroy(levelTimer);
+            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
             //LevelTimeBank += levelTimer.currentTime;
         }
     }

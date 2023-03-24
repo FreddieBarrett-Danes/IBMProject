@@ -368,7 +368,7 @@ public class walGen : MonoBehaviour
         //GameObject.FindGameObjectWithTag("MainCamera").transform.position = cameraPosition;
         //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().material.color = Color.white;
         //pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
-        Debug.Log("Pregame enabled: " + pregameText.GetComponent<TextMeshProUGUI>().enabled);
+        //Debug.Log("Pregame enabled: " + pregameText.GetComponent<TextMeshProUGUI>().enabled);
         preGoalLocation = new Vector3(0, 0, 0);
         goalLocationRng = Random.Range(Maze_Width*2, (Maze_Width * Maze_Height));
 
@@ -468,7 +468,7 @@ public class walGen : MonoBehaviour
          //targetPosGrid = convertToGrid(new Vector3(24, 0, 22));
         //--debug//
         //GameObject.Find("Tracker").transform.position = convertToWorld(currentPosGrid);
-        Debug.Log(currentPosGrid);
+        //Debug.Log(currentPosGrid);
         //currentPosWorld.transform.position = new Vector3(2, 0, 0);
         //targetPosWorld.transform.position = new Vector3(4, 0, 0);
         //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
@@ -519,7 +519,7 @@ public class walGen : MonoBehaviour
         float delay = 0.035f; //0.035f; //0.0175f; //0.035f;
 
         //delay = (1 / frameRate) * 2;
-        Debug.Log(delay);
+        //Debug.Log(delay);
         //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
         //yield return new WaitForSeconds(delay);
 

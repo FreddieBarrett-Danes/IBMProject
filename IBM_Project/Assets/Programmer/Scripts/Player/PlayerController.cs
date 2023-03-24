@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+
     private MinigameController miniController;
     private GameController gc;
     private ReadTSV readTSV;
@@ -113,8 +115,8 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         Vector3 mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-            mainCamera.transform.position.y));
-        transform.LookAt(mousePos + Vector3.up * transform.position.y);
+        mainCamera.transform.position.y));
+        visuals.transform.LookAt(mousePos + Vector3.up * transform.position.y);
         velocity = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * speed;
         mainCamera.transform.position = new Vector3(transform.position.x, 5, transform.position.z);
     }
@@ -135,6 +137,24 @@ public class PlayerController : MonoBehaviour
             controlTimer -= Time.deltaTime;
             if (controlTimer <= 0)
             {
+                GameObject tempBody;
+                switch (threatLevel)
+                {
+                    case 2:
+                    {
+                        Debug.Log("Solider_Death");
+                        tempBody = Resources.Load<GameObject>("Soldier_Death_Place");
+                        Instantiate(tempBody, transform.position, transform.parent.GetChild(2).rotation);
+                        break;
+                    }
+                    case 3:
+                    {
+                        Debug.Log("Scout_Death");
+                        tempBody = Resources.Load<GameObject>("Scout_Death_Place");
+                        Instantiate(tempBody, transform.position, transform.parent.GetChild(2).rotation);
+                        break;
+                    }
+                }
                 threatLevel = 0;
                 controlTimer = 0;
                 gameObject.GetComponent<Shooting>().enabled = false;
@@ -232,7 +252,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!playOnce)
             {
-                loseHack.Play();
+                //loseHack.Play();
                 playOnce = true;
             }
         }
@@ -240,9 +260,8 @@ public class PlayerController : MonoBehaviour
 
     private void DoorInteract()
     {
-        if (computerDoor && !isBehindEnemy && Input.GetKeyDown(KeyCode.E) && !miniController.completedDoor)
+        if (computerDoor && Input.GetKeyDown(KeyCode.E) && !miniController.completedDoor)
         {
-            Debug.Log("computer door");
             //activate computer door minigame
             miniController.StartDoorMinigame();
         }

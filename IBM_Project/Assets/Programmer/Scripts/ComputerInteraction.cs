@@ -14,7 +14,6 @@ public class ComputerInteraction : MonoBehaviour
 
     public bool mazeFailed = false;
 
-
     private bool isTouching;
     // Start is called before the first frame update
     void Start()
@@ -63,34 +62,5 @@ public class ComputerInteraction : MonoBehaviour
         {
             isTouching = false;
         }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        /*if(other == player.GetComponent<CapsuleCollider>() && Input.GetKey(KeyCode.E))
-        {
-            if (!completedMinigame)
-            {
-                minigameCount = minigameHolder.transform.childCount;
-                int randomMinigame = Mathf.RoundToInt(Random.Range(0, minigameCount - 1));
-                chosenMinigame = minigameHolder.transform.GetChild(randomMinigame).gameObject;
-
-                if (!chosenMinigame.active)
-                {
-                    gameController.inMinigame = true;
-
-                }
-            }
-            else
-            {
-                foreach (GameObject enemy in enemies)
-                {
-                    Destroy(enemy);
-                }
-                enemies = null;
-                completedMinigame = false;
-            }
-
-        }*/
     }
 }
