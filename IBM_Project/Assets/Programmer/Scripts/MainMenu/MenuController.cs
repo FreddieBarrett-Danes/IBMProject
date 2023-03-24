@@ -27,7 +27,7 @@ public class MenuController : MonoBehaviour
     private MenuState lastFrameMenuState;
 
     [SerializeField]
-    float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, textboxScalar;
+    float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, creditsHeightFrom, playHeightFrom, textboxScalar;
     public int amountOfButtons;
 
     const int   _start =        0,
@@ -44,6 +44,8 @@ public class MenuController : MonoBehaviour
 
     [SerializeField]
     private Color buttonColour;
+    [SerializeField]
+    private Color textColour;
 
     [SerializeField]
     private float tickboxScaler, sliderScaler, resScaler, creditsScaler;
@@ -60,7 +62,10 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     private string hyperlink = "https://google.com/";
 
+    public string SkillsText;
+
     public float debug;
+
 
     public enum MenuState
     {
@@ -326,7 +331,7 @@ public class MenuController : MonoBehaviour
         //text for ibm
         GameObject ibmText = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
         ibmText.transform.parent = canvas.transform;
-        CreditsButtonList.Add(ibmText);
+        SkillsButtonList.Add(ibmText);
 
         //back button
         GameObject skillsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
@@ -365,7 +370,7 @@ public class MenuController : MonoBehaviour
         {
             for (int i = 0; i < CreditsButtonList.Count; i++)
             {
-                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
+                Vector3 pos = new Vector3(0, creditsHeightFrom - ((buttonSpacing * canvasHeight) * i), 0);
                 CreditsButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
@@ -374,7 +379,7 @@ public class MenuController : MonoBehaviour
         {
             for (int i = 0; i < SkillsButtonList.Count; i++)
             {
-                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
+                Vector3 pos = new Vector3(0, playHeightFrom - ((buttonSpacing * canvasHeight) * i), 0);
                 SkillsButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
@@ -434,12 +439,21 @@ public class MenuController : MonoBehaviour
 
         else if(menuState == MenuState.SkillsBuild)
         {
-            for (int i = 0; i < SkillsButtonList.Count; i++)
-            {
-                SkillsButtonList[i].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            SkillsButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            SkillsButtonList[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
 
-                SkillsButtonList[i].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
-            }
+            SkillsButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            SkillsButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+
+            SkillsButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(0.8f * canvasWidth, 1);
+            SkillsButtonList[2].GetComponent<TextMeshProUGUI>().text = SkillsText;
+            SkillsButtonList[2].GetComponent<TextMeshProUGUI>().enableAutoSizing = true;
+            SkillsButtonList[2].GetComponent<TextMeshProUGUI>().color = textColour;
+
+            //SkillsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+
+            SkillsButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            SkillsButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
         }
     }
 

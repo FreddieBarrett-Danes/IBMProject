@@ -333,6 +333,8 @@ MonoBehaviour:
   buttonHeight: 0.1
   buttonSpacing: 0.15
   startHeightFromStart: 190
+  creditsHeightFrom: 100
+  playHeightFrom: 200
   textboxScalar: 1
   amountOfButtons: 4
   menuButton1: Play
@@ -341,6 +343,7 @@ MonoBehaviour:
   menuButton4: Exit
   menuButton5: Exit
   buttonColour: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 0.89411765}
+  textColour: {r: 0.6226415, g: 0, b: 0, a: 1}
   tickboxScaler: 0.4
   sliderScaler: 0.2
   resScaler: 0.32
@@ -354,6 +357,7 @@ MonoBehaviour:
   - {x: 1920, y: 1080}
   - {x: 720, y: 480}
   hyperlink: https://google.com/
+  SkillsText: It is vital that you check out the IBM Skills Build before starting
   debug: 0.99
 --- !u!82 &659124218
 AudioSource:
