@@ -102,6 +102,7 @@ public class ScoreSystem : MonoBehaviour
     {
         //Debug.Log("push test");
         MinigamePoints = PointsX_MazeY_DiscZ_Tile;
+        LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         //CompletedMinigame(1);
         //QuizScore = Quiz.rightAnswers * BonusThreshold; //Quiz timer * quiz bonus * modifier
         //LevelTimer.currentTime

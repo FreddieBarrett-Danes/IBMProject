@@ -41,6 +41,13 @@ public class MinigameController : MonoBehaviour
         doorGame[0] = discMinigame;
         doorGame[1] = sliderMinigame;
     }
+    public void Update()
+    {
+        /*if(inMaze)
+        {
+            gameController.inMinigame = true;
+        }*/
+    }
     public void StartMazeMinigame()
     {
         chosenMinigame = mazeMinigame;
