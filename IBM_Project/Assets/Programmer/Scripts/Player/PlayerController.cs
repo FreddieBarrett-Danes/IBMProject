@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,6 +61,8 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public Animator animator2;
     public Animator animator3;
+
+    public GameObject[] deadDroids;
 
     private void Start()
     {
@@ -142,21 +146,20 @@ public class PlayerController : MonoBehaviour
                 {
                     case 2:
                     {
-                        Debug.Log("Solider_Death");
-                        tempBody = Resources.Load<GameObject>("Soldier_Death_Place");
+                        tempBody = Resources.Load<GameObject>("Soldier_Death_Sprite_Holder");
                         Instantiate(tempBody, transform.position, transform.parent.GetChild(2).rotation);
                         break;
                     }
                     case 3:
                     {
-                        Debug.Log("Scout_Death");
-                        tempBody = Resources.Load<GameObject>("Scout_Death_Place");
+                        tempBody = Resources.Load<GameObject>("Scout_Death_Sprite_Holder");
                         Instantiate(tempBody, transform.position, transform.parent.GetChild(2).rotation);
                         break;
                     }
                 }
                 threatLevel = 0;
                 controlTimer = 0;
+                deadDroids = GameObject.FindGameObjectsWithTag("DeadEnemy");
                 gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
                 //abilities.Clear();
@@ -207,9 +210,8 @@ public class PlayerController : MonoBehaviour
                 shooting = gameObject.AddComponent<Shooting>();
                 shooting.SetHost(visuals);
                 shooting.bulletSpeed = modifyBulletSpeed;
-                canShoot = true;
             }
-
+            canShoot = true;
             controlTimer = 10.0f;
             isBehindEnemy = false;
             isControlling = true;
@@ -297,6 +299,31 @@ public class PlayerController : MonoBehaviour
                 {
                     bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
                     bot.transform.GetChild(1).gameObject.SetActive(false);
+                }
+            }
+        }
+        if (deadDroids.Length <= 0) return;
+        foreach (GameObject droid in deadDroids)
+        {
+            if (droid)
+            {
+                Vector3 droidPos = droid.transform.position;
+                Vector3 playerPos = transform.position;
+                float range = Vector3.Distance(droidPos, playerPos);
+                Vector3 toTarget = droidPos - playerPos;
+                Vector3 dirToTarget = toTarget.normalized;
+
+                if ((range < transform.gameObject.GetComponent<FieldOfView>().viewRadius - 0.05f &&
+                     Vector3.Angle(transform.forward, dirToTarget) <
+                     transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2)
+                    && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude,
+                        transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
+                {
+                    droid.transform.GetChild(0).gameObject.SetActive(true);
+                }
+                else
+                {
+                    droid.transform.GetChild(0).gameObject.SetActive(false);
                 }
             }
         }
