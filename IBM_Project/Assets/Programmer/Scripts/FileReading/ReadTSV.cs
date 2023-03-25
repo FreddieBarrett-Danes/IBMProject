@@ -553,8 +553,9 @@ public class ReadTSV : MonoBehaviour
             if (questionsInARow > 1)
             {
                 //find = true;
+               
                 gC.inMinigame = false;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                gC.completedLevel = true;
             }
             else
             {
