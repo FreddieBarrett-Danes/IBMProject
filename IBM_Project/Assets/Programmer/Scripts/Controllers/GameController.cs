@@ -7,26 +7,44 @@ public class GameController : MonoBehaviour
     //keeps track of if a bot has alerted, is safe or is hunting maybe keep[ track in player controller
     //keeps track if in lavel/mingame or quiz
     //private LevelTimer levelTimer;
+    [Header("Cloud")]
+    public bool Ship1;
+    [Header("AI")]
+    public bool Ship2;
+    [Header("Data")]
+    public bool Ship3;
+    [Header("Quantum")]
+    public bool Ship4;
+    [Header("Security")]
+    public bool Ship5;
+    [Header("Level")]
+    public bool Level5;
     public GameObject level;
     private GameObject player;
+    [Header("Minigame")]
     public MinigameController mC;
     public bool inMinigame = false;
     public bool inQuiz = false;
+
+    [Header("UI")]
     public GameObject[] levelUI;
     public GameObject[] mazeUI;
     public GameObject[] discUI;
     public GameObject[] tileUI;
 
+    [Header("Timer")]
     public GameObject levelTimer;
 
     public float LevelTimeBank = 0.0f;
+
+    [Header("Level Bools")]
     public bool completedLevel = false;
     public bool GameOver = false;
     public bool newScene = false;
-
     public bool playerHit = false;
-
     public bool Deactivate;
+
+    [Header("Enemies")]
     public GameObject[] bots;
 
     public enum Status
@@ -87,12 +105,32 @@ public class GameController : MonoBehaviour
             {
                 //transistion to losing scene
                 Destroy(levelTimer);
-                //this is the correct way of doing this lol
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - SceneManager.GetActiveScene().buildIndex);
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                if (Ship1)
+                {
+                    SceneManager.LoadScene(28);
+                }
+                else if (Ship2)
+                {
+                    SceneManager.LoadScene(26);
+                }
+                else if (Ship3)
+                {
+                    SceneManager.LoadScene(30);
+                }
+                else if (Ship4)
+                {
+                    SceneManager.LoadScene(32);
+                }
+                else if (Ship5)
+                {
+                    SceneManager.LoadScene(34);
+                }
             }
 
             if (inMinigame)
             {
+                levelTimer.SetActive(false);
                 level.SetActive(false);
                 for (int i = 0; i < levelUI.Length; i++)
                 {
@@ -121,6 +159,7 @@ public class GameController : MonoBehaviour
 
                 mC.inMaze = false;
                 mC.inDoor = false;
+                levelTimer.SetActive(true);
                 level.SetActive(true);
                 for (int i = 0; i < levelUI.Length; i++)
                 {
@@ -132,6 +171,8 @@ public class GameController : MonoBehaviour
                     mC.chosenMinigame.SetActive(false);
                 }
             }
+
+            
             switch (Deactivate)
             {
                 case true:
@@ -194,8 +235,31 @@ public class GameController : MonoBehaviour
         {
             Destroy(levelTimer);
             SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
-            //LevelTimeBank += levelTimer.currentTime;
+            if (Ship1 && Level5)
+            {
+                SceneManager.LoadScene(29);
+            }
+            else if (Ship2 && Level5)
+            {
+                SceneManager.LoadScene(27);
+            }
+            else if (Ship3 && Level5)
+            {
+                SceneManager.LoadScene(31);
+            }
+            else if (Ship4 && Level5)
+            {
+                SceneManager.LoadScene(33);
+            }
+            else if (Ship5 && Level5)
+            {
+                SceneManager.LoadScene(35);
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                //LevelTimeBank += levelTimer.currentTime;
+            }
         }
     }
 }
