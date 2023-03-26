@@ -76,6 +76,8 @@ public class BotInfo : MonoBehaviour
     public float bSusInnerViewRadius;
     [Range(0, 360)] 
     public float bViewAngle;
+    [Range(0, 360)] 
+    public float bInnerViewAngle;
     public float bDetectionTimer;
     public int bTimeBeforeDetect;
     [HideInInspector]
@@ -181,6 +183,7 @@ public class BotInfo : MonoBehaviour
         {
             bAnimator.SetBool("isDead", true);
             GetComponent<NavMeshAgent>().SetDestination(transform.position);
+            bViewCone.GetComponent<Light>().enabled = false;
         }
 
         bViewCone.GetComponent<Light>().range = bViewRadius + 0.5f;

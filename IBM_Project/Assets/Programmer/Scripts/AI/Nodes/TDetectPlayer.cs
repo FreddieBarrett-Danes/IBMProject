@@ -43,7 +43,7 @@ public class TDetectPlayer : BT_Node
             Vector3 toTarget = playerPos - agentPos;
             Vector3 dirToTarget = toTarget.normalized;
 
-            if (((range < botInfo.bViewRadius && Vector3.Angle(botInfo.transform.forward, dirToTarget) < botInfo.bViewAngle / 2) || range < botInfo.bInnerViewRadius) && !Physics.Raycast(botInfo.transform.position, dirToTarget, toTarget.magnitude, botInfo.bObstacleLayer))
+            if (((range < botInfo.bViewRadius && Vector3.Angle(botInfo.transform.forward, dirToTarget) < botInfo.bViewAngle / 2) || range < botInfo.bInnerViewRadius && Vector3.Angle(botInfo.transform.forward, dirToTarget) < botInfo.bInnerViewAngle / 2) && !Physics.Raycast(botInfo.transform.position, dirToTarget, toTarget.magnitude, botInfo.bObstacleLayer))
             {
                 botInfo.bDetectionTimer += Time.deltaTime;
                 perception.ClearFoV();

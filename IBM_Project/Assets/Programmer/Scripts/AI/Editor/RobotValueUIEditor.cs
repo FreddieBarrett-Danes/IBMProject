@@ -25,6 +25,11 @@ public class RobotValueUIEditor : Editor
         Vector3 viewAngleB = DirFromAngle (robot, bot.bViewAngle / 2, false);
         Handles.DrawLine (position, position + viewAngleA * bot.bDefaultViewRadius);
         Handles.DrawLine (position, position + viewAngleB * bot.bDefaultViewRadius);
+        Handles.color = Color.cyan;
+        Vector3 viewAngleC = DirFromAngle (robot, -bot.bInnerViewAngle / 2, false);
+        Vector3 viewAngleD = DirFromAngle (robot, bot.bInnerViewAngle / 2, false);
+        Handles.DrawLine (position, position + viewAngleC * bot.bInnerViewRadius);
+        Handles.DrawLine (position, position + viewAngleD * bot.bInnerViewRadius);
         Handles.color = Color.yellow;
         Handles.DrawWireArc(bot.bDebugLastKnownPos, Vector3.up, Vector3.forward, 360, bot.bSuspiciousRadius);
         Handles.color = Color.magenta;
