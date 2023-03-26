@@ -56,6 +56,7 @@ public class MinigameController : MonoBehaviour
         {
             if (!chosenMinigame.activeSelf)
             {
+                if(chosenMinigame != null)
                 chosenMinigame.SetActive(true);
                 inMaze = true;
                 gameController.inMinigame = true;

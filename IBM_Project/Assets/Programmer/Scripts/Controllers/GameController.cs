@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
     public bool inMinigame = false;
     public bool inQuiz = false;
 
+    private ComputerInteraction computer;
+
     [Header("UI")]
     public GameObject[] levelUI;
     public GameObject[] mazeUI;
@@ -46,6 +48,13 @@ public class GameController : MonoBehaviour
 
     [Header("Enemies")]
     public GameObject[] bots;
+
+    [Header("Audio")]
+    public AudioSource minigameWin;
+    public AudioSource minigameLose;
+    public bool failMinigame;
+    public bool loseSoundPlayed;
+    public bool winSoundPlayed;
 
     public enum Status
     {
@@ -83,6 +92,7 @@ public class GameController : MonoBehaviour
         player = FindObjectOfType<PlayerController>().GameObject();
         PlayerStatus = Status.SAFE;
         bots = GameObject.FindGameObjectsWithTag("Sprite");
+        computer = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
     }
 
@@ -169,6 +179,32 @@ public class GameController : MonoBehaviour
                 if (mC.chosenMinigame != null)
                 {
                     mC.chosenMinigame.SetActive(false);
+                }
+            }
+
+            if(!failMinigame)
+            {
+                loseSoundPlayed = false;
+            }
+
+            if(failMinigame && !inMinigame)//minigame fail sound
+            {
+                if (!loseSoundPlayed)
+                {
+                    
+                    if(failMinigame)
+                    {
+                        minigameLose.Play();
+                        loseSoundPlayed = true;
+                    }
+                }
+            }
+            else if(mC.completedMaze || mC.completedDoor)//minigamem win sound
+            {
+                if (!winSoundPlayed)
+                {
+                    minigameWin.Play();
+                    winSoundPlayed = true;
                 }
             }
 

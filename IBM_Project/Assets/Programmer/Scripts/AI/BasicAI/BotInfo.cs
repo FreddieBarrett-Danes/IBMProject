@@ -102,6 +102,10 @@ public class BotInfo : MonoBehaviour
     public GameObject bViewCone;
     private Vector3 bViewConePos;
 
+    private bool bShutdownPlayed;
+
+    public AudioSource bShutdown;
+
     private void Start()
     {
         // ViewCone
@@ -179,6 +183,11 @@ public class BotInfo : MonoBehaviour
         bAnimator.SetInteger("MoveDir", bMoveDirection);
         if (bIsDead)
         {
+            if(bInPlayerView && !bShutdownPlayed)
+            {
+                bShutdown.Play();
+                bShutdownPlayed = true;
+            }
             bAnimator.SetBool("isDead", true);
             GetComponent<NavMeshAgent>().SetDestination(transform.position);
         }

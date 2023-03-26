@@ -32,6 +32,8 @@ public class DoorsScript : MonoBehaviour
 
     public bool isComputer;
 
+    private GameController gameController;
+
 
     //
 
@@ -47,7 +49,7 @@ public class DoorsScript : MonoBehaviour
         player = FindObjectOfType(typeof(PlayerController)).GameObject();
         ADoors = this.gameObject.transform.Find("ADoor");
         BDoors = this.gameObject.transform.Find("BDoor");
-
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         FindEnemiesInScene();
 
         //restingDoorPos = ADoors.localPosition;

@@ -14,6 +14,8 @@ public class Minigame_Timer : UITimer
         mazeHandler.OnMazeReady += timerReady;
         Updated_Disc_Rotation.OnDiscAlignmentReady += timerReady; //Disc Alignment script
         genGrid.OnTileRotationReady += timerReady; //Tile Rotation script
+        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        gC.failMinigame = false;
     }
 
     private void OnDisable()
@@ -54,7 +56,9 @@ public class Minigame_Timer : UITimer
         {
             Debug.Log("Times up, fail minigame!");
             gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-            //gC.inMinigame = false;
+            gC.failMinigame = true;
+            gC.inMinigame = false;
+            gameObject.SetActive(false);
             Debug.Log("Minigame failed, exit minigame and set droids to alert state");
             //playing = false;
         }

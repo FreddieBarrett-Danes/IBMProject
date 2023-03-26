@@ -452,8 +452,9 @@ public class Updated_Disc_Rotation : MonoBehaviour
                 Timer.GetComponent<TextMeshProUGUI>().enabled = false;
             //OnDiscAlignmentReady(false);
 
-            ScoreSystemGameObject.SendMessage("CompletedMinigame", 2); //2 = DiscAlignment minigame
-            gC.mC.completedDoor = true;
+                ScoreSystemGameObject.SendMessage("CompletedMinigame", 2); //2 = DiscAlignment minigame
+                gC.mC.completedDoor = true;
+                
                 gC.inMinigame = false;
                 Debug.Log("You Win!");
             }

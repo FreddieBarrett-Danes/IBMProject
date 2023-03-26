@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class goalLocationScript : MonoBehaviour
 
     private Camera camera;
     public bool setCameraPosition;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -81,7 +83,9 @@ public class goalLocationScript : MonoBehaviour
             else
                 gC.PlayerStatus = GameController.Status.ALERTED;
             wG.Timer.SetActive(false);
+            gC.failMinigame = true;
             computerInteraction.mazeFailed = true;
+            
             //mC.completedMaze = false;
             mPlayer.timesHit = 0;
         }
