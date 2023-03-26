@@ -12,7 +12,6 @@ public class LevelTimer : MonoBehaviour
     private GameController gC;
 
     public TextMeshProUGUI countdownText;
-    public TextMeshProUGUI playerstatusText;
     private int i = 0;
 
     private static LevelTimer timerInstance;
@@ -31,12 +30,10 @@ public class LevelTimer : MonoBehaviour
             Destroy(gameObject);
         }
         countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
     }
     void Start()
     {
-        playerstatusText.text = "SAFE";
         currentTime = startTime;
         //countdownText.gameObject.SetActive(true);
     }
@@ -46,9 +43,7 @@ public class LevelTimer : MonoBehaviour
     {
         if(countdownText == null)
         {
-            playerstatusText.text = "SAFE";
             countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         }
         if (!TimeUp)
         {
@@ -59,13 +54,6 @@ public class LevelTimer : MonoBehaviour
                 {
                     currentTime -= Time.deltaTime;
                     UpdateTimer(currentTime);
-                    playerstatusText.text = gC.PlayerStatus switch
-                    {
-                        GameController.Status.SAFE => "SAFE",
-                        GameController.Status.HUNTED => "HUNTED",
-                        GameController.Status.ALERTED => "ALERT",
-                        _ => "SAFE"
-                    };
                 }
                 else
                 {
