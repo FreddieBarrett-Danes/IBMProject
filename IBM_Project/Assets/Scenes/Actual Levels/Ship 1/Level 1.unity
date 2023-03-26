@@ -30465,6 +30465,10 @@ PrefabInstance:
       value: LevelTimer
       objectReference: {fileID: 0}
     - target: {fileID: 3770471472808052071, guid: db2bb6e46adcd814aa879a1749cb4d5a, type: 3}
+      propertyPath: TimeUp
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770471472808052071, guid: db2bb6e46adcd814aa879a1749cb4d5a, type: 3}
       propertyPath: startTime
       value: 200
       objectReference: {fileID: 0}
@@ -30879,6 +30883,10 @@ PrefabInstance:
     - target: {fileID: 5636606867117718359, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
       propertyPath: m_FlipY
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5636606867117718359, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8624515799365679630, guid: 33b6648a20b42d74f8eeefe53f9cfbef, type: 3}
       propertyPath: bPath
@@ -60048,7 +60056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1801414270
 Transform:
   m_ObjectHideFlags: 0
@@ -63608,7 +63616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.95
+      value: -22.53
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -63616,7 +63624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.86
+      value: -3.44
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -64137,7 +64145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: Level5
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1477851457995835361, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: m_RootOrder
