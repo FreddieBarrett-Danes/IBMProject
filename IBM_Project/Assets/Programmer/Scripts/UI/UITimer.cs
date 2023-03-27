@@ -6,6 +6,7 @@ public class UITimer : MonoBehaviour
     public TextMeshProUGUI timerText; 
     public bool playing;
     public float timer = 180;
+    public float timerOrigin;
 
     private void Update ()
     {

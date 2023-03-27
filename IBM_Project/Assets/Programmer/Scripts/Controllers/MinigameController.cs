@@ -65,6 +65,9 @@ public class MinigameController : MonoBehaviour
     }
     public void StartDoorMinigame()
     {
+        gameController.inMinigame = true;
+        doorGame[0] = discMinigame;
+        doorGame[1] = sliderMinigame;
         int randNumber = Mathf.RoundToInt(Random.Range(0, 2));
         GameObject minigameHolder = doorGame[randNumber];
         chosenMinigame = minigameHolder;
@@ -75,7 +78,7 @@ public class MinigameController : MonoBehaviour
             {
                 chosenMinigame.SetActive(true);
                 inDoor = true;
-                gameController.inMinigame = true;
+                
             }
         }
         

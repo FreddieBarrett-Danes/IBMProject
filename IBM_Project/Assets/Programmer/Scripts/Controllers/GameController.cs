@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
     public MinigameController mC;
     public bool inMinigame = false;
     public bool inQuiz = false;
+    public float computerDoorTimer = 0.0f;
+    private float computerTimerOrigin;
 
     [Header("UI")]
     public GameObject[] levelUI;
@@ -93,6 +95,7 @@ public class GameController : MonoBehaviour
         bots = GameObject.FindGameObjectsWithTag("Sprite");
         playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         playerstatusText.text = "SAFE";
+        computerTimerOrigin = computerDoorTimer;
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
     }
 
@@ -169,14 +172,14 @@ public class GameController : MonoBehaviour
                     Status.ALERTED => "ALERT",
                     _ => "SAFE"
                 };
-                GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+                /*GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
                 if (tiles != null)
                 {
                     for (int i = 0; i < tiles.Length; i++)
                     {
-                        Destroy(tiles[i]);
+                        tiles[i].SetActive(false);
                     }
-                }
+                }*/
 
                 mC.inMaze = false;
                 mC.inDoor = false;
@@ -195,6 +198,15 @@ public class GameController : MonoBehaviour
             if (!failMinigame)
             {
                 loseSoundPlayed = false;
+            }
+            else
+            {
+                computerDoorTimer -= Time.deltaTime;
+                if(computerDoorTimer < 0)
+                {
+                    failMinigame = false;
+                    computerDoorTimer = computerTimerOrigin;
+                }
             }
 
             if (failMinigame && !inMinigame)//minigame fail sound

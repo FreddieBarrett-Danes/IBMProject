@@ -44,13 +44,22 @@ public class genGrid : MonoBehaviour
     public static event DelType1 OnTileRotationReady;
 
     private GameController gC;
+    private GameObject startTile;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
 
         //gridCompletion = false;
         //tileRotation = tilePrefab.transform.rotation;
+        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+        if (tiles != null)
+        {
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                tiles[i].SetActive(true);
+            }
+        }
         tilePrefab2 = GameObject.Find("Tile_UpDown");
 
         ScoreSystemGameObject = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ScoreSystem>();
@@ -58,23 +67,22 @@ public class genGrid : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
-        
 
-        Timer.SetActive(true);
-        Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+
+
 
         StartTileCheck = true;
-        
+
         grid2 = new CustomTile[3];
         gridarray = new CustomTile[gridWidth, gridHeight];
         //gridarray = new CustomTile[gridWidth, gridHeight];
         //int[] array1 = new int[] { 0, 0, 0, 0, 0 };
 
-        CustomTile tile1 = new CustomTile(false,false,false,false, false);
+        CustomTile tile1 = new CustomTile(false, false, false, false, false);
         tile1.n = true;
         CustomTile tile2 = new CustomTile();
 
-        startColor = tilePrefab2.GetComponent<Renderer>().material.color;
+        startColor = Color.white;//tilePrefab2.GetComponent<Renderer>().material.color;
 
 
         CustomTile[] grid3 = new CustomTile[] { tile1, tile2 };
@@ -119,7 +127,7 @@ public class genGrid : MonoBehaviour
         //Replace every unvisited tile as blank
         for (int x = 0; x < gridWidth; x++)
         {
-            for (int y = 0; y < gridHeight; y ++)
+            for (int y = 0; y < gridHeight; y++)
             {
                 if (gridarray[x, y].Visited == false)
                 {
@@ -139,7 +147,7 @@ public class genGrid : MonoBehaviour
             }
         }
         //Here
-        GameObject startTile = Instantiate(GameObject.Find("Tile_StartUp"), new Vector3(0, -1, 1), GameObject.Find("Tile_StartUp").transform.rotation);
+        startTile = Instantiate(GameObject.Find("Tile_StartUp"), new Vector3(0, -1, 1), GameObject.Find("Tile_StartUp").transform.rotation);
         startTile.GetComponent<BoxCollider>().enabled = false;
         startTile.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
         Debug.Log("StartTileCheck1: " + StartTileCheck);
@@ -149,7 +157,7 @@ public class genGrid : MonoBehaviour
         //SetPrefab();
         //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
         //^^^
-        
+
         //GridMovement();
         //SetPrefab();
         //Debug.Log("Prefab: " + tilePrefab2);
@@ -159,56 +167,24 @@ public class genGrid : MonoBehaviour
         //gridarray[1, 1].type = CustomTile.tileType.StartLeft;
 
         //GridGeneration();
+        Timer.SetActive(true);
+        Timer.GetComponent<TextMeshProUGUI>().enabled = false;
     }
-
-    private void GridGeneration()
+    private void OnDisable()
     {
         for (int x = 0; x < gridWidth; x++)
         {
             for (int y = 0; y < gridHeight; y++)
             {
-                
-                //Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity); //Instantiate needs Monobehaviour to function.
-                                                                                    //Instantiate(tilePrefab, new Vector3(x / 2.0f, 0, y / 4.0f), Quaternion.identity);
-                                                                                    //InstantiatedGameObject.name = "Tile (" + x + "," + y + ")";
-
-                //Instantiate(UpDownPrefab, new Vector3(cPos.x, cPos.y, 0), Quaternion.identity);
-                
+                Destroy(gridarray[x, y].gameObjectBack);
+                Destroy(gridarray[x, y].gameObjectFront);
             }
         }
-
-        //Grid[(int)cPos.x, (int)cPos.y].e = true;
-        //gridarray[0, 0].s = false;
-        //Instantiate(GameObject.Find("Tile_DownLeft"), new Vector3(cPos.x, cPos.y, 0), Quaternion.identity);
-        Debug.Log("test2");
-
-        short counter = 0;
-
-        while (gridCompletion == false) //(counter >= 9)
-        {
-
-
-            GridMovement();
-            if (gridCompletion == false)
-            {
-                SetPrefab();
-                Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation); //Quaternion.identity);
-                counter++;
-                Debug.Log("Counter: " + counter);
-            }
-            //if (gridarray[(int)cPos.x - 1, (int)cPos.y].w == true)
-            //{ gridarray[(int)cPos.x, (int)cPos.y].e = true; }
-            //if (gridarray[(int)cPos.x + 1, (int)cPos.y].e == true)
-            //{ gridarray[(int)cPos.x, (int)cPos.y].w = true; }
-            //if (gridarray[(int)cPos.x, (int)cPos.y + 1].s == true)
-            //{ gridarray[(int)cPos.x, (int)cPos.y].n = true; }
-            //if (gridarray[(int)cPos.x, (int)cPos.y - 1].n == true)
-            //{ gridarray[(int)cPos.x, (int)cPos.y].s = true; }
-
-        }
-
+        Destroy(startTile);
+        gridCompletion = false;
+        pregameText.SetActive(false);
+        pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
     }
-
     private void SetPrefab()
     {
         /*
@@ -696,7 +672,7 @@ public class genGrid : MonoBehaviour
         }
 
         //For debugging, completes minigame instantly.
-        if (Input.GetKey("p"))
+/*        if (Input.GetKey("p"))
         {
             for (int x = 0; x < (gridWidth); x++)
             {
@@ -710,7 +686,7 @@ public class genGrid : MonoBehaviour
 
                 }
             }
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

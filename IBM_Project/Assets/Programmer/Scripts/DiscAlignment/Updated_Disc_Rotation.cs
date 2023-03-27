@@ -73,12 +73,11 @@ public class Updated_Disc_Rotation : MonoBehaviour
         return rv;
     }
 
-    void Start()
+    private void OnEnable()
     {
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         ScoreSystemGameObject = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ScoreSystem>();
-        Timer.SetActive(true);
-        Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+
 
         currentSelect = 1;
         //Timer.SetActive(true);
@@ -116,7 +115,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
                 Debug.Log("Direction: " + randDirection + " currentSelect: " + currentSelect + "," + currentSelect * 5);
                 RotateDisc(1.0f * (currentSelect * 5));
             }
-            
+
             //Disc1.transform.Rotate(new Vector3(0, (rotationSpeed[0] * direction) * Time.deltaTime, 0));
         }
         else
@@ -126,8 +125,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
             //Disc3startRotation = Disc3.transform.rotation;
         }
 
-        GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
-        pregameText.SetActive(showTutorial);
+
 
         currentSelect = 1;
         ColourUpdate();
@@ -136,7 +134,15 @@ public class Updated_Disc_Rotation : MonoBehaviour
         //R1startPosition = R1.transform.position;
         //R1startRotation = R1.transform.eulerAngles;
         //Debug.Log(R1startPosition + "," + R1startRotation);
-
+        Timer.SetActive(true);
+        Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+        GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
+        pregameText.SetActive(showTutorial);
+    }
+    void OnDisable()
+    {
+        pregameText.SetActive(false);
+        pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
     }
 
     void OnValidate()
