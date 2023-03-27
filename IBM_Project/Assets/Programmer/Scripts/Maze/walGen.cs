@@ -149,7 +149,7 @@ public class walGen : MonoBehaviour
         Vector3 rv = new Vector3(v2.x, 0, v2.y);
         rv *= 4;
         //rv += new Vector3(2, 0, 0);
-        rv += new Vector3(64, 0, 62); //+new Vector3(24, 0, 22) for updated/moved maze position | + new Vector3(2,0,2) for world maze calibration
+        rv += new Vector3(84, 0, 82); //+new Vector3(24, 0, 22) for updated/moved maze position | + new Vector3(2,0,2) for world maze calibration
         //rv _- new Vector3(2, 0, 2);
         //rv += new Vector3(2, 0, 0);
         //rv += new Vector3(64, 0, 60)
@@ -421,9 +421,9 @@ public class walGen : MonoBehaviour
         //Generate grid in world space (instigate wall gameobject)
         
         
-        for (int i = 62; i < (62 + (int)Maze_Size.x * 4); i += 4)
+        for (int i = 82; i < (82 + (int)Maze_Size.x * 4); i += 4)
         {
-            for (int j = 62; j < (62 + (int)Maze_Size.y * 4); j += 4)
+            for (int j = 82; j < (82 + (int)Maze_Size.y * 4); j += 4)
             {
                 //Debug.Log("(" + i + "," + j + "," + ")");
                 genGrid(new Vector3(i, 0, j), new Vector2(1, 1));
@@ -778,9 +778,9 @@ public class walGen : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            for (int i = 62; i < (62 + (int)Maze_Size.x * 4); i += 4)
+            for (int i = 82; i < (82 + (int)Maze_Size.x * 4); i += 4)
             {
-                for (int j = 62; j < (62 + (int)Maze_Size.y * 4); j += 4)
+                for (int j = 82; j < (82 + (int)Maze_Size.y * 4); j += 4)
                 {
                     //Debug.Log("(" + i + "," + j + "," + ")");
                     genGrid(new Vector3(i, 0, j), new Vector2(1, 1));

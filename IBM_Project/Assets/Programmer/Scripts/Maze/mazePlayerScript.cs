@@ -39,7 +39,7 @@ public class mazePlayerScript : MonoBehaviour
         if (other.gameObject.tag == "mazeWall")
         {
             //Debug.Log("Trigger Wall hit");
-            if (returnToStartUponCollision == true) transform.position = new Vector3(64, 0, 62);//(2, 0, 0);
+            if (returnToStartUponCollision == true) transform.position = new Vector3(84, 0, 82);//(2, 0, 0);
             touchWall = true;
             wallHitSound.Play();
             timesHit++;
@@ -140,7 +140,7 @@ public class mazePlayerScript : MonoBehaviour
         {
             mazeReadyPlayer = true;
             //transform.position = new Vector3(62, 0, 60);
-            transform.position = new Vector3(64, 0, 62);
+            transform.position = new Vector3(84, 0, 82);
             //returnToStart(true);
         }
 

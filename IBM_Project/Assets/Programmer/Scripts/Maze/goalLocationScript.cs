@@ -49,7 +49,7 @@ public class goalLocationScript : MonoBehaviour
             //Debug.Log("repositioned camera for maze, refer to goalLocation to disable");
             if (inMaze == true)
             {
-                camera.GetComponent<Camera>().transform.position += new Vector3(62, 0, 60);
+                camera.GetComponent<Camera>().transform.position += new Vector3(82, 0, 80);
                 //new Vector3(24, 0, 22)
             }
             else
