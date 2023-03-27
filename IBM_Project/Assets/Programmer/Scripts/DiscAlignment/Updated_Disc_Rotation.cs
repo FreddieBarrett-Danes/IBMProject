@@ -212,6 +212,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(mTimer.timer);
         //GetComponent<Renderer>().material.color = Color.grey;
 
         //Selected = true;
@@ -456,16 +457,16 @@ public class Updated_Disc_Rotation : MonoBehaviour
         //{
             if (R1.transform.position == new Vector3(-5, 10, 0) && R2.transform.position == new Vector3(0, 10, 0) && R3.transform.position == new Vector3(5, 10, 0))// || debugWin == true)
             {
-                Timer.SetActive(false);
-                Timer.GetComponent<TextMeshProUGUI>().enabled = false;
-            //OnDiscAlignmentReady(false);
+            Debug.Log(mTimer.timer + "!!!!!!!!!");
+            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(2, mTimer.timer)); //2 = DiscAlignment minigame NEED TO REPLACE 10, ACTING AS PLACEHOLDER!!!
+            Timer.SetActive(false);
+            Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+            OnDiscAlignmentReady(false);
+            gC.mC.completedDoor = true;
 
-                ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(2, mTimer.timer)); //2 = DiscAlignment minigame NEED TO REPLACE 10, ACTING AS PLACEHOLDER!!!
-                gC.mC.completedDoor = true;
-                
-                gC.inMinigame = false;
-                Debug.Log("You Win!");
-            }
+            gC.inMinigame = false;
+            Debug.Log("You Win!");
+        }
         //}
 
         if (Input.GetKeyDown("p"))

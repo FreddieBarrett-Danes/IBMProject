@@ -7,7 +7,7 @@ using UnityEngine;
 public class ScoreSystem : MonoBehaviour
 {
     [Header("Scripts")]
-    public LevelTimer LevelTimer;
+    private LevelTimer LevelTimer;
     public ReadTSV Quiz;
     public TextMeshProUGUI ScoreText;
     public elevator elevatortest;
@@ -27,32 +27,35 @@ public class ScoreSystem : MonoBehaviour
     float QuizScore;
 
     [Header("Minigame Points")]
-    public bool TimeAwardsPoints = true; //If false, points
-    public Vector3 StaticPointsX_MazeY_DiscZ_Tile; //X = Maze, Y = DiscAlignment, Z = TileRotation | This awards a static amount of points after completing the respective minigame (if TimeAwardsPoints is set to false)
-    public Vector3 MinigameTimeScoreModifier; //X = Maze, Y = DiscAlignment, Z = TileRotation | The points awarded after completing a minigame: time remaining * MinigameTimerScoreModifier (for the respective minigame)
-    private Vector3 MinigamePoints;
-    
+    public bool TimerAwardsPoints = true; //If false, will reward the same amount of points regardless of the time of completion (use StaticPointsX_MazeY_DiscZ_Tile) | If true, the amount of points rewarded is based on the time remaining and ScoreModifier (use uiTimers and MinigameTimeScoreModifier)
+    public Vector3 StaticPointsX_MazeY_DiscZ_Tile = new Vector3(100, 20, 20); //X = Maze, Y = DiscAlignment, Z = TileRotation | This awards a static amount of points after completing the respective minigame (if TimeAwardsPoints is set to false)
+    public Vector3 MinigameTimeScoreModifier = new Vector3(1, 1, 1); //X = Maze, Y = DiscAlignment, Z = TileRotation | The points awarded after completing a minigame: time remaining * MinigameTimerScoreModifier (for the respective minigame)
+    private Vector3 MinigamePoints; //Stores values of MinigameTimeScoreModifier for easier referencing (whilst maintaining clarity in inspector)
+
     //LevelTimer.currentTime counts down starting from LevelTimer.startTime
     //public LevelTimeBank TimeBank;
 
-    void AddBonus()
+    void AddLevelBonus()
     {
-        if (LevelTimer.currentTime >= TimeBonusThreshold)
-        {
-            TimeBonus = (LevelTimer.startTime - TimerUp) * LevelTimeScoreModifier;
-        }
-        else
-        {
-            TimeBonus = 0;
-        }
-        Score += TimeBonus;
+        //if (LevelTimer.currentTime >= TimeBonusThreshold)
+        //{
+        //    TimeBonus = (LevelTimer.startTime - TimerUp) * LevelTimeScoreModifier;
+        //}
+        //else
+        //{
+        //    TimeBonus = 0;
+        //}
+        //Score += TimeBonus;
         //Score = (LevelTimer.currentTime + TimeBonus /* + QuizTimer + MiscBonus*/);
+
+        Score += (LevelTimer.currentTime * LevelTimeScoreModifier);
+
     }
 
     void QuizLoaded()
     {
         Debug.Log("Quiz Loaded message recieved!");
-        //AddBonus();
+        AddLevelBonus();
     }
 
     void CompletedMinigame(Vector2 values) //int num, int remainingTime)
@@ -66,7 +69,7 @@ public class ScoreSystem : MonoBehaviour
         //3 = TileRotation
 
 
-        switch (num, TimeAwardsPoints)
+        switch (num, TimerAwardsPoints)
         {
             case (1, false):
                 Debug.Log("Maze completed, static points awarded");
@@ -85,7 +88,7 @@ public class ScoreSystem : MonoBehaviour
                 Score += (remainingTime * MinigameTimeScoreModifier.x);
                 break;
             case (2, true):
-                Debug.Log("DiscAlignment completed, points awarded based on time");
+                Debug.Log("DiscAlignment completed, points awarded based on time" + remainingTime + "| " + MinigameTimeScoreModifier.y);
                 Score += (remainingTime * MinigameTimeScoreModifier.y);
                 break;
             case (3, true):
@@ -128,6 +131,7 @@ public class ScoreSystem : MonoBehaviour
     {
         //Debug.Log("push test");
         MinigamePoints = StaticPointsX_MazeY_DiscZ_Tile;
+        Gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         //CompletedMinigame(1);
         //QuizScore = Quiz.rightAnswers * BonusThreshold; //Quiz timer * quiz bonus * modifier
@@ -138,29 +142,47 @@ public class ScoreSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(LevelTimer.currentTime);
-        TimerUp += Time.deltaTime;
-        //TimerUp = (int)TimerUp;
+        //if (!Gc.inMinigame)
+        //{
+            ScoreText.text = Score.ToString("Score: " + "000");
+            //countdownText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+            //Debug.Log("Score: " + Score);
 
-        if (LevelTimer.currentTime >= TimeBonusThreshold)
-        {
-            TimeBonus = LevelTimer.startTime - TimerUp;
-        }
-        else
-        {
-            TimeBonus = 0;
-        }
+            if (Quiz.completedQuiz == true) { CompletedQuiz(); } //Score += Quiz.totalPoints;
+        //}
 
-        //At the end of level
+        if (Gc.inQuiz || Gc.inMinigame)
+        {
+            ScoreText.enabled = false;
+        }
+        else { ScoreText.enabled = true; }
+
+        //if (Gc.minigameWin || Gc.minigameLose || Gc.failMinigame || Gc.)
+        //{
+        //    ScoreText.enabled = true;
+        //}
+
+
+        ////At the end of level
+        ////Debug.Log(LevelTimer.currentTime);
+        //TimerUp += Time.deltaTime;
+        ////TimerUp = (int)TimerUp;
+
+        //if (LevelTimer.currentTime >= TimeBonusThreshold)
+        //{
+        //    TimeBonus = LevelTimer.startTime - TimerUp;
+        //}
+        //else
+        //{
+        //    TimeBonus = 0;
+        //}
+
+
 
 
         //Score = (LevelTimer.currentTime + TimeBonus /* + QuizTimer + MiscBonus*/);
 
-        ScoreText.text = Score.ToString("Score: " + "000");
-        //countdownText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
-        //Debug.Log("Score: " + Score);
 
-        if (Quiz.completedQuiz == true) { CompletedQuiz();  } //Score += Quiz.totalPoints;
         //if (Quiz.hackSuccessful == true) {  }
         //if (Hit against target == true) { Score += 4; }
 

@@ -436,7 +436,7 @@ public class genGrid : MonoBehaviour
         if (finishLock == false)
         {
             Debug.Log("Grid has been rotated correctly. Tile Rotation minigame complete, refer to tileCheck() for output");
-            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(3, mTimer.timer)); //3 = TileRotation NEED TO REPLACE 10, ACTING AS PLACEHOLDER!!!
+            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(3, mTimer.timer)); //3 = TileRotation
             Timer.SetActive(false);
             gC.mC.completedDoor = true;
             gC.inMinigame = false;
