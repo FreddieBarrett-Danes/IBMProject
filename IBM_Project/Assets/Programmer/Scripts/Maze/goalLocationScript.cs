@@ -11,6 +11,7 @@ public class goalLocationScript : MonoBehaviour
     public mazePlayerScript mPlayer;
 
     public walGen wG; //Re-reference the gameobject with the walGen script
+    public Minigame_Timer mTimer;
 
     private ScoreSystem ScoreSystemGameObject;
 
@@ -27,7 +28,7 @@ public class goalLocationScript : MonoBehaviour
             Debug.Log(mPlayer.transform.position + "," + transform.position);
             Debug.Log("Maze Win");
             Debug.Log("Refer to goalLocationScript for Maze output");
-            ScoreSystemGameObject.SendMessage("CompletedMinigame", 1); //1 = Maze
+            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(1, mTimer.timer)); //1 = Maze
 
             //GameObject.Find("LevelCanvas").SendMessage("QuizLoaded");
             //GameObject.Find("LevelCanvas").SendMessage("CompletedMinigame", 1);
@@ -83,7 +84,7 @@ public class goalLocationScript : MonoBehaviour
             else
                 gC.PlayerStatus = GameController.Status.ALERTED;
             wG.Timer.SetActive(false);
-            //gC.failMinigame = true;
+            gC.failMinigame = true;
             computerInteraction.mazeFailed = true;
             
             //mC.completedMaze = false;

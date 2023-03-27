@@ -29,6 +29,8 @@ public class genGrid : MonoBehaviour
     public bool showCorrectRotation;
     public bool showTutorial;
 
+    public Minigame_Timer mTimer;
+
     //Following variables/objects used to be public
     CustomTile[,] gridarray;
     CustomTile[] grid2;
@@ -458,7 +460,7 @@ public class genGrid : MonoBehaviour
         if (finishLock == false)
         {
             Debug.Log("Grid has been rotated correctly. Tile Rotation minigame complete, refer to tileCheck() for output");
-            ScoreSystemGameObject.SendMessage("CompletedMinigame", 3); //3 = TileRotation
+            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(3, mTimer.timer)); //3 = TileRotation NEED TO REPLACE 10, ACTING AS PLACEHOLDER!!!
             Timer.SetActive(false);
             gC.mC.completedDoor = true;
             gC.inMinigame = false;

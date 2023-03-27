@@ -58,6 +58,8 @@ public class Updated_Disc_Rotation : MonoBehaviour
     public GameObject Timer;
     private ScoreSystem ScoreSystemGameObject;
 
+    public Minigame_Timer mTimer;
+
     private GameController gC;
     // Start is called before the first frame update
 
@@ -452,7 +454,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
                 Timer.GetComponent<TextMeshProUGUI>().enabled = false;
             //OnDiscAlignmentReady(false);
 
-                ScoreSystemGameObject.SendMessage("CompletedMinigame", 2); //2 = DiscAlignment minigame
+                ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(2, mTimer.timer)); //2 = DiscAlignment minigame NEED TO REPLACE 10, ACTING AS PLACEHOLDER!!!
                 gC.mC.completedDoor = true;
                 
                 gC.inMinigame = false;

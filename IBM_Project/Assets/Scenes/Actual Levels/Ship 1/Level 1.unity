@@ -29290,6 +29290,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1051385218}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1083385950 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6743781225662773657, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+  m_PrefabInstance: {fileID: 3750169703978388246}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2606d8179574974080e5450c63b7395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1095179100
 GameObject:
   m_ObjectHideFlags: 0
@@ -29843,6 +29854,17 @@ Transform:
   m_Father: {fileID: 651174858}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1205408352 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2523596634021114271, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+  m_PrefabInstance: {fileID: 3750169703978388246}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2606d8179574974080e5450c63b7395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1216140985
 GameObject:
   m_ObjectHideFlags: 0
@@ -31287,6 +31309,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7148243925155405778, guid: a8fc5e0654588d14792a5040124c5f75, type: 3}
   m_PrefabInstance: {fileID: 1544264548}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1545526228 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5458436477903623655, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+  m_PrefabInstance: {fileID: 3750169703978388246}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2606d8179574974080e5450c63b7395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1561744143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63608,7 +63641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.7
+      value: 3.71
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -63616,7 +63649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.7
+      value: 22.65
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -64139,6 +64172,34 @@ PrefabInstance:
       propertyPath: Level5
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1406272699613730164, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: TimeAwardsPoints
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406272699613730164, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: PointsX_MazeY_DiscZ_Tile.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406272699613730164, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: PointsX_MazeY_DiscZ_Tile.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406272699613730164, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: PointsX_MazeY_DiscZ_Tile.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406272699613730164, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: MinigameTimeScoreModifier.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406272699613730164, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: MinigameTimeScoreModifier.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406272699613730164, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: MinigameTimeScoreModifier.z
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1477851457995835361, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -64187,6 +64248,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1655351960237499579, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: mTimer
+      value: 
+      objectReference: {fileID: 1205408352}
+    - target: {fileID: 1690106256299950721, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: mTimer
+      value: 
+      objectReference: {fileID: 1545526228}
     - target: {fileID: 2166813819481244635, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: m_Name
       value: Canvas&MiniGames
@@ -64195,6 +64264,10 @@ PrefabInstance:
       propertyPath: fallbackTimeForQuestion
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6497808199514189282, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: mTimer
+      value: 
+      objectReference: {fileID: 1083385950}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
 --- !u!4 &4421982962847928473

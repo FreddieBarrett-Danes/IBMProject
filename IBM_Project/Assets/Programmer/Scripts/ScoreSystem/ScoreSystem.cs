@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ScoreSystem : MonoBehaviour
 {
+    [Header("Scripts")]
     public LevelTimer LevelTimer;
     public ReadTSV Quiz;
     public TextMeshProUGUI ScoreText;
@@ -16,15 +17,21 @@ public class ScoreSystem : MonoBehaviour
     float Score; //Overall score
     float TimerUp; //Timer counting up (aka TimeTaken)
     float TimeBonus;
-    
+
+    [Header("Bonus, Level and Quiz Modifiers")]
     public float TimeBonusThreshold = 180;
-    public float TimeScoreModifier = 1;
+    public float LevelTimeScoreModifier = 1;
+    
     public float QuizScoreModifier = 1;
     
     float QuizScore;
 
-    public Vector3 PointsX_MazeY_DiscZ_Tile;
+    [Header("Minigame Points")]
+    public bool TimeAwardsPoints = true; //If false, points
+    public Vector3 StaticPointsX_MazeY_DiscZ_Tile; //X = Maze, Y = DiscAlignment, Z = TileRotation | This awards a static amount of points after completing the respective minigame (if TimeAwardsPoints is set to false)
+    public Vector3 MinigameTimeScoreModifier; //X = Maze, Y = DiscAlignment, Z = TileRotation | The points awarded after completing a minigame: time remaining * MinigameTimerScoreModifier (for the respective minigame)
     private Vector3 MinigamePoints;
+    
     //LevelTimer.currentTime counts down starting from LevelTimer.startTime
     //public LevelTimeBank TimeBank;
 
@@ -32,7 +39,7 @@ public class ScoreSystem : MonoBehaviour
     {
         if (LevelTimer.currentTime >= TimeBonusThreshold)
         {
-            TimeBonus = (LevelTimer.startTime - TimerUp) * TimeScoreModifier;
+            TimeBonus = (LevelTimer.startTime - TimerUp) * LevelTimeScoreModifier;
         }
         else
         {
@@ -48,23 +55,42 @@ public class ScoreSystem : MonoBehaviour
         //AddBonus();
     }
 
-    void CompletedMinigame(int num)
+    void CompletedMinigame(Vector2 values) //int num, int remainingTime)
     {
+        int num = (int)values.x;
+        int remainingTime = (int)values.y;
         Debug.Log("CompletedMinigame message recieved!");
         //Minigames:
         //1 = Maze
         //2 = DiscAlignment
         //3 = TileRotation
-        switch (num)
+
+
+        switch (num, TimeAwardsPoints)
         {
-            case 1:
+            case (1, false):
+                Debug.Log("Maze completed, static points awarded");
                 Score += MinigamePoints.x;
                 break;
-            case 2:
+            case (2, false):
+                Debug.Log("DiscAlignment completed, static points awarded");
                 Score += MinigamePoints.y;
                 break;
-            case 3:
+            case (3, false):
+                Debug.Log("TileRotation completed, static points awarded");
                 Score += MinigamePoints.z;
+                break;
+            case (1, true):
+                Debug.Log("Maze completed, points awarded based on time");
+                Score += (remainingTime * MinigameTimeScoreModifier.x);
+                break;
+            case (2, true):
+                Debug.Log("DiscAlignment completed, points awarded based on time");
+                Score += (remainingTime * MinigameTimeScoreModifier.y);
+                break;
+            case (3, true):
+                Debug.Log("TileRotation completed, points awarded based on time");
+                Score += (remainingTime * MinigameTimeScoreModifier.z);
                 break;
             default:
                 Debug.LogError("CompletedMinigame() num is " + num + " which isn't a registered minigame number");
@@ -88,7 +114,7 @@ public class ScoreSystem : MonoBehaviour
         //Score = (LevelTimer.currentTime + TimeBonus);
 
 
-        Score += LevelTimer.currentTime * TimeScoreModifier;
+        Score += LevelTimer.currentTime * LevelTimeScoreModifier;
 
     }
 
@@ -101,7 +127,7 @@ public class ScoreSystem : MonoBehaviour
     void Start()
     {
         //Debug.Log("push test");
-        MinigamePoints = PointsX_MazeY_DiscZ_Tile;
+        MinigamePoints = StaticPointsX_MazeY_DiscZ_Tile;
         LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         //CompletedMinigame(1);
         //QuizScore = Quiz.rightAnswers * BonusThreshold; //Quiz timer * quiz bonus * modifier
@@ -130,7 +156,8 @@ public class ScoreSystem : MonoBehaviour
 
         //Score = (LevelTimer.currentTime + TimeBonus /* + QuizTimer + MiscBonus*/);
 
-        ScoreText.text = Score.ToString("000");
+        ScoreText.text = Score.ToString("Score: " + "000");
+        //countdownText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
         //Debug.Log("Score: " + Score);
 
         if (Quiz.completedQuiz == true) { CompletedQuiz();  } //Score += Quiz.totalPoints;
