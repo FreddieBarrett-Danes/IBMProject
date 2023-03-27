@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,8 +27,6 @@ public class GameController : MonoBehaviour
     public bool inMinigame = false;
     public bool inQuiz = false;
 
-    private ComputerInteraction computer;
-
     [Header("UI")]
     public GameObject[] levelUI;
     public GameObject[] mazeUI;
@@ -49,13 +48,6 @@ public class GameController : MonoBehaviour
     [Header("Enemies")]
     public GameObject[] bots;
 
-    [Header("Audio")]
-    public AudioSource minigameWin;
-    public AudioSource minigameLose;
-    public bool failMinigame;
-    public bool loseSoundPlayed;
-    public bool winSoundPlayed;
-
     public enum Status
     {
         SAFE,
@@ -64,6 +56,7 @@ public class GameController : MonoBehaviour
     }
 
     public Status PlayerStatus;
+    public TextMeshProUGUI playerstatusText;
     
     // Start is called before the first frame update
     void Start()
@@ -92,7 +85,8 @@ public class GameController : MonoBehaviour
         player = FindObjectOfType<PlayerController>().GameObject();
         PlayerStatus = Status.SAFE;
         bots = GameObject.FindGameObjectsWithTag("Sprite");
-        computer = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
+        playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        playerstatusText.text = "SAFE";
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
     }
 
@@ -138,6 +132,11 @@ public class GameController : MonoBehaviour
                 }
             }
 
+            if (playerstatusText == null)
+            {
+                playerstatusText.text = "SAFE";
+                playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            }
             if (inMinigame)
             {
                 levelTimer.SetActive(false);
@@ -157,7 +156,13 @@ public class GameController : MonoBehaviour
                 //        Destroy(mazeWalls[i]);
                 //    }
                 //}
-
+                playerstatusText.text = PlayerStatus switch
+                {
+                    Status.SAFE => "SAFE",
+                    Status.HUNTED => "HUNTED",
+                    Status.ALERTED => "ALERT",
+                    _ => "SAFE"
+                };
                 GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
                 if (tiles != null)
                 {
@@ -179,32 +184,6 @@ public class GameController : MonoBehaviour
                 if (mC.chosenMinigame != null)
                 {
                     mC.chosenMinigame.SetActive(false);
-                }
-            }
-
-            if(!failMinigame)
-            {
-                loseSoundPlayed = false;
-            }
-
-            if(failMinigame && !inMinigame)//minigame fail sound
-            {
-                if (!loseSoundPlayed)
-                {
-                    
-                    if(failMinigame)
-                    {
-                        minigameLose.Play();
-                        loseSoundPlayed = true;
-                    }
-                }
-            }
-            else if(mC.completedMaze || mC.completedDoor)//minigamem win sound
-            {
-                if (!winSoundPlayed)
-                {
-                    minigameWin.Play();
-                    winSoundPlayed = true;
                 }
             }
 

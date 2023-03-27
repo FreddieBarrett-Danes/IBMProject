@@ -245,6 +245,7 @@ MonoBehaviour:
   bSusViewRadius: 5
   bSusInnerViewRadius: 1.5
   bViewAngle: 120
+  bInnerViewAngle: 250
   bDetectionTimer: 0
   bTimeBeforeDetect: 2
   bEngaging: 0
@@ -645,6 +646,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3232498220342474495, guid: 82f9a0c842e763f41ae472e2cf4c49d6, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 81b158fe2638a504eb86bb261e50d6f9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82f9a0c842e763f41ae472e2cf4c49d6, type: 3}
 --- !u!4 &3764682598881015809 stripped
