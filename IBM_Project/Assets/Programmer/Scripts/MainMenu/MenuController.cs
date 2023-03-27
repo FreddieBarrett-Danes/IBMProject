@@ -373,8 +373,8 @@ public class MenuController : MonoBehaviour
         GameObject ship1 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship1.transform.parent = canvas.transform;
         PlayButtonList.Add(ship1);
-        ship1.GetComponentInChildren<TextMeshProUGUI>().text = "Ship 1";
-        ship1.GetComponent<Button>().onClick.AddListener(PlayButtonPressed);
+        ship1.GetComponentInChildren<TextMeshProUGUI>().text = "Cloud";
+        ship1.GetComponent<Button>().onClick.AddListener(Ship1Start);
         ship1.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(ship1.GetComponent<answersScript>());
         ship1.GetComponent<Image>().color = buttonColour;
@@ -382,8 +382,8 @@ public class MenuController : MonoBehaviour
         GameObject ship2 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship2.transform.parent = canvas.transform;
         PlayButtonList.Add(ship2);
-        ship2.GetComponentInChildren<TextMeshProUGUI>().text = "Ship 2";
-        ship2.GetComponent<Button>().onClick.AddListener(PlayButtonPressed);
+        ship2.GetComponentInChildren<TextMeshProUGUI>().text = "AI";
+        ship2.GetComponent<Button>().onClick.AddListener(Ship2Start);
         ship2.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(ship2.GetComponent<answersScript>());
         ship2.GetComponent<Image>().color = buttonColour;
@@ -391,8 +391,8 @@ public class MenuController : MonoBehaviour
         GameObject ship3 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship3.transform.parent = canvas.transform;
         PlayButtonList.Add(ship3);
-        ship3.GetComponentInChildren<TextMeshProUGUI>().text = "Ship 3";
-        ship3.GetComponent<Button>().onClick.AddListener(PlayButtonPressed);
+        ship3.GetComponentInChildren<TextMeshProUGUI>().text = "Data";
+        ship3.GetComponent<Button>().onClick.AddListener(Ship3Start);
         ship3.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(ship3.GetComponent<answersScript>());
         ship3.GetComponent<Image>().color = buttonColour;
@@ -400,8 +400,8 @@ public class MenuController : MonoBehaviour
         GameObject ship4 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship4.transform.parent = canvas.transform;
         PlayButtonList.Add(ship4);
-        ship4.GetComponentInChildren<TextMeshProUGUI>().text = "Ship 4";
-        ship4.GetComponent<Button>().onClick.AddListener(PlayButtonPressed);
+        ship4.GetComponentInChildren<TextMeshProUGUI>().text = "Quantum";
+        ship4.GetComponent<Button>().onClick.AddListener(Ship4Start);
         ship4.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(ship4.GetComponent<answersScript>());
         ship4.GetComponent<Image>().color = buttonColour;
@@ -409,8 +409,8 @@ public class MenuController : MonoBehaviour
         GameObject ship5 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship5.transform.parent = canvas.transform;
         PlayButtonList.Add(ship5);
-        ship5.GetComponentInChildren<TextMeshProUGUI>().text = "Ship 5";
-        ship5.GetComponent<Button>().onClick.AddListener(PlayButtonPressed);
+        ship5.GetComponentInChildren<TextMeshProUGUI>().text = "Security";
+        ship5.GetComponent<Button>().onClick.AddListener(Ship5Start);
         ship5.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(ship5.GetComponent<answersScript>());
         ship5.GetComponent<Image>().color = buttonColour;
@@ -695,10 +695,46 @@ public class MenuController : MonoBehaviour
     void PlayButtonPressed()
     {
         //Add the game start logic here
+        //SceneManager.LoadScene(1);
+        menuState = MenuState.Levels;
+        return;
+    }
+
+    void Ship1Start()
+    {
+        //Add the game start logic here
         SceneManager.LoadScene(1);
         return;
     }
-    
+
+    void Ship2Start()
+    {
+        //Add the game start logic here
+        SceneManager.LoadScene(6);
+        return;
+    }
+
+    void Ship3Start()
+    {
+        //Add the game start logic here
+        SceneManager.LoadScene(11);
+        return;
+    }
+
+    void Ship4Start()
+    {
+        //Add the game start logic here
+        SceneManager.LoadScene(16);
+        return;
+    }
+
+    void Ship5Start()
+    {
+        //Add the game start logic here
+        SceneManager.LoadScene(21);
+        return;
+    }
+
     void SettingsButtonPressed()
     {
         //Swap to settings menu
