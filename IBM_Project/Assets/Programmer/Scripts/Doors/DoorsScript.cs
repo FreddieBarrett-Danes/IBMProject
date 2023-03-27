@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class DoorsScript : MonoBehaviour
 {
@@ -142,14 +143,34 @@ public class DoorsScript : MonoBehaviour
 
     private void DoorStateChanged()
     {
-        if (isOpen)
+        Vector3 enemyPos = gameObject.transform.position;
+        Vector3 playerPos = player.transform.position;
+        float range = Vector3.Distance(enemyPos, playerPos);
+        Vector3 toTarget = enemyPos - playerPos;
+        Vector3 dirToTarget = toTarget.normalized;
+
+        bool inRange = false;
+
+        if ((range < player.gameObject.GetComponent<FieldOfView>().viewRadius - 0.05f &&
+                 Vector3.Angle(transform.forward, dirToTarget) <
+                 player.gameObject.GetComponent<FieldOfView>().viewAngle / 2)
+                && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude,
+                    player.gameObject.GetComponent<FieldOfView>().obstacleMask))
         {
-            GameObject sound = Instantiate(openDoor, transform.position, Quaternion.identity);
-            Destroy(sound, 2f);
-            //Spawn open sound in here
+            inRange = true;
+        }
+        else
+        {
+            inRange = false;
+        }
+        if (isOpen && inRange)
+        {
+                GameObject sound = Instantiate(openDoor, transform.position, Quaternion.identity);
+                Destroy(sound, 2f);
+                //Spawn open sound in here
         }
 
-        else
+        else if(!isOpen && inRange)
         {
             GameObject sound = Instantiate(closeDoor, transform.position, Quaternion.identity);
             Destroy(sound, 2f);

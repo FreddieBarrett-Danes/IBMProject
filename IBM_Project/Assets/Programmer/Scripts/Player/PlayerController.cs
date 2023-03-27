@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour
             //activate computer door minigame
             miniController.StartDoorMinigame();
         }
-        else if (miniController.completedDoor)
+        else if (miniController.completedDoor && !gc.failMinigame)
         {
             door.isComputer = false;
         }
