@@ -47,6 +47,12 @@ public class GameController : MonoBehaviour
 
     [Header("Enemies")]
     public GameObject[] bots;
+    [Header("Audio")]
+    public AudioSource minigameWin;
+    public AudioSource minigameLose;
+    public bool failMinigame;
+    public bool loseSoundPlayed;
+    public bool winSoundPlayed;
 
     public enum Status
     {
@@ -186,8 +192,32 @@ public class GameController : MonoBehaviour
                     mC.chosenMinigame.SetActive(false);
                 }
             }
+            if (!failMinigame)
+            {
+                loseSoundPlayed = false;
+            }
 
-            
+            if (failMinigame && !inMinigame)//minigame fail sound
+            {
+                if (!loseSoundPlayed)
+                {
+
+                    if (failMinigame)
+                    {
+                        minigameLose.Play();
+                        loseSoundPlayed = true;
+                    }
+                }
+            }
+            else if (mC.completedMaze || mC.completedDoor)//minigamem win sound
+            {
+                if (!winSoundPlayed)
+                {
+                    minigameWin.Play();
+                    winSoundPlayed = true;
+                }
+            }
+
             switch (Deactivate)
             {
                 case true:
