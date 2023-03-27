@@ -83,7 +83,7 @@ public class goalLocationScript : MonoBehaviour
             else
                 gC.PlayerStatus = GameController.Status.ALERTED;
             wG.Timer.SetActive(false);
-            gC.failMinigame = true;
+            //gC.failMinigame = true;
             computerInteraction.mazeFailed = true;
             
             //mC.completedMaze = false;
