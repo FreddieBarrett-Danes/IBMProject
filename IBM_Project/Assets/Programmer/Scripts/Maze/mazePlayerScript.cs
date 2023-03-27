@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class mazePlayerScript : MonoBehaviour
@@ -13,12 +14,13 @@ public class mazePlayerScript : MonoBehaviour
     [SerializeField]
     private AudioSource wallHitSound;
     bool mazeReadyPlayer;
-
+    private GameController gameController;
     public int timesHit;
 
     private void OnEnable()
     {
         //walGen.OnMazeReady += applyReady;
+        gameController.loseSoundPlayed = false;
     }
 
     private void OnDisable()
@@ -49,7 +51,10 @@ public class mazePlayerScript : MonoBehaviour
             //Setting gameobjects invisible:
             GameObject.FindGameObjectWithTag("goalLocation").GetComponent<MeshRenderer>().enabled = false;
             GameObject.FindGameObjectWithTag("mazePlayer").GetComponent<MeshRenderer>().enabled = false;
-            Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+            //Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+            gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+            gameController.winSoundPlayed = false;
+            gameController.loseSoundPlayed = false;
 
             //Method transforming gameobjects to different location:
 
@@ -82,7 +87,9 @@ public class mazePlayerScript : MonoBehaviour
         gameObject.GetComponent<Renderer>().material.color = Color.white; //Setting colour of Player gameobject
         GameObject goalLocation = GameObject.FindGameObjectWithTag("goalLocation");
         goalLocation.GetComponent<Renderer>().material.color = Color.green;
-        
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        gameController.failMinigame = false;
+
     }
 
     // Update is called once per frame

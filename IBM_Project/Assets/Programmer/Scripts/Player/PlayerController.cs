@@ -11,17 +11,18 @@ public class PlayerController : MonoBehaviour
     private ReadTSV readTSV;
 
     [SerializeField]
-    private AudioSource startHack;
-    [SerializeField]
     private AudioSource winHack;
     [SerializeField]
     private AudioSource loseHack;
     [SerializeField]
     private AudioSource breakBox;
+    [SerializeField]
+    private AudioSource botShutdown;
 
     public DoorsScript door;
 
     public float speed;
+    private float speedOrigin;
 
     public GameObject visuals;
     public GameObject body;
@@ -64,6 +65,9 @@ public class PlayerController : MonoBehaviour
 
     public GameObject[] deadDroids;
 
+    public bool failedHack;
+    private bool loseSoundPlayed = false;
+    private bool shutdownPlayed = false;
     private void Start()
     {
         //controller set up
@@ -75,6 +79,7 @@ public class PlayerController : MonoBehaviour
         //playerColor = body.GetComponent<Renderer>().material.color;
 
         readTSV = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
+        speedOrigin = speed;
     }
 
     void Update()
@@ -148,12 +153,22 @@ public class PlayerController : MonoBehaviour
                     {
                         tempBody = Resources.Load<GameObject>("Soldier_Death_Sprite_Holder");
                         Instantiate(tempBody, transform.position, transform.parent.GetChild(2).rotation);
+                        if (!shutdownPlayed)
+                        {
+                            botShutdown.Play();
+                            shutdownPlayed = true;
+                        }
                         break;
                     }
                     case 3:
                     {
                         tempBody = Resources.Load<GameObject>("Scout_Death_Sprite_Holder");
                         Instantiate(tempBody, transform.position, transform.parent.GetChild(2).rotation);
+                        if (!shutdownPlayed)
+                        {
+                            botShutdown.Play();
+                            shutdownPlayed = true;
+                        }
                         break;
                     }
                 }
@@ -162,6 +177,7 @@ public class PlayerController : MonoBehaviour
                 deadDroids = GameObject.FindGameObjectsWithTag("DeadEnemy");
                 gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
+                speed = speedOrigin;
                 //abilities.Clear();
             }
         }
@@ -169,17 +185,17 @@ public class PlayerController : MonoBehaviour
 
     private void Interact()
     {
-        bool playOnce = false;
+
         if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
+            loseSoundPlayed = false;
             miniController.StartQuiz(1);
-            startHack.Play();
             gc.Deactivate = true;
         }
         else if (!isBehindEnemy && Input.GetKeyDown(KeyCode.E))
         {
             RaycastHit objectHit;
-            if (Physics.Raycast(visuals.transform.position, visuals.transform.forward, out objectHit, 5))
+            if (Physics.Raycast(visuals.transform.position, visuals.transform.forward, out objectHit, 1))
             {
                 if (objectHit.collider.CompareTag("BreakableBox"))
                 {
@@ -205,64 +221,46 @@ public class PlayerController : MonoBehaviour
             gameObject.transform.position = new Vector3(enemyControlled.transform.position.x,
                 gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
-            if (shooting == null)
-            {
-                shooting = gameObject.AddComponent<Shooting>();
-                shooting.SetHost(visuals);
-                shooting.bulletSpeed = modifyBulletSpeed;
-            }
-            canShoot = true;
-            controlTimer = 10.0f;
-            isBehindEnemy = false;
-            isControlling = true;
-            Destroy(enemyControlled.transform.parent.gameObject);
-            //enemyControlled.SetActive(enemyControlled);
-            /*switch (threatLevel)
-            {
-                //change these values when designers pull their finger out
-
-                case 0:
-                    controlTimer = 10.0f;
-                    break;
-                case 1:
-                    controlTimer = 10.0f;
-                    break;
-                case 2:
-                    controlTimer = 10.0f;
-                    break;
-                case 3:
-                    controlTimer = 5.0f;
-                    break;
-
-
-            }*/
-
-            /*//goes through abilities of each robot and adds them to character usiung switch statement. this needs to b eadded to another list so they can be removed after timer is up on controlling robots
-            foreach (Component t in enemyControlled.GetComponent<BotInfo>().bAbilitiesList)
-            {
-                switch (t.GetType().ToString())
+            //Lewis look here
+            //if (threatLevel == 2)
+            //{
+                if (shooting == null)
                 {
-                    case "Shooting":
-                        
-
+                    shooting = gameObject.AddComponent<Shooting>();
+                    shooting.SetHost(visuals);
+                    shooting.bulletSpeed = modifyBulletSpeed;
                 }
+                canShoot = true;
+                controlTimer = 10.0f;
+                isBehindEnemy = false;
+                isControlling = true;
+                Destroy(enemyControlled.transform.parent.gameObject);
+            //}
+/*            else
+            {
+                speed += 2;
+                controlTimer = 10.0f;
+                isBehindEnemy = false;
+                isControlling = true;
+                Destroy(enemyControlled.transform.parent.gameObject);
             }*/
-            //enemyControlled.SetActive(enemyControlled.GetComponent<Collider>());
+            
             readTSV.hackSuccessful = false;
         }
         else if(miniController.completedQuiz && enemyControlled != null && readTSV.hackSuccessful == false)
         {
-            if (!playOnce)
+            if(!loseSoundPlayed)
             {
-                //loseHack.Play();
-                playOnce = true;
+                failedHack = true;
+                loseHack.Play();
+                loseSoundPlayed = true;
             }
         }
     }
 
     private void DoorInteract()
     {
-        if (computerDoor && Input.GetKeyDown(KeyCode.E) && !miniController.completedDoor)
+        if (computerDoor && Input.GetKeyDown(KeyCode.E) && !miniController.completedDoor && !gc.failMinigame)
         {
             //activate computer door minigame
             miniController.StartDoorMinigame();

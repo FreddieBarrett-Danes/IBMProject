@@ -76,6 +76,8 @@ public class BotInfo : MonoBehaviour
     public float bSusInnerViewRadius;
     [Range(0, 360)] 
     public float bViewAngle;
+    [Range(0, 360)] 
+    public float bInnerViewAngle;
     public float bDetectionTimer;
     public int bTimeBeforeDetect;
     [HideInInspector]
@@ -101,6 +103,10 @@ public class BotInfo : MonoBehaviour
     //ViewCone
     public GameObject bViewCone;
     private Vector3 bViewConePos;
+
+    private bool bShutdownPlayed;
+
+    public AudioSource bShutdown;
 
     private void Start()
     {
@@ -179,8 +185,14 @@ public class BotInfo : MonoBehaviour
         bAnimator.SetInteger("MoveDir", bMoveDirection);
         if (bIsDead)
         {
+            if(bInPlayerView && !bShutdownPlayed)
+            {
+                bShutdown.Play();
+                bShutdownPlayed = true;
+            }
             bAnimator.SetBool("isDead", true);
             GetComponent<NavMeshAgent>().SetDestination(transform.position);
+            bViewCone.GetComponent<Light>().enabled = false;
         }
 
         bViewCone.GetComponent<Light>().range = bViewRadius + 0.5f;

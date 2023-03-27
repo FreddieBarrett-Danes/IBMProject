@@ -4,13 +4,26 @@ public class BulletConditions : MonoBehaviour
 {
     private GameObject[] enemies;
     private GameController gC;
-    private AudioSource breakbox;
+    public AudioSource breakbox;
+
+    public AudioSource PlayerShoot;
+    public AudioSource EnemyShoot;
+    public AudioSource WallHit;
 
     private void Start()
     {
         enemies = GameObject.FindGameObjectsWithTag("EnemyScript");
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        breakbox = gameObject.GetComponent<AudioSource>();
+        if (gameObject.CompareTag("Player"))
+        {
+            EnemyShoot.enabled = false;
+            PlayerShoot.enabled = true;
+        }
+        else
+        {
+            PlayerShoot.enabled = false;
+            EnemyShoot.enabled = true;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -26,9 +39,11 @@ public class BulletConditions : MonoBehaviour
                }
                else if (other.gameObject.CompareTag("Wall"))
                {
-                    Destroy(gameObject);
+                    WallHit.enabled = true;
+                    gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                    gameObject.GetComponent<SphereCollider>().enabled = false;
 
-               }
+                }
                else if(other.gameObject.CompareTag("BreakableBox"))
                {
 
@@ -52,8 +67,9 @@ public class BulletConditions : MonoBehaviour
            }
            else if (other.gameObject.CompareTag("Wall"))
            {
-                Debug.Log("wall hit");
-                Destroy(gameObject);
+                WallHit.enabled = true;
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
            }
        }
        else
