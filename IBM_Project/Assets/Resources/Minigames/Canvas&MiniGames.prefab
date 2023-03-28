@@ -491,6 +491,7 @@ MonoBehaviour:
   mTimer: {fileID: 2523596634021114271}
   setCameraPosition: 1
   Lives: 6
+  mazeLives: {fileID: 0}
 --- !u!1 &1655351960577961017
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,9 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pregameText: {fileID: 181245468296008511}
-  pressStartText: {fileID: 7650606725595417468}
   Timer: {fileID: 4265221875148390000}
-  MazeLives: {fileID: 0}
   mazePlayer: {fileID: 1655351960656588649}
   goalLocation: {fileID: 1655351960237499582}
   showIngameText: 0
@@ -1120,11 +1119,11 @@ MonoBehaviour:
   targetPosWorld: {fileID: 1690106255041822279}
   currentPosWorld: {fileID: 1690106254633926040}
   pregameText: {fileID: 181245468296008511}
-  pressStartText: {fileID: 7650606725595417468}
   Timer: {fileID: 4265221875148390000}
   showIngameText: 0
   showPregameTutorial: 1
   preGoalLocation: {x: 0, y: 0, z: 0}
+  mazeLives: {fileID: 0}
 --- !u!1 &1690106255041822279
 GameObject:
   m_ObjectHideFlags: 0
@@ -2886,6 +2885,12 @@ MonoBehaviour:
   submitButtonSizeMultiplier: 0.65
   answersList: []
   TSVFile: {fileID: -1022232229856555865, guid: de74e8f252c53a641a3fc668f5090091, type: 3}
+  CloudTSV: {fileID: 4134640566548223314, guid: 81c0be0972af75e4b8870ab9af13a8dc, type: 3}
+  AITSV: {fileID: -5961253661617688450, guid: 37cb60f6dd0443542a11ecd1daa8c99e, type: 3}
+  DataTSV: {fileID: 4937745292970980521, guid: 140cee27cf34e6e47b34a00dd58b0da9, type: 3}
+  QuantumTSV: {fileID: -8154413885656020249, guid: 18f28aae1144ac84aae062d1d1901249, type: 3}
+  SecurityTSV: {fileID: -616951207384574251, guid: 8efa5c03c1f789e44b842cab8c060e8c, type: 3}
+  shipNumber: 0
   questionsInARow: 3
   loopNumber: 0
   waitTime: 1
@@ -2897,7 +2902,7 @@ MonoBehaviour:
   correctAnswersList: 
   askedList: 
   timeForQuestion: 0
-  fallbackTimeForQuestion: 0
+  fallbackTimeForQuestion: 4
   totalPoints: 0
   singleSelected: {fileID: 0}
   panel: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}

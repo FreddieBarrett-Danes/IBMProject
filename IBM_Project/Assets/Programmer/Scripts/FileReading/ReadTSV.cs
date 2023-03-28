@@ -18,7 +18,16 @@ public class ReadTSV : MonoBehaviour
     [Space]
     public float submitButtonSizeMultiplier; //Multiplier of the Submit text-box 
     public List<GameObject> answersList;
+
     public TextAsset TSVFile;
+    public TextAsset CloudTSV;
+    public TextAsset AITSV;
+    public TextAsset DataTSV;
+    public TextAsset QuantumTSV;
+    public TextAsset SecurityTSV;
+
+    public int shipNumber;
+
     public int questionsInARow;
     public int loopNumber;
     private GameObject questionText;
@@ -126,7 +135,29 @@ public class ReadTSV : MonoBehaviour
         string rv = null;
 
         find = false;
-        var dataset = TSVFile;
+
+        var dataset = CloudTSV;
+
+        if (gC.Ship1)
+        {
+            dataset = CloudTSV;
+        }
+        else if (gC.Ship2)
+        {
+            dataset = AITSV;
+        }
+        else if (gC.Ship3)
+        {
+            dataset = DataTSV;
+        }
+        else if (gC.Ship4)
+        {
+            dataset = QuantumTSV;
+        }
+        else if (gC.Ship5)
+        {
+            dataset = SecurityTSV;
+        }
 
         var splitDataset = dataset.text.Split(new char[] { '\n' });
 
