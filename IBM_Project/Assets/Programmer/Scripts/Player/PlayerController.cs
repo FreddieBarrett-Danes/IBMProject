@@ -175,7 +175,8 @@ public class PlayerController : MonoBehaviour
                 threatLevel = 0;
                 controlTimer = 0;
                 deadDroids = GameObject.FindGameObjectsWithTag("DeadEnemy");
-                gameObject.GetComponent<Shooting>().enabled = false;
+                if(gameObject.GetComponent<Shooting>())
+                    gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
                 speed = speedOrigin;
                 //abilities.Clear();
@@ -221,9 +222,9 @@ public class PlayerController : MonoBehaviour
             gameObject.transform.position = new Vector3(enemyControlled.transform.position.x,
                 gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
-            //Lewis look here
-            //if (threatLevel == 2)
-            //{
+            
+            if (threatLevel != 3)
+            {
                 if (shooting == null)
                 {
                     shooting = gameObject.AddComponent<Shooting>();
@@ -235,15 +236,15 @@ public class PlayerController : MonoBehaviour
                 isBehindEnemy = false;
                 isControlling = true;
                 Destroy(enemyControlled.transform.parent.gameObject);
-            //}
-/*            else
+            }
+            else
             {
                 speed += 2;
                 controlTimer = 10.0f;
                 isBehindEnemy = false;
                 isControlling = true;
                 Destroy(enemyControlled.transform.parent.gameObject);
-            }*/
+            }
             
             readTSV.hackSuccessful = false;
         }
