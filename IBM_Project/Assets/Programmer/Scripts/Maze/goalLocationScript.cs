@@ -75,7 +75,6 @@ public class goalLocationScript : MonoBehaviour
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         ScoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
-        mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
         //mazeLives.text = "UISDHF";
         
         //mazeLives.GetComponent<TextMeshProUGUI>().active(true);
@@ -88,8 +87,13 @@ public class goalLocationScript : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
+        }
+        
         Debug.Log("TimesHit: " + Lives);
-        mazeLives.text = Lives.ToString("0");
+        mazeLives.text = (Lives - mPlayer.timesHit).ToString("Lives: " + "0");
 
 
         if (Input.GetKeyDown(KeyCode.H))
