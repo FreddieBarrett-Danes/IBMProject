@@ -15,6 +15,7 @@ public class mazeHandler : MonoBehaviour
     public GameObject pregameText;
     public GameObject pressStartText;
     public GameObject Timer;
+    //public GameObject mazeLives;
 
     public GameObject mazePlayer;
     public GameObject goalLocation;
@@ -44,11 +45,16 @@ public class mazeHandler : MonoBehaviour
         //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().transform.position = new Vector3(cameraPosition.x, cameraPosition.y-2, cameraPosition.z);
         pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
         Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+        //mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //public GameObject mazeLives
+        //countdownText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+        //timerText.text = timer.ToString("000");
+
         if (Input.GetKeyDown("space")) //&& pressedPlay == false
         {
             //mazeReady = true;
@@ -62,7 +68,7 @@ public class mazeHandler : MonoBehaviour
             mazePlayer.transform.position = new Vector3(84, 0, 82); //new Vector3(2, 0, 0);
             goalLocation.transform.position = wG.preGoalLocation;
             Debug.Log(mazePlayer.transform.position + "," + goalLocation.transform.position);
-
+            //mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
 
             //Debug.Log("Press 'P' to complete maze instantly");
 
