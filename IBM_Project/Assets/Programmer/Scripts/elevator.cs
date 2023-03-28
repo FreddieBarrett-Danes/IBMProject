@@ -38,6 +38,7 @@ public class elevator : MonoBehaviour
     private void Update()
     {
         FindEnemiesInScene();
+        GameObject.Find("LevelCanvas").SendMessage("QuizLoaded"); //For Score System
 
     }
     private void OnTriggerEnter(Collider other)
