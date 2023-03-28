@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class ScoreSystem : MonoBehaviour
 {
     [Header("Scripts")]
-    public LevelTimer LevelTimer;
-    public ReadTSV Quiz;
-    public TextMeshProUGUI ScoreText;
+    private LevelTimer LevelTimer;
+    private ReadTSV Quiz;
+    private TextMeshProUGUI ScoreText;
     private elevator elevatortest;  
 
     private GameController Gc;
@@ -229,79 +230,84 @@ public class ScoreSystem : MonoBehaviour
 
 
 
-
-        Debug.Log("Score: " + Score);
-        //if (!Gc.inMinigame)
-        //{
+        if (Gc != null)
+        {
+            Debug.Log("Score: " + Score);
+            //if (!Gc.inMinigame)
+            //{
             ScoreText.text = Score.ToString("Score: " + "00000");
             //countdownText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
             //Debug.Log("Score: " + Score);
 
             if (Quiz.completedQuiz == true) { CompletedQuiz(); } //Score += Quiz.totalPoints;
-        //}
+                                                                 //}
 
-        if (Gc.inQuiz || Gc.inMinigame)
-        {
-            ScoreText.enabled = false;
+            if (Gc.inQuiz || Gc.inMinigame)
+            {
+                ScoreText.enabled = false;
+            }
+            else { ScoreText.enabled = true; }
+
+            if (Gc.inQuiz && Quiz.askedList.Count > AskedUpdate) { AskedUpdate = Quiz.askedList.Count; Debug.Log("QuestionUpdate"); QuizQuestionUpdate(); }
+
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                Debug.Log("Score: " + Score);
+                //Debug.Log(AskedUpdate + " | " + Quiz.askedList.Count);
+            }
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                Score += 100;
+                //ScoreText.text = Score.ToString("000");
+            }
+
+            //if (Gc.minigameWin || Gc.minigameLose || Gc.failMinigame || Gc.)
+            //{
+            //    ScoreText.enabled = true;
+            //}
+
+
+            ////At the end of level
+            ////Debug.Log(LevelTimer.currentTime);
+            //TimerUp += Time.deltaTime;
+            ////TimerUp = (int)TimerUp;
+
+            //if (LevelTimer.currentTime >= TimeBonusThreshold)
+            //{
+            //    TimeBonus = LevelTimer.startTime - TimerUp;
+            //}
+            //else
+            //{
+            //    TimeBonus = 0;
+            //}
+
+
+
+
+            //Score = (LevelTimer.currentTime + TimeBonus /* + QuizTimer + MiscBonus*/);
+
+
+            //if (Quiz.hackSuccessful == true) {  }
+            //if (Hit against target == true) { Score += 4; }
+
+            //if (Hit by a target == true) { Score -= 12; }
+
+            //if (ComputerInteractionSuccessful == true) { Score += 12; } //Temp value
+            //Player succeeds maze minigame
+
+            //if (ComputerInteractionSuccessful == false) { Score -= 12; } //Temp value
+            //Player fails maze minigame
+
+            //if (DoorInteractionSuccessful == true) { Score += 6; } //Temp value, subject to removal
+            //Player succeeds one of the door minigames
+
+            //if (DoorInteractionSuccessful == true) { Score -= 6; } //Temp value, subject to removal
+            //Player fails one of the door minigames
+
         }
-        else { ScoreText.enabled = true; }
-
-        if (Gc.inQuiz && Quiz.askedList.Count > AskedUpdate) { AskedUpdate = Quiz.askedList.Count; Debug.Log("QuestionUpdate"); QuizQuestionUpdate(); }
-
-        if (Input.GetKeyDown(KeyCode.J))
+        else if (Gc == null && SceneManager.GetActiveScene().buildIndex == 0)
         {
-            Debug.Log("Score: " + Score);
-            //Debug.Log(AskedUpdate + " | " + Quiz.askedList.Count);
+            Destroy(gameObject);
         }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Score += 100;
-            //ScoreText.text = Score.ToString("000");
-        }
-
-        //if (Gc.minigameWin || Gc.minigameLose || Gc.failMinigame || Gc.)
-        //{
-        //    ScoreText.enabled = true;
-        //}
-
-
-        ////At the end of level
-        ////Debug.Log(LevelTimer.currentTime);
-        //TimerUp += Time.deltaTime;
-        ////TimerUp = (int)TimerUp;
-
-        //if (LevelTimer.currentTime >= TimeBonusThreshold)
-        //{
-        //    TimeBonus = LevelTimer.startTime - TimerUp;
-        //}
-        //else
-        //{
-        //    TimeBonus = 0;
-        //}
-
-
-
-
-        //Score = (LevelTimer.currentTime + TimeBonus /* + QuizTimer + MiscBonus*/);
-
-
-        //if (Quiz.hackSuccessful == true) {  }
-        //if (Hit against target == true) { Score += 4; }
-
-        //if (Hit by a target == true) { Score -= 12; }
-
-        //if (ComputerInteractionSuccessful == true) { Score += 12; } //Temp value
-        //Player succeeds maze minigame
-
-        //if (ComputerInteractionSuccessful == false) { Score -= 12; } //Temp value
-        //Player fails maze minigame
-
-        //if (DoorInteractionSuccessful == true) { Score += 6; } //Temp value, subject to removal
-        //Player succeeds one of the door minigames
-
-        //if (DoorInteractionSuccessful == true) { Score -= 6; } //Temp value, subject to removal
-        //Player fails one of the door minigames
-
-
     }
 }

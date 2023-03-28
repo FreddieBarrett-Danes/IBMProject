@@ -43,12 +43,17 @@ public class ComputerInteraction : MonoBehaviour
     void Update()
     {
         FindEnemiesInScene();
-        if ((enemieslist.Count == 0 || enemiesDead) && gameController.Level5)
+        if (enemieslist.Count == 0 || enemiesDead)
         {
-            gC.inQuiz = true;
-            reader.questionsInARow = 4;
-            reader.find = true;
-            cam.GetComponent<Camera>().farClipPlane = 0.5f;
+            gameObject.GetComponent<SphereCollider>().enabled = false;
+            isTouching = false;
+            if (gameController.Level5)
+            {
+                gC.inQuiz = true;
+                reader.questionsInARow = 4;
+                reader.find = true;
+                cam.GetComponent<Camera>().farClipPlane = 0.5f;
+            }
         }
         if (isTouching && !gameController.inMinigame && Input.GetKey(KeyCode.E ))
         {
