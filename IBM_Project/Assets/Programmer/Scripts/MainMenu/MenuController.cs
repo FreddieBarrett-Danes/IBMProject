@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Threading;
 
 public class MenuController : MonoBehaviour
 {
@@ -14,7 +15,10 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     private GameObject buttonPrefab, sliderPrefab, tickboxPrefab, dropdownPrefab, skillsText;
 
+    [SerializeField]
     private List<GameObject> MainButtonList = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> PauseButtonList = new List<GameObject>();
     [SerializeField]
     private List<GameObject> SettingsButtonList = new List<GameObject>();
     [SerializeField]
@@ -30,18 +34,18 @@ public class MenuController : MonoBehaviour
 
     [SerializeField]
     float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, creditsHeightFrom, creditsSpacing, playHeightFrom, textboxScalar, shipsButtonHeight, shipsButtonWidth, shipsSpacing;
-    public int amountOfButtons;
+    //public int amountOfButtons;
 
     const int   _start =        0,
                 _settings =     1,
                 _credits =      2,
                 _quit =         3;
 
-    [SerializeField]
-    string      menuButton1 = "Start",
+    //[SerializeField]
+    string      menuButton1 = "Play",
                 menuButton2 = "Settings",
-                menuButton3 = "IBM Skills Build",
-                menuButton4 = "Credits",
+                menuButton3 = "Credits",
+                menuButton4 = "Exit",
                 menuButton5 = "Exit";
 
     [SerializeField]
@@ -66,8 +70,9 @@ public class MenuController : MonoBehaviour
 
     public string SkillsText;
 
-    public float debug;
+    public bool inGame;
 
+    //public float debug;
 
     public enum MenuState
     {
@@ -75,7 +80,9 @@ public class MenuController : MonoBehaviour
         Settings,
         SkillsBuild,
         Credits,
-        Levels
+        Levels,
+        Running,
+        Paused
     }
 
     public enum Resolution
@@ -87,7 +94,7 @@ public class MenuController : MonoBehaviour
 
     void Start()
     {
-        MainButtonList.Clear();
+        //MainButtonList.Clear();
         canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
         canvasRectTransform = canvas.GetComponent<RectTransform>();
         getCanvasSize();
@@ -101,6 +108,17 @@ public class MenuController : MonoBehaviour
         StateChanged();
         FullscreenState();
         ResolutionState();
+
+        if (GameObject.FindGameObjectWithTag("GameController") != null)
+        {
+            inGame = true;
+            menuState = MenuState.Running;
+        }
+        else
+        {
+            inGame = false;
+            menuState = MenuState.Main;
+        }
     }
 
     void OnGUI()
@@ -113,6 +131,35 @@ public class MenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameObject.FindGameObjectWithTag("GameController") != null)
+        {
+            inGame = true;
+        }
+        else
+        {
+            inGame = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(menuState == MenuState.Running)
+            {
+                //pause
+                menuState = MenuState.Paused;
+                PauseGame();
+            }
+            else if(menuState == MenuState.Paused)
+            {
+                //unpause
+                menuState = MenuState.Running;
+                UnpauseGame();
+            }
+            else if(menuState == MenuState.Settings || menuState == MenuState.Credits || menuState == MenuState.SkillsBuild)
+            {
+                BackButtonPressed();
+            }
+        }
+
         if(lastFrameMenuState != menuState)
         {
             StateChanged();
@@ -163,6 +210,17 @@ public class MenuController : MonoBehaviour
         if(menuState == MenuState.Main) //hide settings & credits
         {
             ShowHideMainMenuComponents      (true);
+            ShowHidePauseMenuComponents     (false);
+            ShowHideSettingsMenuComponents  (false);
+            ShowHideCreditsMenuComponents   (false);
+            ShowHideSkillsMenuComponents    (false);
+            ShowHidePlayMenuComponents      (false);
+        }
+        
+        if(menuState == MenuState.Paused)
+        {
+            ShowHideMainMenuComponents      (false);
+            ShowHidePauseMenuComponents     (true);
             ShowHideSettingsMenuComponents  (false);
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
@@ -172,6 +230,7 @@ public class MenuController : MonoBehaviour
         else if(menuState == MenuState.Settings)
         {
             ShowHideMainMenuComponents      (false);
+            ShowHidePauseMenuComponents     (false);
             ShowHideSettingsMenuComponents  (true);
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
@@ -181,6 +240,7 @@ public class MenuController : MonoBehaviour
         else if(menuState == MenuState.Credits) //hide settings & credits
         {
             ShowHideMainMenuComponents      (false);
+            ShowHidePauseMenuComponents     (false);
             ShowHideSettingsMenuComponents  (false);
             ShowHideCreditsMenuComponents   (true);
             ShowHideSkillsMenuComponents    (false);
@@ -190,6 +250,7 @@ public class MenuController : MonoBehaviour
         else if(menuState == MenuState.SkillsBuild)
         {
             ShowHideMainMenuComponents      (false);
+            ShowHidePauseMenuComponents     (false);
             ShowHideSettingsMenuComponents  (false);
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (true);
@@ -199,10 +260,21 @@ public class MenuController : MonoBehaviour
         else if(menuState == MenuState.Levels)
         {
             ShowHideMainMenuComponents      (false);
+            ShowHidePauseMenuComponents     (false);
             ShowHideSettingsMenuComponents  (false);
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
             ShowHidePlayMenuComponents      (true);
+        }
+
+        else if(menuState == MenuState.Running)
+        {
+            ShowHideMainMenuComponents      (false);
+            ShowHidePauseMenuComponents     (false);
+            ShowHideSettingsMenuComponents  (false);
+            ShowHideCreditsMenuComponents   (false);
+            ShowHideSkillsMenuComponents    (false);
+            ShowHidePlayMenuComponents      (false);
         }
     }
 
@@ -211,6 +283,14 @@ public class MenuController : MonoBehaviour
         for (int i = 0; i < MainButtonList.Count; i++)
         {
             MainButtonList[i].gameObject.SetActive(showHide);
+        }
+    }
+
+    void ShowHidePauseMenuComponents(bool showHide)
+    {
+        for (int i = 0; i < PauseButtonList.Count; i++)
+        {
+            PauseButtonList[i].gameObject.SetActive(showHide);
         }
     }
 
@@ -267,13 +347,29 @@ public class MenuController : MonoBehaviour
         //
         //Spawning Main Menu
         //
-        for (int i = 0; i < amountOfButtons; i++)
+        for (int i = 0; i < 4; i++)
         {
             GameObject tempPrefab = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
             tempPrefab.transform.parent = canvas.transform;
             MainButtonList.Add(tempPrefab);
             SetText(i);
             SetButtonActions(i);
+            tempPrefab.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+            Destroy(tempPrefab.GetComponent<answersScript>());
+            tempPrefab.GetComponent<Image>().color = buttonColour;
+        }
+
+        //
+        //Spawn Pause menu varient
+        //
+
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject tempPrefab = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+            tempPrefab.transform.parent = canvas.transform;
+            PauseButtonList.Add(tempPrefab);
+            SetPauseText(i);
+            SetPauseButtonActions(i);
             tempPrefab.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
             Destroy(tempPrefab.GetComponent<answersScript>());
             tempPrefab.GetComponent<Image>().color = buttonColour;
@@ -287,6 +383,7 @@ public class MenuController : MonoBehaviour
         GameObject slider = Instantiate(sliderPrefab, canvas.transform.position, Quaternion.identity);
         slider.transform.parent = canvas.transform;
         SettingsButtonList.Add(slider);
+        slider.GetComponent<Slider>().value = 5;
 
         //Spawn Fullscreen Tickbox
         GameObject tickbox = Instantiate(tickboxPrefab, canvas.transform.position, Quaternion.identity);
@@ -429,6 +526,15 @@ public class MenuController : MonoBehaviour
             }
         }
 
+        else if (menuState == MenuState.Paused)
+        {
+            for (int i = 0; i < PauseButtonList.Count; i++)
+            {
+                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
+                PauseButtonList[i].transform.position = canvas.transform.position + pos;
+            }
+        }
+
         else if(menuState == MenuState.Settings)
         {
             for (int i = 0; i < SettingsButtonList.Count; i++)
@@ -478,6 +584,16 @@ public class MenuController : MonoBehaviour
                 MainButtonList[i].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
 
                 MainButtonList[i].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+            }
+        }
+
+        else if (menuState == MenuState.Paused)
+        {
+            for (int i = 0; i < PauseButtonList.Count; i++)
+            {
+                PauseButtonList[i].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+
+                PauseButtonList[i].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
             }
         }
 
@@ -586,6 +702,31 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    void SetPauseText(int buttonNumber)
+    {
+        switch (buttonNumber)
+        {
+            case 0:
+                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = "Continue"; // continue
+                break;
+            case 1:
+                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton2; // settings
+                break;
+            case 2:
+                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton3; // Credits
+                break;
+            case 3:
+                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton4; // Exit
+                break;
+            case 4:
+                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton5; // exit
+                break;
+            default:
+                Debug.Log("Unknown button");
+                break;
+        }
+    }
+
     void SetButtonActions(int buttonNumber)
     {
         switch (buttonNumber)
@@ -611,6 +752,31 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    void SetPauseButtonActions(int buttonNumber)
+    {
+        switch (buttonNumber)
+        {
+            case 0:
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(UnpauseGame);
+                break;
+            case 1:
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SettingsButtonPressed);
+                break;
+            case 2:
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
+                break;
+            case 3:
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                break;
+            case 4:
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                break;
+            default:
+                Debug.Log("Unknown button");
+                break;
+        }
+    }
+
     void PositionMenu()
     {
         float averageHeight = 0;
@@ -628,6 +794,21 @@ public class MenuController : MonoBehaviour
             for (int i = 0; i < MainButtonList.Count; i++)
             {
                 MainButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+            }
+        }
+
+        else if (menuState == MenuState.Paused)
+        {
+            for (int i = 0; i < PauseButtonList.Count; i++)
+            {
+                averageHeight += PauseButtonList[i].GetComponent<RectTransform>().localPosition.y;
+            }
+            averageHeight /= PauseButtonList.Count;
+            //Debug.Log(averageHeight);
+
+            for (int i = 0; i < PauseButtonList.Count; i++)
+            {
+                PauseButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
             }
         }
 
@@ -768,8 +949,22 @@ public class MenuController : MonoBehaviour
     void BackButtonPressed()
     {
         //Go back to main menu
-        menuState = MenuState.Main;
+        if (inGame)
+            menuState = MenuState.Paused;
+        else
+            menuState = MenuState.Main;
 
         return;
+    }
+
+    void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    void UnpauseGame()
+    {
+        Time.timeScale = 1;
+        menuState = MenuState.Running;
     }
 }
