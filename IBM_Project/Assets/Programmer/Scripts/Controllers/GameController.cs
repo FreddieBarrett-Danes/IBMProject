@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour
     public GameObject level;
     private GameObject player;
     [Header("Minigame")] 
-    public bool ComputerInScene;
+    public bool NoComputerInScene;
     public MinigameController mC;
     public bool inMinigame = false;
     public bool inQuiz = false;
@@ -145,9 +145,9 @@ public class GameController : MonoBehaviour
             float computerseconds = Mathf.FloorToInt(computerDoorTimer % 60);
             computerdoortimerText.text = $"{computerseconds:00}";
             */
-            switch(ComputerInScene)
+            switch(NoComputerInScene)
             {
-                case true:
+                case false:
                 {
                     switch (ComputerObj.mazeFailed)
                     {
@@ -164,7 +164,7 @@ public class GameController : MonoBehaviour
                     }
                     break;
                 }
-                case false:
+                case true:
                 {
                     computeravailableImage.sprite = greyComputer;
                     break;

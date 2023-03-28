@@ -435,10 +435,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515664a01ff48b5499242923a1fa512e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Ship1: 0
+  Ship2: 0
+  Ship3: 0
+  Ship4: 0
+  Ship5: 0
+  Level5: 0
   level: {fileID: 0}
+  NoComputerInScene: 0
   mC: {fileID: 0}
   inMinigame: 0
   inQuiz: 0
+  computerDoorTimer: 0
   levelUI:
   - {fileID: 0}
   mazeUI:
@@ -447,11 +455,36 @@ MonoBehaviour:
   - {fileID: 0}
   discUI: []
   tileUI: []
+  levelTimer: {fileID: 0}
   LevelTimeBank: 0
   completedLevel: 0
+  GameOver: 0
+  newScene: 0
+  playerHit: 0
   Deactivate: 0
   bots: []
+  minigameWin: {fileID: 0}
+  minigameLose: {fileID: 0}
+  failMinigame: 0
+  loseSoundPlayed: 0
+  winSoundPlayed: 0
   PlayerStatus: 0
+  playerstatusText: {fileID: 0}
+  hacktimerText: {fileID: 0}
+  computerdoortimerText: {fileID: 0}
+  shootabilityiconImage: {fileID: 0}
+  moveabilityiconImage: {fileID: 0}
+  canhackiconImage: {fileID: 0}
+  computeravailableImage: {fileID: 0}
+  greyShooting: {fileID: 21300000, guid: d9cf15b4e8993da4094bfd2c99690d9c, type: 3}
+  greyMove: {fileID: 21300000, guid: 98a69b5d2fd9ad346a9f5e21b72493d4, type: 3}
+  greyHack: {fileID: 21300000, guid: 63af28c367cd6a1429ee11e95e0f3c44, type: 3}
+  greyComputer: {fileID: 21300000, guid: c55180933d2450a4fa369c4c5c031b40, type: 3}
+  greenShooting: {fileID: 21300000, guid: 186330349a14a3546870476c5c3b1b71, type: 3}
+  greenMove: {fileID: 21300000, guid: d9a9bfed372d68f49b86bfe68008efb6, type: 3}
+  greenHack: {fileID: 21300000, guid: 60e5067c7a410a64cad0ccc0827e57d3, type: 3}
+  greenComputer: {fileID: 21300000, guid: 840376641742d0640b1583cf880e93e0, type: 3}
+  ComputerObj: {fileID: 0}
 --- !u!114 &2098330026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,6 +500,8 @@ MonoBehaviour:
   mazeMinigame: {fileID: 0}
   discMinigame: {fileID: 0}
   sliderMinigame: {fileID: 0}
+  mazeTimerStore: 0
+  doorTimerStore: 0
   chosenMinigame: {fileID: 0}
   doorGame: []
   completedQuiz: 0
