@@ -2,6 +2,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -22,7 +23,8 @@ public class GameController : MonoBehaviour
     public bool Level5;
     public GameObject level;
     private GameObject player;
-    [Header("Minigame")]
+    [Header("Minigame")] 
+    public bool ComputerInScene;
     public MinigameController mC;
     public bool inMinigame = false;
     public bool inQuiz = false;
@@ -65,7 +67,22 @@ public class GameController : MonoBehaviour
 
     public Status PlayerStatus;
     public TextMeshProUGUI playerstatusText;
-    
+    public TextMeshProUGUI hacktimerText;
+    public TextMeshProUGUI computerdoortimerText;
+    public Image shootabilityiconImage;
+    public Image moveabilityiconImage;
+    public Image canhackiconImage;
+    public Image computeravailableImage;
+    public Sprite greyShooting;
+    public Sprite greyMove;
+    public Sprite greyHack;
+    public Sprite greyComputer;
+    public Sprite greenShooting;
+    public Sprite greenMove;
+    public Sprite greenHack;
+    public Sprite greenComputer;
+
+    public ComputerInteraction ComputerObj;
     // Start is called before the first frame update
     void Start()
     {
@@ -93,10 +110,25 @@ public class GameController : MonoBehaviour
         player = FindObjectOfType<PlayerController>().GameObject();
         PlayerStatus = Status.SAFE;
         bots = GameObject.FindGameObjectsWithTag("Sprite");
-        playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        playerstatusText.text = "SAFE";
         computerTimerOrigin = computerDoorTimer;
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
+        
+        playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        playerstatusText.text = "SAFE";
+        hacktimerText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        hacktimerText.text = "00";
+        shootabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(3).GetComponent<Image>();
+        shootabilityiconImage.sprite = greyShooting;
+        computerdoortimerText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+        computerdoortimerText.text = "00";
+        moveabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(5).GetComponent<Image>();
+        moveabilityiconImage.sprite = greyMove;
+        canhackiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(6).GetComponent<Image>();
+        canhackiconImage.sprite = greyMove;
+        computeravailableImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(7).GetComponent<Image>();
+        computeravailableImage.sprite = greyComputer;
+
+        ComputerObj = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
     }
 
     // Update is called once per frame
@@ -104,6 +136,42 @@ public class GameController : MonoBehaviour
     {
         if (!completedLevel)
         {
+            /*
+            shootabilityiconImage.sprite = player.GetComponent<PlayerController>().canShoot ? greenShooting : greyShooting;
+            moveabilityiconImage.sprite = player.GetComponent<PlayerController>().canSpeed ? greenMove : greyMove;
+            canhackiconImage.sprite = player.GetComponent<PlayerController>().isBehindEnemy ? greenHack : greyHack;
+            float hackerseconds = Mathf.FloorToInt(player.GetComponent<PlayerController>().controlTimer % 60);
+            hacktimerText.text = $"{hackerseconds:00}";
+            float computerseconds = Mathf.FloorToInt(computerDoorTimer % 60);
+            computerdoortimerText.text = $"{computerseconds:00}";
+            */
+            switch(ComputerInScene)
+            {
+                case true:
+                {
+                    switch (ComputerObj.mazeFailed)
+                    {
+                        case true:
+                        {
+                            computeravailableImage.sprite = greyComputer;
+                            break;
+                        }
+                        case false:
+                        {
+                            computeravailableImage.sprite = greenComputer;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case false:
+                {
+                    computeravailableImage.sprite = greyComputer;
+                    break;
+                }
+            }
+    
+
             if (Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);

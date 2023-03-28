@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
 
     public float speed;
     private float speedOrigin;
-
+    public bool canSpeed;
+    
     public GameObject visuals;
     public GameObject body;
 
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     public float controlTimer = 0;
     private bool isControlling = false;
-    private bool canShoot = false;
+    public bool canShoot = false;
 
     public bool computerDoor = false;
     public bool elevatorDoor = false;
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
         readTSV = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
         speedOrigin = speed;
+        canSpeed = false;
     }
 
     void Update()
@@ -175,8 +177,10 @@ public class PlayerController : MonoBehaviour
                 threatLevel = 0;
                 controlTimer = 0;
                 deadDroids = GameObject.FindGameObjectsWithTag("DeadEnemy");
-                gameObject.GetComponent<Shooting>().enabled = false;
+                if(gameObject.GetComponent<Shooting>())
+                    gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
+                canSpeed = false;
                 speed = speedOrigin;
                 //abilities.Clear();
             }
@@ -221,9 +225,9 @@ public class PlayerController : MonoBehaviour
             gameObject.transform.position = new Vector3(enemyControlled.transform.position.x,
                 gameObject.transform.position.y, enemyControlled.transform.position.z);
             threatLevel = enemyControlled.GetComponent<BotInfo>().bThreatLevel;
-            //Lewis look here
-            //if (threatLevel == 2)
-            //{
+            
+            if (threatLevel != 3)
+            {
                 if (shooting == null)
                 {
                     shooting = gameObject.AddComponent<Shooting>();
@@ -235,15 +239,16 @@ public class PlayerController : MonoBehaviour
                 isBehindEnemy = false;
                 isControlling = true;
                 Destroy(enemyControlled.transform.parent.gameObject);
-            //}
-/*            else
+            }
+            else
             {
+                canSpeed = true;
                 speed += 2;
                 controlTimer = 10.0f;
                 isBehindEnemy = false;
                 isControlling = true;
                 Destroy(enemyControlled.transform.parent.gameObject);
-            }*/
+            }
             
             readTSV.hackSuccessful = false;
         }
