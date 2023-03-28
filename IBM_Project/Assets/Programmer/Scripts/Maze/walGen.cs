@@ -81,7 +81,7 @@ public class walGen : MonoBehaviour
 
     //UI
     public GameObject pregameText;
-    public GameObject pressStartText;
+    //public GameObject pressStartText;
     public GameObject Timer;
     public bool showIngameText;
     public bool showPregameTutorial;
@@ -571,7 +571,7 @@ public class walGen : MonoBehaviour
         currentPosWorld.SetActive(false);
         targetPosWorld.SetActive(false);
         mazeReady = true;
-        pressStartText.GetComponent<TextMeshProUGUI>().enabled = true;
+        //pressStartText.GetComponent<TextMeshProUGUI>().enabled = true;
 
         //for (int i = 0; i < 100; i++)
         //{

@@ -13,7 +13,7 @@ public class mazeHandler : MonoBehaviour
 
     //UI
     public GameObject pregameText;
-    public GameObject pressStartText;
+    //public GameObject pressStartText;
     public GameObject Timer;
 
     public GameObject mazePlayer;
@@ -34,7 +34,7 @@ public class mazeHandler : MonoBehaviour
         mazeReady = false;
         //OnMazeReady(false);
         pregameText.SetActive(true);
-        pressStartText.SetActive(true);
+        //pressStartText.SetActive(true);
         Timer.SetActive(true);
         GameObject.Find("tutorialBackground").GetComponent<MeshRenderer>().enabled = showPregameTutorial;
         mazePlayer.transform.position = new Vector3(64, 0, 62); //new Vector3(2, 0, 0);
@@ -42,7 +42,7 @@ public class mazeHandler : MonoBehaviour
 
         //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().enabled = showPregameTutorial;
         //GameObject.FindGameObjectWithTag("preGame").GetComponent<Renderer>().transform.position = new Vector3(cameraPosition.x, cameraPosition.y-2, cameraPosition.z);
-        pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
+        //pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
         Timer.GetComponent<TextMeshProUGUI>().enabled = false;
     }
 
@@ -58,7 +58,7 @@ public class mazeHandler : MonoBehaviour
             GameObject.Find("tutorialBackground").GetComponent<MeshRenderer>().enabled = false;
             pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
             Timer.GetComponent<TextMeshProUGUI>().enabled = true;
-            pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
+            //pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
             mazePlayer.transform.position = new Vector3(84, 0, 82); //new Vector3(2, 0, 0);
             goalLocation.transform.position = wG.preGoalLocation;
             Debug.Log(mazePlayer.transform.position + "," + goalLocation.transform.position);
