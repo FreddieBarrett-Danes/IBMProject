@@ -23,7 +23,7 @@ public class goalLocationScript : MonoBehaviour
     public bool setCameraPosition;
 
     public int Lives = 6;
-    //public TextMeshProUGUI mazeLives;
+    public TextMeshProUGUI mazeLives;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -32,8 +32,9 @@ public class goalLocationScript : MonoBehaviour
             Debug.Log(mPlayer.transform.position + "," + transform.position);
             Debug.Log("Maze Win");
             Debug.Log("Refer to goalLocationScript for Maze output");
-            //mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
-            ScoreSystemGameObject.CompletedMinigame(new Vector2(1, mTimer.timer)); //1 = Maze
+            mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
+            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(1, mTimer.timer)); //1 = Maze
+            //ScoreSystemGameObject.CompletedMinigame(new Vector2(1, mTimer.timer)); //1 = Maze
             //mC.mazeTimerStore = mTimer.timer;
             ScoreSystemGameObject.Score += 10;
 
@@ -74,8 +75,9 @@ public class goalLocationScript : MonoBehaviour
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         ScoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
-        //mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
-        //mazeLives.text = mPlayer..ToString("000");
+        mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
+        //mazeLives.text = "UISDHF";
+        
         //mazeLives.GetComponent<TextMeshProUGUI>().active(true);
 
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -86,6 +88,15 @@ public class goalLocationScript : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log("TimesHit: " + Lives);
+        mazeLives.text = Lives.ToString("0");
+
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
+        }
+
         if (mPlayer != null && mPlayer.timesHit >= 6)
         {
             mC.interactMaze = false;
