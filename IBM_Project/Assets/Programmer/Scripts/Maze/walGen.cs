@@ -85,6 +85,7 @@ public class walGen : MonoBehaviour
     public GameObject Timer;
     public bool showIngameText;
     public bool showPregameTutorial;
+    
 
     //public Camera camera;
 
@@ -94,6 +95,7 @@ public class walGen : MonoBehaviour
 
     //public Vector3 cameraPosition;
     public Vector3 preGoalLocation;
+    public GameObject mazeLives;
     int goalLocationRng;
 
 
@@ -371,6 +373,7 @@ public class walGen : MonoBehaviour
         //Debug.Log("Pregame enabled: " + pregameText.GetComponent<TextMeshProUGUI>().enabled);
         preGoalLocation = new Vector3(0, 0, 0);
         goalLocationRng = Random.Range(Maze_Width*2, (Maze_Width * Maze_Height));
+        mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
 
         //--------------------------------------
         //UI:

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class goalLocationScript : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class goalLocationScript : MonoBehaviour
 
     public walGen wG; //Re-reference the gameobject with the walGen script
     public Minigame_Timer mTimer;
+    
 
     private ScoreSystem ScoreSystemGameObject;
 
@@ -20,6 +22,8 @@ public class goalLocationScript : MonoBehaviour
     private Camera camera;
     public bool setCameraPosition;
 
+    public int Lives = 6;
+    public GameObject mazeLives;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -28,6 +32,7 @@ public class goalLocationScript : MonoBehaviour
             Debug.Log(mPlayer.transform.position + "," + transform.position);
             Debug.Log("Maze Win");
             Debug.Log("Refer to goalLocationScript for Maze output");
+            mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
             ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(1, mTimer.timer)); //1 = Maze
 
             //GameObject.Find("LevelCanvas").SendMessage("QuizLoaded");
