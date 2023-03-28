@@ -21,13 +21,15 @@ public class MenuController : MonoBehaviour
     private List<GameObject> SkillsButtonList = new List<GameObject>();
     [SerializeField]
     private List<GameObject> CreditsButtonList = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> PlayButtonList = new List<GameObject>();
 
     [SerializeField]
     private MenuState menuState;
     private MenuState lastFrameMenuState;
 
     [SerializeField]
-    float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, creditsHeightFrom, creditsSpacing, playHeightFrom, textboxScalar;
+    float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, creditsHeightFrom, creditsSpacing, playHeightFrom, textboxScalar, shipsButtonHeight, shipsButtonWidth, shipsSpacing;
     public int amountOfButtons;
 
     const int   _start =        0,
@@ -72,7 +74,8 @@ public class MenuController : MonoBehaviour
         Main,
         Settings,
         SkillsBuild,
-        Credits
+        Credits,
+        Levels
     }
 
     public enum Resolution
@@ -163,32 +166,43 @@ public class MenuController : MonoBehaviour
             ShowHideSettingsMenuComponents  (false);
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
+            ShowHidePlayMenuComponents      (false);
         }
 
-        if(menuState == MenuState.Settings)
+        else if(menuState == MenuState.Settings)
         {
             ShowHideMainMenuComponents      (false);
             ShowHideSettingsMenuComponents  (true);
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
-            
+            ShowHidePlayMenuComponents      (false);
         }
 
-        if(menuState == MenuState.Credits) //hide settings & credits
+        else if(menuState == MenuState.Credits) //hide settings & credits
         {
             ShowHideMainMenuComponents      (false);
             ShowHideSettingsMenuComponents  (false);
             ShowHideCreditsMenuComponents   (true);
             ShowHideSkillsMenuComponents    (false);
-
+            ShowHidePlayMenuComponents      (false);
         }
 
-        if(menuState == MenuState.SkillsBuild)
+        else if(menuState == MenuState.SkillsBuild)
         {
             ShowHideMainMenuComponents      (false);
             ShowHideSettingsMenuComponents  (false);
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (true);
+            ShowHidePlayMenuComponents      (false);
+        }
+
+        else if(menuState == MenuState.Levels)
+        {
+            ShowHideMainMenuComponents      (false);
+            ShowHideSettingsMenuComponents  (false);
+            ShowHideCreditsMenuComponents   (false);
+            ShowHideSkillsMenuComponents    (false);
+            ShowHidePlayMenuComponents      (true);
         }
     }
 
@@ -221,6 +235,14 @@ public class MenuController : MonoBehaviour
         for (int i = 0; i < SkillsButtonList.Count; i++)
         {
             SkillsButtonList[i].gameObject.SetActive(showHide);
+        }
+    }
+
+    void ShowHidePlayMenuComponents(bool showHide)
+    {
+        for (int i = 0; i < PlayButtonList.Count; i++)
+        {
+            PlayButtonList[i].gameObject.SetActive(showHide);
         }
     }
 
@@ -343,6 +365,56 @@ public class MenuController : MonoBehaviour
         Destroy(skillsBack.GetComponent<answersScript>());
         skillsBack.GetComponent<Image>().color = buttonColour;
 
+
+        //
+        // Spawn Play menu with 5 ships
+        //
+
+        GameObject ship1 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        ship1.transform.parent = canvas.transform;
+        PlayButtonList.Add(ship1);
+        ship1.GetComponentInChildren<TextMeshProUGUI>().text = "Cloud";
+        ship1.GetComponent<Button>().onClick.AddListener(Ship1Start);
+        ship1.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(ship1.GetComponent<answersScript>());
+        ship1.GetComponent<Image>().color = buttonColour;
+
+        GameObject ship2 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        ship2.transform.parent = canvas.transform;
+        PlayButtonList.Add(ship2);
+        ship2.GetComponentInChildren<TextMeshProUGUI>().text = "AI";
+        ship2.GetComponent<Button>().onClick.AddListener(Ship2Start);
+        ship2.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(ship2.GetComponent<answersScript>());
+        ship2.GetComponent<Image>().color = buttonColour;
+
+        GameObject ship3 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        ship3.transform.parent = canvas.transform;
+        PlayButtonList.Add(ship3);
+        ship3.GetComponentInChildren<TextMeshProUGUI>().text = "Data";
+        ship3.GetComponent<Button>().onClick.AddListener(Ship3Start);
+        ship3.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(ship3.GetComponent<answersScript>());
+        ship3.GetComponent<Image>().color = buttonColour;
+
+        GameObject ship4 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        ship4.transform.parent = canvas.transform;
+        PlayButtonList.Add(ship4);
+        ship4.GetComponentInChildren<TextMeshProUGUI>().text = "Quantum";
+        ship4.GetComponent<Button>().onClick.AddListener(Ship4Start);
+        ship4.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(ship4.GetComponent<answersScript>());
+        ship4.GetComponent<Image>().color = buttonColour;
+        
+        GameObject ship5 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        ship5.transform.parent = canvas.transform;
+        PlayButtonList.Add(ship5);
+        ship5.GetComponentInChildren<TextMeshProUGUI>().text = "Security";
+        ship5.GetComponent<Button>().onClick.AddListener(Ship5Start);
+        ship5.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(ship5.GetComponent<answersScript>());
+        ship5.GetComponent<Image>().color = buttonColour;
+
         return;
     }
 
@@ -381,6 +453,15 @@ public class MenuController : MonoBehaviour
             {
                 Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
                 SkillsButtonList[i].transform.position = canvas.transform.position + pos;
+            }
+        }
+
+        else if(menuState == MenuState.Levels)
+        {
+            for (int i = 0; i < PlayButtonList.Count; i++)
+            {
+                Vector3 pos = new Vector3((shipsSpacing * canvasWidth) * i, 0, 0);
+                PlayButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
     }
@@ -460,6 +541,24 @@ public class MenuController : MonoBehaviour
             SkillsButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
             SkillsButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
         }
+
+        else if(menuState == MenuState.Levels)
+        {
+            PlayButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
+            PlayButtonList[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+            
+            PlayButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
+            PlayButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+
+            PlayButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
+            PlayButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+
+            PlayButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
+            PlayButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+
+            PlayButtonList[4].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
+            PlayButtonList[4].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+        }
     }
 
     void SetText(int buttonNumber)
@@ -515,6 +614,7 @@ public class MenuController : MonoBehaviour
     void PositionMenu()
     {
         float averageHeight = 0;
+        float averageWidth = 0;
 
         if(menuState == MenuState.Main)
         {
@@ -523,7 +623,7 @@ public class MenuController : MonoBehaviour
                 averageHeight += MainButtonList[i].GetComponent<RectTransform>().localPosition.y;
             }
             averageHeight /= MainButtonList.Count;
-            Debug.Log(averageHeight);
+            //Debug.Log(averageHeight);
 
             for (int i = 0; i < MainButtonList.Count; i++)
             {
@@ -538,7 +638,7 @@ public class MenuController : MonoBehaviour
                 averageHeight += SettingsButtonList[i].GetComponent<RectTransform>().localPosition.y;
             }
             averageHeight /= SettingsButtonList.Count;
-            Debug.Log(averageHeight);
+            //Debug.Log(averageHeight);
 
             for (int i = 0; i < SettingsButtonList.Count; i++)
             {
@@ -553,7 +653,7 @@ public class MenuController : MonoBehaviour
                 averageHeight += CreditsButtonList[i].GetComponent<RectTransform>().localPosition.y;
             }
             averageHeight /= CreditsButtonList.Count;
-            Debug.Log(averageHeight);
+            //Debug.Log(averageHeight);
 
             for (int i = 0; i < CreditsButtonList.Count; i++)
             {
@@ -568,22 +668,73 @@ public class MenuController : MonoBehaviour
                 averageHeight += SkillsButtonList[i].GetComponent<RectTransform>().localPosition.y;
             }
             averageHeight /= SkillsButtonList.Count;
-            Debug.Log(averageHeight);
+            //Debug.Log(averageHeight);
 
             for (int i = 0; i < SkillsButtonList.Count; i++)
             {
                 SkillsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
             }
         }
+
+        else if (menuState == MenuState.Levels)
+        {
+            for (int i = 0; i < PlayButtonList.Count; i++)
+            {
+                averageWidth += PlayButtonList[i].GetComponent<RectTransform>().localPosition.x;
+            }
+            averageWidth /= PlayButtonList.Count;
+
+            for (int i = 0; i < PlayButtonList.Count; i++)
+            {
+                PlayButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(averageWidth, 0, 0);
+            }
+
+        }
     }
 
     void PlayButtonPressed()
     {
         //Add the game start logic here
+        //SceneManager.LoadScene(1);
+        menuState = MenuState.Levels;
+        return;
+    }
+
+    void Ship1Start()
+    {
+        //Add the game start logic here
         SceneManager.LoadScene(1);
         return;
     }
-    
+
+    void Ship2Start()
+    {
+        //Add the game start logic here
+        SceneManager.LoadScene(6);
+        return;
+    }
+
+    void Ship3Start()
+    {
+        //Add the game start logic here
+        SceneManager.LoadScene(11);
+        return;
+    }
+
+    void Ship4Start()
+    {
+        //Add the game start logic here
+        SceneManager.LoadScene(16);
+        return;
+    }
+
+    void Ship5Start()
+    {
+        //Add the game start logic here
+        SceneManager.LoadScene(21);
+        return;
+    }
+
     void SettingsButtonPressed()
     {
         //Swap to settings menu
