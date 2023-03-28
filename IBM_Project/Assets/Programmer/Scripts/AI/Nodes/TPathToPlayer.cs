@@ -1,7 +1,6 @@
 using BT;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class TPathToPlayer : BT_Node
 {
