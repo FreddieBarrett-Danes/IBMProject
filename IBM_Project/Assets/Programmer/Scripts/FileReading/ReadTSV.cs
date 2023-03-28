@@ -54,7 +54,7 @@ public class ReadTSV : MonoBehaviour
     [SerializeField]
     private float waitTime;
     private bool waiting;
-    public int rangeOfQuestionsMax = 6; //find a way to set this automatically
+    //public int rangeOfQuestionsMax = 6; //find a way to set this automatically
     //[Range(1, 6)]
     public int row;
 
@@ -296,7 +296,16 @@ public class ReadTSV : MonoBehaviour
 
     public void nonDuplicateRow()
     {
-        row = Random.Range(1, rangeOfQuestionsMax + 1);
+        if (gC.Ship1)
+            row = Random.Range(1, cloudRangeMax + 1);
+        else if (gC.Ship2)
+            row = Random.Range(1, aiRangeMax + 1);
+        else if (gC.Ship3)
+            row = Random.Range(1, dataRangeMax + 1);
+        else if (gC.Ship4)
+            row = Random.Range(1, quantumRangeMax + 1);
+        else if (gC.Ship5)
+            row = Random.Range(1, securityRangeMax + 1);
 
         for (int i = 0; i < askedList.Count; i++)
         {
@@ -669,11 +678,23 @@ public class ReadTSV : MonoBehaviour
             }
 
             //Reset asked list if all questions have already been asked
-            if (askedList.Count == rangeOfQuestionsMax) if (askedList.Count == rangeOfQuestionsMax)
-                {
-                    //clear asked list so duplicates can be asked again
-                    askedList.Clear();
-                }
+
+            if (gC.Ship1 && askedList.Count == cloudRangeMax)
+                askedList.Clear();
+            else if (gC.Ship2 && askedList.Count == aiRangeMax)
+                askedList.Clear();
+            else if (gC.Ship3 && askedList.Count == dataRangeMax)
+                askedList.Clear();
+            else if (gC.Ship4 && askedList.Count == quantumRangeMax)
+                askedList.Clear();
+            else if (gC.Ship5 && askedList.Count == securityRangeMax)
+                askedList.Clear();
+
+            /*if (askedList.Count == rangeOfQuestionsMax)
+            {
+                //clear asked list so duplicates can be asked again
+                askedList.Clear();
+            }*/
 
             waiting = true;
 
