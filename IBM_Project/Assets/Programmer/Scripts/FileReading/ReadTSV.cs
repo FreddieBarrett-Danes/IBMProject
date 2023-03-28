@@ -19,12 +19,26 @@ public class ReadTSV : MonoBehaviour
     public float submitButtonSizeMultiplier; //Multiplier of the Submit text-box 
     public List<GameObject> answersList;
 
+    //TSV FILES
+    [Header("TSV Files")]
+    [Space]
+
     public TextAsset TSVFile;
+
     public TextAsset CloudTSV;
+    public int cloudRangeMax;
+
     public TextAsset AITSV;
+    public int aiRangeMax;
+
     public TextAsset DataTSV;
+    public int dataRangeMax;
+
     public TextAsset QuantumTSV;
+    public int quantumRangeMax;
+
     public TextAsset SecurityTSV;
+    public int securityRangeMax;
 
     public int shipNumber;
 
@@ -99,6 +113,19 @@ public class ReadTSV : MonoBehaviour
 
     [Header("Debug")]
     public bool debug;
+
+    int InitialiseTSVs(int shipNumber)
+    {
+        int i = 0;
+        string cellValue = Find(i, 0, shipNumber);
+        while (cellValue != "")
+        {
+            //Debug.Log(cellValue);
+            i++;
+            cellValue = Find(i, 0, shipNumber);
+        }
+        return i;
+    }
 
     List<int> Shuffle(int length)
     {
@@ -194,6 +221,70 @@ public class ReadTSV : MonoBehaviour
         return rv;
     }
 
+    string Find(int findRow, int findColumn, int shipNumber)
+    {
+        string rv = null;
+
+        find = false;
+
+        var dataset = CloudTSV;
+
+        if (shipNumber == 1)
+        {
+            dataset = CloudTSV;
+        }
+        else if (shipNumber == 2)
+        {
+            dataset = AITSV;
+        }
+        else if (shipNumber == 3)
+        {
+            dataset = DataTSV;
+        }
+        else if (shipNumber == 4)
+        {
+            dataset = QuantumTSV;
+        }
+        else if (shipNumber == 5)
+        {
+            dataset = SecurityTSV;
+        }
+
+        var splitDataset = dataset.text.Split(new char[] { '\n' });
+
+        if (findRow < 1)
+        {
+            findRow = 1;
+            Debug.LogWarning("Desired Row given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
+        }
+
+        if (findColumn < 1)
+        {
+            findColumn = 1;
+            Debug.LogWarning("Desired Column given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
+        }
+
+        for (int i = 0; i < findRow; i++)
+        {
+            char tabSpace = '\u0009'; //takes the TAB ascii code as the splitter character. this value used to be a , when using CSV but now we are using TSV.
+            var data = splitDataset[i].Split(tabSpace.ToString()); //
+            //var data = splitDataset[i].Split(',');
+            for (int j = 0; j < findColumn; j++)
+            {
+                if (findRow > splitDataset.Length) findRow = splitDataset.Length;
+                if (findColumn > data.Length) findColumn = data.Length;
+
+                //questionText.text = data[j];
+
+                rv = data[j];
+            }
+        }
+        //Debug.Log(rv);
+        //Debug.Log(findColumn);
+        //Debug.Log(findRow);
+        return rv;
+    }
+
     public void submitClicked()
     {
         Debug.Log("submit clicked");
@@ -224,7 +315,11 @@ public class ReadTSV : MonoBehaviour
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
         canvasRectTransform = canvas.GetComponent<RectTransform>();
 
-
+        cloudRangeMax = InitialiseTSVs(1);
+        aiRangeMax = InitialiseTSVs(2);
+        dataRangeMax = InitialiseTSVs(3);
+        quantumRangeMax = InitialiseTSVs(4);
+        securityRangeMax = InitialiseTSVs(5);
 
         Debug.Log((panelSize));
     }
@@ -672,4 +767,6 @@ public class ReadTSV : MonoBehaviour
             }
         }
     }
+
+    
 }
