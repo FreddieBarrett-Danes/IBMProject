@@ -29,7 +29,7 @@ public class LevelTimer : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
     }
     void Start()
@@ -43,7 +43,7 @@ public class LevelTimer : MonoBehaviour
     {
         if(countdownText == null)
         {
-            countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         }
         if (!TimeUp)
         {
@@ -79,6 +79,6 @@ public class LevelTimer : MonoBehaviour
         float minutes = Mathf.FloorToInt(currentTime / 60);
         float seconds = Mathf.FloorToInt(currentTime % 60);
 
-        countdownText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+        countdownText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

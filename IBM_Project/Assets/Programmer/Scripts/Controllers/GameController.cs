@@ -65,9 +65,10 @@ public class GameController : MonoBehaviour
         HUNTED
     }
 
+    public PlayerController PlayerControl;
+    
     public Status PlayerStatus;
     public TextMeshProUGUI playerstatusText;
-    public TextMeshProUGUI hacktimerText;
     public TextMeshProUGUI computerdoortimerText;
     public Image shootabilityiconImage;
     public Image moveabilityiconImage;
@@ -112,11 +113,11 @@ public class GameController : MonoBehaviour
         bots = GameObject.FindGameObjectsWithTag("Sprite");
         computerTimerOrigin = computerDoorTimer;
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
+
+        PlayerControl = player.GetComponent<PlayerController>();
         
-        playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         playerstatusText.text = "SAFE";
-        hacktimerText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        hacktimerText.text = "00";
         shootabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(3).GetComponent<Image>();
         shootabilityiconImage.sprite = greyShooting;
         computerdoortimerText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(4).GetComponent<TextMeshProUGUI>();
@@ -136,15 +137,11 @@ public class GameController : MonoBehaviour
     {
         if (!completedLevel)
         {
-            /*
-            shootabilityiconImage.sprite = player.GetComponent<PlayerController>().canShoot ? greenShooting : greyShooting;
-            moveabilityiconImage.sprite = player.GetComponent<PlayerController>().canSpeed ? greenMove : greyMove;
-            canhackiconImage.sprite = player.GetComponent<PlayerController>().isBehindEnemy ? greenHack : greyHack;
-            float hackerseconds = Mathf.FloorToInt(player.GetComponent<PlayerController>().controlTimer % 60);
-            hacktimerText.text = $"{hackerseconds:00}";
+            shootabilityiconImage.sprite = PlayerControl.canShoot ? greenShooting : greyShooting;
+            moveabilityiconImage.sprite = PlayerControl.canSpeed ? greenMove : greyMove;
+            canhackiconImage.sprite = PlayerControl.isBehindEnemy ? greenHack : greyHack;
             float computerseconds = Mathf.FloorToInt(computerDoorTimer % 60);
             computerdoortimerText.text = $"{computerseconds:00}";
-            */
             switch(NoComputerInScene)
             {
                 case false:
@@ -306,7 +303,8 @@ public class GameController : MonoBehaviour
                     {
                         foreach (GameObject bot in bots)
                         {
-                            bot.transform.gameObject.SetActive(false);
+                            if(bot)
+                                bot.transform.gameObject.SetActive(false);
                         }
 
                         player.transform.parent.GetChild(1).gameObject.SetActive(false);
