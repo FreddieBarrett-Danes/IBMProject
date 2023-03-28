@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -34,12 +35,12 @@ public class ReadTSV : MonoBehaviour
     //[Range(1, 6)]
     public int row;
 
-    private const int _questionRow      = 0,
-                      _answer1          = 1,
-                      _answer2          = 2,
-                      _answer3          = 3,
-                      _answer4          = 4,
-                      _amountOfAnswers  = 5,
+    private const int _questionRow = 0,
+                      _answer1 = 1,
+                      _answer2 = 2,
+                      _answer3 = 3,
+                      _answer4 = 4,
+                      _amountOfAnswers = 5,
                       _timeForQuestions = 6;
 
     [Header("Quiz Stats")]
@@ -175,9 +176,9 @@ public class ReadTSV : MonoBehaviour
     {
         row = Random.Range(1, rangeOfQuestionsMax + 1);
 
-        for(int i = 0; i < askedList.Count; i++)
+        for (int i = 0; i < askedList.Count; i++)
         {
-            if(row == askedList[i])
+            if (row == askedList[i])
             {
                 Debug.Log("alredy asked question: " + askedList[i]);
                 nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
@@ -192,7 +193,7 @@ public class ReadTSV : MonoBehaviour
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
         canvasRectTransform = canvas.GetComponent<RectTransform>();
 
-        
+
 
         Debug.Log((panelSize));
     }
@@ -215,14 +216,14 @@ public class ReadTSV : MonoBehaviour
 
             float parseOutput = 0;
 
-           // Debug.Log("Value is :" + Find(row, 7) + ":");
+            // Debug.Log("Value is :" + Find(row, 7) + ":");
 
-            if(Find(row, 7) != "")
+            if (Find(row, 7) != "")
             {
                 timeForQuestion = fallbackTimeForQuestion;
             }
 
-            if(float.TryParse(Find(row, 7), out parseOutput))
+            if (float.TryParse(Find(row, 7), out parseOutput))
             {
                 timeForQuestion = parseOutput;
             }
@@ -264,7 +265,7 @@ public class ReadTSV : MonoBehaviour
             panelSize = new Vector2((canvasRectTransform.sizeDelta.x * 0.9f) / 2, canvasRectTransform.sizeDelta.y * 0.25f); //Find panel size
 
             rightAnswers = 0; //reset the counter for how many answers player got right
-            
+
             //Instantiating question box
 
             questionText = Instantiate(panel);
@@ -275,7 +276,7 @@ public class ReadTSV : MonoBehaviour
             Destroy(questionText.GetComponent<Button>());
             Destroy(questionText.GetComponent<answersScript>());
 
-            if(questionText.GetComponentInChildren<TextMeshProUGUI>().isTextOverflowing == true)
+            if (questionText.GetComponentInChildren<TextMeshProUGUI>().isTextOverflowing == true)
             {
                 Debug.Log("Text overflow");
             }
@@ -288,7 +289,7 @@ public class ReadTSV : MonoBehaviour
             submitText.transform.SetParent(canvas.transform);
             submitText.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.45f, panelSize.y * 0.5f);
             submitText.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x / 2, canvasRectTransform.sizeDelta.y * 0.085f);
-            
+
 
             submitText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set size of textbox
             submitText.GetComponentInChildren<TextMeshProUGUI>().text = ("Submit Answer");
@@ -310,8 +311,8 @@ public class ReadTSV : MonoBehaviour
 
                     tempPanelY.GetComponent<RectTransform>().position = new Vector2(canvasRectTransform.sizeDelta.x * startX, (canvasRectTransform.sizeDelta.y * startY) * 1.5f); // Sets the position of the text-box for the answer
 
-                    tempPanelY.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = panelSize; 
-                    
+                    tempPanelY.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = panelSize;
+
                     answersList.Add(tempPanelY);
 
                     startX += 0.5f;
@@ -379,7 +380,7 @@ public class ReadTSV : MonoBehaviour
 
             int.TryParse(Find(row, 6), out correctAnswers); // randomissation added here;
 
-            if(correctAnswers < 1)
+            if (correctAnswers < 1)
             {
                 correctAnswers = 1;
                 Debug.LogWarning(this.name + " was unable to determine how many correct answers there are. It was automatically set to 1. - ask Istvan");
@@ -390,10 +391,10 @@ public class ReadTSV : MonoBehaviour
                 Debug.Log(j);
             }*/
 
-            List<int> orderList; 
+            List<int> orderList;
             //List<int> orderList = new List<int>(FisherYatesShuffle(Shuffle(4)));
 
-            if(Find(row, 4) == "")
+            if (Find(row, 4) == "")
             {
                 orderList = new List<int>(FisherYatesShuffle(Shuffle(2)));
             }
@@ -412,7 +413,7 @@ public class ReadTSV : MonoBehaviour
                 }
 
                 //Debug.Log(orderList[i]);
-                
+
                 answersList[i].GetComponentInChildren<TextMeshProUGUI>().text = Find(row, orderList[i] + 1).ToString();
             }
 
@@ -436,16 +437,34 @@ public class ReadTSV : MonoBehaviour
 
         //Debug.Log(amountSelected);
 
-        if(amountSelected != 0) //allows submit to be clicked if something is selected //THIS IS'NT WORKING AS INTENDED
+        if (amountSelected != 0) //allows submit to be clicked if something is selected //THIS IS'NT WORKING AS INTENDED
         {
             submitButton.onClick.AddListener(submitClicked);
+        }
+
+        if (amountSelected >= correctAnswers)
+        {
+            for (int i = 0; i < answersList.Count; i++)
+            {
+                if (!answersList[i].GetComponent<answersScript>().selected)
+                {
+                    answersList[i].GetComponent<Button>().interactable = false;
+                }
+            }
+        }
+        else if (amountSelected < correctAnswers)
+        {
+            for (int i = 0; i < answersList.Count; i++)
+            {
+                answersList[i].GetComponent<Button>().interactable = true;
+            }
         }
 
         ////
         /// This section is to make the timer tick down for the timeForQuestion
         ////
-        
-        if(timeForQuestion < 0 && answersList.Count != 0)
+
+        if (timeForQuestion < 0 && answersList.Count != 0)
         {
             //Question time is up
             amountSelected = 1;
@@ -465,10 +484,10 @@ public class ReadTSV : MonoBehaviour
             tempCorrect = 0;
             tempWrong = 0;
 
-            for(int i = 0; i < answersList.Count; i++) //check to make sure correct answers were ticked and set colours
+            for (int i = 0; i < answersList.Count; i++) //check to make sure correct answers were ticked and set colours
             {
                 //if(answersList[i] != null)
-                    Destroy(answersList[i].GetComponent<Button>());
+                Destroy(answersList[i].GetComponent<Button>());
 
                 if (answersList[i].GetComponent<answersScript>().isCorrect && answersList[i].GetComponent<answersScript>().selected) // selected is correct
                 {
@@ -484,7 +503,7 @@ public class ReadTSV : MonoBehaviour
                 }
                 else if (answersList[i].GetComponent<answersScript>().isCorrect && !answersList[i].GetComponent<answersScript>().selected) // not seleced correct answer
                 {
-                    answersList[i].GetComponent<answersScript>().panelColour = new Color(1,0.5f,0,1); // set colour to orange
+                    answersList[i].GetComponent<answersScript>().panelColour = new Color(1, 0.5f, 0, 1); // set colour to orange
                     tempWrong++;
                 }
             }
@@ -493,7 +512,7 @@ public class ReadTSV : MonoBehaviour
             askedList.Add(row); //double check this works
 
             //set this question right/wrong/partial depending on answer
-            if(tempWrong > 0)
+            if (tempWrong > 0)
             {
                 incorrectAnswersList.Add(row);
             }
@@ -508,7 +527,7 @@ public class ReadTSV : MonoBehaviour
             totalPoints += tempCorrect;
 
             //Check if all of the answers were correct
-            if(tempCorrect == correctAnswers)
+            if (tempCorrect == correctAnswers)
             {
                 //FREDDIE
                 //THIS IS WHERE YOU CAN CHECK TO MAKE SURE BOT HACK IS SUCCESSFUL
@@ -524,10 +543,10 @@ public class ReadTSV : MonoBehaviour
 
             //Reset asked list if all questions have already been asked
             if (askedList.Count == rangeOfQuestionsMax) if (askedList.Count == rangeOfQuestionsMax)
-            {
-                //clear asked list so duplicates can be asked again
-                askedList.Clear();
-            }
+                {
+                    //clear asked list so duplicates can be asked again
+                    askedList.Clear();
+                }
 
             waiting = true;
 
@@ -537,23 +556,23 @@ public class ReadTSV : MonoBehaviour
         submit = false;
         amountSelected = 0;
 
-        if(waiting)
+        if (waiting)
         {
             timer -= Time.deltaTime;
         }
 
-        if(timer < 0 && waiting && loopNumber < questionsInARow)
+        if (timer < 0 && waiting && loopNumber < questionsInARow)
         {
             find = true;
             waiting = false;
         }
-        
-        else if(timer < 0 && waiting && loopNumber == questionsInARow)
+
+        else if (timer < 0 && waiting && loopNumber == questionsInARow)
         {
             if (questionsInARow > 1)
             {
                 //find = true;
-               
+
                 gC.inMinigame = false;
                 gC.completedLevel = true;
             }
@@ -578,13 +597,13 @@ public class ReadTSV : MonoBehaviour
         }
 
         //SingleSelectfunctionality
-        if(correctAnswers <= 1)//if only 1 answer is available
+        if (correctAnswers <= 1)//if only 1 answer is available
         {//if selected answer has changed since last frame then unselect all but current
-            if(singleSelected != tempSingleSelected)
+            if (singleSelected != tempSingleSelected)
             {
                 for (int i = 0; i < answersList.Count; i++)
                 {
-                    if(answersList[i] != singleSelected)
+                    if (answersList[i] != singleSelected)
                     {
                         answersList[i].GetComponent<answersScript>().selected = false;
                     }
