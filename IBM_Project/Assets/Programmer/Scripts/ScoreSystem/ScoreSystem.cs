@@ -41,6 +41,8 @@ public class ScoreSystem : MonoBehaviour
 
     private int AskedUpdate;
 
+    private int askedListTotal;
+
     private int TempQuizPoints;
 
     //LevelTimer.currentTime counts down starting from LevelTimer.startTime
@@ -180,7 +182,7 @@ public class ScoreSystem : MonoBehaviour
 
     void CompletedQuiz()
     {
-        Debug.Log("CorrectAnswers | Total Points | Score " + Quiz.correctAnswersList.Count + " | " + Quiz.totalPoints + " | " + Score);
+        //Debug.Log("CorrectAnswers | Total Points | Score " + Quiz.correctAnswersList.Count + " | " + Quiz.totalPoints + " | " + Score);
         //Score += Quiz.totalPoints * QuizScoreModifier;
     }
 
@@ -193,7 +195,7 @@ public class ScoreSystem : MonoBehaviour
         Quiz = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
         ScoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
         LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
-        AskedUpdate = Quiz.askedList.Count;
+        AskedUpdate = Quiz.cloudAskedList.Count + Quiz.aiAskedList.Count + Quiz.dataAskedList.Count + Quiz.quantumAskedList.Count + Quiz.securityAskedList.Count;
 
         DontDestroyOnLoad(this);
         if (ScoreInstance == null)
@@ -248,7 +250,7 @@ public class ScoreSystem : MonoBehaviour
             }
             else { ScoreText.enabled = true; }
 
-            if (Gc.inQuiz && Quiz.askedList.Count > AskedUpdate) { AskedUpdate = Quiz.askedList.Count; Debug.Log("QuestionUpdate"); QuizQuestionUpdate(); }
+            if (Gc.inQuiz && askedListTotal > AskedUpdate) { AskedUpdate = askedListTotal; Debug.Log("QuestionUpdate"); QuizQuestionUpdate(); }
 
             if (Input.GetKeyDown(KeyCode.J))
             {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -73,9 +74,27 @@ public class ReadTSV : MonoBehaviour
     public int correctAnswers; //How many correct answers there are
     private int amountSelected;
 
-    public List<int> incorrectAnswersList; //List of questions the user answered Wrong
-    public List<int> correctAnswersList; //List of questions the user answered Correct
-    public List<int> askedList; //List of questions already asked
+    //public List<int> incorrectAnswersList; //List of questions the user answered Wrong
+    public List<int> cloudIncorrectAnswersList;
+    public List<int> aiIncorrectAnswersList;
+    public List<int> dataIncorrectAnswersList;
+    public List<int> quantumIncorrectAnswersList;
+    public List<int> securityIncorrectAnswersList;
+
+    //public List<int> correctAnswersList; //List of questions the user answered Correct
+    public List<int> cloudCorrectAnswersList; 
+    public List<int> aiCorrectAnswersList; 
+    public List<int> dataCorrectAnswersList; 
+    public List<int> quantumCorrectAnswersList; 
+    public List<int> securityCorrectAnswersList; 
+
+    //public List<int> askedList; //List of questions already asked
+    public List<int> cloudAskedList; 
+    public List<int> aiAskedList; 
+    public List<int> dataAskedList; 
+    public List<int> quantumAskedList; 
+    public List<int> securityAskedList; 
+
     private int tempCorrect;
     private int tempWrong;
 
@@ -307,14 +326,80 @@ public class ReadTSV : MonoBehaviour
         else if (gC.Ship5)
             row = Random.Range(1, securityRangeMax + 1);
 
-        for (int i = 0; i < askedList.Count; i++)
+        if (gC.Ship1)
+        {
+            for (int i = 0; i < cloudIncorrectAnswersList.Count; i++)
+            {
+                if (row == cloudIncorrectAnswersList[i])
+                {
+                    Debug.Log("alredy asked question: " + cloudIncorrectAnswersList[i]);
+                    nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+                }
+            }
+            //cloudIncorrectAnswersList
+
+        }
+        else if (gC.Ship2)
+        {
+            for (int i = 0; i < aiIncorrectAnswersList.Count; i++)
+            {
+                if (row == aiIncorrectAnswersList[i])
+                {
+                    Debug.Log("alredy asked question: " + aiIncorrectAnswersList[i]);
+                    nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+                }
+            }
+            //aiIncorrectAnswersList =
+
+        }
+        else if (gC.Ship3)
+        {
+            for (int i = 0; i < dataIncorrectAnswersList.Count; i++)
+            {
+                if (row == dataIncorrectAnswersList[i])
+                {
+                    Debug.Log("alredy asked question: " + dataIncorrectAnswersList[i]);
+                    nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+                }
+            }
+            //dataIncorrectAnswersList
+
+        }
+        else if (gC.Ship4)
+        {
+            for (int i = 0; i < quantumIncorrectAnswersList.Count; i++)
+            {
+                if (row == quantumIncorrectAnswersList[i])
+                {
+                    Debug.Log("alredy asked question: " + quantumIncorrectAnswersList[i]);
+                    nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+                }
+            }
+            //quantumIncorrectAnswersList
+
+        }
+        else if (gC.Ship5)
+        {
+            for (int i = 0; i < securityIncorrectAnswersList.Count; i++)
+            {
+                if (row == securityIncorrectAnswersList[i])
+                {
+                    Debug.Log("alredy asked question: " + securityIncorrectAnswersList[i]);
+                    nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+                }
+            }
+            //securityIncorrectAnswersList
+
+        }
+
+        /*for (int i = 0; i < askedList.Count; i++)
         {
             if (row == askedList[i])
             {
                 Debug.Log("alredy asked question: " + askedList[i]);
                 nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
             }
-        }
+        }*/
     }
 
     void Start()
@@ -645,18 +730,96 @@ public class ReadTSV : MonoBehaviour
             }
 
             //set this question as asked
-            askedList.Add(row); //double check this works
+            //askedList.Add(row); //double check this works
+
+            if (gC.Ship1)
+            {
+                cloudAskedList.Add(row);
+
+            }
+            else if (gC.Ship2)
+            {
+                aiAskedList.Add(row);
+
+            }
+            else if (gC.Ship3)
+            {
+                dataAskedList.Add(row);
+
+            }
+            else if (gC.Ship4)
+            {
+                quantumAskedList.Add(row);
+
+            }
+            else if (gC.Ship5)
+            {
+                securityAskedList.Add(row);
+
+            }
 
             //set this question right/wrong/partial depending on answer
             if (tempWrong > 0)
             {
-                incorrectAnswersList.Add(row);
+                if (gC.Ship1)
+                {
+                    cloudIncorrectAnswersList.Add(row);
+
+                }
+                else if (gC.Ship2)
+                {
+                    aiIncorrectAnswersList.Add(row);
+
+                }
+                else if (gC.Ship3)
+                {
+                    dataIncorrectAnswersList.Add(row);
+
+                }
+                else if (gC.Ship4)
+                {
+                    quantumIncorrectAnswersList.Add(row);
+
+                }
+                else if (gC.Ship5)
+                {
+                    securityIncorrectAnswersList.Add(row);
+
+                }
+                
+                //incorrectAnswersList.Add(row);
             }
 
             //Set this question as answered fully correct
             else
             {
-                correctAnswersList.Add(row);
+                if (gC.Ship1)
+                {  
+                    cloudCorrectAnswersList.Add(row);    
+
+                }
+                else if (gC.Ship2)
+                {
+                    aiCorrectAnswersList.Add(row); 
+
+                }
+                else if (gC.Ship3)
+                {
+                    dataCorrectAnswersList.Add(row); 
+
+                }
+                else if (gC.Ship4)
+                {
+                    quantumCorrectAnswersList.Add(row); 
+                   
+                }
+                else if (gC.Ship5)
+                {
+                    securityCorrectAnswersList.Add(row); 
+
+                }
+
+                
             }
 
             //Update the user points for each correct answer
@@ -679,16 +842,16 @@ public class ReadTSV : MonoBehaviour
 
             //Reset asked list if all questions have already been asked
 
-            if (gC.Ship1 && askedList.Count == cloudRangeMax)
-                askedList.Clear();
-            else if (gC.Ship2 && askedList.Count == aiRangeMax)
-                askedList.Clear();
-            else if (gC.Ship3 && askedList.Count == dataRangeMax)
-                askedList.Clear();
-            else if (gC.Ship4 && askedList.Count == quantumRangeMax)
-                askedList.Clear();
-            else if (gC.Ship5 && askedList.Count == securityRangeMax)
-                askedList.Clear();
+            if (gC.Ship1 && cloudAskedList.Count == cloudRangeMax)
+                cloudAskedList.Clear();
+            else if (gC.Ship2 && aiAskedList.Count == aiRangeMax)
+                aiAskedList.Clear();
+            else if (gC.Ship3 && dataAskedList.Count == dataRangeMax)
+                dataAskedList.Clear();
+            else if (gC.Ship4 && quantumAskedList.Count == quantumRangeMax)
+                quantumAskedList.Clear();
+            else if (gC.Ship5 && securityAskedList.Count == securityRangeMax)
+                securityAskedList.Clear();
 
             /*if (askedList.Count == rangeOfQuestionsMax)
             {
