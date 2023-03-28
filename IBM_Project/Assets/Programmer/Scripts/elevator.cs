@@ -30,7 +30,7 @@ public class elevator : MonoBehaviour
     {
         player = FindObjectOfType(typeof(PlayerController)).GameObject();
         quizMaster = GameObject.FindGameObjectWithTag("QuizMaster");
-        reader = quizMaster.GetComponent<ReadTSV>();
+        reader = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         cam = GameObject.FindGameObjectWithTag("MainCamera");
     }
