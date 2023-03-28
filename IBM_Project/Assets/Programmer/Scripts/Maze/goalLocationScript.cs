@@ -7,7 +7,7 @@ public class goalLocationScript : MonoBehaviour
 {
     private GameController gC;
     private MinigameController mC;
-    private ComputerInteraction computerInteraction;
+    public ComputerInteraction computerInteraction;
     public mazePlayerScript mPlayer;
 
     public walGen wG; //Re-reference the gameobject with the walGen script

@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
 
     public float speed;
     private float speedOrigin;
-
+    public bool canSpeed;
+    
     public GameObject visuals;
     public GameObject body;
 
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     public float controlTimer = 0;
     private bool isControlling = false;
-    private bool canShoot = false;
+    public bool canShoot = false;
 
     public bool computerDoor = false;
     public bool elevatorDoor = false;
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
         readTSV = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
         speedOrigin = speed;
+        canSpeed = false;
     }
 
     void Update()
@@ -178,6 +180,7 @@ public class PlayerController : MonoBehaviour
                 if(gameObject.GetComponent<Shooting>())
                     gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
+                canSpeed = false;
                 speed = speedOrigin;
                 //abilities.Clear();
             }
@@ -239,6 +242,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                canSpeed = true;
                 speed += 2;
                 controlTimer = 10.0f;
                 isBehindEnemy = false;
