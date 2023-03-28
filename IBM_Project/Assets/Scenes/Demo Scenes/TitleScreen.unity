@@ -152,7 +152,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 84192623}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90008cbb3cec33e4084acca523ae0596, type: 3}
+  m_Script: {fileID: 11500000, guid: b3e88d33903092d4fb517036030a2465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &84192625
@@ -452,12 +452,6 @@ MonoBehaviour:
   shipsButtonHeight: 0.15
   shipsButtonWidth: 0.18
   shipsSpacing: 0.2
-  amountOfButtons: 4
-  menuButton1: Play
-  menuButton2: Settings
-  menuButton3: Credits
-  menuButton4: Exit
-  menuButton5: Exit
   buttonColour: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 0.89411765}
   textColour: {r: 0.6226415, g: 0, b: 0, a: 1}
   tickboxScaler: 0.4
@@ -475,7 +469,6 @@ MonoBehaviour:
   hyperlink: https://google.com/
   SkillsText: It is vital that you check out the IBM Skills Build before starting
   inGame: 0
-  debug: 0.99
 --- !u!1 &774266116
 GameObject:
   m_ObjectHideFlags: 0

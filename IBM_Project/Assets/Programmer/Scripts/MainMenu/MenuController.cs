@@ -34,18 +34,18 @@ public class MenuController : MonoBehaviour
 
     [SerializeField]
     float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, creditsHeightFrom, creditsSpacing, playHeightFrom, textboxScalar, shipsButtonHeight, shipsButtonWidth, shipsSpacing;
-    public int amountOfButtons;
+    //public int amountOfButtons;
 
     const int   _start =        0,
                 _settings =     1,
                 _credits =      2,
                 _quit =         3;
 
-    [SerializeField]
-    string      menuButton1 = "Start",
+    //[SerializeField]
+    string      menuButton1 = "Play",
                 menuButton2 = "Settings",
-                menuButton3 = "IBM Skills Build",
-                menuButton4 = "Credits",
+                menuButton3 = "Credits",
+                menuButton4 = "Exit",
                 menuButton5 = "Exit";
 
     [SerializeField]
@@ -72,7 +72,7 @@ public class MenuController : MonoBehaviour
 
     public bool inGame;
 
-    public float debug;
+    //public float debug;
 
     public enum MenuState
     {
@@ -108,6 +108,17 @@ public class MenuController : MonoBehaviour
         StateChanged();
         FullscreenState();
         ResolutionState();
+
+        if (GameObject.FindGameObjectWithTag("GameController") != null)
+        {
+            inGame = true;
+            menuState = MenuState.Running;
+        }
+        else
+        {
+            inGame = false;
+            menuState = MenuState.Main;
+        }
     }
 
     void OnGUI()
@@ -120,6 +131,15 @@ public class MenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameObject.FindGameObjectWithTag("GameController") != null)
+        {
+            inGame = true;
+        }
+        else
+        {
+            inGame = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(menuState == MenuState.Running)
