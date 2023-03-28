@@ -70,8 +70,9 @@ public class MenuController : MonoBehaviour
 
     public string SkillsText;
 
-    public float debug;
+    public bool inGame;
 
+    public float debug;
 
     public enum MenuState
     {
@@ -125,11 +126,17 @@ public class MenuController : MonoBehaviour
             {
                 //pause
                 menuState = MenuState.Paused;
+                PauseGame();
             }
             else if(menuState == MenuState.Paused)
             {
                 //unpause
                 menuState = MenuState.Running;
+                UnpauseGame();
+            }
+            else if(menuState == MenuState.Settings || menuState == MenuState.Credits || menuState == MenuState.SkillsBuild)
+            {
+                BackButtonPressed();
             }
         }
 
@@ -341,8 +348,8 @@ public class MenuController : MonoBehaviour
             GameObject tempPrefab = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
             tempPrefab.transform.parent = canvas.transform;
             PauseButtonList.Add(tempPrefab);
-            SetText(i);
-            SetButtonActions(i);
+            SetPauseText(i);
+            SetPauseButtonActions(i);
             tempPrefab.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
             Destroy(tempPrefab.GetComponent<answersScript>());
             tempPrefab.GetComponent<Image>().color = buttonColour;
@@ -675,6 +682,31 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    void SetPauseText(int buttonNumber)
+    {
+        switch (buttonNumber)
+        {
+            case 0:
+                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = "Continue"; // continue
+                break;
+            case 1:
+                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton2; // settings
+                break;
+            case 2:
+                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton3; // Credits
+                break;
+            case 3:
+                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton4; // Exit
+                break;
+            case 4:
+                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton5; // exit
+                break;
+            default:
+                Debug.Log("Unknown button");
+                break;
+        }
+    }
+
     void SetButtonActions(int buttonNumber)
     {
         switch (buttonNumber)
@@ -693,6 +725,31 @@ public class MenuController : MonoBehaviour
                 break;
             case 4:
                 MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                break;
+            default:
+                Debug.Log("Unknown button");
+                break;
+        }
+    }
+
+    void SetPauseButtonActions(int buttonNumber)
+    {
+        switch (buttonNumber)
+        {
+            case 0:
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(UnpauseGame);
+                break;
+            case 1:
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SettingsButtonPressed);
+                break;
+            case 2:
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
+                break;
+            case 3:
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                break;
+            case 4:
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
                 break;
             default:
                 Debug.Log("Unknown button");
@@ -872,8 +929,22 @@ public class MenuController : MonoBehaviour
     void BackButtonPressed()
     {
         //Go back to main menu
-        menuState = MenuState.Main;
+        if (inGame)
+            menuState = MenuState.Paused;
+        else
+            menuState = MenuState.Main;
 
         return;
+    }
+
+    void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    void UnpauseGame()
+    {
+        Time.timeScale = 1;
+        menuState = MenuState.Running;
     }
 }
