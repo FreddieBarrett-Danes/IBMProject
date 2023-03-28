@@ -488,6 +488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mPlayer: {fileID: 1655351960656588647}
   wG: {fileID: 1690106255004003015}
+  mTimer: {fileID: 2523596634021114271}
   setCameraPosition: 1
 --- !u!1 &1655351960577961017
 GameObject:
@@ -1535,6 +1536,7 @@ MonoBehaviour:
   showTutorial: 1
   randomiseRotations: 1
   Timer: {fileID: 2119993664480814291}
+  mTimer: {fileID: 5458436477903623655}
 --- !u!1 &1919364697626368917
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,6 +1833,7 @@ MonoBehaviour:
   timerText: {fileID: 637824625622827962}
   playing: 1
   timer: 30
+  timerOrigin: 0
 --- !u!1 &2166813819481244635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2262,14 +2265,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a326295b815543242802e9883d2d12a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelTimer: {fileID: 0}
   Quiz: {fileID: 4408009199939621955}
   ScoreText: {fileID: 6165458837595361868}
   elevatortest: {fileID: 0}
   TimeBonusThreshold: 180
-  TimeScoreModifier: 1
+  LevelTimeScoreModifier: 1
   QuizScoreModifier: 1
-  PointsX_MazeY_DiscZ_Tile: {x: 30, y: 20, z: 10}
+  TimerAwardsPoints: 1
+  StaticPointsX_MazeY_DiscZ_Tile: {x: 100, y: 20, z: 20}
+  MinigameTimeScoreModifier: {x: 1, y: 1, z: 1}
 --- !u!1 &2471290624841279785
 GameObject:
   m_ObjectHideFlags: 0
@@ -2691,6 +2695,7 @@ MonoBehaviour:
   timerText: {fileID: 3271240097370296493}
   playing: 1
   timer: 120
+  timerOrigin: 0
 --- !u!1 &4408009199939621952
 GameObject:
   m_ObjectHideFlags: 0
@@ -2912,6 +2917,7 @@ MonoBehaviour:
   timerText: {fileID: 6872796586026779135}
   playing: 1
   timer: 30
+  timerOrigin: 0
 --- !u!1 &4948992615070448598
 GameObject:
   m_ObjectHideFlags: 0
@@ -7688,6 +7694,7 @@ MonoBehaviour:
   Timer: {fileID: 4414674609320834708}
   showCorrectRotation: 1
   showTutorial: 1
+  mTimer: {fileID: 6743781225662773657}
 --- !u!1 &6497808199563398427
 GameObject:
   m_ObjectHideFlags: 0
