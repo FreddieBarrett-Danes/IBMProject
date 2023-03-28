@@ -64,7 +64,7 @@ public class genGrid : MonoBehaviour
         }
         tilePrefab2 = GameObject.Find("Tile_UpDown");
 
-        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ScoreSystem>();
+        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
 
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();

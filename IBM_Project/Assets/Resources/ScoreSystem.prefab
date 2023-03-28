@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4803746324015185168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4803746324015185171}
+  - component: {fileID: 4803746324015185170}
+  m_Layer: 0
+  m_Name: ScoreSystem
+  m_TagString: ScoreSystem
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4803746324015185171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803746324015185168}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 243.21732, y: 519.33014, z: -294.5325}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4803746324015185170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803746324015185168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a326295b815543242802e9883d2d12a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelTimer: {fileID: 0}
+  Quiz: {fileID: 0}
+  ScoreText: {fileID: 0}
+  Score: 0
+  TimeBonusThreshold: 180
+  LevelTimeScoreModifier: 0.1
+  QuizScoreModifier: 1
+  LosePointsOnIncorrectAnswer: 0
+  PointsPerQuestion: 0
+  TimerAwardsPoints: 1
+  StaticPointsX_MazeY_DiscZ_Tile: {x: 100, y: 20, z: 20}
+  MinigameTimeScoreModifier: {x: 1, y: 1, z: 1}

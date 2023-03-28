@@ -74,10 +74,7 @@ MonoBehaviour:
     WASD
     - Movement
 
-    Space - Return to Start
-
-    Maze has generated, press space
-    to begin'
+    Space - Return to Start'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
@@ -493,6 +490,7 @@ MonoBehaviour:
   wG: {fileID: 1690106255004003015}
   mTimer: {fileID: 2523596634021114271}
   setCameraPosition: 1
+  Lives: 6
 --- !u!1 &1655351960577961017
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,8 +602,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pregameText: {fileID: 181245468296008511}
-  pressStartText: {fileID: 0}
+  pressStartText: {fileID: 7650606725595417468}
   Timer: {fileID: 4265221875148390000}
+  MazeLives: {fileID: 0}
   mazePlayer: {fileID: 1655351960656588649}
   goalLocation: {fileID: 1655351960237499582}
   showIngameText: 0
@@ -1121,7 +1120,7 @@ MonoBehaviour:
   targetPosWorld: {fileID: 1690106255041822279}
   currentPosWorld: {fileID: 1690106254633926040}
   pregameText: {fileID: 181245468296008511}
-  pressStartText: {fileID: 0}
+  pressStartText: {fileID: 7650606725595417468}
   Timer: {fileID: 4265221875148390000}
   showIngameText: 0
   showPregameTutorial: 1
@@ -1540,6 +1539,141 @@ MonoBehaviour:
   randomiseRotations: 1
   Timer: {fileID: 2119993664480814291}
   mTimer: {fileID: 5458436477903623655}
+--- !u!1 &1839526450004476608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7662482980960288076}
+  - component: {fileID: 5964454512010805917}
+  - component: {fileID: 5599153729830589185}
+  m_Layer: 0
+  m_Name: mazeLives
+  m_TagString: MazeUI
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7662482980960288076
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839526450004476608}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4372447693016957747}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1368, y: 431}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5964454512010805917
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839526450004476608}
+  m_CullTransparentMesh: 1
+--- !u!114 &5599153729830589185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839526450004476608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: '[Lives]'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 32
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: -355.59753, y: 0, z: 414.776, w: 1.8946533}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1919364697626368917
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,7 +2272,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8233842351868251569}
+  - {fileID: 7838810366149503052}
   - {fileID: 7690456227569925052}
+  - {fileID: 7662482980960288076}
   m_Father: {fileID: 2471290624690481660}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2267,12 +2403,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a326295b815543242802e9883d2d12a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LevelTimer: {fileID: 0}
   Quiz: {fileID: 4408009199939621955}
   ScoreText: {fileID: 6165458837595361868}
-  elevatortest: {fileID: 0}
+  Score: 0
   TimeBonusThreshold: 180
-  LevelTimeScoreModifier: 1
+  LevelTimeScoreModifier: 0.1
   QuizScoreModifier: 1
+  LosePointsOnIncorrectAnswer: 0
+  PointsPerQuestion: 0
   TimerAwardsPoints: 1
   StaticPointsX_MazeY_DiscZ_Tile: {x: 100, y: 20, z: 20}
   MinigameTimeScoreModifier: {x: 1, y: 1, z: 1}
@@ -2564,7 +2703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7690456227569925052
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2578,7 +2717,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4372447693016957747}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2697,7 +2836,7 @@ MonoBehaviour:
   timerText: {fileID: 3271240097370296493}
   playing: 1
   timer: 120
-  timerOrigin: 0
+  timerOrigin: 120
 --- !u!1 &4408009199939621952
 GameObject:
   m_ObjectHideFlags: 0
@@ -8479,6 +8618,143 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &7650606725595417468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7838810366149503052}
+  - component: {fileID: 4229607177852849407}
+  - component: {fileID: 1110885111902987353}
+  m_Layer: 0
+  m_Name: ingameInfo2
+  m_TagString: MazeUI
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7838810366149503052
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7650606725595417468}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4372447693016957747}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 500, y: 65}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4229607177852849407
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7650606725595417468}
+  m_CullTransparentMesh: 1
+--- !u!114 &1110885111902987353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7650606725595417468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'Maze has generated, press space to begin
+
+'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 32
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: -355.59753, y: 0, z: -432.8922, w: -15.101105}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8219611499336381847
 GameObject:
   m_ObjectHideFlags: 0
@@ -8733,10 +9009,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5208733453639338058, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
-      propertyPath: mazeUI.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5208733453639338058, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
       propertyPath: tileUI.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -8751,7 +9023,7 @@ PrefabInstance:
     - target: {fileID: 5208733453639338058, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
       propertyPath: mazeUI.Array.data[1]
       value: 
-      objectReference: {fileID: 4265221875148390000}
+      objectReference: {fileID: 7650606725595417468}
     - target: {fileID: 5208733453639338058, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
       propertyPath: mazeUI.Array.data[2]
       value: 

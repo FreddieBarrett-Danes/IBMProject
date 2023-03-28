@@ -12,10 +12,13 @@ public class MinigameController : MonoBehaviour
     public GameObject mazeMinigame;
     public GameObject discMinigame;
     public GameObject sliderMinigame;
-
+    public float mazeTimerStore;
+    public float doorTimerStore;
     public GameObject chosenMinigame;
 
     private GameController gameController;
+
+    private ScoreSystem ScoreSystemGameObject;
 
     [SerializeField]
     private GameObject[] doorGame;
@@ -47,6 +50,10 @@ public class MinigameController : MonoBehaviour
         {
             gameController.inMinigame = true;
         }*/
+        if (completedMaze)
+        {
+
+        }
     }
     public void StartMazeMinigame()
     {
