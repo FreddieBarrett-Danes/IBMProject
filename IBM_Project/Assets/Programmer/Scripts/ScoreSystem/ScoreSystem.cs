@@ -85,7 +85,7 @@ public class ScoreSystem : MonoBehaviour
         AddLevelBonus();
     }
 
-    void CompletedMinigame(Vector2 values) //int num, int remainingTime)
+    public void CompletedMinigame(Vector2 values) //int num, int remainingTime)
     {
         int num = (int)values.x;
         int remainingTime = (int)values.y;

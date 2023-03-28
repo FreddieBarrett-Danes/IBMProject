@@ -78,7 +78,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
     private void OnEnable()
     {
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ScoreSystem>();
+        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
 
 
         currentSelect = 1;

@@ -23,7 +23,7 @@ public class goalLocationScript : MonoBehaviour
     public bool setCameraPosition;
 
     public int Lives = 6;
-    public GameObject mazeLives;
+    //public TextMeshProUGUI mazeLives;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -32,11 +32,14 @@ public class goalLocationScript : MonoBehaviour
             Debug.Log(mPlayer.transform.position + "," + transform.position);
             Debug.Log("Maze Win");
             Debug.Log("Refer to goalLocationScript for Maze output");
-            mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
-            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(1, mTimer.timer)); //1 = Maze
+            //mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
+            ScoreSystemGameObject.CompletedMinigame(new Vector2(1, mTimer.timer)); //1 = Maze
+            //mC.mazeTimerStore = mTimer.timer;
+            ScoreSystemGameObject.Score += 10;
 
             //GameObject.Find("LevelCanvas").SendMessage("QuizLoaded");
-            //GameObject.Find("LevelCanvas").SendMessage("CompletedMinigame", 1);
+            //ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(1, mTimer.timer));
+            //Debug.Log("Complet")
             
             //CameraMaze call - Sets position of the camera
             if (setCameraPosition == false) { cameraMaze(false); };
@@ -70,7 +73,10 @@ public class goalLocationScript : MonoBehaviour
     private void Start()
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ScoreSystem>();
+        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
+        //mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
+        //mazeLives.text = mPlayer..ToString("000");
+        //mazeLives.GetComponent<TextMeshProUGUI>().active(true);
 
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
