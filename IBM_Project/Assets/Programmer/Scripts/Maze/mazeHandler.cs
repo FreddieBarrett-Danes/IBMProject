@@ -59,7 +59,7 @@ public class mazeHandler : MonoBehaviour
             pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
             Timer.GetComponent<TextMeshProUGUI>().enabled = true;
             pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
-            mazePlayer.transform.position = new Vector3(64, 0, 62); //new Vector3(2, 0, 0);
+            mazePlayer.transform.position = new Vector3(84, 0, 82); //new Vector3(2, 0, 0);
             goalLocation.transform.position = wG.preGoalLocation;
             Debug.Log(mazePlayer.transform.position + "," + goalLocation.transform.position);
 
