@@ -441,24 +441,23 @@ public class ReadTSV : MonoBehaviour
         {
             submitButton.onClick.AddListener(submitClicked);
         }
-        if (!submit)
+
+        if (amountSelected >= correctAnswers)
         {
-            if (amountSelected >= correctAnswers)
+            for (int i = 0; i < answersList.Count; i++)
             {
-                for (int i = 0; i < answersList.Count; i++)
+                if (!answersList[i].GetComponent<answersScript>().selected && answersList[i].GetComponent<Button>() != null)
                 {
-                    if (!answersList[i].GetComponent<answersScript>().selected)
-                    {
-                        answersList[i].GetComponent<Button>().interactable = false;
-                    }
+                    answersList[i].GetComponent<Button>().interactable = false;
                 }
             }
-            else if (amountSelected < correctAnswers)
+        }
+        else if (amountSelected < correctAnswers)
+        {
+            for (int i = 0; i < answersList.Count; i++)
             {
-                for (int i = 0; i < answersList.Count; i++)
-                {
+                if(answersList[i].GetComponent<Button>() != null)
                     answersList[i].GetComponent<Button>().interactable = true;
-                }
             }
         }
 
