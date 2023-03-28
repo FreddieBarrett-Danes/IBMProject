@@ -44,19 +44,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085a771bef0da494aa47f392077fc3b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  submitText: {fileID: 0}
-  submitButton: {fileID: 0}
+  completedQuiz: 0
+  hackSuccessful: 0
+  submitButtonSizeMultiplier: 0
   answersList: []
   TSVFile: {fileID: -1022232229856555865, guid: de74e8f252c53a641a3fc668f5090091, type: 3}
-  rightAnswers: 0
-  correctAnswers: 0
-  singleSelected: {fileID: 0}
-  waitTime: 2
   questionsInARow: 0
-  panel: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
-  panelSize: {x: 0, y: 0}
+  loopNumber: 0
+  waitTime: 2
   rangeOfQuestionsMax: 6
   row: 3
+  rightAnswers: 0
+  correctAnswers: 0
+  incorrectAnswersList: 
+  correctAnswersList: 
+  askedList: 
+  timeForQuestion: 0
+  fallbackTimeForQuestion: 10
+  totalPoints: 0
+  singleSelected: {fileID: 0}
+  panel: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
+  panelSize: {x: 0, y: 0}
+  smallestFont: 0
+  fontSizeMultiplier: 0
   find: 0
   submit: 0
-  reloadSceneAtEnd: 0
+  debug: 0
