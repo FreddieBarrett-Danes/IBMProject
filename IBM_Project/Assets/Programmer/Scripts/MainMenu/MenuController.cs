@@ -944,10 +944,10 @@ public class MenuController : MonoBehaviour
                 PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
                 break;
             case 3:
-                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(BackMenuPressed);
                 break;
             case 4:
-                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(BackMenuPressed);
                 break;
             default:
                 Debug.Log("Unknown button");
@@ -1133,6 +1133,14 @@ public class MenuController : MonoBehaviour
         //Force Quit Game..
 
         Application.Quit();
+
+        return;
+    }
+    void BackMenuPressed()
+    {
+        //Take to Main Menu..
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
 
         return;
     }
