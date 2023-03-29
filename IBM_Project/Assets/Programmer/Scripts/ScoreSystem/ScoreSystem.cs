@@ -253,7 +253,7 @@ public class ScoreSystem : MonoBehaviour
             Debug.Log("Score: " + Score);
             //if (!Gc.inMinigame)
             //{
-            ScoreText.text = Score.ToString("");
+            ScoreText.text = Score.ToString("Score: " + "0");
             //countdownText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
             //Debug.Log("Score: " + Score);
 
