@@ -74,14 +74,14 @@ public class GameController : MonoBehaviour
     public Image moveabilityiconImage;
     public Image canhackiconImage;
     public Image computeravailableImage;
-    public Sprite greyShooting;
-    public Sprite greyMove;
-    public Sprite greyHack;
-    public Sprite greyComputer;
-    public Sprite greenShooting;
-    public Sprite greenMove;
-    public Sprite greenHack;
-    public Sprite greenComputer;
+    private Sprite greyShooting;
+    private Sprite greyMove;
+    private Sprite greyHack;
+    private Sprite greyComputer;
+    private Sprite greenShooting;
+    private Sprite greenMove;
+    private Sprite greenHack;
+    private Sprite greenComputer;
 
     public ComputerInteraction ComputerObj;
     // Start is called before the first frame update
@@ -116,6 +116,15 @@ public class GameController : MonoBehaviour
 
         PlayerControl = player.GetComponent<PlayerController>();
         
+        greyShooting = Resources.Load<Sprite>("GunIconGrey");
+        greyMove = Resources.Load<Sprite>("Speed_Icon_Grey");
+        greyHack = Resources.Load<Sprite>("RobotIconGrey");
+        greyComputer = Resources.Load<Sprite>("ComputerIconGrey");
+        greenShooting = Resources.Load<Sprite>("GunIcon");
+        greenMove = Resources.Load<Sprite>("Speed_Icon");
+        greenHack = Resources.Load<Sprite>("RobotIcon");
+        greenComputer = Resources.Load<Sprite>("ComputerIcon");
+        
         playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         playerstatusText.text = "SAFE";
         shootabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(3).GetComponent<Image>();
@@ -125,7 +134,7 @@ public class GameController : MonoBehaviour
         moveabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(5).GetComponent<Image>();
         moveabilityiconImage.sprite = greyMove;
         canhackiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(6).GetComponent<Image>();
-        canhackiconImage.sprite = greyMove;
+        canhackiconImage.sprite = greyHack;
         computeravailableImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(7).GetComponent<Image>();
         computeravailableImage.sprite = greyComputer;
 
