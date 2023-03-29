@@ -130,7 +130,7 @@ public class MenuController : MonoBehaviour
         FullscreenState();
         ResolutionState();
 
-        if (this.transform.tag == ("GameController")/* != null*/)
+        if (GameObject.FindGameObjectWithTag("GameController")/* != null*/)
         {
             inGame = true;
             menuState = MenuState.Running;
@@ -577,7 +577,7 @@ public class MenuController : MonoBehaviour
 
         //How to play 0
 
-        GameObject htp0Title = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
+        /*GameObject htp0Title = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
         htp0Title.transform.parent = canvas.transform;
         HTP0List.Add(htp0Title);
         htp0Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
@@ -599,7 +599,7 @@ public class MenuController : MonoBehaviour
         htpBack.GetComponent<Button>().onClick.AddListener(SkillsButtonPressed);
         htpBack.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(htpBack.GetComponent<answersScript>());
-        htpBack.GetComponent<Image>().color = buttonColour;
+        htpBack.GetComponent<Image>().color = buttonColour;*/
 
         return;
     }
