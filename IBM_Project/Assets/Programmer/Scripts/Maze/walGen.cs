@@ -98,6 +98,8 @@ public class walGen : MonoBehaviour
     public GameObject mazeLives;
     int goalLocationRng;
 
+    public Vector3 Origin;
+
 
     //public delegate void DelType1(bool mazeReady); //Delegate type
     //public static event DelType1 OnMazeReady; //Event variable
@@ -201,12 +203,12 @@ public class walGen : MonoBehaviour
                 array1[3] = 4;
             }
         }
-        Debug.Log("Array values: " + array1[0] + "," + array1[1] + "," + array1[2] + "," + array1[3]);
+        //Debug.Log("Array values: " + array1[0] + "," + array1[1] + "," + array1[2] + "," + array1[3]);
 
         //Area of refinement: check if all values of array = 0
         if (array1[0] == 0 && array1[1] == 0 && array1[2] == 0 && array1[3] == 0)
         {
-            Debug.Log("Dead end reached");
+            //Debug.Log("Dead end reached");
             array1[4] = 5;
         }
 
@@ -220,7 +222,7 @@ public class walGen : MonoBehaviour
             {
                 rng = 5;
             }
-            Debug.Log("This should be showing");
+            //Debug.Log("This should be showing");
             if (array1[4] == 0)
             {
                 rng = array1[Random.Range(0, 5)];
@@ -229,18 +231,18 @@ public class walGen : MonoBehaviour
             //{
             //    rng = 6;
             //}
-            Debug.Log("This should also be showing");
+            //Debug.Log("This should also be showing");
             //Debug.Log("rng = " + rng + " array being referenced: " + array1[rng]);
             //should keep looping until a value different from 0 is found
         }
 
-        Debug.Log("Directions found | N: " + array1[0] + " S: " + array1[1] + " E: " + array1[2] + " W: " + array1[3]);
-        Debug.Log("Direction selected: " + rng);
+        //Debug.Log("Directions found | N: " + array1[0] + " S: " + array1[1] + " E: " + array1[2] + " W: " + array1[3]);
+        //Debug.Log("Direction selected: " + rng);
 
         switch (rng)
         {
             case 0:
-                Debug.Log("rng error, check Random.Range of rng in gridMovement");
+                //Debug.Log("rng error, check Random.Range of rng in gridMovement");
                 break;
             case 1:
                 cgp.y += 1;
@@ -268,7 +270,7 @@ public class walGen : MonoBehaviour
                 break;
             case 5:
                 backtracking = true;
-                Debug.Log("Backtrack using stack");
+                //Debug.Log("Backtrack using stack");
                 //Debug.Log(visitedStack.Peek());
                 cgp = visitedStack.Pop();
                 wallDestroyer.GetComponent<MeshRenderer>().enabled = false;
@@ -279,7 +281,7 @@ public class walGen : MonoBehaviour
                 //backtrack using the stack
                 break;
             case 6:
-                Debug.Log("Reached end of stack");
+                //Debug.Log("Reached end of stack");
                 break;
         }
         if (backtracking == false)
@@ -422,13 +424,17 @@ public class walGen : MonoBehaviour
         //Debug.Log(a + "," + b);
 
         //Generate grid in world space (instigate wall gameobject)
-        
-        
+
+        //StartCoroutine(test());
+
         for (int i = 82; i < (82 + (int)Maze_Size.x * 4); i += 4)
         {
             for (int j = 82; j < (82 + (int)Maze_Size.y * 4); j += 4)
             {
                 //Debug.Log("(" + i + "," + j + "," + ")");
+                //Origin = new Vector3(i, 0, j);
+                //Debug.Log("Origin: " + Origin);
+                //StartCoroutine(test());
                 genGrid(new Vector3(i, 0, j), new Vector2(1, 1));
             }
         }
@@ -517,6 +523,42 @@ public class walGen : MonoBehaviour
 
     }
 
+    //Slows down grid generation for debugging
+    //IEnumerator test()
+    //{
+    //    float delay2 = 0.25f;
+    //    yield return new WaitForSeconds(2.0f);
+
+    //    for (int i = 82; i < (82 + (int)Maze_Size.x * 4); i += 4)
+    //    {
+    //        for (int j = 82; j < (82 + (int)Maze_Size.y * 4); j += 4)
+    //        {
+    //            //Debug.Log("(" + i + "," + j + "," + ")");
+    //            //Origin = new Vector3(i, 0, j);
+    //            //Debug.Log("Origin: " + Origin);
+    //            //StartCoroutine(test());
+    //            Debug.Log("i: " + i + " j: " + j);
+    //            yield return new WaitForSeconds(delay2);
+    //            genGrid(new Vector3(i, 0, j), new Vector2(1, 1));
+    //        }
+    //    }
+
+
+        
+    //    Instantiate(wallPrefab, new Vector3(Origin.x + 2.0f, Origin.y, Origin.z + 2.0f), Quaternion.identity);
+        
+    //    Instantiate(wallPrefab, new Vector3(Origin.x + 2.0f, Origin.y, Origin.z - 2.0f), Quaternion.identity);
+    //    yield return new WaitForSeconds(delay2);
+    //    Instantiate(wallPrefab, new Vector3(Origin.x, Origin.y, Origin.z), Quaternion.Euler(0.0f, 90.0f, 0.0f));
+    //    yield return new WaitForSeconds(delay2);
+    //    Instantiate(wallPrefab, new Vector3(Origin.x + 4.0f, Origin.y, Origin.z), Quaternion.Euler(0.0f, 90.0f, 0.0f));
+    //    yield return new WaitForSeconds(delay2);
+
+        
+
+    //}
+
+
     IEnumerator destroyWall()
     {
         float delay = 0.035f; //0.035f; //0.0175f; //0.035f;
@@ -538,7 +580,7 @@ public class walGen : MonoBehaviour
         //mazeGrid[(int)currentPosGrid.x, (int)currentPosGrid.y] = true;
         //visitedStack.Push(currentPosGrid);
         currentPosWorld.transform.position = targetPosWorld.transform.position;
-        Debug.Log("UPDATE " + targetPosGrid.x + "," + targetPosGrid.y);
+        //Debug.Log("UPDATE " + targetPosGrid.x + "," + targetPosGrid.y);
 
         yield return new WaitForSeconds(delay);
 
@@ -556,7 +598,7 @@ public class walGen : MonoBehaviour
             //mazeGrid[(int)currentPosGrid.x, (int)currentPosGrid.y] = true;
             //visitedStack.Push(currentPosGrid);
             //currentPosWorld.transform.position = targetPosWorld.transform.position;
-            Debug.Log("UPDATE " + targetPosGrid.x + "," + targetPosGrid.y);
+            //Debug.Log("UPDATE " + targetPosGrid.x + "," + targetPosGrid.y);
 
             if (cellCount == ((Maze_Size.x * Maze_Size.y))) { preGoalLocation = convertToWorld(currentPosGrid); }
             //if (cellCount == goalLocationRng) { preGoalLocation = convertToWorld(currentPosGrid); }
@@ -564,7 +606,7 @@ public class walGen : MonoBehaviour
             yield return new WaitForSeconds(delay); 
         }
         yield return new WaitForSeconds(delay);
-        Debug.Log("MAZE IS COMPLETE!!! WOOOH!!!!");
+        //Debug.Log("MAZE IS COMPLETE!!! WOOOH!!!!");
         
 
         //mazePlayer.transform.position = new Vector3(2, 0, 0);
@@ -604,11 +646,14 @@ public class walGen : MonoBehaviour
         //visitedStack.Peek();
     }
 
+
+
     //Generates sample maze for proof of concept within 5 seconds.
     IEnumerator setGen()
     {
         float delay = 0.035f; //0.035f;
-        Debug.Log("Generating Maze...");
+        Debug.Log("setGen() in WalGen.cs has been activated");
+        //Debug.Log("Generating Maze...");
         yield return new WaitForSeconds(delay);
         wallDestroyer.transform.position = new Vector3(2, 0, 2);
         //moveGen3(1);
@@ -713,7 +758,7 @@ public class walGen : MonoBehaviour
 
 
         // myDialogBalloon.GetComponent<Image>().enabled = false;
-        Debug.Log("Maze Generated, press space to begin");
+        //Debug.Log("Maze Generated, press space to begin");
         //transform.position = new Vector3(0, 0, 0);
         //yield return new WaitForSeconds(1);
         //transform.position = new Vector3(1, 0, 0);

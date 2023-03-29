@@ -16,6 +16,10 @@ public class mazePlayerScript : MonoBehaviour
     bool mazeReadyPlayer;
     private GameController gameController;
     public int timesHit;
+    private int prevTH; //Previous timesHit
+
+
+    private float debugfloat;
 
     private void OnEnable()
     {
@@ -33,7 +37,6 @@ public class mazePlayerScript : MonoBehaviour
         //mazeReadyPlayer = mazeReady;
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "mazeWall")
@@ -41,8 +44,13 @@ public class mazePlayerScript : MonoBehaviour
             //Debug.Log("Trigger Wall hit");
             if (returnToStartUponCollision == true) transform.position = new Vector3(84, 0, 82);//(2, 0, 0);
             touchWall = true;
+            Debug.Log("debugfloat: " + debugfloat);
+            touchWall = false;
             wallHitSound.Play();
-            timesHit++;
+            //timesHit++;
+            timesHit = prevTH + 1;
+            //StartCoroutine(HitDelay());
+
         }
         else if (other.gameObject.tag == "goalLocation")
         {
@@ -77,24 +85,58 @@ public class mazePlayerScript : MonoBehaviour
         {
             //Debug.Log("Trigger Wall exit");
             //transform.position = new Vector3(2, 0, 0);
-            touchWall = false;
         }
     }
+
+    //IEnumerator HitDelay()
+    //{
+    //    //timesHit++;
+    //    yield return new WaitForSeconds(0.035f);
+    //    if (timesHit > (prevTH + 1))
+    //    {
+    //        timesHit = prevTH + 1;
+    //    }
+    //    prevTH++;
+    //}
+
     // Start is called before the first frame update
     void Start()
     {
+        timesHit = 0;
+        prevTH = 0;
         mazeReadyPlayer = false;
         gameObject.GetComponent<Renderer>().material.color = Color.white; //Setting colour of Player gameobject
         GameObject goalLocation = GameObject.FindGameObjectWithTag("goalLocation");
         goalLocation.GetComponent<Renderer>().material.color = Color.green;
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         //gameController.failMinigame = false;
-
+        debugfloat = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("MazePlayer timesHit: " + timesHit);
+
+
+
+
+        debugfloat += Time.deltaTime;
+        //debugfloat = (int)debugfloat;
+
+        if (debugfloat > 0.035f)
+        {
+            debugfloat = 0;
+            prevTH = timesHit;
+            
+        }
+
+        //if (timesHit > (prevTH + 1))
+        //{
+        //    timesHit = prevTH + 1;
+        //}
+
+
         transform.rotation = Quaternion.Euler(0, 0, 0);
         if (mazeReadyPlayer)
         {
@@ -103,7 +145,7 @@ public class mazePlayerScript : MonoBehaviour
                 transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
                 if (touchWall == true)
                 {
-                    transform.position -= new Vector3(speed * Time.deltaTime, 0, 0) * 3;
+                    //transform.position -= new Vector3(speed * Time.deltaTime, 0, 0) * 3;
                 }
             }
             if (Input.GetKey("w"))
@@ -111,7 +153,7 @@ public class mazePlayerScript : MonoBehaviour
                 transform.position += new Vector3(0, 0, speed * Time.deltaTime);
                 if (touchWall == true)
                 {
-                    transform.position -= new Vector3(0, 0, speed * Time.deltaTime) * 3;
+                    //transform.position -= new Vector3(0, 0, speed * Time.deltaTime) * 3;
                 }
             }
             if (Input.GetKey("a"))
@@ -119,7 +161,7 @@ public class mazePlayerScript : MonoBehaviour
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
                 if (touchWall == true)
                 {
-                    transform.position += new Vector3(speed * Time.deltaTime, 0, 0) * 3;
+                    //transform.position += new Vector3(speed * Time.deltaTime, 0, 0) * 3;
                 }
             }
             if (Input.GetKey("s"))
@@ -127,14 +169,14 @@ public class mazePlayerScript : MonoBehaviour
                 transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
                 if (touchWall == true)
                 {
-                    transform.position += new Vector3(0, 0, speed * Time.deltaTime) * 3;
+                    //transform.position += new Vector3(0, 0, speed * Time.deltaTime) * 3;
                 }
             }
 
-            if (Input.GetKeyDown("p"))
-            {
-                transform.position = GameObject.FindGameObjectWithTag("goalLocation").transform.position;
-            }
+            //if (Input.GetKeyDown("p"))
+            //{
+            //    transform.position = GameObject.FindGameObjectWithTag("goalLocation").transform.position;
+            //}
         }
         if (Input.GetKeyDown("space"))// && mazeReadyPlayer == true)
         {

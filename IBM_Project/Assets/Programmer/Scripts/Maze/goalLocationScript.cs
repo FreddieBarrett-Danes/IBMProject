@@ -36,7 +36,7 @@ public class goalLocationScript : MonoBehaviour
             ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(1, mTimer.timer)); //1 = Maze
             //ScoreSystemGameObject.CompletedMinigame(new Vector2(1, mTimer.timer)); //1 = Maze
             //mC.mazeTimerStore = mTimer.timer;
-            ScoreSystemGameObject.Score += 10;
+            //ScoreSystemGameObject.Score += 10;
 
             //GameObject.Find("LevelCanvas").SendMessage("QuizLoaded");
             //ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(1, mTimer.timer));
@@ -91,17 +91,18 @@ public class goalLocationScript : MonoBehaviour
         {
             mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
         }
-        
-        Debug.Log("TimesHit: " + Lives);
+
+        Debug.Log("TimesHit: " + mPlayer.timesHit + " Lives: " + Lives);
         mazeLives.text = (Lives - mPlayer.timesHit).ToString("Lives: " + "0");
 
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
+        //}
 
-        if (mPlayer != null && mPlayer.timesHit >= 6)
+        //if (mPlayer != null && mPlayer.timesHit >= 6)
+        if (mPlayer != null && mPlayer.timesHit > Lives)
         {
             mC.interactMaze = false;
             gC.inMinigame = false;
