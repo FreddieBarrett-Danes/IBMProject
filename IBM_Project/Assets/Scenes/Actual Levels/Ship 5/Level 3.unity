@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44515526, g: 0.4947673, b: 0.5738286, a: 1}
+  m_IndirectSpecularColor: {r: 0.44515568, g: 0.49476755, b: 0.5738293, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -26477,68 +26477,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &215010772
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 900459458}
-    m_Modifications:
-    - target: {fileID: 6261825384843107314, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_Name
-      value: Teleporter Pad - Red
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0000021457672
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
---- !u!4 &215010773 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6261825384843107325, guid: 1236f8de60f593749b1e0863f1834bc4, type: 3}
-  m_PrefabInstance: {fileID: 215010772}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &219263242
 GameObject:
   m_ObjectHideFlags: 0
@@ -27154,6 +27092,26 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 86d04c64fee83bd40864cd7a5ffaa4a3, type: 3}
+    - target: {fileID: 5472157108295243337, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472157108295243337, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472157109368655277, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472157109368655277, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472157109368655277, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8842488317474327851, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: m_audioClip
       value: 
@@ -30416,6 +30374,68 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &791895703
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 900459458}
+    m_Modifications:
+    - target: {fileID: 6261825384843107314, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_Name
+      value: Teleporter Pad - Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+--- !u!4 &791895704 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6261825384843107325, guid: bc66854890854214bb505c66e2f1bf7a, type: 3}
+  m_PrefabInstance: {fileID: 791895703}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &797400524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34796,8 +34816,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 215010773}
   - {fileID: 1878860250}
+  - {fileID: 791895704}
   m_Father: {fileID: 860468585}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
