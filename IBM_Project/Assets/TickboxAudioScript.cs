@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AudioSlider : MonoBehaviour
+public class TickboxAudioScript : MonoBehaviour
 {
-    [Range(0f, 1f), SerializeField]
-    private float volume, lastFrame;
     public GameObject prefabToSpawn;
-
-    void OnGUI()
+    private bool lastFrame;
+    private Toggle toggle;
+    void Start()
     {
-        volume = GetComponent<Slider>().value;
-        AudioListener.volume = volume/10;
+        toggle = GetComponent<Toggle>();
+    }
 
-        if(volume != lastFrame)
+    void Update()
+    {
+        if(lastFrame != toggle.isOn)
         {
             GameObject audio = Instantiate(prefabToSpawn, transform.position, transform.rotation);
             Destroy(audio, 3f);
         }
 
-        lastFrame = volume;
+        lastFrame = toggle.isOn;
     }
 }

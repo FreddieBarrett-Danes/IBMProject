@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,12 +20,26 @@ public class ReadTSV : MonoBehaviour
     public float submitButtonSizeMultiplier; //Multiplier of the Submit text-box 
     public List<GameObject> answersList;
 
+    //TSV FILES
+    [Header("TSV Files")]
+    [Space]
+
     public TextAsset TSVFile;
+
     public TextAsset CloudTSV;
+    public int cloudRangeMax;
+
     public TextAsset AITSV;
+    public int aiRangeMax;
+
     public TextAsset DataTSV;
+    public int dataRangeMax;
+
     public TextAsset QuantumTSV;
+    public int quantumRangeMax;
+
     public TextAsset SecurityTSV;
+    public int securityRangeMax;
 
     public int shipNumber;
 
@@ -40,7 +55,7 @@ public class ReadTSV : MonoBehaviour
     [SerializeField]
     private float waitTime;
     private bool waiting;
-    public int rangeOfQuestionsMax = 6; //find a way to set this automatically
+    //public int rangeOfQuestionsMax = 6; //find a way to set this automatically
     //[Range(1, 6)]
     public int row;
 
@@ -59,9 +74,27 @@ public class ReadTSV : MonoBehaviour
     public int correctAnswers; //How many correct answers there are
     private int amountSelected;
 
-    public List<int> incorrectAnswersList; //List of questions the user answered Wrong
-    public List<int> correctAnswersList; //List of questions the user answered Correct
-    public List<int> askedList; //List of questions already asked
+    //public List<int> incorrectAnswersList; //List of questions the user answered Wrong
+    public List<int> cloudIncorrectAnswersList;
+    public List<int> aiIncorrectAnswersList;
+    public List<int> dataIncorrectAnswersList;
+    public List<int> quantumIncorrectAnswersList;
+    public List<int> securityIncorrectAnswersList;
+
+    //public List<int> correctAnswersList; //List of questions the user answered Correct
+    public List<int> cloudCorrectAnswersList; 
+    public List<int> aiCorrectAnswersList; 
+    public List<int> dataCorrectAnswersList; 
+    public List<int> quantumCorrectAnswersList; 
+    public List<int> securityCorrectAnswersList; 
+
+    //public List<int> askedList; //List of questions already asked
+    public List<int> cloudAskedList; 
+    public List<int> aiAskedList; 
+    public List<int> dataAskedList; 
+    public List<int> quantumAskedList; 
+    public List<int> securityAskedList; 
+
     private int tempCorrect;
     private int tempWrong;
 
@@ -99,6 +132,19 @@ public class ReadTSV : MonoBehaviour
 
     [Header("Debug")]
     public bool debug;
+
+    int InitialiseTSVs(int shipNumber)
+    {
+        int i = 0;
+        string cellValue = Find(i, 0, shipNumber);
+        while (cellValue != "")
+        {
+            //Debug.Log(cellValue);
+            i++;
+            cellValue = Find(i, 0, shipNumber);
+        }
+        return i;
+    }
 
     List<int> Shuffle(int length)
     {
@@ -194,6 +240,70 @@ public class ReadTSV : MonoBehaviour
         return rv;
     }
 
+    string Find(int findRow, int findColumn, int shipNumber)
+    {
+        string rv = null;
+
+        find = false;
+
+        var dataset = CloudTSV;
+
+        if (shipNumber == 1)
+        {
+            dataset = CloudTSV;
+        }
+        else if (shipNumber == 2)
+        {
+            dataset = AITSV;
+        }
+        else if (shipNumber == 3)
+        {
+            dataset = DataTSV;
+        }
+        else if (shipNumber == 4)
+        {
+            dataset = QuantumTSV;
+        }
+        else if (shipNumber == 5)
+        {
+            dataset = SecurityTSV;
+        }
+
+        var splitDataset = dataset.text.Split(new char[] { '\n' });
+
+        if (findRow < 1)
+        {
+            findRow = 1;
+            Debug.LogWarning("Desired Row given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
+        }
+
+        if (findColumn < 1)
+        {
+            findColumn = 1;
+            Debug.LogWarning("Desired Column given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
+        }
+
+        for (int i = 0; i < findRow; i++)
+        {
+            char tabSpace = '\u0009'; //takes the TAB ascii code as the splitter character. this value used to be a , when using CSV but now we are using TSV.
+            var data = splitDataset[i].Split(tabSpace.ToString()); //
+            //var data = splitDataset[i].Split(',');
+            for (int j = 0; j < findColumn; j++)
+            {
+                if (findRow > splitDataset.Length) findRow = splitDataset.Length;
+                if (findColumn > data.Length) findColumn = data.Length;
+
+                //questionText.text = data[j];
+
+                rv = data[j];
+            }
+        }
+        //Debug.Log(rv);
+        //Debug.Log(findColumn);
+        //Debug.Log(findRow);
+        return rv;
+    }
+
     public void submitClicked()
     {
         Debug.Log("submit clicked");
@@ -205,16 +315,91 @@ public class ReadTSV : MonoBehaviour
 
     public void nonDuplicateRow()
     {
-        row = Random.Range(1, rangeOfQuestionsMax + 1);
+        if (gC.Ship1)
+            row = Random.Range(1, cloudRangeMax + 1);
+        else if (gC.Ship2)
+            row = Random.Range(1, aiRangeMax + 1);
+        else if (gC.Ship3)
+            row = Random.Range(1, dataRangeMax + 1);
+        else if (gC.Ship4)
+            row = Random.Range(1, quantumRangeMax + 1);
+        else if (gC.Ship5)
+            row = Random.Range(1, securityRangeMax + 1);
 
-        for (int i = 0; i < askedList.Count; i++)
+        if (gC.Ship1)
+        {
+            for (int i = 0; i < cloudIncorrectAnswersList.Count; i++)
+            {
+                if (row == cloudIncorrectAnswersList[i])
+                {
+                    Debug.Log("alredy asked question: " + cloudIncorrectAnswersList[i]);
+                    nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+                }
+            }
+            //cloudIncorrectAnswersList
+
+        }
+        else if (gC.Ship2)
+        {
+            for (int i = 0; i < aiIncorrectAnswersList.Count; i++)
+            {
+                if (row == aiIncorrectAnswersList[i])
+                {
+                    Debug.Log("alredy asked question: " + aiIncorrectAnswersList[i]);
+                    nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+                }
+            }
+            //aiIncorrectAnswersList =
+
+        }
+        else if (gC.Ship3)
+        {
+            for (int i = 0; i < dataIncorrectAnswersList.Count; i++)
+            {
+                if (row == dataIncorrectAnswersList[i])
+                {
+                    Debug.Log("alredy asked question: " + dataIncorrectAnswersList[i]);
+                    nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+                }
+            }
+            //dataIncorrectAnswersList
+
+        }
+        else if (gC.Ship4)
+        {
+            for (int i = 0; i < quantumIncorrectAnswersList.Count; i++)
+            {
+                if (row == quantumIncorrectAnswersList[i])
+                {
+                    Debug.Log("alredy asked question: " + quantumIncorrectAnswersList[i]);
+                    nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+                }
+            }
+            //quantumIncorrectAnswersList
+
+        }
+        else if (gC.Ship5)
+        {
+            for (int i = 0; i < securityIncorrectAnswersList.Count; i++)
+            {
+                if (row == securityIncorrectAnswersList[i])
+                {
+                    Debug.Log("alredy asked question: " + securityIncorrectAnswersList[i]);
+                    nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
+                }
+            }
+            //securityIncorrectAnswersList
+
+        }
+
+        /*for (int i = 0; i < askedList.Count; i++)
         {
             if (row == askedList[i])
             {
                 Debug.Log("alredy asked question: " + askedList[i]);
                 nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
             }
-        }
+        }*/
     }
 
     void Start()
@@ -224,7 +409,11 @@ public class ReadTSV : MonoBehaviour
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
         canvasRectTransform = canvas.GetComponent<RectTransform>();
 
-
+        cloudRangeMax = InitialiseTSVs(1);
+        aiRangeMax = InitialiseTSVs(2);
+        dataRangeMax = InitialiseTSVs(3);
+        quantumRangeMax = InitialiseTSVs(4);
+        securityRangeMax = InitialiseTSVs(5);
 
         Debug.Log((panelSize));
     }
@@ -541,18 +730,96 @@ public class ReadTSV : MonoBehaviour
             }
 
             //set this question as asked
-            askedList.Add(row); //double check this works
+            //askedList.Add(row); //double check this works
+
+            if (gC.Ship1)
+            {
+                cloudAskedList.Add(row);
+
+            }
+            else if (gC.Ship2)
+            {
+                aiAskedList.Add(row);
+
+            }
+            else if (gC.Ship3)
+            {
+                dataAskedList.Add(row);
+
+            }
+            else if (gC.Ship4)
+            {
+                quantumAskedList.Add(row);
+
+            }
+            else if (gC.Ship5)
+            {
+                securityAskedList.Add(row);
+
+            }
 
             //set this question right/wrong/partial depending on answer
             if (tempWrong > 0)
             {
-                incorrectAnswersList.Add(row);
+                if (gC.Ship1)
+                {
+                    cloudIncorrectAnswersList.Add(row);
+
+                }
+                else if (gC.Ship2)
+                {
+                    aiIncorrectAnswersList.Add(row);
+
+                }
+                else if (gC.Ship3)
+                {
+                    dataIncorrectAnswersList.Add(row);
+
+                }
+                else if (gC.Ship4)
+                {
+                    quantumIncorrectAnswersList.Add(row);
+
+                }
+                else if (gC.Ship5)
+                {
+                    securityIncorrectAnswersList.Add(row);
+
+                }
+                
+                //incorrectAnswersList.Add(row);
             }
 
             //Set this question as answered fully correct
             else
             {
-                correctAnswersList.Add(row);
+                if (gC.Ship1)
+                {  
+                    cloudCorrectAnswersList.Add(row);    
+
+                }
+                else if (gC.Ship2)
+                {
+                    aiCorrectAnswersList.Add(row); 
+
+                }
+                else if (gC.Ship3)
+                {
+                    dataCorrectAnswersList.Add(row); 
+
+                }
+                else if (gC.Ship4)
+                {
+                    quantumCorrectAnswersList.Add(row); 
+                   
+                }
+                else if (gC.Ship5)
+                {
+                    securityCorrectAnswersList.Add(row); 
+
+                }
+
+                
             }
 
             //Update the user points for each correct answer
@@ -574,11 +841,23 @@ public class ReadTSV : MonoBehaviour
             }
 
             //Reset asked list if all questions have already been asked
-            if (askedList.Count == rangeOfQuestionsMax) if (askedList.Count == rangeOfQuestionsMax)
-                {
-                    //clear asked list so duplicates can be asked again
-                    askedList.Clear();
-                }
+
+            if (gC.Ship1 && cloudAskedList.Count == cloudRangeMax)
+                cloudAskedList.Clear();
+            else if (gC.Ship2 && aiAskedList.Count == aiRangeMax)
+                aiAskedList.Clear();
+            else if (gC.Ship3 && dataAskedList.Count == dataRangeMax)
+                dataAskedList.Clear();
+            else if (gC.Ship4 && quantumAskedList.Count == quantumRangeMax)
+                quantumAskedList.Clear();
+            else if (gC.Ship5 && securityAskedList.Count == securityRangeMax)
+                securityAskedList.Clear();
+
+            /*if (askedList.Count == rangeOfQuestionsMax)
+            {
+                //clear asked list so duplicates can be asked again
+                askedList.Clear();
+            }*/
 
             waiting = true;
 
@@ -672,4 +951,6 @@ public class ReadTSV : MonoBehaviour
             }
         }
     }
+
+    
 }
