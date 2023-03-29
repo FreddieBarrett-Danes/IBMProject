@@ -28,7 +28,7 @@ public class LevelTimer : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        countdownText = FindObjectOfType<FinderScript>().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
     }
     void Start()
@@ -42,7 +42,7 @@ public class LevelTimer : MonoBehaviour
     {
         if(countdownText == null)
         {
-            countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            countdownText = FindObjectOfType<FinderScript>().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         }
         if (!TimeUp)
         {
