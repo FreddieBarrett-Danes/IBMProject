@@ -898,6 +898,7 @@ public class ReadTSV : MonoBehaviour
                 Destroy(submitText);
                 mC.completedQuiz = true;
                 gC.inMinigame = false;
+                gC.inQuiz = false;
                 submit = false;
                 //completedQuiz = true;
                 loopNumber = 0;

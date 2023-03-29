@@ -7,11 +7,15 @@ public class ImageScrolling : MonoBehaviour
     public float scrollSpeed;
     public float scaleFactor = 1f;
 
+    public bool attachedCanvas = true;
+
     private int numImages;
     private float imageWidth;
     private float imageHeight;
     private float canvasWidth;
     private float canvasHeight;
+    public float width;
+    public float height;
     private List<Transform> images = new List<Transform>();
 
     void Start()
@@ -23,8 +27,10 @@ public class ImageScrolling : MonoBehaviour
         Destroy(tempImage);
 
         // Step 2: Get the canvas dimensions
+
         canvasWidth = GetComponent<RectTransform>().rect.width;
         canvasHeight = GetComponent<RectTransform>().rect.height;
+        
 
         // Step 3: Determine the number of images needed to fill the screen horizontally and vertically
         numImages = Mathf.CeilToInt(canvasWidth / imageWidth);
@@ -38,14 +44,15 @@ public class ImageScrolling : MonoBehaviour
         // Step 5: Spawn the images, resize them, and lay them out side by side
         float imageScaledWidth = imageWidth * scale;
         float imageScaledHeight = imageHeight * scale;
-        Vector2 spawnPos = new Vector2(-numImages * imageScaledWidth / 2f, numVerticalImages * imageScaledHeight / 2f);
+        Vector3 spawnPos = new Vector3(-numImages * imageScaledWidth / 2f, numVerticalImages * imageScaledHeight / 2f, -700);
+        Quaternion spawnRot = Quaternion.Euler(spawnPos.x, spawnPos.y, 0);
         for (int i = 0; i < numImages + 5; i++)
         {
             for (int j = 0; j < numVerticalImages + 5; j++)
             {
                 GameObject image = Instantiate(imagePrefab, transform);
                 image.transform.localScale = new Vector3(scale , scale , 1f);
-                image.transform.localPosition = spawnPos + new Vector2(i * imageScaledWidth, -j * imageScaledHeight);
+                image.transform.localPosition = spawnPos + new Vector3(i * imageScaledWidth, -j * imageScaledHeight);
                 images.Add(image.transform);
             }
         }

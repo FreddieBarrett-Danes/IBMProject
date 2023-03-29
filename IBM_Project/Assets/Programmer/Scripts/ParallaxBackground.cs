@@ -50,7 +50,7 @@ public class ParallaxBackground : MonoBehaviour
             if (close[i].GetComponent<RectTransform>().localPosition.x < -imageWidth)
                 additional = (amountOfImages * imageWidth);
 
-            close[i].transform.position = new Vector3(close[i].transform.position.x - (speed * Time.deltaTime), canvas.transform.position.y, close[i].transform.position.z);
+            close[i].transform.position = new Vector3(close[i].transform.position.x - (speed * Time.deltaTime), canvas.transform.position.y, close[i].transform.position.z - 700);
             close[i].transform.position = new Vector3(close[i].transform.position.x + additional, close[i].transform.position.y, close[i].transform.position.z);
         }
         

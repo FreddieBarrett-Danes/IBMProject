@@ -58,6 +58,8 @@ public class GameController : MonoBehaviour
     public bool loseSoundPlayed;
     public bool winSoundPlayed;
 
+    [SerializeField]
+    private GameObject Menu;
     public enum Status
     {
         SAFE,
@@ -105,6 +107,7 @@ public class GameController : MonoBehaviour
         {
             tile.SetActive(false);
         }
+        Menu = GameObject.Find("Menu");
         levelUI = GameObject.FindGameObjectsWithTag("LevelUI");
         levelTimer = GameObject.FindGameObjectWithTag("LevelTimer");
         level = GameObject.FindGameObjectWithTag("LevelObject");
@@ -145,6 +148,7 @@ public class GameController : MonoBehaviour
     {
         if (!completedLevel)
         {
+            Menu.GetComponent<MenuController>().Quiz = inQuiz;
             deadDroids = GameObject.FindGameObjectsWithTag("DeadEnemy");
             if (PlayerControl.canShoot)
                 shootabilityiconImage.sprite = greenShooting;

@@ -7,12 +7,15 @@ public class LoseWinButton : MonoBehaviour
 {
     public float Scalar;
     private RectTransform canvas;
+    private GameObject Menu;
     private void Awake()
     {
         canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<RectTransform>();
+        Menu = GameObject.Find("Menu");
     }
     public void MoveMainMenu()
     {
+        Destroy(Menu);
         SceneManager.LoadScene(0);
     }
     private void OnGUI()

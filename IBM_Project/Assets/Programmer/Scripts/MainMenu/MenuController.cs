@@ -38,6 +38,7 @@ public class MenuController : MonoBehaviour
     private List<GameObject> HTP2List = new List<GameObject>();
     [SerializeField]
     private List<GameObject> HTP3List = new List<GameObject>();
+    public bool Quiz;
 
     [SerializeField]
     private MenuState menuState;
@@ -92,6 +93,7 @@ public class MenuController : MonoBehaviour
 
     AudioLowPassFilter lpf;
 
+    bool escCanBePressed;
     //public float debug;
 
     public enum MenuState
@@ -141,6 +143,7 @@ public class MenuController : MonoBehaviour
         tickboxPrefab = Resources.Load<GameObject>("Menu/TickboxPrefab");
         dropdownPrefab = Resources.Load<GameObject>("Menu/DropdownPrefab");
         skillsText = Resources.Load<GameObject>("Menu/SkillsText");
+
         getCanvasSize();
         spawnButtons();
         setButtonPosition();
@@ -188,26 +191,42 @@ public class MenuController : MonoBehaviour
         {
             inGame = false;
         }*/
-
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(menuState == MenuState.Running)
+            if (escCanBePressed)
             {
-                //pause
-                menuState = MenuState.Paused;
-                PauseGame();
-            }
-            else if(menuState == MenuState.Paused)
-            {
-                //unpause
-                menuState = MenuState.Running;
-                UnpauseGame();
-            }
-            else if(menuState == MenuState.Settings || menuState == MenuState.Credits || menuState == MenuState.SkillsBuild)
-            {
-                BackButtonPressed();
+                if (menuState == MenuState.Running)
+                {
+                    //pause
+                    menuState = MenuState.Paused;
+                    PauseGame();
+                }
+                else if (menuState == MenuState.Paused)
+                {
+                    //unpause
+                    menuState = MenuState.Running;
+                    UnpauseGame();
+                }
+                else if (menuState == MenuState.Settings || menuState == MenuState.Credits || menuState == MenuState.SkillsBuild)
+                {
+                    BackButtonPressed();
+                }
             }
         }
+
+        if(SceneManager.GetActiveScene().buildIndex == 26 || SceneManager.GetActiveScene().buildIndex == 27 || SceneManager.GetActiveScene().buildIndex == 28 || SceneManager.GetActiveScene().buildIndex == 29 || SceneManager.GetActiveScene().buildIndex == 30 || SceneManager.GetActiveScene().buildIndex == 31 || SceneManager.GetActiveScene().buildIndex == 32 || SceneManager.GetActiveScene().buildIndex == 33 || SceneManager.GetActiveScene().buildIndex == 34 || SceneManager.GetActiveScene().buildIndex == 35 || Quiz)
+        {
+            menuState = MenuState.Running;
+            music.enabled = false;
+            escCanBePressed = false;
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            //menuState = MenuState.Main;
+            escCanBePressed = true;
+        }
+
 
         if(lastFrameMenuState != menuState)
         {

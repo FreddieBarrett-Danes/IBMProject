@@ -94,6 +94,7 @@ public class MinigameController : MonoBehaviour
     {
         if (!completedQuiz)
         {
+            gameController.inQuiz = true;
             rTSV.questionsInARow = numberofQuestions;
             rTSV.loopNumber = 0;
             rTSV.find = true;

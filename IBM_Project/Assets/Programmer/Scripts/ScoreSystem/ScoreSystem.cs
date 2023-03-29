@@ -196,7 +196,10 @@ public class ScoreSystem : MonoBehaviour
         ScoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
         LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         AskedUpdate = Quiz.cloudAskedList.Count + Quiz.aiAskedList.Count + Quiz.dataAskedList.Count + Quiz.quantumAskedList.Count + Quiz.securityAskedList.Count;
-
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            Destroy(this);
+        }
         DontDestroyOnLoad(this);
         if (ScoreInstance == null)
         {
