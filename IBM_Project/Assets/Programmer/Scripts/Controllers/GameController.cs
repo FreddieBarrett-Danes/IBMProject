@@ -373,7 +373,7 @@ public class GameController : MonoBehaviour
         else if (completedLevel)
         {
             Destroy(levelTimer);
-            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             if (Ship1 && Level5)
             {
                 SceneManager.LoadScene(29);
