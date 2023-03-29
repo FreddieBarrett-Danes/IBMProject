@@ -153,6 +153,11 @@ public class MenuController : MonoBehaviour
         FullscreenState();
         ResolutionState();
 
+        /*for (int i = 0; i < HTP0List.Count; i++)
+        {
+            ShowHideHTP0Components(true);
+        }*/
+
         if (GameObject.FindGameObjectWithTag("GameController")/* != null*/)
         {
             inGame = true;
@@ -330,9 +335,13 @@ public class MenuController : MonoBehaviour
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
             ShowHidePlayMenuComponents      (false);
+            ShowHideHTP0Components          (false);
+            ShowHideHTP1Components          (false);
+            ShowHideHTP2Components          (false);
+            ShowHideHTP3Components          (false);
         }
         
-        if(menuState == MenuState.Paused)
+        else if(menuState == MenuState.Paused)
         {
             ShowHideMainMenuComponents      (false);
             ShowHidePauseMenuComponents     (true);
@@ -340,6 +349,10 @@ public class MenuController : MonoBehaviour
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
             ShowHidePlayMenuComponents      (false);
+            ShowHideHTP0Components          (false);
+            ShowHideHTP1Components          (false);
+            ShowHideHTP2Components          (false);
+            ShowHideHTP3Components          (false);
         }
 
         else if(menuState == MenuState.Settings)
@@ -350,6 +363,10 @@ public class MenuController : MonoBehaviour
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
             ShowHidePlayMenuComponents      (false);
+            ShowHideHTP0Components          (false);
+            ShowHideHTP1Components          (false);
+            ShowHideHTP2Components          (false);
+            ShowHideHTP3Components          (false);
         }
 
         else if(menuState == MenuState.Credits) //hide settings & credits
@@ -360,6 +377,10 @@ public class MenuController : MonoBehaviour
             ShowHideCreditsMenuComponents   (true);
             ShowHideSkillsMenuComponents    (false);
             ShowHidePlayMenuComponents      (false);
+            ShowHideHTP0Components          (false);
+            ShowHideHTP1Components          (false);
+            ShowHideHTP2Components          (false);
+            ShowHideHTP3Components          (false);
         }
 
         else if(menuState == MenuState.SkillsBuild)
@@ -370,6 +391,10 @@ public class MenuController : MonoBehaviour
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (true);
             ShowHidePlayMenuComponents      (false);
+            ShowHideHTP0Components          (false);
+            ShowHideHTP1Components          (false);
+            ShowHideHTP2Components          (false);
+            ShowHideHTP3Components          (false);
         }
 
         else if(menuState == MenuState.Levels)
@@ -380,6 +405,10 @@ public class MenuController : MonoBehaviour
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
             ShowHidePlayMenuComponents      (true);
+            ShowHideHTP0Components          (false);
+            ShowHideHTP1Components          (false);
+            ShowHideHTP2Components          (false);
+            ShowHideHTP3Components          (false);
             GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
             Destroy(audio, 3f);
         }
@@ -392,6 +421,66 @@ public class MenuController : MonoBehaviour
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
             ShowHidePlayMenuComponents      (false);
+            ShowHideHTP0Components          (false);
+            ShowHideHTP1Components          (false);
+            ShowHideHTP2Components          (false);
+            ShowHideHTP3Components          (false);
+        }
+
+        else if (menuState == MenuState.HTP0)
+        {
+            ShowHideMainMenuComponents      (false);
+            ShowHidePauseMenuComponents     (false);
+            ShowHideSettingsMenuComponents  (false);
+            ShowHideCreditsMenuComponents   (false);
+            ShowHideSkillsMenuComponents    (false);
+            ShowHidePlayMenuComponents      (false);
+            ShowHideHTP0Components          (true);
+            ShowHideHTP1Components          (false);
+            ShowHideHTP2Components          (false);
+            ShowHideHTP3Components          (false);
+        }
+
+        else if (menuState == MenuState.HTP1)
+        {
+            ShowHideMainMenuComponents      (false);
+            ShowHidePauseMenuComponents     (false);
+            ShowHideSettingsMenuComponents  (false);
+            ShowHideCreditsMenuComponents   (false);
+            ShowHideSkillsMenuComponents    (false);
+            ShowHidePlayMenuComponents      (false);
+            ShowHideHTP0Components          (false);
+            ShowHideHTP1Components          (true);
+            ShowHideHTP2Components          (false);
+            ShowHideHTP3Components          (false);
+        }
+
+        else if (menuState == MenuState.HTP2)
+        {
+            ShowHideMainMenuComponents      (false);
+            ShowHidePauseMenuComponents     (false);
+            ShowHideSettingsMenuComponents  (false);
+            ShowHideCreditsMenuComponents   (false);
+            ShowHideSkillsMenuComponents    (false);
+            ShowHidePlayMenuComponents      (false);
+            ShowHideHTP0Components          (false);
+            ShowHideHTP1Components          (false);
+            ShowHideHTP2Components          (true);
+            ShowHideHTP3Components          (false);
+        }
+
+        else if (menuState == MenuState.HTP3)
+        {
+            ShowHideMainMenuComponents      (false);
+            ShowHidePauseMenuComponents     (false);
+            ShowHideSettingsMenuComponents  (false);
+            ShowHideCreditsMenuComponents   (false);
+            ShowHideSkillsMenuComponents    (false);
+            ShowHidePlayMenuComponents      (false);
+            ShowHideHTP0Components          (false);
+            ShowHideHTP1Components          (false);
+            ShowHideHTP2Components          (false);
+            ShowHideHTP3Components          (true);
         }
     }
 
@@ -448,6 +537,7 @@ public class MenuController : MonoBehaviour
         for (int i = 0; i < HTP0List.Count; i++)
         {
             HTP0List[i].gameObject.SetActive(showHide);
+            Debug.Log(HTP0List[i].gameObject.name);
         }
     }
 
@@ -663,9 +753,11 @@ public class MenuController : MonoBehaviour
         Destroy(ship5.GetComponent<answersScript>());
         ship5.GetComponent<Image>().color = buttonColour;
 
+        //
         //How to play 0
+        //
 
-        /*GameObject htp0Title = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
+        GameObject htp0Title = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
         htp0Title.transform.SetParent(canvas.transform);
         HTP0List.Add(htp0Title);
         htp0Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
@@ -677,17 +769,40 @@ public class MenuController : MonoBehaviour
         htp0text.GetComponent<TextMeshProUGUI>().enableAutoSizing=true;
 
         //back button
-        GameObject htpBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        htpBack.transform.SetParent(canvas.transform);
-        HTP0List.Add(htpBack);
-        HTP1List.Add(htpBack);
-        HTP2List.Add(htpBack);
-        HTP3List.Add(htpBack);
-        htpBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
-        htpBack.GetComponent<Button>().onClick.AddListener(SkillsButtonPressed);
-        htpBack.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
-        Destroy(htpBack.GetComponent<answersScript>());
-        htpBack.GetComponent<Image>().color = buttonColour;*/
+        GameObject htp0Back = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        htp0Back.transform.SetParent(canvas.transform);
+        HTP0List.Add(htp0Back);
+        //HTP1List.Add(htpBack);
+        //HTP2List.Add(htpBack);
+        //HTP3List.Add(htpBack);
+        htp0Back.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
+        htp0Back.GetComponent<Button>().onClick.AddListener(SkillsButtonPressed);
+        htp0Back.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(htp0Back.GetComponent<answersScript>());
+        htp0Back.GetComponent<Image>().color = buttonColour;
+
+        //
+        //How to play 1
+        //
+
+        GameObject htp1Title = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
+        htp1Title.transform.SetParent(canvas.transform);
+        HTP0List.Add(htp1Title);
+        htp1Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
+
+        //GameObject htp1Image0 //CONTINUE FROM HERE
+
+        GameObject htp1Back = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        htp1Back.transform.SetParent(canvas.transform);
+        //HTP0List.Add(htp1Back);
+        HTP1List.Add(htp1Back);
+        //HTP2List.Add(htpBack);
+        //HTP3List.Add(htpBack);
+        htp1Back.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
+        htp1Back.GetComponent<Button>().onClick.AddListener(SkillsButtonPressed);
+        htp1Back.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(htp1Back.GetComponent<answersScript>());
+        htp1Back.GetComponent<Image>().color = buttonColour;
 
         return;
     }
@@ -745,6 +860,42 @@ public class MenuController : MonoBehaviour
             {
                 Vector3 pos = new Vector3((shipsSpacing * canvasWidth) * i, 0, 0);
                 PlayButtonList[i].transform.position = canvas.transform.position + pos;
+            }
+        }
+
+        else if(menuState == MenuState.HTP0)
+        {
+            for (int i = 0; i < HTP0List.Count; i++)
+            {
+                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
+                HTP0List[i].transform.position = canvas.transform.position + pos;
+            }
+        }
+
+        else if (menuState == MenuState.HTP1)
+        {
+            for (int i = 0; i < HTP1List.Count; i++)
+            {
+                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
+                HTP1List[i].transform.position = canvas.transform.position + pos;
+            }
+        }
+
+        else if (menuState == MenuState.HTP2)
+        {
+            for (int i = 0; i < HTP2List.Count; i++)
+            {
+                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
+                HTP2List[i].transform.position = canvas.transform.position + pos;
+            }
+        }
+
+        else if (menuState == MenuState.HTP3)
+        {
+            for (int i = 0; i < HTP3List.Count; i++)
+            {
+                Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
+                HTP3List[i].transform.position = canvas.transform.position + pos;
             }
         }
     }
@@ -851,6 +1002,30 @@ public class MenuController : MonoBehaviour
 
             PlayButtonList[4].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
             PlayButtonList[4].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+        }
+
+        else if(menuState == MenuState.HTP0)
+        {
+            HTP0List[2].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            HTP0List[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+        }
+
+        else if (menuState == MenuState.HTP1)
+        {
+            HTP1List[2].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            HTP1List[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+        }
+
+        else if (menuState == MenuState.HTP2)
+        {
+            HTP2List[2].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            HTP2List[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+        }
+
+        else if (menuState == MenuState.HTP3)
+        {
+            HTP3List[2].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            HTP3List[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
         }
     }
 
@@ -1047,6 +1222,21 @@ public class MenuController : MonoBehaviour
                 PlayButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(averageWidth, 0, 0);
             }
 
+        }
+
+        else if (menuState == MenuState.HTP0)
+        {
+            for (int i = 0; i < HTP0List.Count; i++)
+            {
+                averageHeight += HTP0List[i].GetComponent<RectTransform>().localPosition.y;
+            }
+            averageHeight /= HTP0List.Count;
+            //Debug.Log(averageHeight);
+
+            for (int i = 0; i < HTP0List.Count; i++)
+            {
+                HTP0List[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+            }
         }
     }
 
