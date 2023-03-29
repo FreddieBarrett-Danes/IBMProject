@@ -13,7 +13,7 @@ public class MenuController : MonoBehaviour
     private float canvasHeight, canvasWidth;
 
     [SerializeField]
-    private GameObject buttonPrefab, sliderPrefab, tickboxPrefab, dropdownPrefab, skillsText;
+    private GameObject buttonPrefab, sliderPrefab, tickboxPrefab, dropdownPrefab, skillsText, htp0Text, htp1Text, htp2Text, htp3Text;
 
     [SerializeField]
     private List<GameObject> MainButtonList = new List<GameObject>();
@@ -27,6 +27,14 @@ public class MenuController : MonoBehaviour
     private List<GameObject> CreditsButtonList = new List<GameObject>();
     [SerializeField]
     private List<GameObject> PlayButtonList = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> HTP0List = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> HTP1List = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> HTP2List = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> HTP3List = new List<GameObject>();
 
     [SerializeField]
     private MenuState menuState;
@@ -89,7 +97,11 @@ public class MenuController : MonoBehaviour
         Credits,
         Levels,
         Running,
-        Paused
+        Paused,
+        HTP0,
+        HTP1,
+        HTP2,
+        HTP3
     }
 
     public enum Resolution
@@ -118,7 +130,7 @@ public class MenuController : MonoBehaviour
         FullscreenState();
         ResolutionState();
 
-        if (GameObject.FindGameObjectWithTag("GameController") != null)
+        if (this.transform.tag == ("GameController")/* != null*/)
         {
             inGame = true;
             menuState = MenuState.Running;
@@ -345,6 +357,38 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    void ShowHideHTP0Components(bool showHide)
+    {
+        for (int i = 0; i < HTP0List.Count; i++)
+        {
+            HTP0List[i].gameObject.SetActive(showHide);
+        }
+    }
+
+    void ShowHideHTP1Components(bool showHide)
+    {
+        for (int i = 0; i < HTP1List.Count; i++)
+        {
+            HTP1List[i].gameObject.SetActive(showHide);
+        }
+    }
+
+    void ShowHideHTP2Components(bool showHide)
+    {
+        for (int i = 0; i < HTP2List.Count; i++)
+        {
+            HTP2List[i].gameObject.SetActive(showHide);
+        }
+    }
+
+    void ShowHideHTP3Components(bool showHide)
+    {
+        for (int i = 0; i < HTP3List.Count; i++)
+        {
+            HTP3List[i].gameObject.SetActive(showHide);
+        }
+    }
+
     void OpenHyperlink()
     {
         Application.OpenURL(hyperlink);
@@ -530,6 +574,32 @@ public class MenuController : MonoBehaviour
         ship5.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(ship5.GetComponent<answersScript>());
         ship5.GetComponent<Image>().color = buttonColour;
+
+        //How to play 0
+
+        GameObject htp0Title = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
+        htp0Title.transform.parent = canvas.transform;
+        HTP0List.Add(htp0Title);
+        htp0Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
+
+        GameObject htp0text = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
+        htp0text.transform.parent = canvas.transform;
+        HTP0List.Add(htp0text);
+        htp0text.GetComponent<TextMeshProUGUI>().text = "Text text text more text yes yes yes hhhmm yes very interesting";
+        htp0text.GetComponent<TextMeshProUGUI>().enableAutoSizing=true;
+
+        //back button
+        GameObject htpBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        htpBack.transform.parent = canvas.transform;
+        HTP0List.Add(htpBack);
+        HTP1List.Add(htpBack);
+        HTP2List.Add(htpBack);
+        HTP3List.Add(htpBack);
+        htpBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
+        htpBack.GetComponent<Button>().onClick.AddListener(SkillsButtonPressed);
+        htpBack.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(htpBack.GetComponent<answersScript>());
+        htpBack.GetComponent<Image>().color = buttonColour;
 
         return;
     }
