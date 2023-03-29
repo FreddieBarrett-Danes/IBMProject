@@ -136,6 +136,11 @@ public class MenuController : MonoBehaviour
         lpf = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioLowPassFilter>();
         canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
         canvasRectTransform = canvas.GetComponent<RectTransform>();
+        buttonPrefab = Resources.Load<GameObject>("Menu/PanelPrefab");
+        sliderPrefab = Resources.Load<GameObject>("Menu/SliderPrefab");
+        tickboxPrefab = Resources.Load<GameObject>("Menu/TickboxPrefab");
+        dropdownPrefab = Resources.Load<GameObject>("Menu/DropdownPrefab");
+        skillsText = Resources.Load<GameObject>("Menu/SkillsText");
         getCanvasSize();
         spawnButtons();
         setButtonPosition();
@@ -235,49 +240,67 @@ public class MenuController : MonoBehaviour
             music.volume = 0.6f;
     }
 
-    private void OnLevelWasLoaded(int level)
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("newLevel");
-
-        MainButtonList.Clear();
-        PauseButtonList.Clear();
-        SettingsButtonList.Clear();
-        SkillsButtonList.Clear();
-        CreditsButtonList.Clear();
-        PlayButtonList.Clear();
-        HTP0List.Clear();
-        HTP1List.Clear();
-        HTP2List.Clear();
-        HTP3List.Clear();
-
-        music = GetComponent<AudioSource>();
-        lpf = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioLowPassFilter>();
-        canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
-        canvasRectTransform = canvas.GetComponent<RectTransform>();
-        getCanvasSize();
-        spawnButtons();
-        setButtonPosition();
-        setButtonSize();
-
-        menuState = MenuState.Main;
-        thisFrameResolution = Resolution.Default;
-
-        StateChanged();
-        FullscreenState();
-        ResolutionState();
-
-        if (GameObject.FindGameObjectWithTag("GameController")/* != null*/)
+        //int resolution = (int)thisFrameResolution;
+        if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-            inGame = true;
-            menuState = MenuState.Running;
-        }
-        else
-        {
-            inGame = false;
-            menuState = MenuState.Main;
-        }
+            
+            MainButtonList.Clear();
+            PauseButtonList.Clear();
+            SettingsButtonList.Clear();
+            SkillsButtonList.Clear();
+            CreditsButtonList.Clear();
+            PlayButtonList.Clear();
+            HTP0List.Clear();
+            HTP1List.Clear();
+            HTP2List.Clear();
+            HTP3List.Clear();
 
-        return;
+            music = GetComponent<AudioSource>();
+            lpf = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioLowPassFilter>();
+            canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
+            canvasRectTransform = canvas.GetComponent<RectTransform>();
+            //Debug.Log("Canvas Name " + canvas.gameObject.name);
+            buttonPrefab = Resources.Load<GameObject>("Menu/PanelPrefab");
+            sliderPrefab = Resources.Load<GameObject>("Menu/SliderPrefab");
+            tickboxPrefab = Resources.Load<GameObject>("Menu/TickboxPrefab");
+            dropdownPrefab = Resources.Load<GameObject>("Menu/DropdownPrefab");
+            skillsText = Resources.Load<GameObject>("Menu/SkillsText");
+            getCanvasSize();
+            spawnButtons();
+            //SettingsButtonList[2].GetComponent<Dropdown>().value = resolution;
+            setButtonPosition();
+            setButtonSize();
+
+            //menuState = MenuState.Main;
+            //thisFrameResolution = Resolution.Default;
+
+            StateChanged();
+            FullscreenState();
+            ResolutionState();
+
+            if (GameObject.FindGameObjectWithTag("GameController")/* != null*/)
+            {
+                inGame = true;
+                menuState = MenuState.Running;
+            }
+            else
+            {
+                inGame = false;
+                menuState = MenuState.Main;
+            }
+        }
     }
 
     void FullscreenState()
@@ -476,7 +499,8 @@ public class MenuController : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             GameObject tempPrefab = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-            tempPrefab.transform.parent = canvas.transform;
+            //tempPrefab.transform.SetParent(canvas.transform);
+            tempPrefab.transform.SetParent(canvas.transform);
             MainButtonList.Add(tempPrefab);
             SetText(i);
             SetButtonActions(i);
@@ -492,7 +516,8 @@ public class MenuController : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             GameObject tempPrefab = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-            tempPrefab.transform.parent = canvas.transform;
+            //tempPrefab.transform.parent = canvas.transform;
+            tempPrefab.transform.SetParent(canvas.transform);
             PauseButtonList.Add(tempPrefab);
             SetPauseText(i);
             SetPauseButtonActions(i);
@@ -507,23 +532,23 @@ public class MenuController : MonoBehaviour
 
         //Spawn Audio Slider
         GameObject slider = Instantiate(sliderPrefab, canvas.transform.position, Quaternion.identity);
-        slider.transform.parent = canvas.transform;
+        slider.transform.SetParent(canvas.transform);
         SettingsButtonList.Add(slider);
         slider.GetComponent<Slider>().value = 5;
 
         //Spawn Fullscreen Tickbox
         GameObject tickbox = Instantiate(tickboxPrefab, canvas.transform.position, Quaternion.identity);
-        tickbox.transform.parent = canvas.transform;
+        tickbox.transform.SetParent(canvas.transform);
         SettingsButtonList.Add(tickbox);
 
         //Spawn Resolution Dropdown
         GameObject dropdown = Instantiate(dropdownPrefab, canvas.transform.position, Quaternion.identity);
-        dropdown.transform.parent = canvas.transform;
+        dropdown.transform.SetParent(canvas.transform);
         SettingsButtonList.Add(dropdown);
 
         //Spawn Back Button
         GameObject settingsBack = Instantiate(buttonPrefab,canvas.transform.position, Quaternion.identity);
-        settingsBack.transform.parent = canvas.transform;
+        settingsBack.transform.SetParent(canvas.transform);
         SettingsButtonList.Add(settingsBack);
         settingsBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
         settingsBack.GetComponent<Button>().onClick.AddListener(BackButtonPressed);
@@ -536,12 +561,12 @@ public class MenuController : MonoBehaviour
         //
 
         GameObject creditsText = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
-        creditsText.transform.parent = canvas.transform;
+        creditsText.transform.SetParent(canvas.transform);
         CreditsButtonList.Add(creditsText);
 
         //back button
         GameObject creditsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        creditsBack.transform.parent = canvas.transform;
+        creditsBack.transform.SetParent(canvas.transform);
         CreditsButtonList.Add(creditsBack);
         creditsBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
         creditsBack.GetComponent<Button>().onClick.AddListener(BackButtonPressed);
@@ -555,7 +580,7 @@ public class MenuController : MonoBehaviour
 
         //Start button
         GameObject skillsPlay = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        skillsPlay.transform.parent = canvas.transform;
+        skillsPlay.transform.SetParent(canvas.transform);
         SkillsButtonList.Add(skillsPlay);
         skillsPlay.GetComponentInChildren<TextMeshProUGUI>().text = "Start";
         skillsPlay.GetComponent<Button>().onClick.AddListener(PlayButtonPressed);
@@ -565,7 +590,7 @@ public class MenuController : MonoBehaviour
 
         //link to ibm
         GameObject skillsLink = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        skillsLink.transform.parent = canvas.transform;
+        skillsLink.transform.SetParent(canvas.transform);
         SkillsButtonList.Add(skillsLink);
         skillsLink.GetComponentInChildren<TextMeshProUGUI>().text = "IBM Skills Build";
         skillsLink.GetComponent<Button>().onClick.AddListener(OpenHyperlink);
@@ -575,12 +600,12 @@ public class MenuController : MonoBehaviour
 
         //text for ibm
         GameObject ibmText = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
-        ibmText.transform.parent = canvas.transform;
+        ibmText.transform.SetParent(canvas.transform);
         SkillsButtonList.Add(ibmText);
 
         //back button
         GameObject skillsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        skillsBack.transform.parent = canvas.transform;
+        skillsBack.transform.SetParent(canvas.transform);
         SkillsButtonList.Add(skillsBack);
         skillsBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
         skillsBack.GetComponent<Button>().onClick.AddListener(BackButtonPressed);
@@ -594,7 +619,7 @@ public class MenuController : MonoBehaviour
         //
 
         GameObject ship1 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        ship1.transform.parent = canvas.transform;
+        ship1.transform.SetParent(canvas.transform);
         PlayButtonList.Add(ship1);
         ship1.GetComponentInChildren<TextMeshProUGUI>().text = "Cloud";
         ship1.GetComponent<Button>().onClick.AddListener(Ship1Start);
@@ -603,7 +628,7 @@ public class MenuController : MonoBehaviour
         ship1.GetComponent<Image>().color = buttonColour;
 
         GameObject ship2 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        ship2.transform.parent = canvas.transform;
+        ship2.transform.SetParent(canvas.transform);
         PlayButtonList.Add(ship2);
         ship2.GetComponentInChildren<TextMeshProUGUI>().text = "AI";
         ship2.GetComponent<Button>().onClick.AddListener(Ship2Start);
@@ -612,7 +637,7 @@ public class MenuController : MonoBehaviour
         ship2.GetComponent<Image>().color = buttonColour;
 
         GameObject ship3 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        ship3.transform.parent = canvas.transform;
+        ship3.transform.SetParent(canvas.transform);
         PlayButtonList.Add(ship3);
         ship3.GetComponentInChildren<TextMeshProUGUI>().text = "Data";
         ship3.GetComponent<Button>().onClick.AddListener(Ship3Start);
@@ -621,7 +646,7 @@ public class MenuController : MonoBehaviour
         ship3.GetComponent<Image>().color = buttonColour;
 
         GameObject ship4 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        ship4.transform.parent = canvas.transform;
+        ship4.transform.SetParent(canvas.transform);
         PlayButtonList.Add(ship4);
         ship4.GetComponentInChildren<TextMeshProUGUI>().text = "Quantum";
         ship4.GetComponent<Button>().onClick.AddListener(Ship4Start);
@@ -630,7 +655,7 @@ public class MenuController : MonoBehaviour
         ship4.GetComponent<Image>().color = buttonColour;
         
         GameObject ship5 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        ship5.transform.parent = canvas.transform;
+        ship5.transform.SetParent(canvas.transform);
         PlayButtonList.Add(ship5);
         ship5.GetComponentInChildren<TextMeshProUGUI>().text = "Security";
         ship5.GetComponent<Button>().onClick.AddListener(Ship5Start);
@@ -641,19 +666,19 @@ public class MenuController : MonoBehaviour
         //How to play 0
 
         /*GameObject htp0Title = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
-        htp0Title.transform.parent = canvas.transform;
+        htp0Title.transform.SetParent(canvas.transform);
         HTP0List.Add(htp0Title);
         htp0Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
 
         GameObject htp0text = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
-        htp0text.transform.parent = canvas.transform;
+        htp0text.transform.SetParent(canvas.transform);
         HTP0List.Add(htp0text);
         htp0text.GetComponent<TextMeshProUGUI>().text = "Text text text more text yes yes yes hhhmm yes very interesting";
         htp0text.GetComponent<TextMeshProUGUI>().enableAutoSizing=true;
 
         //back button
         GameObject htpBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
-        htpBack.transform.parent = canvas.transform;
+        htpBack.transform.SetParent(canvas.transform);
         HTP0List.Add(htpBack);
         HTP1List.Add(htpBack);
         HTP2List.Add(htpBack);
