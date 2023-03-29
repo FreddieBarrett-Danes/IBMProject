@@ -72,6 +72,13 @@ public class MenuController : MonoBehaviour
 
     public bool inGame;
 
+    [SerializeField]
+    private GameObject lTick;
+
+    AudioSource music;
+
+    AudioLowPassFilter lpf;
+
     //public float debug;
 
     public enum MenuState
@@ -95,6 +102,8 @@ public class MenuController : MonoBehaviour
     void Start()
     {
         //MainButtonList.Clear();
+        music = GetComponent<AudioSource>();
+        lpf = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioLowPassFilter>();
         canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
         canvasRectTransform = canvas.GetComponent<RectTransform>();
         getCanvasSize();
@@ -189,6 +198,11 @@ public class MenuController : MonoBehaviour
         }
 
         lastframeResolution = thisFrameResolution;
+
+        if (inGame)
+            music.volume = 0f;
+        else
+            music.volume = 0.6f;
     }
 
     void FullscreenState()
@@ -207,7 +221,10 @@ public class MenuController : MonoBehaviour
 
     void StateChanged()
     {
-        if(menuState == MenuState.Main) //hide settings & credits
+        //GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
+        //Destroy(audio, 3f);
+
+        if (menuState == MenuState.Main) //hide settings & credits
         {
             ShowHideMainMenuComponents      (true);
             ShowHidePauseMenuComponents     (false);
@@ -265,6 +282,8 @@ public class MenuController : MonoBehaviour
             ShowHideCreditsMenuComponents   (false);
             ShowHideSkillsMenuComponents    (false);
             ShowHidePlayMenuComponents      (true);
+            GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
+            Destroy(audio, 3f);
         }
 
         else if(menuState == MenuState.Running)
@@ -878,6 +897,8 @@ public class MenuController : MonoBehaviour
         //Add the game start logic here
         //SceneManager.LoadScene(1);
         menuState = MenuState.Levels;
+        GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
+        Destroy(audio, 3f);
         return;
     }
 
@@ -920,6 +941,8 @@ public class MenuController : MonoBehaviour
     {
         //Swap to settings menu
         menuState = MenuState.Settings;
+        GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
+        Destroy(audio, 3f);
         return;
     }
 
@@ -927,6 +950,8 @@ public class MenuController : MonoBehaviour
     {
         //swap to skills build
         menuState = MenuState.SkillsBuild;
+        GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
+        Destroy(audio, 3f);
         return;
     }
 
@@ -934,6 +959,8 @@ public class MenuController : MonoBehaviour
     {
         //Swap to credits menu
         menuState = MenuState.Credits;
+        GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
+        Destroy(audio, 3f);
         return;
     }
 
@@ -954,16 +981,20 @@ public class MenuController : MonoBehaviour
         else
             menuState = MenuState.Main;
 
+        GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
+        Destroy(audio, 3f);
         return;
     }
 
     void PauseGame()
     {
+        lpf.enabled = true;
         Time.timeScale = 0;
     }
 
     void UnpauseGame()
     {
+        lpf.enabled = false;
         Time.timeScale = 1;
         menuState = MenuState.Running;
     }
