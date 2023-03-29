@@ -124,15 +124,15 @@ public class GameController : MonoBehaviour
         greenHack = Resources.Load<Sprite>("RobotIcon");
         greenComputer = Resources.Load<Sprite>("ComputerIcon");
         
-        playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        playerstatusText = FindObjectOfType<FinderScript>().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         playerstatusText.text = "SAFE";
-        shootabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(3).GetComponent<Image>();
+        shootabilityiconImage = FindObjectOfType<FinderScript>().transform.GetChild(3).GetComponent<Image>();
         shootabilityiconImage.sprite = greyShooting;
-        moveabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(4).GetComponent<Image>();
+        moveabilityiconImage = FindObjectOfType<FinderScript>().transform.GetChild(4).GetComponent<Image>();
         moveabilityiconImage.sprite = greyMove;
-        canhackiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(5).GetComponent<Image>();
+        canhackiconImage = FindObjectOfType<FinderScript>().transform.GetChild(5).GetComponent<Image>();
         canhackiconImage.sprite = greyHack;
-        computeravailableImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(6).GetComponent<Image>();
+        computeravailableImage = FindObjectOfType<FinderScript>().transform.GetChild(6).GetComponent<Image>();
         computeravailableImage.sprite = greyComputer;
 
         ComputerObj = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
@@ -143,9 +143,19 @@ public class GameController : MonoBehaviour
     {
         if (!completedLevel)
         {
-            shootabilityiconImage.sprite = PlayerControl.canShoot ? greenShooting : greyShooting;
-            moveabilityiconImage.sprite = PlayerControl.canSpeed ? greenMove : greyMove;
-            canhackiconImage.sprite = PlayerControl.isBehindEnemy ? greenHack : greyHack;
+            if (PlayerControl.canShoot)
+                shootabilityiconImage.sprite = greenShooting;
+            else
+                shootabilityiconImage.sprite = greyShooting;
+            if (PlayerControl.canSpeed)
+                shootabilityiconImage.sprite = greenMove;
+            else
+                shootabilityiconImage.sprite = greyMove;
+            if (PlayerControl.isBehindEnemy)
+                shootabilityiconImage.sprite = greenHack;
+            else
+                shootabilityiconImage.sprite = greyHack;
+
             switch(NoComputerInScene)
             {
                 case false:

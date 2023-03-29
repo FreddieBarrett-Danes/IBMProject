@@ -12,7 +12,6 @@ public class LevelTimer : MonoBehaviour
     private GameController gC;
 
     public TextMeshProUGUI countdownText;
-    private int i = 0;
 
     private static LevelTimer timerInstance;
     // Start is called before the first frame update
