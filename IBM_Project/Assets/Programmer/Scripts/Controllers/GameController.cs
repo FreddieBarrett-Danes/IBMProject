@@ -217,7 +217,7 @@ public class GameController : MonoBehaviour
             }
             if (inMinigame)
             {
-                Debug.Log("in minigame");
+                //Debug.Log("in minigame");
                 levelTimer.SetActive(false);
                 level.SetActive(false);
                 for (int i = 0; i < levelUI.Length; i++)
@@ -227,7 +227,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                Debug.Log("no minigame");
+                //Debug.Log("no minigame");
                 //GameObject[] mazeWalls = GameObject.FindGameObjectsWithTag("mazeWall");
                 //if (mazeWalls != null)
                 //{

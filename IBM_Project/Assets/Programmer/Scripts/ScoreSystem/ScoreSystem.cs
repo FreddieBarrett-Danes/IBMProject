@@ -250,7 +250,7 @@ public class ScoreSystem : MonoBehaviour
 
         if (Gc != null)
         {
-            Debug.Log("Score: " + Score);
+            //Debug.Log("Score: " + Score);
             //if (!Gc.inMinigame)
             //{
             ScoreText.text = Score.ToString("Score: " + "0");
