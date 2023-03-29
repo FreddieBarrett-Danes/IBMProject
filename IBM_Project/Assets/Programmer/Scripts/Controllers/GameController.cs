@@ -69,19 +69,18 @@ public class GameController : MonoBehaviour
     
     public Status PlayerStatus;
     public TextMeshProUGUI playerstatusText;
-    public TextMeshProUGUI computerdoortimerText;
     public Image shootabilityiconImage;
     public Image moveabilityiconImage;
     public Image canhackiconImage;
     public Image computeravailableImage;
-    public Sprite greyShooting;
-    public Sprite greyMove;
-    public Sprite greyHack;
-    public Sprite greyComputer;
-    public Sprite greenShooting;
-    public Sprite greenMove;
-    public Sprite greenHack;
-    public Sprite greenComputer;
+    private Sprite greyShooting;
+    private Sprite greyMove;
+    private Sprite greyHack;
+    private Sprite greyComputer;
+    private Sprite greenShooting;
+    private Sprite greenMove;
+    private Sprite greenHack;
+    private Sprite greenComputer;
 
     public ComputerInteraction ComputerObj;
     // Start is called before the first frame update
@@ -116,17 +115,24 @@ public class GameController : MonoBehaviour
 
         PlayerControl = player.GetComponent<PlayerController>();
         
+        greyShooting = Resources.Load<Sprite>("GunIconGrey");
+        greyMove = Resources.Load<Sprite>("Speed_Icon_Grey");
+        greyHack = Resources.Load<Sprite>("RobotIconGrey");
+        greyComputer = Resources.Load<Sprite>("ComputerIconGrey");
+        greenShooting = Resources.Load<Sprite>("GunIcon");
+        greenMove = Resources.Load<Sprite>("Speed_Icon");
+        greenHack = Resources.Load<Sprite>("RobotIcon");
+        greenComputer = Resources.Load<Sprite>("ComputerIcon");
+        
         playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         playerstatusText.text = "SAFE";
         shootabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(3).GetComponent<Image>();
         shootabilityiconImage.sprite = greyShooting;
-        computerdoortimerText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(4).GetComponent<TextMeshProUGUI>();
-        computerdoortimerText.text = "00";
-        moveabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(5).GetComponent<Image>();
+        moveabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(4).GetComponent<Image>();
         moveabilityiconImage.sprite = greyMove;
-        canhackiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(6).GetComponent<Image>();
-        canhackiconImage.sprite = greyMove;
-        computeravailableImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(7).GetComponent<Image>();
+        canhackiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(5).GetComponent<Image>();
+        canhackiconImage.sprite = greyHack;
+        computeravailableImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(6).GetComponent<Image>();
         computeravailableImage.sprite = greyComputer;
 
         ComputerObj = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
@@ -140,8 +146,6 @@ public class GameController : MonoBehaviour
             shootabilityiconImage.sprite = PlayerControl.canShoot ? greenShooting : greyShooting;
             moveabilityiconImage.sprite = PlayerControl.canSpeed ? greenMove : greyMove;
             canhackiconImage.sprite = PlayerControl.isBehindEnemy ? greenHack : greyHack;
-            float computerseconds = Mathf.FloorToInt(computerDoorTimer % 60);
-            computerdoortimerText.text = $"{computerseconds:00}";
             switch(NoComputerInScene)
             {
                 case false:

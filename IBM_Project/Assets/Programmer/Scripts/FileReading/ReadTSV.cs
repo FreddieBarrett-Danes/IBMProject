@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -143,7 +141,7 @@ public class ReadTSV : MonoBehaviour
             i++;
             cellValue = Find(i, 0, shipNumber);
         }
-        return i;
+        return i - 1;
     }
 
     List<int> Shuffle(int length)

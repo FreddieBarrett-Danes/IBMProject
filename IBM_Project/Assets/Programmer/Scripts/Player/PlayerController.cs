@@ -244,7 +244,7 @@ public class PlayerController : MonoBehaviour
                 isControlling = true;
                 
                 enemyControlled.GetComponent<BotInfo>().bIsDead = true;
-                
+                enemyControlled.GetComponent<BotInfo>().bWasHacked = true;
             }
             else
             {
@@ -255,7 +255,7 @@ public class PlayerController : MonoBehaviour
                 isControlling = true;
                 
                 enemyControlled.GetComponent<BotInfo>().bIsDead = true;
-                
+                enemyControlled.GetComponent<BotInfo>().bWasHacked = true;
             }
             
             readTSV.hackSuccessful = false;
@@ -286,8 +286,8 @@ public class PlayerController : MonoBehaviour
 
     private void DetectEnemy()
     {
-        if (!PC.mazeDONE)
-        {
+        //if (!PC.mazeDONE)
+        //{
             if (gc.bots.Length <= 0) return;
             foreach (GameObject bot in gc.bots)
             {
@@ -306,14 +306,20 @@ public class PlayerController : MonoBehaviour
                         && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude,
                             transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
                     {
-                        bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = true;
-                        bot.transform.GetChild(1).gameObject.SetActive(true);
+                        if (!bot.transform.GetChild(0).GetComponent<BotInfo>().bWasHacked)
+                        {
+                            bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = true;
+                            bot.transform.GetChild(1).gameObject.SetActive(true);
+                        }
                     }
                     else
                     {
-                        bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
-                        bot.transform.GetChild(1).gameObject.SetActive(false);
-                    }
+                        if (!bot.transform.GetChild(0).GetComponent<BotInfo>().bWasHacked)
+                        {
+                            bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
+                            bot.transform.GetChild(1).gameObject.SetActive(false);
+                        }
+                }
                 }
             }
             if (deadDroids.Length <= 0) return;
@@ -341,6 +347,6 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-        }
+        //}
     }
 }
