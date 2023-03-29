@@ -102,7 +102,7 @@ public class goalLocationScript : MonoBehaviour
         //}
 
         //if (mPlayer != null && mPlayer.timesHit >= 6)
-        if (mPlayer != null && mPlayer.timesHit > Lives)
+        if (mPlayer != null && mPlayer.timesHit >= Lives)
         {
             mC.interactMaze = false;
             gC.inMinigame = false;
