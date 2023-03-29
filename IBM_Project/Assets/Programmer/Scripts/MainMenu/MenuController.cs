@@ -252,7 +252,7 @@ public class MenuController : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("newLevel");
-        //int resolution = (int)thisFrameResolution;
+        int resolution = (int)thisFrameResolution;
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             
@@ -279,6 +279,7 @@ public class MenuController : MonoBehaviour
             skillsText = Resources.Load<GameObject>("Menu/SkillsText");
             getCanvasSize();
             spawnButtons();
+            SettingsButtonList[2].GetComponent<TMP_Dropdown>().value = resolution;
             //SettingsButtonList[2].GetComponent<Dropdown>().value = resolution;
             setButtonPosition();
             setButtonSize();
