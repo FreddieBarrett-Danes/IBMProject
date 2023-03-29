@@ -10,7 +10,7 @@ public class ComputerInteraction : MonoBehaviour
     private GameObject player;
 
 
-    public GameObject[] enemies;
+    public GameObject[] enemiesArray;
     public GameObject chosenMinigame;
 
     private GameController gameController;
@@ -23,16 +23,17 @@ public class ComputerInteraction : MonoBehaviour
     private GameObject cam;
 
     public bool mazeFailed = false;
+    public bool mazeDONE = false;
 
     private bool isTouching;
-    private bool enemiesDead = false;
+    [SerializeField]
+    private bool allDead = false;
 
-    public List<BotInfo> enemieslist = new List<BotInfo>();
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType(typeof(PlayerController)).GameObject();
-        enemies = GameObject.FindGameObjectsWithTag("EnemyScript");
+        enemiesArray = GameObject.FindGameObjectsWithTag("EnemyScript");
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         reader = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
@@ -43,18 +44,11 @@ public class ComputerInteraction : MonoBehaviour
     void Update()
     {
         FindEnemiesInScene();
-        if (enemieslist.Count == 0 || enemiesDead)
+        if(allDead)
         {
             gameObject.GetComponent<SphereCollider>().enabled = false;
-            isTouching = false;
-            if (gameController.Level5)
-            {
-                gC.inQuiz = true;
-                reader.questionsInARow = 4;
-                reader.find = true;
-                cam.GetComponent<Camera>().farClipPlane = 0.5f;
-            }
         }
+
         if (isTouching && !gameController.inMinigame && Input.GetKey(KeyCode.E ))
         {
             if (!miniController.completedMaze)
@@ -64,16 +58,28 @@ public class ComputerInteraction : MonoBehaviour
 
         }
 
+        if (gC.Level5 && allDead)
+        {
+            gC.inQuiz = true;
+            reader.questionsInARow = 4;
+            reader.find = true;
+            cam.GetComponent<Camera>().farClipPlane = 0.5f;
+
+        }
+
         if (miniController.completedMaze)
         {
-            foreach (GameObject enemy in enemies)
+            gameObject.GetComponent<SphereCollider>().enabled = false;
+            isTouching = false;
+            foreach (GameObject enemy in enemiesArray)
             {
                 if (enemy != null)
                 {
                     enemy.GetComponent<BotInfo>().bIsDead = true;
                 }
             }
-            enemies = null;
+            mazeDONE = true;
+            //enemiesArray = null;
             miniController.completedMaze = false;
         }
 
@@ -96,8 +102,17 @@ public class ComputerInteraction : MonoBehaviour
     }
     private void FindEnemiesInScene()
     {
-        enemieslist.Clear();
+        allDead = true;
 
+        for (int i = 0; i < enemiesArray.Length; i++)
+        {
+            if (!enemiesArray[i].GetComponent<BotInfo>().bIsDead) // if any element is false
+            {
+                allDead = false; // set allTrue to false and exit the loop
+                break;
+            }
+        }
+        /*enemieslist.Clear();
         BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
         enemieslist = botScripts.Select(t => t).ToList();
 
@@ -112,7 +127,6 @@ public class ComputerInteraction : MonoBehaviour
         if (counter == enemieslist.Count)
         {
             enemiesDead = true;
-        }
-
+        }*/
     }
 }

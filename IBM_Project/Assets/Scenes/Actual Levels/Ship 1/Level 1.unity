@@ -28192,17 +28192,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1839526450004476608, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
   m_PrefabInstance: {fileID: 3750169703978388246}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &746364463 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5599153729830589185, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
-  m_PrefabInstance: {fileID: 3750169703978388246}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 746364462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &753055757
 GameObject:
   m_ObjectHideFlags: 0
@@ -30999,14 +30988,6 @@ PrefabInstance:
     - target: {fileID: 394812973697413374, guid: db2bb6e46adcd814aa879a1749cb4d5a, type: 3}
       propertyPath: m_Name
       value: LevelTimer
-      objectReference: {fileID: 0}
-    - target: {fileID: 3770471472808052071, guid: db2bb6e46adcd814aa879a1749cb4d5a, type: 3}
-      propertyPath: TimeUp
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3770471472808052071, guid: db2bb6e46adcd814aa879a1749cb4d5a, type: 3}
-      propertyPath: startTime
-      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3770471472808052071, guid: db2bb6e46adcd814aa879a1749cb4d5a, type: 3}
       propertyPath: countdownText
@@ -60979,10 +60960,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7209069689025269408, guid: a76570467da2d5e4692a7c858704beef, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a9f8fba9f2128424dadd990a27dabca9, type: 2}
     - target: {fileID: 7209069689025269410, guid: a76570467da2d5e4692a7c858704beef, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -64463,7 +64440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.2
+      value: 14.8
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -64471,7 +64448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25
+      value: 6.3
       objectReference: {fileID: 0}
     - target: {fileID: 4092629621831517614, guid: 239874d7b9dc9384b9d24bd5b2ced2c7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -64970,17 +64947,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 256299996955283643, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: mC
       value: 
       objectReference: {fileID: 907073098}
     - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: Ship1
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: Ship2
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: Ship3
@@ -64996,7 +64977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: Level5
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: levelTimer
@@ -65006,18 +64987,14 @@ PrefabInstance:
       propertyPath: playerstatusText
       value: 
       objectReference: {fileID: 1794488480}
+    - target: {fileID: 1181498724646191071, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 1292865036377129672, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1406272699613730164, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1406272699613730164, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
-      propertyPath: LevelTimer
-      value: 
-      objectReference: {fileID: 1971977679}
     - target: {fileID: 1477851457995835361, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -65066,10 +65043,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1655351960237499579, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
-      propertyPath: mazeLives
-      value: 
-      objectReference: {fileID: 746364463}
     - target: {fileID: 1690106254485020840, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: MazeLives
       value: 
@@ -65078,25 +65051,33 @@ PrefabInstance:
       propertyPath: mazeLives
       value: 
       objectReference: {fileID: 746364462}
-    - target: {fileID: 1690106255004003015, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
-      propertyPath: mazeLives
-      value: 
-      objectReference: {fileID: 746364462}
     - target: {fileID: 2166813819481244635, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: m_Name
       value: Canvas&MiniGames
       objectReference: {fileID: 0}
-    - target: {fileID: 2471290624841279785, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
-      propertyPath: m_TagString
-      value: LevelUI
+    - target: {fileID: 2279552596507165718, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4408009199939621955, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: fallbackTimeForQuestion
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5234726642251637085, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533678867458335929, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7662482980960288076, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8797233829639452010, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
