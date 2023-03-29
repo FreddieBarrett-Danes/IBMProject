@@ -29,9 +29,9 @@ public class goalLocationScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("mazePlayer"))
         {
-            Debug.Log(mPlayer.transform.position + "," + transform.position);
-            Debug.Log("Maze Win");
-            Debug.Log("Refer to goalLocationScript for Maze output");
+            //Debug.Log(mPlayer.transform.position + "," + transform.position);
+            //Debug.Log("Maze Win");
+            //Debug.Log("Refer to goalLocationScript for Maze output");
             mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
             ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(1, mTimer.timer)); //1 = Maze
             //ScoreSystemGameObject.CompletedMinigame(new Vector2(1, mTimer.timer)); //1 = Maze
@@ -92,7 +92,7 @@ public class goalLocationScript : MonoBehaviour
             mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
         }
 
-        Debug.Log("TimesHit: " + mPlayer.timesHit + " Lives: " + Lives);
+        //Debug.Log("TimesHit: " + mPlayer.timesHit + " Lives: " + Lives);
         mazeLives.text = (Lives - mPlayer.timesHit).ToString("Lives: " + "0");
 
 

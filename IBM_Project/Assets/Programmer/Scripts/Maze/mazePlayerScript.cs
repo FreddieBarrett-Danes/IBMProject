@@ -44,7 +44,7 @@ public class mazePlayerScript : MonoBehaviour
             //Debug.Log("Trigger Wall hit");
             if (returnToStartUponCollision == true) transform.position = new Vector3(84, 0, 82);//(2, 0, 0);
             touchWall = true;
-            Debug.Log("debugfloat: " + debugfloat);
+            //Debug.Log("debugfloat: " + debugfloat);
             touchWall = false;
             wallHitSound.Play();
             //timesHit++;
@@ -116,7 +116,7 @@ public class mazePlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("MazePlayer timesHit: " + timesHit);
+        //Debug.Log("MazePlayer timesHit: " + timesHit);
 
 
 

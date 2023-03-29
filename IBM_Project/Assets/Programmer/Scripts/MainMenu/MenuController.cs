@@ -251,7 +251,7 @@ public class MenuController : MonoBehaviour
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("newLevel");
+        //Debug.Log("newLevel");
         //int resolution = (int)thisFrameResolution;
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {

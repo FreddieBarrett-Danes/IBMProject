@@ -84,7 +84,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
         currentSelect = 1;
         //Timer.SetActive(true);
         //Timer.GetComponent<MeshRenderer>().enabled = true;
-        Debug.Log("start test");
+        //Debug.Log("start test");
 
         numAligned = new bool[3];
 
@@ -114,7 +114,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
             for (int i = 0; i < UnityEngine.Random.Range(30, 360); i++)
             {
                 currentSelect = (short)UnityEngine.Random.Range(1, 4);
-                Debug.Log("Direction: " + randDirection + " currentSelect: " + currentSelect + "," + currentSelect * 5);
+                //Debug.Log("Direction: " + randDirection + " currentSelect: " + currentSelect + "," + currentSelect * 5);
                 RotateDisc(1.0f * (currentSelect * 5));
             }
 
@@ -152,7 +152,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
         //if (rotationSpeed.Length != 3)
         if (rotationSpeed.Length != DISCS)
         {
-            Debug.LogError("Oi! What you doing?! The rotationSpeed length should be set to " + DISCS + "! (Because there should be exactly " + DISCS + " discs)");
+            //Debug.LogError("Oi! What you doing?! The rotationSpeed length should be set to " + DISCS + "! (Because there should be exactly " + DISCS + " discs)");
             Array.Resize(ref rotationSpeed, DISCS);
         }
     }
@@ -212,7 +212,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(mTimer.timer);
+        //Debug.Log(mTimer.timer);
         //GetComponent<Renderer>().material.color = Color.grey;
 
         //Selected = true;
@@ -238,7 +238,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
             Timer.SetActive(true);
             Timer.GetComponent<TextMeshProUGUI>().enabled = true;
             OnDiscAlignmentReady(true);
-            Debug.Log("DISC ALIGNMENT!!!");
+            //Debug.Log("DISC ALIGNMENT!!!");
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -254,7 +254,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
                 //Timer.SetActive(true);
                 Timer.GetComponent<TextMeshProUGUI>().enabled = true;
                 OnDiscAlignmentReady(true);
-                Debug.Log("If Timer isn't showing, press 'N'");
+                //Debug.Log("If Timer isn't showing, press 'N'");
             }
             
 

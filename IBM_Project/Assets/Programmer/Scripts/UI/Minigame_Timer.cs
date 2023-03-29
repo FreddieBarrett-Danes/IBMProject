@@ -34,14 +34,14 @@ public class Minigame_Timer : UITimer
     void timerReady(bool timerReady)
     {
         playing = timerReady;
-        Debug.Log("Timer status: " + playing);
+        //Debug.Log("Timer status: " + playing);
     }
 
     void checkTimer()
     {
         if (timer <= 0)
         {
-            Debug.Log("Times up, fail minigame!");
+            //Debug.Log("Times up, fail minigame!");
         }
     }
 
@@ -60,7 +60,7 @@ public class Minigame_Timer : UITimer
 
         if (timer <= 0)
         {
-            Debug.Log("Times up, fail minigame!");
+            //Debug.Log("Times up, fail minigame!");
             gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
             gC.failMinigame = true;
             if (gC.PlayerStatus == GameController.Status.HUNTED)
@@ -69,7 +69,7 @@ public class Minigame_Timer : UITimer
                 gC.PlayerStatus = GameController.Status.ALERTED;
             gC.inMinigame = false;
             gameObject.SetActive(false);
-            Debug.Log("Minigame failed, exit minigame and set droids to alert state");
+            //Debug.Log("Minigame failed, exit minigame and set droids to alert state");
             //playing = false;
         }
     }

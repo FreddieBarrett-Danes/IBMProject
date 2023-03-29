@@ -148,13 +148,13 @@ public class GameController : MonoBehaviour
             else
                 shootabilityiconImage.sprite = greyShooting;
             if (PlayerControl.canSpeed)
-                shootabilityiconImage.sprite = greenMove;
+                moveabilityiconImage.sprite = greenMove;
             else
-                shootabilityiconImage.sprite = greyMove;
+                moveabilityiconImage.sprite = greyMove;
             if (PlayerControl.isBehindEnemy)
-                shootabilityiconImage.sprite = greenHack;
+                canhackiconImage.sprite = greenHack;
             else
-                shootabilityiconImage.sprite = greyHack;
+                canhackiconImage.sprite = greyHack;
 
             switch(NoComputerInScene)
             {

@@ -79,7 +79,7 @@ public class CustomTile
     public tileType ConvertIntoTile(short num1)
     {
         tileType rv = tileType.UpDown;
-        Debug.Log("[" + num1 + "]" + "Before switch: " + n + "," + s + "," + e + "," + w);
+        //Debug.Log("[" + num1 + "]" + "Before switch: " + n + "," + s + "," + e + "," + w);
                                                         //up       down     right     left
         
         switch (n, s, e, w)
@@ -122,7 +122,7 @@ public class CustomTile
                 break;
 
             default:
-                Debug.Log("[" + num1 + "]" + "Error! This tile dosen't have exactly two directions! " + n + "," + s + "," + e + "," + w);
+                //Debug.Log("[" + num1 + "]" + "Error! This tile dosen't have exactly two directions! " + n + "," + s + "," + e + "," + w);
                 break;
         }
         //if (n == true && s == true)

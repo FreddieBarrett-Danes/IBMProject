@@ -12,7 +12,7 @@ namespace BT
             {
                 for (int i = 0; i < loopTimesInt; i++)
                 {
-                    Debug.Log(i);
+                    //Debug.Log(i);
                     state = childNode.Evaluate() switch
                     {
                         NodeState.FAILURE => NodeState.FAILURE,
@@ -21,10 +21,10 @@ namespace BT
                         _ => NodeState.SUCCESS
                     };
                 }
-                Debug.Log("FOR LOOP");
+                //Debug.Log("FOR LOOP");
                 return state;
             }
-            Debug.LogError("Inefficient use of LoopDecorator. Either its looping once or not at all. Use a regular Decorator node.");
+            //Debug.LogError("Inefficient use of LoopDecorator. Either its looping once or not at all. Use a regular Decorator node.");
             state = NodeState.FAILURE;
             return state;
         }

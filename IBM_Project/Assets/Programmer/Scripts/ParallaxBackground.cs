@@ -26,13 +26,13 @@ public class ParallaxBackground : MonoBehaviour
         //imageWidth = image.GetComponent<RectTransform>().sizeDelta.x;
         imageWidth = image.width;
         amountOfImages = Mathf.CeilToInt(canvas.pixelRect.width/imageWidth) + 1;
-        Debug.Log(canvas.pixelRect.width);
-        Debug.Log(imageWidth / canvas.pixelRect.width);
+        //Debug.Log(canvas.pixelRect.width);
+        //Debug.Log(imageWidth / canvas.pixelRect.width);
 
         for (int i = 0; i < amountOfImages; i++)
         {
             GameObject temp = Instantiate(imagePrefab, new Vector3((-canvas.pixelRect.width / 2) + (i * imageWidth),0,0), Quaternion.identity, level1.transform);
-            Debug.Log(amountOfImages);
+            //Debug.Log(amountOfImages);
             close.Add(temp.GameObject());
         }
 
