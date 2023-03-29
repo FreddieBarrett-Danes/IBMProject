@@ -8,8 +8,11 @@ using System.Threading;
 
 public class MenuController : MonoBehaviour
 {
+    [SerializeField]
     private Canvas canvas;
+    [SerializeField]
     private RectTransform canvasRectTransform;
+    [SerializeField]
     private float canvasHeight, canvasWidth;
 
     [SerializeField]
@@ -230,6 +233,51 @@ public class MenuController : MonoBehaviour
             music.volume = 0f;
         else
             music.volume = 0.6f;
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        Debug.Log("newLevel");
+
+        MainButtonList.Clear();
+        PauseButtonList.Clear();
+        SettingsButtonList.Clear();
+        SkillsButtonList.Clear();
+        CreditsButtonList.Clear();
+        PlayButtonList.Clear();
+        HTP0List.Clear();
+        HTP1List.Clear();
+        HTP2List.Clear();
+        HTP3List.Clear();
+
+        music = GetComponent<AudioSource>();
+        lpf = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioLowPassFilter>();
+        canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
+        canvasRectTransform = canvas.GetComponent<RectTransform>();
+        getCanvasSize();
+        spawnButtons();
+        setButtonPosition();
+        setButtonSize();
+
+        menuState = MenuState.Main;
+        thisFrameResolution = Resolution.Default;
+
+        StateChanged();
+        FullscreenState();
+        ResolutionState();
+
+        if (GameObject.FindGameObjectWithTag("GameController")/* != null*/)
+        {
+            inGame = true;
+            menuState = MenuState.Running;
+        }
+        else
+        {
+            inGame = false;
+            menuState = MenuState.Main;
+        }
+
+        return;
     }
 
     void FullscreenState()
