@@ -229,7 +229,23 @@ public class ScoreSystem : MonoBehaviour
         //ScoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
         //LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         //AskedUpdate = Quiz.askedList.Count;
-
+        if (Gc == null)
+        {
+            Gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        }
+        //mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
+        if (Quiz == null)
+        {
+            Quiz = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
+        }
+        if (ScoreText == null)
+        {
+            ScoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
+        }
+        if (LevelTimer == null)
+        {
+            LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
+        }
 
 
         if (Gc != null)

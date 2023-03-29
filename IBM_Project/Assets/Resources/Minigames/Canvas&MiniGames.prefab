@@ -492,7 +492,7 @@ MonoBehaviour:
   mTimer: {fileID: 2523596634021114271}
   setCameraPosition: 1
   Lives: 6
-  mazeLives: {fileID: 0}
+  mazeLives: {fileID: 5599153729830589185}
 --- !u!1 &1655351960577961017
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,7 +1124,7 @@ MonoBehaviour:
   showIngameText: 0
   showPregameTutorial: 1
   preGoalLocation: {x: 0, y: 0, z: 0}
-  mazeLives: {fileID: 0}
+  mazeLives: {fileID: 1839526450004476608}
 --- !u!1 &1690106255041822279
 GameObject:
   m_ObjectHideFlags: 0
@@ -2515,7 +2515,6 @@ GameObject:
   - component: {fileID: 2471290624690481663}
   - component: {fileID: 2471290624690481662}
   - component: {fileID: 2471290624690481649}
-  - component: {fileID: 1406272699613730164}
   m_Layer: 5
   m_Name: LevelCanvas
   m_TagString: Canvas
@@ -2611,27 +2610,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1406272699613730164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2471290624690481648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a326295b815543242802e9883d2d12a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Score: 0
-  TimeBonusThreshold: 180
-  LevelTimeScoreModifier: 0.1
-  QuizScoreModifier: 1
-  LosePointsOnIncorrectAnswer: 0
-  PointsPerQuestion: 0
-  TimerAwardsPoints: 1
-  StaticPointsX_MazeY_DiscZ_Tile: {x: 100, y: 20, z: 20}
-  MinigameTimeScoreModifier: {x: 1, y: 1, z: 1}
 --- !u!1 &2471290624841279785
 GameObject:
   m_ObjectHideFlags: 0
@@ -2645,7 +2623,7 @@ GameObject:
   - component: {fileID: 2471290624841279798}
   m_Layer: 5
   m_Name: CountdownText
-  m_TagString: Untagged
+  m_TagString: LevelUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3315,21 +3293,37 @@ MonoBehaviour:
   answersList: []
   TSVFile: {fileID: -1022232229856555865, guid: de74e8f252c53a641a3fc668f5090091, type: 3}
   CloudTSV: {fileID: 4134640566548223314, guid: 81c0be0972af75e4b8870ab9af13a8dc, type: 3}
+  cloudRangeMax: 0
   AITSV: {fileID: -5961253661617688450, guid: 37cb60f6dd0443542a11ecd1daa8c99e, type: 3}
+  aiRangeMax: 0
   DataTSV: {fileID: 4937745292970980521, guid: 140cee27cf34e6e47b34a00dd58b0da9, type: 3}
+  dataRangeMax: 0
   QuantumTSV: {fileID: -8154413885656020249, guid: 18f28aae1144ac84aae062d1d1901249, type: 3}
+  quantumRangeMax: 0
   SecurityTSV: {fileID: -616951207384574251, guid: 8efa5c03c1f789e44b842cab8c060e8c, type: 3}
+  securityRangeMax: 0
   shipNumber: 0
   questionsInARow: 3
   loopNumber: 0
   waitTime: 1
-  rangeOfQuestionsMax: 4
   row: 1
   rightAnswers: 0
   correctAnswers: 0
-  incorrectAnswersList: 
-  correctAnswersList: 
-  askedList: 
+  cloudIncorrectAnswersList: 
+  aiIncorrectAnswersList: 
+  dataIncorrectAnswersList: 
+  quantumIncorrectAnswersList: 
+  securityIncorrectAnswersList: 
+  cloudCorrectAnswersList: 
+  aiCorrectAnswersList: 
+  dataCorrectAnswersList: 
+  quantumCorrectAnswersList: 
+  securityCorrectAnswersList: 
+  cloudAskedList: 
+  aiAskedList: 
+  dataAskedList: 
+  quantumAskedList: 
+  securityAskedList: 
   timeForQuestion: 0
   fallbackTimeForQuestion: 4
   totalPoints: 0

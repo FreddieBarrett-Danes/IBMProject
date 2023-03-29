@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,15 @@ public class elevator : MonoBehaviour
     private ReadTSV reader;
 
     private GameController gC;
+    [SerializeField]
+    public GameObject[] enemiesArray;
 
+    private GameObject PC;
 
     public Vector3 debug;
 
-    private bool enemiesDead = false;
-    
-    public List<BotInfo> enemies = new List<BotInfo>();
+    [SerializeField]
+    private bool allDead;
 
     //OMG FOR THE LOVE OF GOD WE NEED TO CHANGE THIS LATER. UNLOAD THE SCENE OR SOMETHING. 
     private GameObject cam;
@@ -28,24 +31,27 @@ public class elevator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enemiesArray = GameObject.FindGameObjectsWithTag("EnemyScript");
         player = FindObjectOfType(typeof(PlayerController)).GameObject();
         quizMaster = GameObject.FindGameObjectWithTag("QuizMaster");
         reader = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         cam = GameObject.FindGameObjectWithTag("MainCamera");
+        PC = GameObject.FindGameObjectWithTag("Computer");
     }
 
     private void Update()
     {
         FindEnemiesInScene();
-        GameObject.Find("LevelCanvas").SendMessage("QuizLoaded"); //For Score System
+
+        //GameObject.Find("LevelCanvas").SendMessage("QuizLoaded"); //For Score System
 
     }
     private void OnTriggerEnter(Collider other)
     {
-        GameObject.Find("LevelCanvas").SendMessage("QuizLoaded"); //For Score System
+        //GameObject.Find("LevelCanvas").SendMessage("QuizLoaded"); //For Score System
 
-        if (other.gameObject.tag == player.tag && (enemies.Count == 0 || enemiesDead))
+        if (other.gameObject.tag == player.tag && allDead)
         {
             gC.inQuiz = true;
             reader.questionsInARow = 4;
@@ -56,8 +62,19 @@ public class elevator : MonoBehaviour
 
     private void FindEnemiesInScene()
     {
-        enemies.Clear();
+        allDead = true;
 
+        for (int i = 0; i < enemiesArray.Length; i++)
+        {
+            if (!enemiesArray[i].GetComponent<BotInfo>().bIsDead) // if any element is false
+            {
+                allDead = false; // set allTrue to false and exit the loop
+                break;
+            }
+        }
+        //allMissing = true;
+        //for(int i = 0; i < enemies.Count; i++)
+        /*enemies.Clear();
         BotInfo[] botScripts = FindObjectsOfType<BotInfo>();
         enemies = botScripts.Select(t => t).ToList();
 
@@ -69,10 +86,13 @@ public class elevator : MonoBehaviour
                 counter++;
             }
         }
+        Debug.Log("Counter" + counter);
+        Debug.Log("Count" + enemies.Count);
         if(counter == enemies.Count)
         {
             enemiesDead = true;
-        }
+        }*/
+
 
     }
 }

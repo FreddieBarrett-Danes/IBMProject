@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     public GameObject visuals;
     public GameObject body;
 
+    private ComputerInteraction PC;
+
     private Camera mainCamera;
 
     public bool isBehindEnemy;
@@ -74,6 +76,8 @@ public class PlayerController : MonoBehaviour
         //controller set up
         miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+
+        PC = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rBody = GetComponent<Rigidbody>();
@@ -190,7 +194,7 @@ public class PlayerController : MonoBehaviour
     private void Interact()
     {
 
-        if (isBehindEnemy && Input.GetKeyDown(KeyCode.E))
+        if (isBehindEnemy && Input.GetKeyDown(KeyCode.E) && gc.PlayerStatus != GameController.Status.HUNTED)
         {
             loseSoundPlayed = false;
             miniController.StartQuiz(1);
@@ -238,7 +242,9 @@ public class PlayerController : MonoBehaviour
                 controlTimer = 10.0f;
                 isBehindEnemy = false;
                 isControlling = true;
-                Destroy(enemyControlled.transform.parent.gameObject);
+                
+                enemyControlled.GetComponent<BotInfo>().bIsDead = true;
+                
             }
             else
             {
@@ -247,7 +253,9 @@ public class PlayerController : MonoBehaviour
                 controlTimer = 10.0f;
                 isBehindEnemy = false;
                 isControlling = true;
-                Destroy(enemyControlled.transform.parent.gameObject);
+                
+                enemyControlled.GetComponent<BotInfo>().bIsDead = true;
+                
             }
             
             readTSV.hackSuccessful = false;
@@ -278,55 +286,59 @@ public class PlayerController : MonoBehaviour
 
     private void DetectEnemy()
     {
-        if (gc.bots.Length <= 0) return;
-        foreach (GameObject bot in gc.bots)
+        if (!PC.mazeDONE)
         {
-            if (bot)
+            if (gc.bots.Length <= 0) return;
+            foreach (GameObject bot in gc.bots)
             {
-                Vector3 enemyPos = bot.transform.GetChild(0).position;
-                Vector3 playerPos = transform.position;
-                float range = Vector3.Distance(enemyPos, playerPos);
-                Vector3 toTarget = enemyPos - playerPos;
-                Vector3 dirToTarget = toTarget.normalized;
 
-                if ((range < transform.gameObject.GetComponent<FieldOfView>().viewRadius - 0.05f &&
-                     Vector3.Angle(transform.forward, dirToTarget) <
-                     transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2)
-                    && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude,
-                        transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
+                if (bot)
                 {
-                    bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = true;
-                    bot.transform.GetChild(1).gameObject.SetActive(true);
-                }
-                else
-                {
-                    bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
-                    bot.transform.GetChild(1).gameObject.SetActive(false);
+                    Vector3 enemyPos = bot.transform.GetChild(0).position;
+                    Vector3 playerPos = transform.position;
+                    float range = Vector3.Distance(enemyPos, playerPos);
+                    Vector3 toTarget = enemyPos - playerPos;
+                    Vector3 dirToTarget = toTarget.normalized;
+
+                    if ((range < transform.gameObject.GetComponent<FieldOfView>().viewRadius - 0.05f &&
+                         Vector3.Angle(transform.forward, dirToTarget) <
+                         transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2)
+                        && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude,
+                            transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
+                    {
+                        bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = true;
+                        bot.transform.GetChild(1).gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        bot.transform.GetChild(0).GetComponent<BotInfo>().bInPlayerView = false;
+                        bot.transform.GetChild(1).gameObject.SetActive(false);
+                    }
                 }
             }
-        }
-        if (deadDroids.Length <= 0) return;
-        foreach (GameObject droid in deadDroids)
-        {
-            if (droid)
+            if (deadDroids.Length <= 0) return;
+            foreach (GameObject droid in deadDroids)
             {
-                Vector3 droidPos = droid.transform.position;
-                Vector3 playerPos = transform.position;
-                float range = Vector3.Distance(droidPos, playerPos);
-                Vector3 toTarget = droidPos - playerPos;
-                Vector3 dirToTarget = toTarget.normalized;
+                if (droid)
+                {
+                    Vector3 droidPos = droid.transform.position;
+                    Vector3 playerPos = transform.position;
+                    float range = Vector3.Distance(droidPos, playerPos);
+                    Vector3 toTarget = droidPos - playerPos;
+                    Vector3 dirToTarget = toTarget.normalized;
 
-                if ((range < transform.gameObject.GetComponent<FieldOfView>().viewRadius - 0.05f &&
-                     Vector3.Angle(transform.forward, dirToTarget) <
-                     transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2)
-                    && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude,
-                        transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
-                {
-                    droid.transform.GetChild(0).gameObject.SetActive(true);
-                }
-                else
-                {
-                    droid.transform.GetChild(0).gameObject.SetActive(false);
+                    if ((range < transform.gameObject.GetComponent<FieldOfView>().viewRadius - 0.05f &&
+                         Vector3.Angle(transform.forward, dirToTarget) <
+                         transform.gameObject.GetComponent<FieldOfView>().viewAngle / 2)
+                        && !Physics.Raycast(transform.position, dirToTarget, toTarget.magnitude,
+                            transform.gameObject.GetComponent<FieldOfView>().obstacleMask))
+                    {
+                        droid.transform.GetChild(0).gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        droid.transform.GetChild(0).gameObject.SetActive(false);
+                    }
                 }
             }
         }

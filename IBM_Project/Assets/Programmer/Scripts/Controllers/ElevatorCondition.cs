@@ -14,7 +14,7 @@ public class ElevatorCondition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Computer.GetComponent<ComputerInteraction>().enemies == null)
+        if(Computer.GetComponent<ComputerInteraction>().enemiesArray == null)
         {
             Destroy(this.gameObject);
         }

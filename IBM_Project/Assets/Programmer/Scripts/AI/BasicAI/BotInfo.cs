@@ -192,6 +192,7 @@ public class BotInfo : MonoBehaviour
             }
             bAnimator.SetBool("isDead", true);
             GetComponent<NavMeshAgent>().SetDestination(transform.position);
+            transform.parent.GetChild(1).gameObject.SetActive(false);
             bViewCone.GetComponent<Light>().enabled = false;
         }
 
