@@ -167,7 +167,7 @@ public class walGen : MonoBehaviour
                                                     //north, south, east, west, none
         bool backtracking = false;
 
-        Debug.Log("cpg.x = " + cgp.x + " | cpg.y = " + cgp.y);
+        //Debug.Log("cpg.x = " + cgp.x + " | cpg.y = " + cgp.y);
         //This checks what adjacent cells are unvisited.
         //Area of refinement: convert to switch case?
         if (cgp.y != (Maze_Size.y - 1))
