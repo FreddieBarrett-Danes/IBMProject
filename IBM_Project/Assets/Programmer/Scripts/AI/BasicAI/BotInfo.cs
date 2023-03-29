@@ -21,6 +21,7 @@ public class BotInfo : MonoBehaviour
     public GameObject bComputer;
     public Animator bAnimator;
     public bool bIsDead;
+    public bool bWasHacked;
     public int bMoveDirection;
     public bool bInPlayerView;
     public bool bSpriteTrigger;
@@ -185,16 +186,26 @@ public class BotInfo : MonoBehaviour
         bAnimator.SetInteger("MoveDir", bMoveDirection);
         if (bIsDead)
         {
-            if(bInPlayerView && !bShutdownPlayed)
+            if (bWasHacked)
             {
-                bShutdown.Play();
-                bShutdownPlayed = true;
+                transform.parent.GetChild(1).gameObject.SetActive(false);
+                GetComponent<NavMeshAgent>().SetDestination(transform.position);
+                bViewCone.GetComponent<Light>().enabled = false;
             }
-            bAnimator.SetBool("isDead", true);
-            GetComponent<NavMeshAgent>().SetDestination(transform.position);
-            transform.parent.GetChild(1).gameObject.SetActive(false);
-            bViewCone.GetComponent<Light>().enabled = false;
+            else
+            {
+
+                if (bInPlayerView && !bShutdownPlayed)
+                {
+                    bShutdown.Play();
+                    bShutdownPlayed = true;
+                }
+                bAnimator.SetBool("isDead", true);
+                GetComponent<NavMeshAgent>().SetDestination(transform.position);
+                bViewCone.GetComponent<Light>().enabled = false;
+            }
         }
+        
 
         bViewCone.GetComponent<Light>().range = bViewRadius + 0.5f;
         Vector3 movementDirection = GetComponent<NavMeshAgent>().velocity;
