@@ -82,6 +82,8 @@ public class GameController : MonoBehaviour
     private Sprite greenHack;
     private Sprite greenComputer;
 
+    public GameObject[] deadDroids;
+    
     public ComputerInteraction ComputerObj;
     // Start is called before the first frame update
     void Start()
@@ -143,6 +145,7 @@ public class GameController : MonoBehaviour
     {
         if (!completedLevel)
         {
+            deadDroids = GameObject.FindGameObjectsWithTag("DeadEnemy");
             if (PlayerControl.canShoot)
                 shootabilityiconImage.sprite = greenShooting;
             else
@@ -155,7 +158,7 @@ public class GameController : MonoBehaviour
                 canhackiconImage.sprite = greenHack;
             else
                 canhackiconImage.sprite = greyHack;
-
+            
             switch(NoComputerInScene)
             {
                 case false:
@@ -181,7 +184,24 @@ public class GameController : MonoBehaviour
                     break;
                 }
             }
-    
+
+            if (deadDroids.Length > 0)
+            {
+                foreach (GameObject droid in deadDroids)
+                {
+                    if (droid)
+                    {
+                        if (!inMinigame)
+                        {
+                            droid.transform.GetChild(0).gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            droid.transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                    }
+                }
+            }
 
             if (Input.GetKeyDown(KeyCode.R))
             {
