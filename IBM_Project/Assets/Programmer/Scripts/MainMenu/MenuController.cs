@@ -40,6 +40,8 @@ public class MenuController : MonoBehaviour
     private MenuState menuState;
     private MenuState lastFrameMenuState;
 
+    private MenuController menuInstance;
+
     [SerializeField]
     float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, creditsHeightFrom, creditsSpacing, playHeightFrom, textboxScalar, shipsButtonHeight, shipsButtonWidth, shipsSpacing;
     //public int amountOfButtons;
@@ -110,9 +112,22 @@ public class MenuController : MonoBehaviour
         FHD,
         LHD
     }
+    private void Awake()
+    {
 
+    }
     void Start()
     {
+        DontDestroyOnLoad(this);
+        if (menuInstance == null)
+        {
+            menuInstance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         //MainButtonList.Clear();
         music = GetComponent<AudioSource>();
         lpf = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioLowPassFilter>();
