@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 5432482813687518641}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2387, y: 1.2387, z: 1.2387}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -66,20 +66,51 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Leila
+  m_text: 'Credits
 
-    Zane
 
-    x
+    Producers
 
-    y
+    Leila De Luna
 
-    z
+    Zane Oliver
 
-'
+
+    Art
+
+    Jade
+    Tilbrook -  Lead, UI, Tile Sets, Map Assets, Character Design, Animation
+
+    Tyson
+    Snagg - Ship Exteriors, Map Assets
+
+
+    Audio
+
+    Freddie Barrett-Danes
+
+
+    Design
+
+    Alex
+    Hill - Lead, Documentation, Level Design / Implementation, Quality Assurance
+
+    Alfie
+    Froude - Documenation, Level Design / Implementation, Research
+
+
+    Programming
+
+    Lewis
+    Roberts - Lead, AI, Animation Implementation
+
+    Freddie Barrett-Danes - Implmentation,
+    Bug Fixing
+
+    Istvan Franczuz - Quizzes, File Reading, UI'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
+  m_sharedMaterial: {fileID: -745580112320430078, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -103,11 +134,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 12
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 12
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -139,7 +170,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -28.320503, z: 0, w: -97.104836}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
