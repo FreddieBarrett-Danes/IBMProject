@@ -143,7 +143,7 @@ public class ReadTSV : MonoBehaviour
             i++;
             cellValue = Find(i, 0, shipNumber);
         }
-        return i;
+        return i - 1;
     }
 
     List<int> Shuffle(int length)
