@@ -167,14 +167,14 @@ public class MenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameObject.FindGameObjectWithTag("GameController") != null)
+        /*if(GameObject.FindGameObjectWithTag("GameController") != null)
         {
             inGame = true;
         }
         else
         {
             inGame = false;
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -226,7 +226,7 @@ public class MenuController : MonoBehaviour
 
         lastframeResolution = thisFrameResolution;
 
-        if (inGame)
+        if (inGame == true)
             music.volume = 0f;
         else
             music.volume = 0.6f;
@@ -991,6 +991,7 @@ public class MenuController : MonoBehaviour
     {
         //Add the game start logic here
         SceneManager.LoadScene(1);
+        inGame = true;
         return;
     }
 
@@ -998,6 +999,7 @@ public class MenuController : MonoBehaviour
     {
         //Add the game start logic here
         SceneManager.LoadScene(6);
+        inGame = true;
         return;
     }
 
@@ -1005,6 +1007,7 @@ public class MenuController : MonoBehaviour
     {
         //Add the game start logic here
         SceneManager.LoadScene(11);
+        inGame = true;
         return;
     }
 
@@ -1012,6 +1015,7 @@ public class MenuController : MonoBehaviour
     {
         //Add the game start logic here
         SceneManager.LoadScene(16);
+        inGame = true;
         return;
     }
 
@@ -1019,6 +1023,7 @@ public class MenuController : MonoBehaviour
     {
         //Add the game start logic here
         SceneManager.LoadScene(21);
+        inGame = true;
         return;
     }
 
