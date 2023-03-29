@@ -69,7 +69,6 @@ public class GameController : MonoBehaviour
     
     public Status PlayerStatus;
     public TextMeshProUGUI playerstatusText;
-    public TextMeshProUGUI computerdoortimerText;
     public Image shootabilityiconImage;
     public Image moveabilityiconImage;
     public Image canhackiconImage;
@@ -129,13 +128,11 @@ public class GameController : MonoBehaviour
         playerstatusText.text = "SAFE";
         shootabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(3).GetComponent<Image>();
         shootabilityiconImage.sprite = greyShooting;
-        computerdoortimerText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(4).GetComponent<TextMeshProUGUI>();
-        computerdoortimerText.text = "00";
-        moveabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(5).GetComponent<Image>();
+        moveabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(4).GetComponent<Image>();
         moveabilityiconImage.sprite = greyMove;
-        canhackiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(6).GetComponent<Image>();
+        canhackiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(5).GetComponent<Image>();
         canhackiconImage.sprite = greyHack;
-        computeravailableImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(7).GetComponent<Image>();
+        computeravailableImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(6).GetComponent<Image>();
         computeravailableImage.sprite = greyComputer;
 
         ComputerObj = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
@@ -149,8 +146,6 @@ public class GameController : MonoBehaviour
             shootabilityiconImage.sprite = PlayerControl.canShoot ? greenShooting : greyShooting;
             moveabilityiconImage.sprite = PlayerControl.canSpeed ? greenMove : greyMove;
             canhackiconImage.sprite = PlayerControl.isBehindEnemy ? greenHack : greyHack;
-            float computerseconds = Mathf.FloorToInt(computerDoorTimer % 60);
-            computerdoortimerText.text = $"{computerseconds:00}";
             switch(NoComputerInScene)
             {
                 case false:
