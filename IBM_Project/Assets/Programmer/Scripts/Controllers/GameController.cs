@@ -160,7 +160,7 @@ public class GameController : MonoBehaviour
             {
                 case false:
                 {
-                    switch (ComputerObj.mazeFailed)
+                    switch (ComputerObj.mazeFailed || ComputerObj.mazeDONE)
                     {
                         case true:
                         {
