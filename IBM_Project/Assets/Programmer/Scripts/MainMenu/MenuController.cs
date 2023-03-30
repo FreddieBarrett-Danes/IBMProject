@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters;
 
 public class MenuController : MonoBehaviour
 {
+    
     [SerializeField]
     private Canvas canvas;
     [SerializeField]
@@ -90,7 +91,7 @@ public class MenuController : MonoBehaviour
     public string SkillsText;
 
     public bool inGame;
-
+    public bool escCanBePressed;
     public bool Quiz;
 
     [SerializeField]
@@ -100,7 +101,7 @@ public class MenuController : MonoBehaviour
 
     AudioLowPassFilter lpf;
 
-    public bool escCanBePressed;
+    
     //public float debug;
 
     public enum MenuState
@@ -247,7 +248,7 @@ public class MenuController : MonoBehaviour
             music.enabled = false;
             escCanBePressed = false;
         }
-        else if (SceneManager.GetActiveScene().buildIndex == 0)
+        else if (SceneManager.GetActiveScene().buildIndex == 0 || !Quiz)
         {
             //menuState = MenuState.Main;
             escCanBePressed = true;
