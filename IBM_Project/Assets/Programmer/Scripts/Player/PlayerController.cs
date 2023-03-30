@@ -247,7 +247,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 canSpeed = true;
-                speed += 1.0f;
+                speed = 6.0f;
                 controlTimer = 10.0f;
                 isBehindEnemy = false;
                 isControlling = true;
