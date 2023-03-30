@@ -261,12 +261,12 @@ public class ScoreSystem : MonoBehaviour
             //Debug.Log("Score: " + Score);
             //if (!Gc.inMinigame)
             //{
-            ScoreText.text = Score.ToString("Score: " + "0");
+            ScoreText.text = Score.ToString("Score:" + "0");
             //countdownText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
             //Debug.Log("Score: " + Score);
 
             if (Quiz.completedQuiz == true) { CompletedQuiz(); } //Score += Quiz.totalPoints;
-                                                                 //}
+
 
             if (Gc.inQuiz || Gc.inMinigame)
             {
@@ -276,6 +276,7 @@ public class ScoreSystem : MonoBehaviour
 
             if (Gc.inQuiz && askedListTotal > AskedUpdate) { AskedUpdate = askedListTotal; Debug.Log("QuestionUpdate"); QuizQuestionUpdate(); }
 
+            /*
             if (Input.GetKeyDown(KeyCode.J))
             {
                 Debug.Log("Score: " + Score);
@@ -286,7 +287,7 @@ public class ScoreSystem : MonoBehaviour
                 Score += 100;
                 //ScoreText.text = Score.ToString("000");
             }
-
+            */
             //if (Gc.minigameWin || Gc.minigameLose || Gc.failMinigame || Gc.)
             //{
             //    ScoreText.enabled = true;
