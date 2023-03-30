@@ -89,14 +89,14 @@ MonoBehaviour:
   creditsSpacing: 0.5
   playHeightFrom: 200
   textboxScalar: 1
-  htpTitleScalar: 0.1
+  htpTitleScalar: 0.23
   shipsButtonHeight: 0.15
   shipsButtonWidth: 0.18
   shipsSpacing: 0.2
   htpSpacing: 0.4
   htp0Scalar: 0.1
   htp1Scalar: 0.03
-  htp2Scalar: 0.07
+  htp2Scalar: 0.06
   htp3Scalar: 0.12
   htp4Scalar: 0.06
   cornerScalar: 0.5
@@ -106,6 +106,7 @@ MonoBehaviour:
   sliderScaler: 0.2
   resScaler: 0.34
   creditsScaler: 0.2
+  testScale: 0.08
   fullscreen: 0
   lastframeFullscreen: 0
   thisFrameResolution: 0
@@ -115,7 +116,8 @@ MonoBehaviour:
   - {x: 1920, y: 1080}
   - {x: 720, y: 480}
   hyperlink: https://skillsbuild.org/students/digital-credentials
-  SkillsText: It is vital that you check out the IBM Skills Build before starting
+  SkillsText: To play the game, you must be familiar with the Skills Build content.
+    If you haave not already, please sin up and review.
   inGame: 0
   escCanBePressed: 0
   Quiz: 0

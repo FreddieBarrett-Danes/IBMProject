@@ -53,6 +53,12 @@ public class elevator : MonoBehaviour
 
         if (other.gameObject.tag == player.tag && allDead)
         {
+            reader.cloudAskedList.Clear();
+            reader.aiAskedList.Clear();
+            reader.dataAskedList.Clear();
+            reader.quantumAskedList.Clear();
+            reader.securityAskedList.Clear();
+            
             gC.inQuiz = true;
             reader.questionsInARow = 4;
             reader.find = true;

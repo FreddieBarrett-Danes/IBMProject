@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using UnityEditor;
 using UnityEngine.Analytics;
 
 public class ComputerInteraction : MonoBehaviour
@@ -62,6 +63,11 @@ public class ComputerInteraction : MonoBehaviour
         {
             if (!playOnce)
             {
+                reader.cloudAskedList.Clear();
+                reader.aiAskedList.Clear();
+                reader.dataAskedList.Clear();
+                reader.quantumAskedList.Clear();
+                reader.securityAskedList.Clear();
                 gC.inQuiz = true;
                 reader.questionsInARow = 4;
                 reader.find = true;

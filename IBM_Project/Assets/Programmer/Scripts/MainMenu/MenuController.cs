@@ -1250,6 +1250,7 @@ public class MenuController : MonoBehaviour
         {
             float titleSize = Mathf.Min(canvasWidth, canvasHeight) * (htpTitleScalar / 100f);
             HTP0List[0].transform.localScale = new Vector2(titleSize, titleSize);
+            HTP0List[0].GetComponent<RectTransform>().pivot = new Vector2(0.5f,0.5f);
 
             float size = Mathf.Min(canvasWidth, canvasHeight) * (htp0Scalar / 100f);
             HTP0List[1].transform.localScale = new Vector2(size, size);
@@ -1262,6 +1263,7 @@ public class MenuController : MonoBehaviour
         {
             float titleSize = Mathf.Min(canvasWidth, canvasHeight) * (htpTitleScalar / 100f);
             HTP1List[0].transform.localScale = new Vector2(titleSize, titleSize);
+            HTP1List[0].GetComponent<RectTransform>().pivot = new Vector2(0.5f,0.5f);
 
             float size = Mathf.Min(canvasWidth, canvasHeight) * (htp1Scalar / 100f);
             HTP1List[1].transform.localScale = new Vector2(size, size);
@@ -1274,6 +1276,7 @@ public class MenuController : MonoBehaviour
         {
             float titleSize = Mathf.Min(canvasWidth, canvasHeight) * (htpTitleScalar / 100f);
             HTP2List[0].transform.localScale = new Vector2(titleSize, titleSize);
+            HTP2List[0].GetComponent<RectTransform>().pivot = new Vector2(0.5f,0.5f);
 
             float size = Mathf.Min(canvasWidth, canvasHeight) * (htp2Scalar / 100f);
             HTP2List[1].transform.localScale = new Vector2(size, size);
@@ -1286,6 +1289,7 @@ public class MenuController : MonoBehaviour
         {
             float titleSize = Mathf.Min(canvasWidth, canvasHeight) * (htpTitleScalar / 100f);
             HTP3List[0].transform.localScale = new Vector2(titleSize, titleSize);
+            HTP3List[0].GetComponent<RectTransform>().pivot = new Vector2(0.5f,0.5f);
 
             float size = Mathf.Min(canvasWidth, canvasHeight) * (htp3Scalar / 100f);
             HTP3List[1].transform.localScale = new Vector2(size, size);
@@ -1298,6 +1302,7 @@ public class MenuController : MonoBehaviour
         {
             float titleSize = Mathf.Min(canvasWidth, canvasHeight) * (htpTitleScalar / 100f);
             HTP4List[0].transform.localScale = new Vector2(titleSize, titleSize);
+            HTP4List[0].GetComponent<RectTransform>().pivot = new Vector2(0.5f,0.5f);
 
             float size = Mathf.Min(canvasWidth, canvasHeight) * (htp4Scalar / 100f);
             HTP4List[1].transform.localScale = new Vector2(size, size);
