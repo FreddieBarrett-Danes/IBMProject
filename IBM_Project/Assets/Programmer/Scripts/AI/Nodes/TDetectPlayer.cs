@@ -24,7 +24,7 @@ public class TDetectPlayer : BT_Node
         }
         if (botInfo.bRecentlyChase)
         {
-            Debug.Log("That");
+            //Debug.Log("That");
             botInfo.bRecentChaseTimer--;
             if (botInfo.bRecentChaseTimer <= 0)
             {

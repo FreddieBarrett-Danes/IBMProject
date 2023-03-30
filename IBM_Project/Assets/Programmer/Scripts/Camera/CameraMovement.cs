@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    [SerializeField]
     private GameController gC;
     private GameObject player;
 
@@ -12,6 +13,7 @@ public class CameraMovement : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log(gC.name);
         if (gC.mC.inMaze)
         {
             Vector3 temp = new Vector3(20.0f, gameObject.transform.position.y, 20.0f);

@@ -15,7 +15,7 @@ public class Melee : Ability
 
         foreach(Collider enemy in hitEnemies)
         {
-            Debug.Log("Enemy hit");
+            //Debug.Log("Enemy hit");
             
         }
     }

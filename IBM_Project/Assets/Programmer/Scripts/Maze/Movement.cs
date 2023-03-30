@@ -27,14 +27,14 @@ public class Movement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("Trigger Collision");
+        //Debug.Log("Trigger Collision");
         //touchWall = true;
        // speed = speed * -1;
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        Debug.Log("Exiting Trigger");
+        //Debug.Log("Exiting Trigger");
         //touchWall = false;
        // speed = speed * -1;
     }

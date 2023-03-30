@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5432482813687518641
+--- !u!1 &4969916613965619609
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,27 +8,27 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8626156378494312469}
-  - component: {fileID: 3954744717269870574}
-  - component: {fileID: 5176578016069417376}
+  - component: {fileID: 8659011443735548989}
+  - component: {fileID: 4142939867745145798}
+  - component: {fileID: 5209073523801197960}
   m_Layer: 5
-  m_Name: Credits Text
+  m_Name: How To Play Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &8626156378494312469
+--- !u!224 &8659011443735548989
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5432482813687518641}
+  m_GameObject: {fileID: 4969916613965619609}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -36,23 +36,23 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1138.36, y: 100}
+  m_SizeDelta: {x: 1000, y: 570}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &3954744717269870574
+--- !u!222 &4142939867745145798
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5432482813687518641}
+  m_GameObject: {fileID: 4969916613965619609}
   m_CullTransparentMesh: 1
---- !u!114 &5176578016069417376
+--- !u!114 &5209073523801197960
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5432482813687518641}
+  m_GameObject: {fileID: 4969916613965619609}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -66,20 +66,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Leila
-
-    Zane
-
-    x
-
-    y
-
-    z
-
-'
+  m_text: "The objective of the game is to shutdown all droids within a level. This
+    is achieved by either hacking all of the enemies in a level or by shutting them
+    down from a computer. \r\nTo hack an enemy, approach them from behind and interact
+    with them. This will be indicated to you by the interact icon on the HUD.\r\nWhen
+    reaching a computer, the room the computer is in will be locked. To enter you
+    must interact with the door. To shut enemies down you must interact with the
+    computer.\r\nUpon shutting down all enemies in a level, you must find the teleporter
+    out to begin a quiz, or be automatically taken to it if on the final level of
+    a ship.\r\nAvoid being detected by the droids, as if you are detected you will
+    progress through alert states, leading to all enemies hunting you down!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
+  m_sharedMaterial: {fileID: -745580112320430078, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -103,10 +102,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 24.9
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0

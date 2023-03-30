@@ -2,6 +2,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -58,6 +59,8 @@ public class GameController : MonoBehaviour
     public bool loseSoundPlayed;
     public bool winSoundPlayed;
 
+    [SerializeField]
+    private GameObject Menu;
     public enum Status
     {
         SAFE,
@@ -82,6 +85,10 @@ public class GameController : MonoBehaviour
     private Sprite greenHack;
     private Sprite greenComputer;
 
+    public GameObject[] deadDroids;
+
+    public ScoreSystem scoreSystem;
+
     public ComputerInteraction ComputerObj;
     // Start is called before the first frame update
     void Start()
@@ -103,6 +110,8 @@ public class GameController : MonoBehaviour
         {
             tile.SetActive(false);
         }
+        Menu = GameObject.Find("Menu");
+        scoreSystem = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
         levelUI = GameObject.FindGameObjectsWithTag("LevelUI");
         levelTimer = GameObject.FindGameObjectWithTag("LevelTimer");
         level = GameObject.FindGameObjectWithTag("LevelObject");
@@ -124,18 +133,20 @@ public class GameController : MonoBehaviour
         greenHack = Resources.Load<Sprite>("RobotIcon");
         greenComputer = Resources.Load<Sprite>("ComputerIcon");
         
-        playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        playerstatusText = FindObjectOfType<FinderScript>().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         playerstatusText.text = "SAFE";
-        shootabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(3).GetComponent<Image>();
+        shootabilityiconImage = FindObjectOfType<FinderScript>().transform.GetChild(3).GetComponent<Image>();
         shootabilityiconImage.sprite = greyShooting;
-        moveabilityiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(4).GetComponent<Image>();
+        moveabilityiconImage = FindObjectOfType<FinderScript>().transform.GetChild(4).GetComponent<Image>();
         moveabilityiconImage.sprite = greyMove;
-        canhackiconImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(5).GetComponent<Image>();
+        canhackiconImage = FindObjectOfType<FinderScript>().transform.GetChild(5).GetComponent<Image>();
         canhackiconImage.sprite = greyHack;
-        computeravailableImage = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(6).GetComponent<Image>();
+        computeravailableImage = FindObjectOfType<FinderScript>().transform.GetChild(6).GetComponent<Image>();
         computeravailableImage.sprite = greyComputer;
 
         ComputerObj = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
+        scoreSystem.restarted = false;
+
     }
 
     // Update is called once per frame
@@ -143,14 +154,26 @@ public class GameController : MonoBehaviour
     {
         if (!completedLevel)
         {
-            shootabilityiconImage.sprite = PlayerControl.canShoot ? greenShooting : greyShooting;
-            moveabilityiconImage.sprite = PlayerControl.canSpeed ? greenMove : greyMove;
-            canhackiconImage.sprite = PlayerControl.isBehindEnemy ? greenHack : greyHack;
+            Menu.GetComponent<MenuController>().Quiz = inQuiz;
+            deadDroids = GameObject.FindGameObjectsWithTag("DeadEnemy");
+            if (PlayerControl.canShoot)
+                shootabilityiconImage.sprite = greenShooting;
+            else
+                shootabilityiconImage.sprite = greyShooting;
+            if (PlayerControl.canSpeed)
+                moveabilityiconImage.sprite = greenMove;
+            else
+                moveabilityiconImage.sprite = greyMove;
+            if (PlayerControl.isBehindEnemy)
+                canhackiconImage.sprite = greenHack;
+            else
+                canhackiconImage.sprite = greyHack;
+            
             switch(NoComputerInScene)
             {
                 case false:
                 {
-                    switch (ComputerObj.mazeFailed)
+                    switch (ComputerObj.mazeFailed || ComputerObj.mazeDONE)
                     {
                         case true:
                         {
@@ -171,23 +194,44 @@ public class GameController : MonoBehaviour
                     break;
                 }
             }
-    
+
+            if (deadDroids.Length > 0)
+            {
+                foreach (GameObject droid in deadDroids)
+                {
+                    if (droid)
+                    {
+                        if (!inMinigame)
+                        {
+                            droid.transform.GetChild(0).gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            droid.transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                    }
+                }
+            }
 
             if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                scoreSystem.restarted = true; 
+                scoreSystem.Score = scoreSystem.scorePool;
+                levelTimer.GetComponent<LevelTimer>().currentTime = levelTimer.GetComponent<LevelTimer>().startTime;
+                Debug.Log("Score " + scoreSystem.scorePool);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             if(playerHit)
             {
                 //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             if (GameOver)
             {
                 //transistion to losing scene
                 Destroy(levelTimer);
-                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                 if (Ship1)
                 {
                     SceneManager.LoadScene(28);
@@ -217,7 +261,7 @@ public class GameController : MonoBehaviour
             }
             if (inMinigame)
             {
-                Debug.Log("in minigame");
+                //Debug.Log("in minigame");
                 levelTimer.SetActive(false);
                 level.SetActive(false);
                 for (int i = 0; i < levelUI.Length; i++)
@@ -227,7 +271,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                Debug.Log("no minigame");
+                //Debug.Log("no minigame");
                 //GameObject[] mazeWalls = GameObject.FindGameObjectsWithTag("mazeWall");
                 //if (mazeWalls != null)
                 //{
@@ -363,7 +407,7 @@ public class GameController : MonoBehaviour
         else if (completedLevel)
         {
             Destroy(levelTimer);
-            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             if (Ship1 && Level5)
             {
                 SceneManager.LoadScene(29);
