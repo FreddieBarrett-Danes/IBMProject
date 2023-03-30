@@ -192,7 +192,7 @@ public class Disc_Rotation : MonoBehaviour
             currentSelect -= 1;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        /*if (Input.GetKeyDown(KeyCode.R))
         {
             //Debug.Log("R Pressed");
             //R1.transform.position = R1startPosition;
@@ -205,7 +205,7 @@ public class Disc_Rotation : MonoBehaviour
             Disc2.transform.rotation = Disc2startRotation;
             Disc3.transform.rotation = Disc3startRotation;
             Debug.Log("[Updated] R1.transform.rotation | startRotationR1 " + Disc1.transform.rotation + " | " + Disc1startRotation);
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

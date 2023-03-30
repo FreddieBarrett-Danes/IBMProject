@@ -173,10 +173,10 @@ public class mazePlayerScript : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown("p"))
+           /* if (Input.GetKeyDown("p"))
             {
                 transform.position = GameObject.FindGameObjectWithTag("goalLocation").transform.position;
-            }
+            }*/
         }
         if (Input.GetKeyDown("space"))// && mazeReadyPlayer == true)
         {

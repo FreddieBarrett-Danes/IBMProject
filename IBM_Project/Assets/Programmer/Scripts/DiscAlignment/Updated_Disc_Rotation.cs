@@ -233,13 +233,13 @@ public class Updated_Disc_Rotation : MonoBehaviour
             ColourUpdate();
         }
 
-        if (Input.GetKeyDown(KeyCode.N))
+        /*if (Input.GetKeyDown(KeyCode.N))
         {
             Timer.SetActive(true);
             Timer.GetComponent<TextMeshProUGUI>().enabled = true;
             OnDiscAlignmentReady(true);
             //Debug.Log("DISC ALIGNMENT!!!");
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

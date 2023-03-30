@@ -852,7 +852,7 @@ public class ReadTSV : MonoBehaviour
             }
 
             //Update the user points for each correct answer
-            totalPoints += tempCorrect;
+            totalPoints += tempCorrect*5;
             ScoreSystemGameObject.QuizQuestionUpdate();
             //Check if all of the answers were correct
             if (tempCorrect == correctAnswers)

@@ -285,7 +285,7 @@ public class ScoreSystem : MonoBehaviour
             if (Gc.inQuiz && askedListTotal > AskedUpdate) { AskedUpdate = askedListTotal; Debug.Log("QuestionUpdate"); QuizQuestionUpdate(); }
 
             
-            if (Input.GetKeyDown(KeyCode.J))
+           /* if (Input.GetKeyDown(KeyCode.J))
             {
                 Debug.Log("Score: " + Score);
                 Debug.Log(AskedUpdate); // + " | " + //Quiz.askedList.Count);
@@ -294,7 +294,7 @@ public class ScoreSystem : MonoBehaviour
             {
                 Score += 100;
                 ScoreText.text = Score.ToString("000");
-            }
+            }*/
             
             //if (Gc.minigameWin || Gc.minigameLose || Gc.failMinigame || Gc.)
             //{
