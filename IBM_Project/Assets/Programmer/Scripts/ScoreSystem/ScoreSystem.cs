@@ -28,7 +28,8 @@ public class ScoreSystem : MonoBehaviour
     public bool LosePointsOnIncorrectAnswer;
 
     public int PointsPerQuestion;
-
+    public bool restarted = false;
+    public float scorePool;
     private float QuizScore;
 
     [Header("Minigame Points")]
@@ -196,10 +197,7 @@ public class ScoreSystem : MonoBehaviour
         ScoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
         LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         AskedUpdate = Quiz.cloudAskedList.Count + Quiz.aiAskedList.Count + Quiz.dataAskedList.Count + Quiz.quantumAskedList.Count + Quiz.securityAskedList.Count;
-        if(SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            Destroy(this);
-        }
+        
         DontDestroyOnLoad(this);
         if (ScoreInstance == null)
         {
@@ -209,8 +207,7 @@ public class ScoreSystem : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-
+        restarted = false;
         TempQuizPoints = Quiz.totalPoints; //Move to Awake()
         //Debug.Log("push test");
         MinigamePoints = StaticPointsX_MazeY_DiscZ_Tile;
@@ -225,6 +222,10 @@ public class ScoreSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            Destroy(this.gameObject);
+        }
         //Debug.Log("ScoreSystem Awake");
         //Gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         ////mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
@@ -249,7 +250,11 @@ public class ScoreSystem : MonoBehaviour
         {
             LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         }
-
+/*        if(restarted)
+        {
+            scorePool = Score;
+            Debug.Log("Score " +scorePool);
+        }*/
 
         if (Gc != null)
         {

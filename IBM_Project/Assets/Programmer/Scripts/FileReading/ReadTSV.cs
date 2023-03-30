@@ -886,6 +886,8 @@ public class ReadTSV : MonoBehaviour
                 //find = true;
 
                 gC.inMinigame = false;
+                gC.inQuiz = false;
+                gC.scoreSystem.scorePool = gC.scoreSystem.Score;
                 gC.completedLevel = true;
             }
             else

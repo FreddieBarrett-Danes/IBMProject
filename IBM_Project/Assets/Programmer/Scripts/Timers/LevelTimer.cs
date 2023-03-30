@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class LevelTimer : MonoBehaviour
 {
     public float startTime;
-    public static float currentTime;
+    public float currentTime;
     public bool TimeUp = false;
     private GameController gC;
 

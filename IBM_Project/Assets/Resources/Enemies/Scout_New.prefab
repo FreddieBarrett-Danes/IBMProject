@@ -11,14 +11,14 @@ GameObject:
   - component: {fileID: 857445884709465595}
   - component: {fileID: 8486216223809491286}
   - component: {fileID: 1693900489407237295}
-  - component: {fileID: 6070826627195391350}
+  - component: {fileID: 9206402209789232716}
   m_Layer: 3
   m_Name: Capsule
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &857445884709465595
 Transform:
   m_ObjectHideFlags: 0
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6070826627195391350
-CapsuleCollider:
+--- !u!65 &9206402209789232716
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,10 +94,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: -0.00000023841858}
 --- !u!1 &3764682598750428219
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +215,7 @@ MonoBehaviour:
   bComputer: {fileID: 0}
   bAnimator: {fileID: 3764682598881015810}
   bIsDead: 0
+  bWasHacked: 0
   bMoveDirection: 0
   bInPlayerView: 0
   bSpriteTrigger: 0

@@ -69,16 +69,20 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Reach the green objective marker before time runs out!
 
+    DON''T TOOUCH
+    THE WALLS!!
 
     Controls:
 
-    WASD
-    - Movement
+    WASD - Movement
 
-    Space - Return to Start'
+    Space - Return to Start
+
+    Maze
+    has generated, press space to begin'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
+  m_sharedMaterial: {fileID: -745580112320430078, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1624,8 +1628,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[Lives]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
+  m_sharedMaterial: {fileID: -745580112320430078, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1783,8 +1787,8 @@ MonoBehaviour:
 
     Press Space to Start'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
+  m_sharedMaterial: {fileID: -745580112320430078, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1920,8 +1924,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[Timer]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
+  m_sharedMaterial: {fileID: -745580112320430078, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2088,7 +2092,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 500, y: 650}
-  m_SizeDelta: {x: 700, y: 150}
+  m_SizeDelta: {x: 1163.86, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8527162011576250890
 CanvasRenderer:
@@ -2122,8 +2126,8 @@ MonoBehaviour:
     between them\r.\n\r\n\r\nUse W and S to navigate between discs\r \n\nUse A and
     D to rotate the discs left and right\r\n\r\nPress Space to Start"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
+  m_sharedMaterial: {fileID: -745580112320430078, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3178,8 +3182,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[Timer]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: a1389596f4be63f4687a39ad1d087808, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
+  m_sharedMaterial: {fileID: -745580112320430078, guid: 541cbab3b5c2b2e4a9399e76372a63cc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9856,6 +9860,10 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: aed251495b066a8449efbe6ed9f59867, type: 3}
+    - target: {fileID: 240556019582831343, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1633922411735625584, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -9900,6 +9908,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5208733453639338058, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
+      propertyPath: mC
+      value: 
+      objectReference: {fileID: 5677019258401350937}
     - target: {fileID: 5208733453639338058, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
       propertyPath: level
       value: 
@@ -10151,6 +10163,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5677019258401350937 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2098330026, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}
+  m_PrefabInstance: {fileID: 5677019256471002291}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851795230404195093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f0dafb6dd28f004b8752aac789dc79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6369225845966156739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1633922411735625584, guid: e85a08b3260533a44bf1e6b26f2f7966, type: 3}

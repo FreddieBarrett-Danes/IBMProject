@@ -2,6 +2,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -85,7 +86,9 @@ public class GameController : MonoBehaviour
     private Sprite greenComputer;
 
     public GameObject[] deadDroids;
-    
+
+    public ScoreSystem scoreSystem;
+
     public ComputerInteraction ComputerObj;
     // Start is called before the first frame update
     void Start()
@@ -108,6 +111,7 @@ public class GameController : MonoBehaviour
             tile.SetActive(false);
         }
         Menu = GameObject.Find("Menu");
+        scoreSystem = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
         levelUI = GameObject.FindGameObjectsWithTag("LevelUI");
         levelTimer = GameObject.FindGameObjectWithTag("LevelTimer");
         level = GameObject.FindGameObjectWithTag("LevelObject");
@@ -141,6 +145,8 @@ public class GameController : MonoBehaviour
         computeravailableImage.sprite = greyComputer;
 
         ComputerObj = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
+        scoreSystem.restarted = false;
+
     }
 
     // Update is called once per frame
@@ -209,13 +215,17 @@ public class GameController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                scoreSystem.restarted = true; 
+                scoreSystem.Score = scoreSystem.scorePool;
+                levelTimer.GetComponent<LevelTimer>().currentTime = levelTimer.GetComponent<LevelTimer>().startTime;
+                Debug.Log("Score " + scoreSystem.scorePool);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             if(playerHit)
             {
                 //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             if (GameOver)
             {
