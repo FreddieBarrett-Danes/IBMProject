@@ -445,6 +445,9 @@ MonoBehaviour:
   imagePrefab: {fileID: 4272414195958280197, guid: c6110d0914e439b4a96b6a1a19cd1a0d, type: 3}
   scrollSpeed: 75
   scaleFactor: 1
+  attachedCanvas: 1
+  width: 0
+  height: 0
 --- !u!114 &774266122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,6 +463,9 @@ MonoBehaviour:
   imagePrefab: {fileID: 4272414195958280197, guid: c6110d0914e439b4a96b6a1a19cd1a0d, type: 3}
   scrollSpeed: 25
   scaleFactor: 6
+  attachedCanvas: 1
+  width: 0
+  height: 0
 --- !u!114 &774266123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,6 +481,9 @@ MonoBehaviour:
   imagePrefab: {fileID: 4272414195958280197, guid: c6110d0914e439b4a96b6a1a19cd1a0d, type: 3}
   scrollSpeed: 50
   scaleFactor: 2
+  attachedCanvas: 1
+  width: 0
+  height: 0
 --- !u!1 &873450514
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,12 +648,76 @@ PrefabInstance:
       value: Menu
       objectReference: {fileID: 0}
     - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp0Text
+      value: 
+      objectReference: {fileID: 5432482813687518641, guid: 1989f4afc79cbe44da6f2a9d3dabf312, type: 3}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp1Text
+      value: 
+      objectReference: {fileID: 5432482813687518641, guid: 1989f4afc79cbe44da6f2a9d3dabf312, type: 3}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp2Text
+      value: 
+      objectReference: {fileID: 5432482813687518641, guid: 1989f4afc79cbe44da6f2a9d3dabf312, type: 3}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp3Text
+      value: 
+      objectReference: {fileID: 5432482813687518641, guid: 1989f4afc79cbe44da6f2a9d3dabf312, type: 3}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp1Image
+      value: 
+      objectReference: {fileID: 6162834073535478950, guid: 14667e8860940b34091ced55f41f97f8, type: 3}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp2Image
+      value: 
+      objectReference: {fileID: 6162834073535478950, guid: 14667e8860940b34091ced55f41f97f8, type: 3}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp3Image
+      value: 
+      objectReference: {fileID: 6162834073535478950, guid: 14667e8860940b34091ced55f41f97f8, type: 3}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp4Image
+      value: 
+      objectReference: {fileID: 6162834073535478950, guid: 14667e8860940b34091ced55f41f97f8, type: 3}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp0Scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp1Scalar
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp2Scalar
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp3Scalar
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htp4Scalar
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: htpSpacing
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
       propertyPath: skillsText
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
       propertyPath: buttonPrefab
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: cornerButton
+      value: 
+      objectReference: {fileID: 6723219057468046863, guid: 8a79f8e3a70ddbc43828145f2af51847, type: 3}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: cornerScalar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
       propertyPath: sliderPrefab

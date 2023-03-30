@@ -1072,20 +1072,19 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        cornerList[0].transform.position = canvas.transform.position - new Vector3((canvasWidth / 2) - (cornerList[0].GetComponent<RectTransform>().sizeDelta.x / 1.5f), 0, 0);
+        /*cornerList[0].transform.position = canvas.transform.position - new Vector3((canvasWidth / 2) - (cornerList[0].GetComponent<RectTransform>().sizeDelta.x / 1.5f), 0, 0);
         cornerList[0].transform.position = new Vector3(cornerList[0].transform.position.x, HTP0List[2].transform.position.y,0);
 
-        //cornerList[1].transform.position = canvas.transform.position + new Vector3((canvasWidth / 2) - (cornerList[0].GetComponent<RectTransform>().sizeDelta.x / 1.5f), 0, 0);
-        cornerList[1].transform.position = HTP0List[2].transform.position;
-        //cornerList[1].transform.position = new Vector3(cornerList[1].transform.position.x, HTP0List[2].GetComponent<RectTransform>().localPosition.y, 0);
+        cornerList[1].transform.position = canvas.transform.position + new Vector3((canvasWidth / 2) - (cornerList[0].GetComponent<RectTransform>().sizeDelta.x / 1.5f), 0, 0);
+        cornerList[1].transform.position = new Vector3(cornerList[1].transform.position.x, HTP0List[2].GetComponent<RectTransform>().localPosition.y, 0);*/
 
         //HERE Freddie
-
+/*
         Debug.Log(HTP0List[2].transform.position.y);
         Debug.Log(HTP0List[2].transform.localPosition.y);
         Debug.Log(HTP0List[2].GetComponent<RectTransform>().position.y);
         Debug.Log(HTP0List[2].GetComponent<RectTransform>().localPosition.y);
-        Debug.Log(HTP0List[2].GetComponent<RectTransform>().anchoredPosition.y);
+        Debug.Log(HTP0List[2].GetComponent<RectTransform>().anchoredPosition.y);*/
     }
 
     void setButtonSize()
@@ -1528,6 +1527,11 @@ public class MenuController : MonoBehaviour
                 HTP4List[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
             }
         }
+        cornerList[0].transform.position = canvas.transform.position - new Vector3((canvasWidth / 2) - (cornerList[0].GetComponent<RectTransform>().sizeDelta.x / 1.5f), 0, 0);
+        cornerList[0].transform.position = new Vector3(cornerList[0].transform.position.x, HTP0List[2].transform.position.y, 0);
+
+        cornerList[1].transform.position = canvas.transform.position + new Vector3((canvasWidth / 2) - (cornerList[0].GetComponent<RectTransform>().sizeDelta.x / 1.5f), 0, 0);
+        cornerList[1].transform.position = new Vector3(cornerList[1].transform.position.x, HTP0List[2].transform.position.y, 0);
     }
 
     void PlayButtonPressed()
