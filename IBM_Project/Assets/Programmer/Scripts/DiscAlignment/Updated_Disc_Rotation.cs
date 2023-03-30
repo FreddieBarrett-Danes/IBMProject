@@ -464,13 +464,14 @@ public class Updated_Disc_Rotation : MonoBehaviour
             if (R1.transform.position == new Vector3(-5, 10, 0) && R2.transform.position == new Vector3(0, 10, 0) && R3.transform.position == new Vector3(5, 10, 0))// || debugWin == true)
             {
             //Debug.Log(mTimer.timer + "!!!!!!!!!");
-            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(2, mTimer.timer)); //2 = DiscAlignment minigame NEED TO REPLACE 10, ACTING AS PLACEHOLDER!!!
             Timer.SetActive(false);
             Timer.GetComponent<TextMeshProUGUI>().enabled = false;
             OnDiscAlignmentReady(false);
             gC.mC.completedDoor = true;
 
             gC.inMinigame = false;
+            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(2, mTimer.timer)); //2 = DiscAlignment minigame NEED TO REPLACE 10, ACTING AS PLACEHOLDER!!!
+            Debug.Log("Disc Complete!!!");
             //Debug.Log("You Win!");
         }
         //}
