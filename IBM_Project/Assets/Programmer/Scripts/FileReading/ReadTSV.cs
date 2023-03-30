@@ -134,6 +134,10 @@ public class ReadTSV : MonoBehaviour
     [Header("Debug")]
     public bool debug;
 
+    private ScoreSystem ScoreSystemGameObject;
+
+
+
     int InitialiseTSVs(int shipNumber)
     {
         int i = 0;
@@ -437,6 +441,10 @@ public class ReadTSV : MonoBehaviour
         securityRangeMax = InitialiseTSVs(5);
 
         //Debug.Log((panelSize));
+
+
+        Debug.Log("Calling SystemScore");
+        ScoreSystemGameObject.SendMessage("QuizQuestionUpdate");
     }
 
     void Update()
