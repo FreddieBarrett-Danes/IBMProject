@@ -697,7 +697,7 @@ public class ReadTSV : MonoBehaviour
         {
             for (int i = 0; i < answersList.Count; i++)
             {
-                if (answersList[i].GetComponent<Button>() != null)
+                if (answersList[i] != null && answersList[i].GetComponent<Button>() != null)
                     answersList[i].GetComponent<Button>().interactable = true;
                 else
                     break;
