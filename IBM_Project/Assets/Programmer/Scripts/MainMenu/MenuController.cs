@@ -297,6 +297,8 @@ public class MenuController : MonoBehaviour
             HTP1List.Clear();
             HTP2List.Clear();
             HTP3List.Clear();
+            HTP4List.Clear();
+            cornerList.Clear();
 
             music = GetComponent<AudioSource>();
             lpf = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioLowPassFilter>();
@@ -845,7 +847,7 @@ public class MenuController : MonoBehaviour
         GameObject htp0text = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
         htp0text.transform.SetParent(canvas.transform);
         HTP0List.Add(htp0text);
-        htp0text.GetComponent<TextMeshProUGUI>().text = "Text text text more text yes yes yes hhhmm yes very interesting";
+        //htp0text.GetComponent<TextMeshProUGUI>().text = "Text text text more text yes yes yes hhhmm yes very interesting";
         htp0text.GetComponent<TextMeshProUGUI>().enableAutoSizing=true;
 
         //back button
@@ -889,7 +891,7 @@ public class MenuController : MonoBehaviour
         HTP2List.Add(htp2Title);
         htp2Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
 
-        GameObject htpo2TempImage = Instantiate(htp1Image, canvas.transform.position, Quaternion.identity);
+        GameObject htpo2TempImage = Instantiate(htp2Image, canvas.transform.position, Quaternion.identity);
         htpo2TempImage.transform.SetParent(canvas.transform);
         HTP2List.Add(htpo2TempImage);
 
@@ -911,7 +913,7 @@ public class MenuController : MonoBehaviour
         HTP3List.Add(htp3Title);
         htp3Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
 
-        GameObject htpo3TempImage = Instantiate(htp1Image, canvas.transform.position, Quaternion.identity);
+        GameObject htpo3TempImage = Instantiate(htp3Image, canvas.transform.position, Quaternion.identity);
         htpo3TempImage.transform.SetParent(canvas.transform);
         HTP3List.Add(htpo3TempImage);
 
@@ -933,7 +935,7 @@ public class MenuController : MonoBehaviour
         HTP4List.Add(htp4Title);
         htp4Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
 
-        GameObject htpo4TempImage = Instantiate(htp1Image, canvas.transform.position, Quaternion.identity);
+        GameObject htpo4TempImage = Instantiate(htp4Image, canvas.transform.position, Quaternion.identity);
         htpo4TempImage.transform.SetParent(canvas.transform);
         HTP4List.Add(htpo4TempImage);
 
