@@ -1,4 +1,12 @@
-﻿using UnityEngine;
+﻿/*
+*    Title: Pathfinding
+*    Author: Lague, S
+*    Date: 2016
+*    Code version: N/A
+*    Availability: https://github.com/SebLague/Field-of-View
+*
+*/
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
