@@ -1,0 +1,1 @@
+using UnityEngine; public class FinderScript : MonoBehaviour { /*LOL DO NOT REMOVE OR EDIT IE.  COCONUT.JPEG*/ }

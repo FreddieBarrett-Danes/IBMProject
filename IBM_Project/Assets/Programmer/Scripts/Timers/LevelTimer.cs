@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelTimer : MonoBehaviour
 {
     public float startTime;
-    public static float currentTime;
+    public float currentTime;
     public bool TimeUp = false;
     private GameController gC;
 
     public TextMeshProUGUI countdownText;
-    private int i = 0;
 
     private static LevelTimer timerInstance;
     // Start is called before the first frame update
@@ -29,7 +29,7 @@ public class LevelTimer : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        countdownText = FindObjectOfType<FinderScript>().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
     }
     void Start()
@@ -41,9 +41,13 @@ public class LevelTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            Destroy(this.gameObject);
+        }
         if(countdownText == null)
         {
-            countdownText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            countdownText = FindObjectOfType<FinderScript>().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         }
         if (!TimeUp)
         {
@@ -67,7 +71,7 @@ public class LevelTimer : MonoBehaviour
                 TimeUp = true;
             }
         }
-        else if(TimeUp)
+        else
         {
             gC.GameOver = true;
         }

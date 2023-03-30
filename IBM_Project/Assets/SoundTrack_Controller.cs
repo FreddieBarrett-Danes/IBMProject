@@ -50,6 +50,7 @@ public class SoundTrack_Controller : MonoBehaviour
             alertState.mute = true;
             huntedState.mute = true;
             minigameState.mute = true;
+            quizState.mute = true;
 
         }
         else if (gC.PlayerStatus == GameController.Status.ALERTED && !gC.inMinigame && !gC.inQuiz)
@@ -59,6 +60,7 @@ public class SoundTrack_Controller : MonoBehaviour
             alertState.mute = false;
             huntedState.mute = true;
             minigameState.mute = true;
+            quizState.mute = true;
 
         }
         else if (gC.PlayerStatus == GameController.Status.HUNTED && !gC.inMinigame && !gC.inQuiz)
@@ -68,6 +70,7 @@ public class SoundTrack_Controller : MonoBehaviour
             alertState.mute = true;
             huntedState.mute = false;
             minigameState.mute = true;
+            quizState.mute = true;
 
         }
         else if(gC.inMinigame && !gC.inQuiz)
@@ -76,6 +79,7 @@ public class SoundTrack_Controller : MonoBehaviour
             alertState.mute = true;
             huntedState.mute = true;
             minigameState.mute = false;
+            quizState.mute = true;
 
         }
         else if(gC.inQuiz)
@@ -84,11 +88,7 @@ public class SoundTrack_Controller : MonoBehaviour
             alertState.mute = true;
             huntedState.mute = true;
             minigameState.mute = true;
-            if (!playOnce)
-            {
-                quizState.Play();
-                playOnce = true;
-            }
+            quizState.mute = false;
         }
 
     }

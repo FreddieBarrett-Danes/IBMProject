@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+using UnityEngine.Rendering;
 
 public class ReadTSV : MonoBehaviour
 {
@@ -208,13 +211,13 @@ public class ReadTSV : MonoBehaviour
         if (findRow < 1)
         {
             findRow = 1;
-            Debug.LogWarning("Desired Row given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
+            //Debug.LogWarning("Desired Row given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
         }
 
         if (findColumn < 1)
         {
             findColumn = 1;
-            Debug.LogWarning("Desired Column given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
+            //Debug.LogWarning("Desired Column given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
         }
 
         for (int i = 0; i < findRow; i++)
@@ -272,13 +275,13 @@ public class ReadTSV : MonoBehaviour
         if (findRow < 1)
         {
             findRow = 1;
-            Debug.LogWarning("Desired Row given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
+            //Debug.LogWarning("Desired Row given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
         }
 
         if (findColumn < 1)
         {
             findColumn = 1;
-            Debug.LogWarning("Desired Column given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
+            //Debug.LogWarning("Desired Column given in the Find() function located on: " + this.gameObject.name + " was out of bounds. It was automatically brought back into range. - ask Istvan");
         }
 
         for (int i = 0; i < findRow; i++)
@@ -304,7 +307,7 @@ public class ReadTSV : MonoBehaviour
 
     public void submitClicked()
     {
-        Debug.Log("submit clicked");
+        //Debug.Log("submit clicked");
         submit = true;
         //DON'T WRITE ANYTHING UNDER HERE
         //UNITY UI WILL LAG YOU INTO NEXT SUNDAY
@@ -330,7 +333,7 @@ public class ReadTSV : MonoBehaviour
             {
                 if (row == cloudIncorrectAnswersList[i])
                 {
-                    Debug.Log("alredy asked question: " + cloudIncorrectAnswersList[i]);
+                    //Debug.Log("alredy asked question: " + cloudIncorrectAnswersList[i]);
                     nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
                 }
             }
@@ -343,7 +346,7 @@ public class ReadTSV : MonoBehaviour
             {
                 if (row == aiIncorrectAnswersList[i])
                 {
-                    Debug.Log("alredy asked question: " + aiIncorrectAnswersList[i]);
+                    //Debug.Log("alredy asked question: " + aiIncorrectAnswersList[i]);
                     nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
                 }
             }
@@ -356,7 +359,7 @@ public class ReadTSV : MonoBehaviour
             {
                 if (row == dataIncorrectAnswersList[i])
                 {
-                    Debug.Log("alredy asked question: " + dataIncorrectAnswersList[i]);
+                    //Debug.Log("alredy asked question: " + dataIncorrectAnswersList[i]);
                     nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
                 }
             }
@@ -369,7 +372,7 @@ public class ReadTSV : MonoBehaviour
             {
                 if (row == quantumIncorrectAnswersList[i])
                 {
-                    Debug.Log("alredy asked question: " + quantumIncorrectAnswersList[i]);
+                    //Debug.Log("alredy asked question: " + quantumIncorrectAnswersList[i]);
                     nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
                 }
             }
@@ -382,7 +385,7 @@ public class ReadTSV : MonoBehaviour
             {
                 if (row == securityIncorrectAnswersList[i])
                 {
-                    Debug.Log("alredy asked question: " + securityIncorrectAnswersList[i]);
+                    //Debug.Log("alredy asked question: " + securityIncorrectAnswersList[i]);
                     nonDuplicateRow(); //Re-runs the randomisation to find one that has not been used yet
                 }
             }
@@ -402,6 +405,26 @@ public class ReadTSV : MonoBehaviour
 
     void Start()
     {
+        string cloudPath = Path.Combine(Application.streamingAssetsPath, "CloudTSV.tsv");
+        string cloudContents = File.ReadAllText(cloudPath);
+        CloudTSV = new TextAsset(cloudContents);
+
+        string aiPath = Path.Combine(Application.streamingAssetsPath, "AITSV.tsv");
+        string aiContents = File.ReadAllText(aiPath);
+        AITSV = new TextAsset(aiContents);
+
+        string dataPath = Path.Combine(Application.streamingAssetsPath, "DataTSV.tsv");
+        string dataContents = File.ReadAllText(dataPath);
+        DataTSV = new TextAsset(dataContents);
+
+        string quantumPath = Path.Combine(Application.streamingAssetsPath, "QuantumTSV.tsv");
+        string quantumContents = File.ReadAllText(quantumPath);
+        QuantumTSV = new TextAsset(quantumContents);
+
+        string securityPath = Path.Combine(Application.streamingAssetsPath, "SecurityTSV.tsv");
+        string securityContents = File.ReadAllText(securityPath);
+        SecurityTSV = new TextAsset(securityContents);
+
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
@@ -413,7 +436,7 @@ public class ReadTSV : MonoBehaviour
         quantumRangeMax = InitialiseTSVs(4);
         securityRangeMax = InitialiseTSVs(5);
 
-        Debug.Log((panelSize));
+        //Debug.Log((panelSize));
     }
 
     void Update()
@@ -496,7 +519,7 @@ public class ReadTSV : MonoBehaviour
 
             if (questionText.GetComponentInChildren<TextMeshProUGUI>().isTextOverflowing == true)
             {
-                Debug.Log("Text overflow");
+                //Debug.Log("Text overflow");
             }
 
             questionText.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRectTransform.sizeDelta.x * 0.95f, panelSize.y); //set size of textbox
@@ -556,7 +579,7 @@ public class ReadTSV : MonoBehaviour
 
             else
             {
-                Debug.Log("question has 4 answers");
+                //Debug.Log("question has 4 answers");
                 //Instantiating answer boxes
                 for (int i = 0; i < 2; i++)
                 {
@@ -601,7 +624,7 @@ public class ReadTSV : MonoBehaviour
             if (correctAnswers < 1)
             {
                 correctAnswers = 1;
-                Debug.LogWarning(this.name + " was unable to determine how many correct answers there are. It was automatically set to 1. - ask Istvan");
+                //Debug.LogWarning(this.name + " was unable to determine how many correct answers there are. It was automatically set to 1. - ask Istvan");
             }
 
             /*for(int j = 0; j < correctAnswers; j++) //This determines which answers are the correct ones
@@ -670,12 +693,14 @@ public class ReadTSV : MonoBehaviour
                 }
             }
         }
-        else if (amountSelected < correctAnswers)
+        else/* if ((amountSelected < correctAnswers) && completedQuiz)*/
         {
             for (int i = 0; i < answersList.Count; i++)
             {
-                if(answersList[i].GetComponent<Button>() != null)
+                if (answersList[i].GetComponent<Button>() != null)
                     answersList[i].GetComponent<Button>().interactable = true;
+                else
+                    break;
             }
         }
 
@@ -883,6 +908,8 @@ public class ReadTSV : MonoBehaviour
                 //find = true;
 
                 gC.inMinigame = false;
+                gC.inQuiz = false;
+                gC.scoreSystem.scorePool = gC.scoreSystem.Score;
                 gC.completedLevel = true;
             }
             else
@@ -895,6 +922,7 @@ public class ReadTSV : MonoBehaviour
                 Destroy(submitText);
                 mC.completedQuiz = true;
                 gC.inMinigame = false;
+                gC.inQuiz = false;
                 submit = false;
                 //completedQuiz = true;
                 loopNumber = 0;

@@ -7,7 +7,7 @@ public class move_test : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Cube Collision");
+        //Debug.Log("Cube Collision");
     }
 
     // Start is called before the first frame update

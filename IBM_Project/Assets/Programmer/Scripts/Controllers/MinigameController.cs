@@ -58,7 +58,7 @@ public class MinigameController : MonoBehaviour
     public void StartMazeMinigame()
     {
         chosenMinigame = mazeMinigame;
-        Debug.Log("maze Set");
+        //Debug.Log("maze Set");
         if (!completedMaze && interactMaze)
         {
             if (!chosenMinigame.activeSelf)
@@ -78,7 +78,7 @@ public class MinigameController : MonoBehaviour
         int randNumber = Mathf.RoundToInt(Random.Range(0, 2));
         GameObject minigameHolder = doorGame[randNumber];
         chosenMinigame = minigameHolder;
-        Debug.Log("door Set");
+        //Debug.Log("door Set");
         if (!completedDoor && interactDoor)
         {
             if(!chosenMinigame.activeSelf)
@@ -94,6 +94,7 @@ public class MinigameController : MonoBehaviour
     {
         if (!completedQuiz)
         {
+            gameController.inQuiz = true;
             rTSV.questionsInARow = numberofQuestions;
             rTSV.loopNumber = 0;
             rTSV.find = true;

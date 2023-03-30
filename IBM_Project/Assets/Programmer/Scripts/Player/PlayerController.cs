@@ -66,8 +66,6 @@ public class PlayerController : MonoBehaviour
     public Animator animator2;
     public Animator animator3;
 
-    public GameObject[] deadDroids;
-
     public bool failedHack;
     private bool loseSoundPlayed = false;
     private bool shutdownPlayed = false;
@@ -180,7 +178,6 @@ public class PlayerController : MonoBehaviour
                 }
                 threatLevel = 0;
                 controlTimer = 0;
-                deadDroids = GameObject.FindGameObjectsWithTag("DeadEnemy");
                 if(gameObject.GetComponent<Shooting>())
                     gameObject.GetComponent<Shooting>().enabled = false;
                 canShoot = false;
@@ -322,8 +319,8 @@ public class PlayerController : MonoBehaviour
                 }
                 }
             }
-            if (deadDroids.Length <= 0) return;
-            foreach (GameObject droid in deadDroids)
+            if (gc.deadDroids.Length <= 0) return;
+            foreach (GameObject droid in gc.deadDroids)
             {
                 if (droid)
                 {

@@ -67,7 +67,7 @@ public class mazeHandler : MonoBehaviour
             //pressStartText.GetComponent<TextMeshProUGUI>().enabled = false;
             mazePlayer.transform.position = new Vector3(84, 0, 82); //new Vector3(2, 0, 0);
             goalLocation.transform.position = wG.preGoalLocation;
-            Debug.Log(mazePlayer.transform.position + "," + goalLocation.transform.position);
+            //Debug.Log(mazePlayer.transform.position + "," + goalLocation.transform.position);
             //mazeLives.GetComponent<TextMeshProUGUI>().enabled = true;
 
             //Debug.Log("Press 'P' to complete maze instantly");
