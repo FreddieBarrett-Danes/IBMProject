@@ -39871,6 +39871,10 @@ PrefabInstance:
       value: Scout_New (10)
       objectReference: {fileID: 0}
     - target: {fileID: 3764682598881015811, guid: b7b6f4794cd8c494ab44e29f07ce9d57, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3764682598881015811, guid: b7b6f4794cd8c494ab44e29f07ce9d57, type: 3}
       propertyPath: m_FlipY
       value: 1
       objectReference: {fileID: 0}
@@ -39878,6 +39882,14 @@ PrefabInstance:
       propertyPath: bPath
       value: 
       objectReference: {fileID: 510047837}
+    - target: {fileID: 4522026264724218993, guid: b7b6f4794cd8c494ab44e29f07ce9d57, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4522026264724218993, guid: b7b6f4794cd8c494ab44e29f07ce9d57, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7b6f4794cd8c494ab44e29f07ce9d57, type: 3}
 --- !u!4 &1610381296 stripped
