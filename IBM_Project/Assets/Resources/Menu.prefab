@@ -54,19 +54,20 @@ MonoBehaviour:
   canvasRectTransform: {fileID: 0}
   canvasHeight: 0
   canvasWidth: 0
-  buttonPrefab: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
-  sliderPrefab: {fileID: 3196526869720418601, guid: 5c90e52c42a9b224d8ffba529b2a3064, type: 3}
-  tickboxPrefab: {fileID: 2526034962566033833, guid: 919ba4e0a7f368545833af2f65475817, type: 3}
-  dropdownPrefab: {fileID: 3166809461652847562, guid: 42fd4126613de1c4f833a700ffc401f3, type: 3}
-  skillsText: {fileID: 5432482813687518641, guid: 5f6f75449a5588e40aebf39a48a2f1fa, type: 3}
-  htp0Text: {fileID: 0}
-  htp1Text: {fileID: 0}
-  htp2Text: {fileID: 0}
-  htp3Text: {fileID: 0}
-  htp1Image: {fileID: 0}
-  htp2Image: {fileID: 0}
-  htp3Image: {fileID: 0}
-  htp4Image: {fileID: 0}
+  buttonPrefab: {fileID: 0}
+  sliderPrefab: {fileID: 0}
+  tickboxPrefab: {fileID: 0}
+  dropdownPrefab: {fileID: 0}
+  skillsText: {fileID: 0}
+  htp0Text: {fileID: 4969916613965619609, guid: d073b30db7a1c5247b9aee9313624ee4, type: 3}
+  htp1Text: {fileID: 5432482813687518641, guid: 1989f4afc79cbe44da6f2a9d3dabf312, type: 3}
+  htp2Text: {fileID: 5432482813687518641, guid: 1989f4afc79cbe44da6f2a9d3dabf312, type: 3}
+  htp3Text: {fileID: 5432482813687518641, guid: 1989f4afc79cbe44da6f2a9d3dabf312, type: 3}
+  htp1Image: {fileID: 1732947452495944212, guid: 347f2065f5c0dbb43a1d5bb9fdf00f93, type: 3}
+  htp2Image: {fileID: 6162834073535478950, guid: 14667e8860940b34091ced55f41f97f8, type: 3}
+  htp3Image: {fileID: 7687501899417700170, guid: e53f9f2c3f418ea478555275cdef2930, type: 3}
+  htp4Image: {fileID: 188327807293545763, guid: 0c75f6cdc933cf54cb4689ca68fbc7ab, type: 3}
+  cornerButton: {fileID: 6723219057468046863, guid: 8a79f8e3a70ddbc43828145f2af51847, type: 3}
   MainButtonList: []
   PauseButtonList: []
   SettingsButtonList: []
@@ -78,7 +79,7 @@ MonoBehaviour:
   HTP2List: []
   HTP3List: []
   HTP4List: []
-  CornerList: []
+  cornerList: []
   menuState: 0
   buttonWidth: 0.3
   buttonHeight: 0.1
@@ -88,18 +89,19 @@ MonoBehaviour:
   creditsSpacing: 0.5
   playHeightFrom: 200
   textboxScalar: 1
-  htpTitleScalar: 0
+  htpTitleScalar: 0.1
   shipsButtonHeight: 0.15
   shipsButtonWidth: 0.18
   shipsSpacing: 0.2
-  htpSpacing: 0
-  htp0Scalar: 0
-  htp1Scalar: 0
-  htp2Scalar: 0
-  htp3Scalar: 0
-  htp4Scalar: 0
-  buttonColour: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 0.89411765}
-  textColour: {r: 0.6226415, g: 0, b: 0, a: 1}
+  htpSpacing: 0.4
+  htp0Scalar: 0.1
+  htp1Scalar: 0.03
+  htp2Scalar: 0.07
+  htp3Scalar: 0.12
+  htp4Scalar: 0.06
+  cornerScalar: 0.5
+  buttonColour: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 0.89411765}
+  textColour: {r: 0.8867924, g: 0, b: 0, a: 1}
   tickboxScaler: 0.4
   sliderScaler: 0.2
   resScaler: 0.34
@@ -109,12 +111,14 @@ MonoBehaviour:
   thisFrameResolution: 0
   lastframeResolution: 0
   resOptions:
-  - {x: 500, y: 500}
+  - {x: 1920, y: 1080}
   - {x: 1920, y: 1080}
   - {x: 720, y: 480}
   hyperlink: https://skillsbuild.org/students/digital-credentials
   SkillsText: It is vital that you check out the IBM Skills Build before starting
   inGame: 0
+  escCanBePressed: 0
+  Quiz: 0
   lTick: {fileID: 1621599099659810923, guid: 9de20b9ff55fa294e8c6bcd34259d112, type: 3}
 --- !u!82 &4755962744927018027
 AudioSource:
