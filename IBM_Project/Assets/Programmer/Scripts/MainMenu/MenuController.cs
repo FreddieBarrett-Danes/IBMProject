@@ -239,6 +239,10 @@ public class MenuController : MonoBehaviour
                 {
                     BackButtonPressed();
                 }
+                else if (menuState == MenuState.HTP0 || menuState == MenuState.HTP1 || menuState == MenuState.HTP2 || menuState == MenuState.HTP3 || menuState == MenuState.HTP4)
+                {
+                    SkillsButtonPressed();
+                }
             }
         }
 
@@ -795,6 +799,16 @@ public class MenuController : MonoBehaviour
         ibmText.transform.SetParent(canvas.transform);
         SkillsButtonList.Add(ibmText);
 
+        //menu for controls
+        GameObject controls = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
+        controls.transform.SetParent(canvas.transform);
+        SkillsButtonList.Add(controls);
+        controls.GetComponentInChildren<TextMeshProUGUI>().text = "Controls";
+        controls.GetComponent<Button>().onClick.AddListener(ControlsPressed);
+        controls.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        Destroy(controls.GetComponent<answersScript>());
+        controls.GetComponent<Image>().color = buttonColour;
+
         //back button
         GameObject skillsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         skillsBack.transform.SetParent(canvas.transform);
@@ -859,7 +873,7 @@ public class MenuController : MonoBehaviour
         //How to play 0
         //
 
-        GameObject htp0Title = Instantiate(htp0Text, canvas.transform.position, Quaternion.identity);
+        GameObject htp0Title = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
         htp0Title.transform.SetParent(canvas.transform);
         HTP0List.Add(htp0Title);
         htp0Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
@@ -986,7 +1000,7 @@ public class MenuController : MonoBehaviour
         right.transform.SetParent(canvas.transform);
         cornerList.Add(right);
         right.GetComponentInChildren<TextMeshProUGUI>().text = "->";
-        right.GetComponent<Button>().onClick.AddListener(LeftHTPPressed);
+        right.GetComponent<Button>().onClick.AddListener(RightHTPPressed);
         right.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(right.GetComponent<answersScript>());
         right.GetComponent<Image>().color = buttonColour;
@@ -1195,6 +1209,9 @@ public class MenuController : MonoBehaviour
 
             SkillsButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
             SkillsButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+
+            SkillsButtonList[4].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            SkillsButtonList[4].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
         }
 
         else if (menuState == MenuState.Levels)
@@ -1666,14 +1683,40 @@ public class MenuController : MonoBehaviour
         return;
     }
 
+    void ControlsPressed()
+    {
+        menuState = MenuState.HTP0;
+
+        GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
+        Destroy(audio, 3f);
+    }
+
     void LeftHTPPressed()
     {
-
+        if (menuState == MenuState.HTP1)
+            menuState = MenuState.HTP0;
+        else if (menuState == MenuState.HTP2)
+            menuState = MenuState.HTP1;
+        else if (menuState == MenuState.HTP3)
+            menuState = MenuState.HTP2;
+        else if (menuState == MenuState.HTP4)
+            menuState = MenuState.HTP3;
+        GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
+        Destroy(audio, 3f);
     }
 
     void RightHTPPressed()
     {
-
+        if (menuState == MenuState.HTP0)
+            menuState = MenuState.HTP1;
+        else if (menuState == MenuState.HTP1)
+            menuState = MenuState.HTP2;
+        else if (menuState == MenuState.HTP2)
+            menuState = MenuState.HTP3;
+        else if (menuState == MenuState.HTP3)
+            menuState = MenuState.HTP4;
+        GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
+        Destroy(audio, 3f);
     }
 
     void PauseGame()
