@@ -66,7 +66,7 @@ public class LevelTimer : MonoBehaviour
                 TimeUp = true;
             }
         }
-        else if(TimeUp)
+        else
         {
             gC.GameOver = true;
         }
