@@ -173,10 +173,10 @@ public class mazePlayerScript : MonoBehaviour
                 }
             }
 
-            //if (Input.GetKeyDown("p"))
-            //{
-            //    transform.position = GameObject.FindGameObjectWithTag("goalLocation").transform.position;
-            //}
+            if (Input.GetKeyDown("p"))
+            {
+                transform.position = GameObject.FindGameObjectWithTag("goalLocation").transform.position;
+            }
         }
         if (Input.GetKeyDown("space"))// && mazeReadyPlayer == true)
         {
@@ -185,6 +185,15 @@ public class mazePlayerScript : MonoBehaviour
             transform.position = new Vector3(84, 0, 82);
             //returnToStart(true);
         }
+
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    GameObject.FindGameObjectWithTag("goalLocation").GetComponent<MeshRenderer>().enabled = false;
+        //    GameObject.FindGameObjectWithTag("mazePlayer").GetComponent<MeshRenderer>().enabled = false;
+        //    //Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+        //    gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+
+        //}
 
 
         //Attempted to convert input to a switch case, didn't turnout as smooth

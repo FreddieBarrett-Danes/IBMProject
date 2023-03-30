@@ -164,6 +164,8 @@ public class ScoreSystem : MonoBehaviour
         //Score += (float)(Quiz.correctAnswersList.Count + (Quiz.questionsInARow * 0.1));
         //Debug.Log("CorrectAnswers | Total Points | Score " + Quiz.correctAnswersList.Count + " | " + Quiz.totalPoints + " | " + Score);
 
+        Debug.Log("Quiz total points | TempQuizPoints " + Quiz.totalPoints + " | " + TempQuizPoints);
+
         if (Quiz.totalPoints != TempQuizPoints) //(Quiz.totalPoints > TempQuizPoints || Quiz.totalPoints < TempQuizPoints)
         {
             //Score += 1;
@@ -197,6 +199,10 @@ public class ScoreSystem : MonoBehaviour
         ScoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
         LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         AskedUpdate = Quiz.cloudAskedList.Count + Quiz.aiAskedList.Count + Quiz.dataAskedList.Count + Quiz.quantumAskedList.Count + Quiz.securityAskedList.Count;
+
+        
+
+        
         
         DontDestroyOnLoad(this);
         if (ScoreInstance == null)
@@ -222,6 +228,10 @@ public class ScoreSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log(AskedUpdate + "," + askedListTotal);
+        Debug.Log("Score: " + Score);
+
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             Destroy(this.gameObject);
@@ -276,18 +286,18 @@ public class ScoreSystem : MonoBehaviour
 
             if (Gc.inQuiz && askedListTotal > AskedUpdate) { AskedUpdate = askedListTotal; Debug.Log("QuestionUpdate"); QuizQuestionUpdate(); }
 
-            /*
+            
             if (Input.GetKeyDown(KeyCode.J))
             {
                 Debug.Log("Score: " + Score);
-                //Debug.Log(AskedUpdate + " | " + Quiz.askedList.Count);
+                Debug.Log(AskedUpdate); // + " | " + //Quiz.askedList.Count);
             }
             if (Input.GetKeyDown(KeyCode.H))
             {
                 Score += 100;
-                //ScoreText.text = Score.ToString("000");
+                ScoreText.text = Score.ToString("000");
             }
-            */
+            
             //if (Gc.minigameWin || Gc.minigameLose || Gc.failMinigame || Gc.)
             //{
             //    ScoreText.enabled = true;

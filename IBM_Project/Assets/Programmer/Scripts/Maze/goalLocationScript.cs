@@ -118,6 +118,14 @@ public class goalLocationScript : MonoBehaviour
             mPlayer.timesHit = 0;
         }
 
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    //Debug win of minigame
+        //    gC.inMinigame = false;
+        //    wG.Timer.SetActive(false);
+        //    mC.completedMaze = true;
+        //}
+
         
         
             cameraMaze(true);
