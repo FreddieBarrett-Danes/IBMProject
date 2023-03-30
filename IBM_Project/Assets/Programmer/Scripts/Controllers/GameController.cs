@@ -231,7 +231,7 @@ public class GameController : MonoBehaviour
             {
                 //transistion to losing scene
                 Destroy(levelTimer);
-                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                 if (Ship1)
                 {
                     SceneManager.LoadScene(28);
