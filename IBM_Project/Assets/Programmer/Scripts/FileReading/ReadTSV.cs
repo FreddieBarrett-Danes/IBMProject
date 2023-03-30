@@ -4,6 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+using UnityEngine.Rendering;
 
 public class ReadTSV : MonoBehaviour
 {
@@ -403,6 +405,26 @@ public class ReadTSV : MonoBehaviour
 
     void Start()
     {
+        string cloudPath = Path.Combine(Application.streamingAssetsPath, "CloudTSV.tsv");
+        string cloudContents = File.ReadAllText(cloudPath);
+        CloudTSV = new TextAsset(cloudContents);
+
+        string aiPath = Path.Combine(Application.streamingAssetsPath, "AITSV.tsv");
+        string aiContents = File.ReadAllText(aiPath);
+        AITSV = new TextAsset(aiContents);
+
+        string dataPath = Path.Combine(Application.streamingAssetsPath, "DataTSV.tsv");
+        string dataContents = File.ReadAllText(dataPath);
+        DataTSV = new TextAsset(dataContents);
+
+        string quantumPath = Path.Combine(Application.streamingAssetsPath, "QuantumTSV.tsv");
+        string quantumContents = File.ReadAllText(quantumPath);
+        QuantumTSV = new TextAsset(quantumContents);
+
+        string securityPath = Path.Combine(Application.streamingAssetsPath, "SecurityTSV.tsv");
+        string securityContents = File.ReadAllText(securityPath);
+        SecurityTSV = new TextAsset(securityContents);
+
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
