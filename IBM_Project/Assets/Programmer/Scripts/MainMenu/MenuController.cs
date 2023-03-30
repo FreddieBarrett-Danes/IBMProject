@@ -636,7 +636,7 @@ public class MenuController : MonoBehaviour
         for (int i = 0; i < HTP0List.Count; i++)
         {
             HTP0List[i].gameObject.SetActive(showHide);
-            Debug.Log(HTP0List[i].gameObject.name);
+            //Debug.Log(HTP0List[i].gameObject.name);
         }
     }
 

@@ -148,12 +148,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175780b46e724014898270b915fdac87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHack: {fileID: 0}
   winHack: {fileID: 6806375771511517174}
   loseHack: {fileID: 5226137432426054200}
   breakBox: {fileID: 2872523968688022929}
+  botShutdown: {fileID: 0}
   door: {fileID: 0}
   speed: 5
+  canSpeed: 0
   visuals: {fileID: 2054899258900365622}
   body: {fileID: 2054899258714693484}
   isBehindEnemy: 0
@@ -163,12 +164,13 @@ MonoBehaviour:
   modifyBulletSpeed: 1000
   enemyControlled: {fileID: 0}
   controlTimer: 0
+  canShoot: 0
   computerDoor: 0
   elevatorDoor: 0
   animator: {fileID: 0}
   animator2: {fileID: 0}
   animator3: {fileID: 0}
-  deadDroids: []
+  failedHack: 0
 --- !u!54 &378670207
 Rigidbody:
   m_ObjectHideFlags: 0
