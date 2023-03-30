@@ -37,7 +37,8 @@ public class ScoreSystem : MonoBehaviour
     public Vector3 StaticPointsX_MazeY_DiscZ_Tile = new Vector3(100, 20, 20); //X = Maze, Y = DiscAlignment, Z = TileRotation | This awards a static amount of points after completing the respective minigame (if TimeAwardsPoints is set to false)
     public Vector3 MinigameTimeScoreModifier = new Vector3(1, 1, 1); //X = Maze, Y = DiscAlignment, Z = TileRotation | The points awarded after completing a minigame: time remaining * MinigameTimerScoreModifier (for the respective minigame)
     private Vector3 MinigamePoints; //Stores values of MinigameTimeScoreModifier for easier referencing (whilst maintaining clarity in inspector)
-
+    public MinigameController minigameCont;
+    
     private static ScoreSystem ScoreInstance;
 
     private int AskedUpdate;
@@ -155,7 +156,7 @@ public class ScoreSystem : MonoBehaviour
 
     }
 
-    void QuizQuestionUpdate()
+    public void QuizQuestionUpdate()
     {
         //QuizScore = Quiz.totalPoints * QuizScoreModifier;
 
@@ -164,7 +165,7 @@ public class ScoreSystem : MonoBehaviour
         //Score += (float)(Quiz.correctAnswersList.Count + (Quiz.questionsInARow * 0.1));
         //Debug.Log("CorrectAnswers | Total Points | Score " + Quiz.correctAnswersList.Count + " | " + Quiz.totalPoints + " | " + Score);
 
-        Debug.Log("Quiz total points | TempQuizPoints " + Quiz.totalPoints + " | " + TempQuizPoints);
+        //Debug.Log("Quiz total points | TempQuizPoints " + Quiz.totalPoints + " | " + TempQuizPoints);
 
         if (Quiz.totalPoints != TempQuizPoints) //(Quiz.totalPoints > TempQuizPoints || Quiz.totalPoints < TempQuizPoints)
         {
@@ -199,7 +200,7 @@ public class ScoreSystem : MonoBehaviour
         ScoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
         LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         AskedUpdate = Quiz.cloudAskedList.Count + Quiz.aiAskedList.Count + Quiz.dataAskedList.Count + Quiz.quantumAskedList.Count + Quiz.securityAskedList.Count;
-
+        minigameCont = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         
 
         
@@ -228,9 +229,6 @@ public class ScoreSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        Debug.Log(AskedUpdate + "," + askedListTotal);
-        Debug.Log("Score: " + Score);
 
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {

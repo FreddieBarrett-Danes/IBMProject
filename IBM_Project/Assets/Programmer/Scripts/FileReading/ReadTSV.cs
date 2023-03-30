@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Rendering;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ReadTSV : MonoBehaviour
 {
@@ -431,6 +432,7 @@ public class ReadTSV : MonoBehaviour
 
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
+        ScoreSystemGameObject = FindObjectOfType<ScoreSystem>().gameObject.GetComponent<ScoreSystem>();
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
         canvasRectTransform = canvas.GetComponent<RectTransform>();
 
@@ -441,10 +443,6 @@ public class ReadTSV : MonoBehaviour
         securityRangeMax = InitialiseTSVs(5);
 
         //Debug.Log((panelSize));
-
-
-        Debug.Log("Calling SystemScore");
-        ScoreSystemGameObject.SendMessage("QuizQuestionUpdate");
     }
 
     void Update()
@@ -855,7 +853,7 @@ public class ReadTSV : MonoBehaviour
 
             //Update the user points for each correct answer
             totalPoints += tempCorrect;
-
+            ScoreSystemGameObject.QuizQuestionUpdate();
             //Check if all of the answers were correct
             if (tempCorrect == correctAnswers)
             {
