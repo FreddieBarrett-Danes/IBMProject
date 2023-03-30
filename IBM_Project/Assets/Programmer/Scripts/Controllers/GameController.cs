@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -215,12 +216,15 @@ public class GameController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.R))
             {
-                //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-                scoreSystem.restarted = true; 
-                scoreSystem.Score = scoreSystem.scorePool;
-                levelTimer.GetComponent<LevelTimer>().currentTime = levelTimer.GetComponent<LevelTimer>().startTime;
-                Debug.Log("Score " + scoreSystem.scorePool);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                if (inQuiz != true && inMinigame != true)
+                {
+                    //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                    scoreSystem.restarted = true;
+                    scoreSystem.Score = scoreSystem.scorePool;
+                    levelTimer.GetComponent<LevelTimer>().currentTime = levelTimer.GetComponent<LevelTimer>().startTime;
+                    UnityEngine.Debug.Log("Score " + scoreSystem.scorePool);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
             }
             if(playerHit)
             {
