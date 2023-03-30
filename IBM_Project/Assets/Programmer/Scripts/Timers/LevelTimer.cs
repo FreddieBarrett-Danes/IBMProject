@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelTimer : MonoBehaviour
@@ -40,6 +41,10 @@ public class LevelTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            Destroy(this.gameObject);
+        }
         if(countdownText == null)
         {
             countdownText = FindObjectOfType<FinderScript>().transform.GetChild(1).GetComponent<TextMeshProUGUI>();

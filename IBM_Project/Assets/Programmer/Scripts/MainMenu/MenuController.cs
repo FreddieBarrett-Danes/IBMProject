@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Threading;
+using System.Runtime.Serialization.Formatters;
 
 public class MenuController : MonoBehaviour
 {
@@ -50,17 +51,17 @@ public class MenuController : MonoBehaviour
     private MenuController menuInstance;
 
     [SerializeField]
-    float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, creditsHeightFrom, creditsSpacing, playHeightFrom, textboxScalar, 
+    float buttonWidth, buttonHeight, buttonSpacing, startHeightFromStart, creditsHeightFrom, creditsSpacing, playHeightFrom, textboxScalar,
         htpTitleScalar, shipsButtonHeight, shipsButtonWidth, shipsSpacing, htpSpacing, htp0Scalar, htp1Scalar, htp2Scalar, htp3Scalar, htp4Scalar, cornerScalar;
     //public int amountOfButtons;
 
-    const int   _start =        0,
-                _settings =     1,
-                _credits =      2,
-                _quit =         3;
+    const int _start = 0,
+                _settings = 1,
+                _credits = 2,
+                _quit = 3;
 
     //[SerializeField]
-    string      menuButton1 = "Play",
+    string menuButton1 = "Play",
                 menuButton2 = "Settings",
                 menuButton3 = "Credits",
                 menuButton4 = "Exit",
@@ -99,7 +100,7 @@ public class MenuController : MonoBehaviour
 
     AudioLowPassFilter lpf;
 
-    bool escCanBePressed;
+    public bool escCanBePressed;
     //public float debug;
 
     public enum MenuState
@@ -130,13 +131,31 @@ public class MenuController : MonoBehaviour
     }
     void Start()
     {
-        DontDestroyOnLoad(this);
+        /*        GameObject[] menuArray = GameObject.FindGameObjectsWithTag("MenuController");
+                if (menuArray.Length > 1)
+                {
+                    for(int i = 1; i < menuArray.Length; i++)
+                    {
+                        Destroy(menuArray[i]);
+                    }
+                }*/
+        /*        GameObject existingObject = GameObject.Find(gameObject.name);
+                if(existingObject != null)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+
+                }*/
+        DontDestroyOnLoad(this.gameObject);
         if (menuInstance == null)
         {
             menuInstance = this;
         }
         else
         {
+            Debug.Log("Hello");
             Destroy(gameObject);
         }
 
@@ -198,7 +217,7 @@ public class MenuController : MonoBehaviour
         {
             inGame = false;
         }*/
-        
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (escCanBePressed)
@@ -222,20 +241,20 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        if(SceneManager.GetActiveScene().buildIndex == 26 || SceneManager.GetActiveScene().buildIndex == 27 || SceneManager.GetActiveScene().buildIndex == 28 || SceneManager.GetActiveScene().buildIndex == 29 || SceneManager.GetActiveScene().buildIndex == 30 || SceneManager.GetActiveScene().buildIndex == 31 || SceneManager.GetActiveScene().buildIndex == 32 || SceneManager.GetActiveScene().buildIndex == 33 || SceneManager.GetActiveScene().buildIndex == 34 || SceneManager.GetActiveScene().buildIndex == 35 || Quiz)
+        if (SceneManager.GetActiveScene().buildIndex == 26 || SceneManager.GetActiveScene().buildIndex == 27 || SceneManager.GetActiveScene().buildIndex == 28 || SceneManager.GetActiveScene().buildIndex == 29 || SceneManager.GetActiveScene().buildIndex == 30 || SceneManager.GetActiveScene().buildIndex == 31 || SceneManager.GetActiveScene().buildIndex == 32 || SceneManager.GetActiveScene().buildIndex == 33 || SceneManager.GetActiveScene().buildIndex == 34 || SceneManager.GetActiveScene().buildIndex == 35 || Quiz)
         {
             menuState = MenuState.Running;
             music.enabled = false;
             escCanBePressed = false;
         }
-        else if(SceneManager.GetActiveScene().buildIndex == 0)
+        else if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             //menuState = MenuState.Main;
             escCanBePressed = true;
         }
 
 
-        if(lastFrameMenuState != menuState)
+        if (lastFrameMenuState != menuState)
         {
             StateChanged();
         }
@@ -243,7 +262,7 @@ public class MenuController : MonoBehaviour
 
         fullscreen = SettingsButtonList[1].transform.GetChild(1).GetComponent<Toggle>().isOn;
 
-        if(lastframeFullscreen == fullscreen)
+        if (lastframeFullscreen == fullscreen)
         {
             FullscreenState();
         }
@@ -258,7 +277,7 @@ public class MenuController : MonoBehaviour
         thisFrameResolution = (Resolution)dropdownInt;
         //Debug.Log(thisFrameResolution);
 
-        if(lastframeResolution != thisFrameResolution)
+        if (lastframeResolution != thisFrameResolution)
         {
             ResolutionState();
         }
@@ -286,7 +305,7 @@ public class MenuController : MonoBehaviour
         //int resolution = (int)thisFrameResolution;
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-            
+
             MainButtonList.Clear();
             PauseButtonList.Clear();
             SettingsButtonList.Clear();
@@ -357,196 +376,196 @@ public class MenuController : MonoBehaviour
 
         if (menuState == MenuState.Main) //hide settings & credits
         {
-            ShowHideMainMenuComponents      (true);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (false);
-        }
-        
-        else if(menuState == MenuState.Paused)
-        {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (true);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (false);
+            ShowHideMainMenuComponents(true);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(false);
         }
 
-        else if(menuState == MenuState.Settings)
+        else if (menuState == MenuState.Paused)
         {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (true);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (false);
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(true);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(false);
         }
 
-        else if(menuState == MenuState.Credits) //hide settings & credits
+        else if (menuState == MenuState.Settings)
         {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (true);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (false);
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(true);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(false);
         }
 
-        else if(menuState == MenuState.SkillsBuild)
+        else if (menuState == MenuState.Credits) //hide settings & credits
         {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (true);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (false);
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(true);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(false);
         }
 
-        else if(menuState == MenuState.Levels)
+        else if (menuState == MenuState.SkillsBuild)
         {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (true);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (false);
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(true);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(false);
+        }
+
+        else if (menuState == MenuState.Levels)
+        {
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(true);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(false);
             GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
             Destroy(audio, 3f);
         }
 
-        else if(menuState == MenuState.Running)
+        else if (menuState == MenuState.Running)
         {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (false);
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(false);
         }
 
         else if (menuState == MenuState.HTP0)
         {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (true);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (true);
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(true);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(true);
         }
 
         else if (menuState == MenuState.HTP1)
         {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (true);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (true);
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(true);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(true);
         }
 
         else if (menuState == MenuState.HTP2)
         {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (true);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (true);
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(true);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(true);
         }
 
         else if (menuState == MenuState.HTP3)
         {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (true);
-            ShowHideHTP4Components          (false);
-            ShowHideCornerComponents        (true);
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(true);
+            ShowHideHTP4Components(false);
+            ShowHideCornerComponents(true);
         }
 
         else if (menuState == MenuState.HTP4)
         {
-            ShowHideMainMenuComponents      (false);
-            ShowHidePauseMenuComponents     (false);
-            ShowHideSettingsMenuComponents  (false);
-            ShowHideCreditsMenuComponents   (false);
-            ShowHideSkillsMenuComponents    (false);
-            ShowHidePlayMenuComponents      (false);
-            ShowHideHTP0Components          (false);
-            ShowHideHTP1Components          (false);
-            ShowHideHTP2Components          (false);
-            ShowHideHTP3Components          (false);
-            ShowHideHTP4Components          (true);
-            ShowHideCornerComponents        (true);
+            ShowHideMainMenuComponents(false);
+            ShowHidePauseMenuComponents(false);
+            ShowHideSettingsMenuComponents(false);
+            ShowHideCreditsMenuComponents(false);
+            ShowHideSkillsMenuComponents(false);
+            ShowHidePlayMenuComponents(false);
+            ShowHideHTP0Components(false);
+            ShowHideHTP1Components(false);
+            ShowHideHTP2Components(false);
+            ShowHideHTP3Components(false);
+            ShowHideHTP4Components(true);
+            ShowHideCornerComponents(true);
         }
     }
 
@@ -630,7 +649,7 @@ public class MenuController : MonoBehaviour
             HTP3List[i].gameObject.SetActive(showHide);
         }
     }
-    
+
     void ShowHideHTP4Components(bool showHide)
     {
         for (int i = 0; i < HTP4List.Count; i++)
@@ -719,7 +738,7 @@ public class MenuController : MonoBehaviour
         SettingsButtonList.Add(dropdown);
 
         //Spawn Back Button
-        GameObject settingsBack = Instantiate(buttonPrefab,canvas.transform.position, Quaternion.identity);
+        GameObject settingsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         settingsBack.transform.SetParent(canvas.transform);
         SettingsButtonList.Add(settingsBack);
         settingsBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
@@ -825,7 +844,7 @@ public class MenuController : MonoBehaviour
         ship4.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(ship4.GetComponent<answersScript>());
         ship4.GetComponent<Image>().color = buttonColour;
-        
+
         GameObject ship5 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship5.transform.SetParent(canvas.transform);
         PlayButtonList.Add(ship5);
@@ -839,16 +858,16 @@ public class MenuController : MonoBehaviour
         //How to play 0
         //
 
-        GameObject htp0Title = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
+        GameObject htp0Title = Instantiate(htp0Text, canvas.transform.position, Quaternion.identity);
         htp0Title.transform.SetParent(canvas.transform);
         HTP0List.Add(htp0Title);
         htp0Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
 
-        GameObject htp0text = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
+        GameObject htp0text = Instantiate(htp0Text, canvas.transform.position, Quaternion.identity);
         htp0text.transform.SetParent(canvas.transform);
         HTP0List.Add(htp0text);
         //htp0text.GetComponent<TextMeshProUGUI>().text = "Text text text more text yes yes yes hhhmm yes very interesting";
-        htp0text.GetComponent<TextMeshProUGUI>().enableAutoSizing=true;
+        htp0text.GetComponent<TextMeshProUGUI>().enableAutoSizing = true;
 
         //back button
         GameObject htp0Back = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
@@ -869,7 +888,7 @@ public class MenuController : MonoBehaviour
         HTP1List.Add(htp1Title);
         htp1Title.GetComponent<TextMeshProUGUI>().text = "How To Play...";
 
-        GameObject htpo1TempImage = Instantiate(htp1Image, canvas.transform.position, Quaternion.identity); 
+        GameObject htpo1TempImage = Instantiate(htp1Image, canvas.transform.position, Quaternion.identity);
         htpo1TempImage.transform.SetParent(canvas.transform);
         HTP1List.Add(htpo1TempImage);
 
@@ -955,27 +974,29 @@ public class MenuController : MonoBehaviour
         GameObject left = Instantiate(cornerButton, canvas.transform.position, Quaternion.identity);
         left.transform.SetParent(canvas.transform);
         cornerList.Add(left);
-        left.GetComponentInChildren<TextMeshProUGUI>().text = "";
+        left.GetComponentInChildren<TextMeshProUGUI>().text = "<-";
         left.GetComponent<Button>().onClick.AddListener(LeftHTPPressed);
         left.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(left.GetComponent<answersScript>());
         left.GetComponent<Image>().color = buttonColour;
-        
+        left.GetComponent<CornerScript>().thisIsRight = false;
+
         GameObject right = Instantiate(cornerButton, canvas.transform.position, Quaternion.identity);
         right.transform.SetParent(canvas.transform);
         cornerList.Add(right);
-        right.GetComponentInChildren<TextMeshProUGUI>().text = "";
+        right.GetComponentInChildren<TextMeshProUGUI>().text = "->";
         right.GetComponent<Button>().onClick.AddListener(LeftHTPPressed);
         right.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
         Destroy(right.GetComponent<answersScript>());
         right.GetComponent<Image>().color = buttonColour;
+        right.GetComponent<CornerScript>().thisIsRight = true;
 
         return;
     }
 
     void setButtonPosition()
     {
-        if(menuState == MenuState.Main)
+        if (menuState == MenuState.Main)
         {
             for (int i = 0; i < MainButtonList.Count; i++)
             {
@@ -993,7 +1014,7 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        else if(menuState == MenuState.Settings)
+        else if (menuState == MenuState.Settings)
         {
             for (int i = 0; i < SettingsButtonList.Count; i++)
             {
@@ -1011,7 +1032,7 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        else if(menuState == MenuState.SkillsBuild)
+        else if (menuState == MenuState.SkillsBuild)
         {
             for (int i = 0; i < SkillsButtonList.Count; i++)
             {
@@ -1020,7 +1041,7 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        else if(menuState == MenuState.Levels)
+        else if (menuState == MenuState.Levels)
         {
             for (int i = 0; i < PlayButtonList.Count; i++)
             {
@@ -1029,7 +1050,7 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        else if(menuState == MenuState.HTP0)
+        else if (menuState == MenuState.HTP0)
         {
             for (int i = 0; i < HTP0List.Count; i++)
             {
@@ -1064,7 +1085,7 @@ public class MenuController : MonoBehaviour
                 HTP3List[i].transform.position = canvas.transform.position + pos;
             }
         }
-        
+
         else if (menuState == MenuState.HTP4)
         {
             for (int i = 0; i < HTP4List.Count; i++)
@@ -1081,12 +1102,12 @@ public class MenuController : MonoBehaviour
         cornerList[1].transform.position = new Vector3(cornerList[1].transform.position.x, HTP0List[2].GetComponent<RectTransform>().localPosition.y, 0);*/
 
         //HERE Freddie
-/*
-        Debug.Log(HTP0List[2].transform.position.y);
-        Debug.Log(HTP0List[2].transform.localPosition.y);
-        Debug.Log(HTP0List[2].GetComponent<RectTransform>().position.y);
-        Debug.Log(HTP0List[2].GetComponent<RectTransform>().localPosition.y);
-        Debug.Log(HTP0List[2].GetComponent<RectTransform>().anchoredPosition.y);*/
+        /*
+                Debug.Log(HTP0List[2].transform.position.y);
+                Debug.Log(HTP0List[2].transform.localPosition.y);
+                Debug.Log(HTP0List[2].GetComponent<RectTransform>().position.y);
+                Debug.Log(HTP0List[2].GetComponent<RectTransform>().localPosition.y);
+                Debug.Log(HTP0List[2].GetComponent<RectTransform>().anchoredPosition.y);*/
     }
 
     void setButtonSize()
@@ -1094,7 +1115,7 @@ public class MenuController : MonoBehaviour
         canvasWidth = canvasRectTransform.sizeDelta.x;
         canvasHeight = canvasRectTransform.sizeDelta.y;
 
-        if(menuState == MenuState.Main)
+        if (menuState == MenuState.Main)
         {
             for (int i = 0; i < MainButtonList.Count; i++)
             {
@@ -1114,11 +1135,11 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        else if(menuState == MenuState.Settings)
+        else if (menuState == MenuState.Settings)
         {
             //SettingsButtonList[0].GetComponent<RectTransform>().sizeDelta = canvasWidth * debug/*new Vector2(buttonWidth * canvasWidth, /*buttonHeight * canvasHeight * debug)*/;
             //SettingsButtonList[0].GetComponent<RectTransform>().sizeDelta *= new Vector2(debug, debug);
-            
+
             float sliderSize = Mathf.Min(canvasWidth, canvasHeight) * (sliderScaler / 100f);
             //SettingsButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, ((buttonWidth / 500) * 30) * canvasHeight);
             SettingsButtonList[0].transform.localScale = new Vector2(sliderSize, sliderSize);
@@ -1142,7 +1163,7 @@ public class MenuController : MonoBehaviour
 
         }
 
-        else if(menuState == MenuState.Credits)
+        else if (menuState == MenuState.Credits)
         {
             float creditsSize = Mathf.Min(canvasWidth, canvasHeight) * (creditsScaler / 100f);
             CreditsButtonList[0].transform.localScale = new Vector2(creditsSize, creditsSize);
@@ -1151,7 +1172,7 @@ public class MenuController : MonoBehaviour
             CreditsButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
         }
 
-        else if(menuState == MenuState.SkillsBuild)
+        else if (menuState == MenuState.SkillsBuild)
         {
             SkillsButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
             SkillsButtonList[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
@@ -1175,11 +1196,11 @@ public class MenuController : MonoBehaviour
             SkillsButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
         }
 
-        else if(menuState == MenuState.Levels)
+        else if (menuState == MenuState.Levels)
         {
             PlayButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
             PlayButtonList[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
-            
+
             PlayButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
             PlayButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
 
@@ -1193,7 +1214,7 @@ public class MenuController : MonoBehaviour
             PlayButtonList[4].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
         }
 
-        else if(menuState == MenuState.HTP0)
+        else if (menuState == MenuState.HTP0)
         {
             float titleSize = Mathf.Min(canvasWidth, canvasHeight) * (htpTitleScalar / 100f);
             HTP0List[0].transform.localScale = new Vector2(titleSize, titleSize);
@@ -1254,10 +1275,10 @@ public class MenuController : MonoBehaviour
         }
 
         cornerList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
-        cornerList[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * cornerScalar, (buttonHeight * canvasHeight) * textboxScalar);
+        cornerList[0].transform.GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * cornerScalar, (buttonHeight * canvasHeight) * textboxScalar);
 
         cornerList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
-        cornerList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * cornerScalar, (buttonHeight * canvasHeight) * textboxScalar);
+        cornerList[1].transform.GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * cornerScalar, (buttonHeight * canvasHeight) * textboxScalar);
     }
 
     void SetText(int buttonNumber)
@@ -1349,10 +1370,10 @@ public class MenuController : MonoBehaviour
                 PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
                 break;
             case 3:
-                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(BackMainMenuPressed);
                 break;
             case 4:
-                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(BackMainMenuPressed);
                 break;
             default:
                 Debug.Log("Unknown button");
@@ -1365,7 +1386,7 @@ public class MenuController : MonoBehaviour
         float averageHeight = 0;
         float averageWidth = 0;
 
-        if(menuState == MenuState.Main)
+        if (menuState == MenuState.Main)
         {
             for (int i = 0; i < MainButtonList.Count; i++)
             {
@@ -1395,7 +1416,7 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        else if(menuState == MenuState.Settings)
+        else if (menuState == MenuState.Settings)
         {
             for (int i = 0; i < SettingsButtonList.Count; i++)
             {
@@ -1410,7 +1431,7 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        else if(menuState == MenuState.Credits)
+        else if (menuState == MenuState.Credits)
         {
             for (int i = 0; i < CreditsButtonList.Count; i++)
             {
@@ -1499,7 +1520,7 @@ public class MenuController : MonoBehaviour
                 HTP2List[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
             }
         }
-        
+
         else if (menuState == MenuState.HTP3)
         {
             for (int i = 0; i < HTP3List.Count; i++)
@@ -1621,7 +1642,16 @@ public class MenuController : MonoBehaviour
 
         return;
     }
+    void BackMainMenuPressed()
+    {
+        //Back to Main Menu...
 
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
+        menuState = MenuState.Main;
+        
+        return;
+    }
     void BackButtonPressed()
     {
         //Go back to main menu
