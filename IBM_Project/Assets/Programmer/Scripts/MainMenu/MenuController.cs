@@ -74,7 +74,7 @@ public class MenuController : MonoBehaviour
     private Color textColour;
 
     [SerializeField]
-    private float tickboxScaler, sliderScaler, resScaler, creditsScaler;
+    private float tickboxScaler, sliderScaler, resScaler, creditsScaler, testScale;
 
     [SerializeField]
     bool fullscreen, lastframeFullscreen;
@@ -1209,10 +1209,15 @@ public class MenuController : MonoBehaviour
             SkillsButtonList[2].GetComponent<TextMeshProUGUI>().color = textColour;
             SkillsButtonList[2].GetComponent<TextMeshProUGUI>().enableAutoSizing = true;
 
-            float skillsSize = Mathf.Min(canvasWidth, canvasHeight) * (resScaler / 100f);
-            SettingsButtonList[2].transform.localScale = new Vector2(skillsSize, skillsSize);
+            float skillsSize = Mathf.Min(canvasWidth, canvasHeight) * (testScale / 100f);
+            SkillsButtonList[2].transform.localScale = new Vector2(skillsSize, skillsSize);
             //SettingsButtonList[2].transform.GetChild(0).GetComponent<TextMeshProUGUI>
-            SettingsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(160 * 0.8f, 30 * 0.8f);
+            //SkillsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(160 * 0.8f, 30 * 0.8f);
+
+            /* skillsSize = Mathf.Min(canvasWidth, canvasHeight) * (testScale / 100f);
+            SkillsButtonList[2].transform.localScale = new Vector2(skillsSize, skillsSize);
+            //SettingsButtonList[2].transform.GetChild(0).GetComponent<TextMeshProUGUI>
+            SkillsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(160 * 0.8f, 30 * 0.8f);*/
 
             //SkillsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
 

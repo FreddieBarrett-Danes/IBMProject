@@ -648,6 +648,15 @@ PrefabInstance:
       value: Menu
       objectReference: {fileID: 0}
     - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: testScale
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
+      propertyPath: SkillsText
+      value: To play the game, you must be familiar with the Skills Build content.
+        If you haave not already, please sin up and review.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755962744927018024, guid: 151f623857b2f99449d230dbb5fffc06, type: 3}
       propertyPath: htpTitleScalar
       value: 0.23
       objectReference: {fileID: 0}
@@ -781,4 +790,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b2fa3186e45e840bfc3a0951a99576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Menu: []
+  Menu: {fileID: 0}
