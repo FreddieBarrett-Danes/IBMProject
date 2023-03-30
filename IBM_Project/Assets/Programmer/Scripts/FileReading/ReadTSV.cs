@@ -671,7 +671,7 @@ public class ReadTSV : MonoBehaviour
                 }
             }
         }
-        else if ((amountSelected < correctAnswers) && completedQuiz)
+        else/* if ((amountSelected < correctAnswers) && completedQuiz)*/
         {
             for (int i = 0; i < answersList.Count; i++)
             {
