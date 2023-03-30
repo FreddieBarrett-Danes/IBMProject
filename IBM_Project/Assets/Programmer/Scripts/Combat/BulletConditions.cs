@@ -71,15 +71,16 @@ public class BulletConditions : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 gameObject.GetComponent<SphereCollider>().enabled = false;
            }
-       }
-       else
-        {
-           if (other.gameObject.CompareTag("Wall"))
-           {
+            else if (other.gameObject.CompareTag("BreakableBox"))
+            {
+
+                
 
                 Destroy(gameObject);
-           }
+            }
         }
+        
+ 
         
         /*else
         {

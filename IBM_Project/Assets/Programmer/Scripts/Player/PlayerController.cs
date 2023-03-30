@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour
     private void Interact()
     {
 
-        if (isBehindEnemy && Input.GetKeyDown(KeyCode.E) && gc.PlayerStatus != GameController.Status.HUNTED && Time.timeScale != 0)
+        if (isBehindEnemy && Input.GetKeyDown(KeyCode.E) && Time.timeScale != 0)
         {
             loseSoundPlayed = false;
             miniController.StartQuiz(1);

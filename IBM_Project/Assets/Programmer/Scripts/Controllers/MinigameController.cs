@@ -95,10 +95,11 @@ public class MinigameController : MonoBehaviour
         if (!completedQuiz)
         {
             gameController.inQuiz = true;
+            gameController.inMinigame = true;
             rTSV.questionsInARow = numberofQuestions;
             rTSV.loopNumber = 0;
             rTSV.find = true;
-            gameController.inMinigame = true;
+            
         }
     }
 }
