@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4755962744927018027}
   m_Layer: 5
   m_Name: Menu
-  m_TagString: Untagged
+  m_TagString: MenuController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,17 +50,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79d2413e1ae4b64aba0b3b8894f22a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  canvasRectTransform: {fileID: 0}
+  canvasHeight: 0
+  canvasWidth: 0
   buttonPrefab: {fileID: 6723219057468046863, guid: d02fadccf79be7945b92dabc1f2eea0f, type: 3}
   sliderPrefab: {fileID: 3196526869720418601, guid: 5c90e52c42a9b224d8ffba529b2a3064, type: 3}
   tickboxPrefab: {fileID: 2526034962566033833, guid: 919ba4e0a7f368545833af2f65475817, type: 3}
   dropdownPrefab: {fileID: 3166809461652847562, guid: 42fd4126613de1c4f833a700ffc401f3, type: 3}
   skillsText: {fileID: 5432482813687518641, guid: 5f6f75449a5588e40aebf39a48a2f1fa, type: 3}
+  htp0Text: {fileID: 0}
+  htp1Text: {fileID: 0}
+  htp2Text: {fileID: 0}
+  htp3Text: {fileID: 0}
+  htp1Image: {fileID: 0}
+  htp2Image: {fileID: 0}
+  htp3Image: {fileID: 0}
+  htp4Image: {fileID: 0}
   MainButtonList: []
   PauseButtonList: []
   SettingsButtonList: []
   SkillsButtonList: []
   CreditsButtonList: []
   PlayButtonList: []
+  HTP0List: []
+  HTP1List: []
+  HTP2List: []
+  HTP3List: []
+  HTP4List: []
+  CornerList: []
   menuState: 0
   buttonWidth: 0.3
   buttonHeight: 0.1
@@ -70,9 +88,16 @@ MonoBehaviour:
   creditsSpacing: 0.5
   playHeightFrom: 200
   textboxScalar: 1
+  htpTitleScalar: 0
   shipsButtonHeight: 0.15
   shipsButtonWidth: 0.18
   shipsSpacing: 0.2
+  htpSpacing: 0
+  htp0Scalar: 0
+  htp1Scalar: 0
+  htp2Scalar: 0
+  htp3Scalar: 0
+  htp4Scalar: 0
   buttonColour: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 0.89411765}
   textColour: {r: 0.6226415, g: 0, b: 0, a: 1}
   tickboxScaler: 0.4
