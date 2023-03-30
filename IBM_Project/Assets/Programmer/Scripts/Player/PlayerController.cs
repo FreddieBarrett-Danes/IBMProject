@@ -241,6 +241,7 @@ public class PlayerController : MonoBehaviour
                 isControlling = true;
                 
                 enemyControlled.GetComponent<BotInfo>().bIsDead = true;
+                enemyControlled.transform.parent.GetChild(2).gameObject.SetActive(false);
                 enemyControlled.GetComponent<BotInfo>().bWasHacked = true;
             }
             else
@@ -252,6 +253,7 @@ public class PlayerController : MonoBehaviour
                 isControlling = true;
                 
                 enemyControlled.GetComponent<BotInfo>().bIsDead = true;
+                enemyControlled.transform.parent.GetChild(2).gameObject.SetActive(false);
                 enemyControlled.GetComponent<BotInfo>().bWasHacked = true;
             }
             
