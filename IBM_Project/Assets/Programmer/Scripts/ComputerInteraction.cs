@@ -28,7 +28,7 @@ public class ComputerInteraction : MonoBehaviour
     private bool isTouching;
     [SerializeField]
     private bool allDead = false;
-
+    private bool playOnce = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,11 +60,14 @@ public class ComputerInteraction : MonoBehaviour
 
         if (gC.Level5 && allDead)
         {
-            gC.inQuiz = true;
-            reader.questionsInARow = 4;
-            reader.find = true;
-            cam.GetComponent<Camera>().farClipPlane = 0.5f;
-
+            if (!playOnce)
+            {
+                gC.inQuiz = true;
+                reader.questionsInARow = 4;
+                reader.find = true;
+                cam.GetComponent<Camera>().farClipPlane = 0.5f;
+                playOnce = true;
+            }
         }
 
         if (miniController.completedMaze)
