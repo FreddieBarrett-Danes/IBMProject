@@ -149,15 +149,24 @@ public class MenuController : MonoBehaviour
                 {
 
                 }*/
+        
         DontDestroyOnLoad(this.gameObject);
-        if (menuInstance == null)
+        /*if (menuInstance == null)
         {
             menuInstance = this;
+            Debug.Log(menuInstance);
+            Debug.Log("ahhhhhhhhh");
         }
         else
         {
             Debug.Log("Hello");
             Destroy(gameObject);
+        }*/
+        
+        GameObject[] menuControllers = GameObject.FindGameObjectsWithTag("MenuController");
+        if (menuControllers.Length > 1)
+        {
+            Destroy(menuControllers[0]);
         }
 
         //MainButtonList.Clear();
