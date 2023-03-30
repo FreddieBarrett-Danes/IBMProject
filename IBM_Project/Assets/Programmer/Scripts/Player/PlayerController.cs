@@ -191,13 +191,13 @@ public class PlayerController : MonoBehaviour
     private void Interact()
     {
 
-        if (isBehindEnemy && Input.GetKeyDown(KeyCode.E) && gc.PlayerStatus != GameController.Status.HUNTED)
+        if (isBehindEnemy && Input.GetKeyDown(KeyCode.E) && gc.PlayerStatus != GameController.Status.HUNTED && Time.timeScale != 0)
         {
             loseSoundPlayed = false;
             miniController.StartQuiz(1);
             gc.Deactivate = true;
         }
-        else if (!isBehindEnemy && Input.GetKeyDown(KeyCode.E))
+        else if (!isBehindEnemy && Input.GetKeyDown(KeyCode.E) && Time.timeScale != 0)
         {
             RaycastHit objectHit;
             if (Physics.Raycast(visuals.transform.position, visuals.transform.forward, out objectHit, 1))
