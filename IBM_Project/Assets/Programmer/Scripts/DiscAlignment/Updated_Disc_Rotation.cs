@@ -362,10 +362,14 @@ public class Updated_Disc_Rotation : MonoBehaviour
         //Debug.Log("Disc2: " + (int)Disc2.transform.rotation.eulerAngles.x + "," + (int)Disc2.transform.eulerAngles.y + "," + (int)Disc2.transform.eulerAngles.z);
         //Debug.Log("Disc3: " + (int)Disc3.transform.rotation.eulerAngles.x + "," + (int)Disc3.transform.eulerAngles.y + "," + (int)Disc3.transform.eulerAngles.z);
 
+        Debug.Log("Disc1 Rotations xyz: " + Disc1.transform.rotation.eulerAngles.x + "," + Disc1.transform.rotation.eulerAngles.y + "," + Disc1.transform.rotation.eulerAngles.z);
+        Debug.Log("Disc2 Rotations xyz: " + Disc2.transform.rotation.eulerAngles.x + "," + Disc2.transform.rotation.eulerAngles.y + "," + Disc2.transform.rotation.eulerAngles.z);
+        Debug.Log("Disc3 Rotations xyz: " + Disc3.transform.rotation.eulerAngles.x + "," + Disc3.transform.rotation.eulerAngles.y + "," + Disc3.transform.rotation.eulerAngles.z);
+
         //Disc1 and Disc2
         if ((Disc1.transform.rotation.eulerAngles.x >= Disc2.transform.rotation.eulerAngles.x - 5.0f && Disc1.transform.rotation.eulerAngles.x <= Disc2.transform.rotation.eulerAngles.x + 5.0f 
             && Disc1.transform.rotation.eulerAngles.y >= Disc2.transform.rotation.eulerAngles.y - 5.0f && Disc1.transform.rotation.eulerAngles.y <= Disc2.transform.rotation.eulerAngles.y + 5.0f
-            && Disc1.transform.rotation.eulerAngles.z >= Disc2.transform.rotation.eulerAngles.z - 5.0f && Disc1.transform.rotation.eulerAngles.z <= Disc2.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true)
+            && Disc1.transform.rotation.eulerAngles.z >= Disc2.transform.rotation.eulerAngles.z - 5.0f && Disc1.transform.rotation.eulerAngles.z <= Disc2.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true || (Disc1.transform.rotation.eulerAngles.x - Disc2.transform.rotation.eulerAngles.x) > 340.0f)
         {
             numAligned[0] = true;
             //Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc2.transform.rotation.eulerAngles.x + " [Discs 1 and 2 are aligned]");
@@ -381,7 +385,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
         //Disc1 and Disc3
         if ((Disc1.transform.rotation.eulerAngles.x >= Disc3.transform.rotation.eulerAngles.x - 5.0f && Disc1.transform.rotation.eulerAngles.x <= Disc3.transform.rotation.eulerAngles.x + 5.0f
             && Disc1.transform.rotation.eulerAngles.y >= Disc3.transform.rotation.eulerAngles.y - 5.0f && Disc1.transform.rotation.eulerAngles.y <= Disc3.transform.rotation.eulerAngles.y + 5.0f
-            && Disc1.transform.rotation.eulerAngles.z >= Disc3.transform.rotation.eulerAngles.z - 5.0f && Disc1.transform.rotation.eulerAngles.z <= Disc3.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true)
+            && Disc1.transform.rotation.eulerAngles.z >= Disc3.transform.rotation.eulerAngles.z - 5.0f && Disc1.transform.rotation.eulerAngles.z <= Disc3.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true || (Disc1.transform.rotation.eulerAngles.x - Disc3.transform.rotation.eulerAngles.x) > 340.0f)
         {
             numAligned[1] = true;
             //Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc3.transform.rotation.eulerAngles.x + " [Discs 1 and 3 are aligned]");
@@ -397,7 +401,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
         //Disc2 and Disc3
         if ((Disc2.transform.rotation.eulerAngles.x >= Disc3.transform.rotation.eulerAngles.x - 5.0f && Disc2.transform.rotation.eulerAngles.x <= Disc3.transform.rotation.eulerAngles.x + 5.0f
             && Disc2.transform.rotation.eulerAngles.y >= Disc3.transform.rotation.eulerAngles.y - 5.0f && Disc2.transform.rotation.eulerAngles.y <= Disc3.transform.rotation.eulerAngles.y + 5.0f
-            && Disc2.transform.rotation.eulerAngles.z >= Disc3.transform.rotation.eulerAngles.z - 5.0f && Disc2.transform.rotation.eulerAngles.z <= Disc3.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true)
+            && Disc2.transform.rotation.eulerAngles.z >= Disc3.transform.rotation.eulerAngles.z - 5.0f && Disc2.transform.rotation.eulerAngles.z <= Disc3.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true || (Disc1.transform.rotation.eulerAngles.x - Disc2.transform.rotation.eulerAngles.x) > 340.0f)
         {
             numAligned[2] = true;
             //Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc3.transform.rotation.eulerAngles.x + " [Discs 2 and 3 are aligned]");
