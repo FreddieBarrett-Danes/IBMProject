@@ -235,6 +235,8 @@ public class PlayerController : MonoBehaviour
                     shooting.SetHost(visuals);
                     shooting.bulletSpeed = modifyBulletSpeed;
                 }
+                canSpeed = false;
+                speed = 5.0f;
                 canShoot = true;
                 controlTimer = 10.0f;
                 isBehindEnemy = false;
@@ -248,6 +250,7 @@ public class PlayerController : MonoBehaviour
             {
                 canSpeed = true;
                 speed = 6.0f;
+                canShoot = false;
                 controlTimer = 10.0f;
                 isBehindEnemy = false;
                 isControlling = true;
