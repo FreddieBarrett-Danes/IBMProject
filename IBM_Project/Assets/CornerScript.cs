@@ -6,19 +6,7 @@ using UnityEngine.UI;
 
 public class CornerScript : MonoBehaviour
 {
-    [SerializeField]
-    private bool thisIsRight;
-    void Awake()
-    {
-        if(this.GetComponent<RectTransform>().localPosition.x < 0)
-        {
-            thisIsRight = false;
-        }
-        else
-        {
-            thisIsRight = true;
-        }
-    }
+    public bool thisIsRight;
     private void Update()
     {
         this.transform.GetChild(0).gameObject.SetActive(true);
