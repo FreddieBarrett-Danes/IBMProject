@@ -110,7 +110,7 @@ public class DoorsScript : MonoBehaviour
         else if (isComputer)
         {
             
-            if (distToPlayer < activateDistance || nearestEnemy < activateDistance)//close to computer door
+            if (distToPlayer < activateDistance)//close to computer door
             {
                 player.GetComponent<PlayerController>().computerDoor = true;
                 player.GetComponent<PlayerController>().door = gameObject.GetComponent<DoorsScript>();
