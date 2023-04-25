@@ -1,28 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class goalLocationScript : MonoBehaviour
+public class GoalLocationScript : MonoBehaviour
 {
     private GameController gC;
     private MinigameController mC;
     public ComputerInteraction computerInteraction;
-    public mazePlayerScript mPlayer;
+    public MazePlayerScript mPlayer;
 
-    public walGen wG; //Re-reference the gameobject with the walGen script
+    public WallGen wG; //Re-reference the gameobject with the walGen script
     public Minigame_Timer mTimer;
     
 
-    private ScoreSystem ScoreSystemGameObject;
+    private ScoreSystem scoreSystemGameObject;
 
     private Vector3 originalCameraPos;
 
     private Camera camera;
     public bool setCameraPosition;
 
-    public int Lives = 6;
+    public int lives = 6;
     public TextMeshProUGUI mazeLives;
 
     private void OnTriggerEnter(Collider other)
@@ -33,7 +30,7 @@ public class goalLocationScript : MonoBehaviour
             //Debug.Log("Maze Win");
             //Debug.Log("Refer to goalLocationScript for Maze output");
             mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
-            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(1, mTimer.timer)); //1 = Maze
+            scoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(1, mTimer.timer)); //1 = Maze
             //ScoreSystemGameObject.CompletedMinigame(new Vector2(1, mTimer.timer)); //1 = Maze
             //mC.mazeTimerStore = mTimer.timer;
             //ScoreSystemGameObject.Score += 10;
@@ -43,16 +40,16 @@ public class goalLocationScript : MonoBehaviour
             //Debug.Log("Complet")
             
             //CameraMaze call - Sets position of the camera
-            if (setCameraPosition == false) { cameraMaze(false); };
+            if (setCameraPosition == false) { CameraMaze(false); };
 
             mPlayer.timesHit = 0;
             gC.inMinigame = false;
-            wG.Timer.SetActive(false);
+            wG.timer.SetActive(false);
             mC.completedMaze = true;
         }
     }
 
-    void cameraMaze(bool inMaze)
+    void CameraMaze(bool inMaze)
     {
         if (setCameraPosition == true)
         {
@@ -74,7 +71,7 @@ public class goalLocationScript : MonoBehaviour
     private void Start()
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
+        scoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
         //mazeLives.text = "UISDHF";
         
         //mazeLives.GetComponent<TextMeshProUGUI>().active(true);
@@ -83,7 +80,7 @@ public class goalLocationScript : MonoBehaviour
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         computerInteraction = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
         originalCameraPos = camera.GetComponent<Camera>().transform.position;
-        cameraMaze(true);
+        CameraMaze(true);
     }
     private void Update()
     {
@@ -93,7 +90,7 @@ public class goalLocationScript : MonoBehaviour
         }
 
         //Debug.Log("TimesHit: " + mPlayer.timesHit + " Lives: " + Lives);
-        mazeLives.text = (Lives - mPlayer.timesHit).ToString("Lives: " + "0");
+        mazeLives.text = (lives - mPlayer.timesHit).ToString("Lives: " + "0");
 
 
         //if (Input.GetKeyDown(KeyCode.H))
@@ -102,15 +99,15 @@ public class goalLocationScript : MonoBehaviour
         //}
 
         //if (mPlayer != null && mPlayer.timesHit >= 6)
-        if (mPlayer != null && mPlayer.timesHit >= Lives)
+        if (mPlayer != null && mPlayer.timesHit >= lives)
         {
             mC.interactMaze = false;
             gC.inMinigame = false;
-            if (gC.PlayerStatus == GameController.Status.HUNTED)
+            if (gC.playerStatus == GameController.Status.HUNTED)
                 return;
             else
-                gC.PlayerStatus = GameController.Status.ALERTED;
-            wG.Timer.SetActive(false);
+                gC.playerStatus = GameController.Status.ALERTED;
+            wG.timer.SetActive(false);
             gC.failMinigame = true;
             computerInteraction.mazeFailed = true;
             
@@ -128,7 +125,7 @@ public class goalLocationScript : MonoBehaviour
 
         
         
-            cameraMaze(true);
+            CameraMaze(true);
         
     }
 }

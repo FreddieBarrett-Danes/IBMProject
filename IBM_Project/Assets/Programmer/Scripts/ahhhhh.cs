@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ahhhhh : MonoBehaviour
+public class Ahhhhh : MonoBehaviour
 {
 
     public int avgFrameRate;
@@ -18,11 +16,7 @@ public class ahhhhh : MonoBehaviour
     }
 
     public PlayerController pc;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     private void Awake()
     {

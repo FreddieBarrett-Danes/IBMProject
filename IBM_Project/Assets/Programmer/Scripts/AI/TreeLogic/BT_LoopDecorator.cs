@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace BT
 {
     public class BT_LoopDecorator : BT_Node

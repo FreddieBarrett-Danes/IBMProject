@@ -1,16 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class mazePlayerScript : MonoBehaviour
+public class MazePlayerScript : MonoBehaviour
 {
     public float speed;
     public bool returnToStartUponCollision;
     bool touchWall;
-    public TextMeshProUGUI Timer;
+    public TextMeshProUGUI timer;
     [SerializeField]
     private AudioSource wallHitSound;
     bool mazeReadyPlayer;

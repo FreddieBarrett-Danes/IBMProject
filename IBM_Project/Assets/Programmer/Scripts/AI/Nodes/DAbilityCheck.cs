@@ -6,9 +6,9 @@ public class DAbilityCheck : BT_Node
     private readonly BotInfo botInfo;
     private readonly string ability;
 
-    public DAbilityCheck(BotInfo pinput, string pAbility)
+    public DAbilityCheck(BotInfo pInput, string pAbility)
     {
-        botInfo = pinput;
+        botInfo = pInput;
         ability = pAbility;
     }
 

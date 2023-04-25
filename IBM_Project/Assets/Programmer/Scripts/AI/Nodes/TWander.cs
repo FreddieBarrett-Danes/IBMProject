@@ -7,10 +7,10 @@ public class TWander : BT_Node
     private readonly NavMeshAgent agent;
     private readonly BotInfo botInfo;
 
-    public TWander(NavMeshAgent pAgent, BotInfo pbotInfo)
+    public TWander(NavMeshAgent pAgent, BotInfo pBotInfo)
     {
         agent = pAgent;
-        botInfo = pbotInfo;
+        botInfo = pBotInfo;
     }
 
     public override NodeState Evaluate()

@@ -6,11 +6,11 @@ public class TPathToPlayer : BT_Node
 {
     private readonly NavMeshAgent agent;
     private readonly BotInfo botInfo;
-    private float timer = 0.0f;
-    public TPathToPlayer(NavMeshAgent pAgent, BotInfo pbotInfo)
+    private float timer;
+    public TPathToPlayer(NavMeshAgent pAgent, BotInfo pBotInfo)
     {
         agent = pAgent;
-        botInfo = pbotInfo;
+        botInfo = pBotInfo;
     }
 
     public override NodeState Evaluate()

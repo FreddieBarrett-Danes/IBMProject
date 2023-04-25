@@ -7,10 +7,10 @@ public class TPatrol : BT_Node
     private readonly NavMeshAgent agent;
     private readonly BotInfo botInfo;
 
-    public TPatrol(NavMeshAgent pAgent, BotInfo pbotInfo)
+    public TPatrol(NavMeshAgent pAgent, BotInfo pBotInfo)
     {
         agent = pAgent;
-        botInfo = pbotInfo;
+        botInfo = pBotInfo;
     }
 
     public override NodeState Evaluate()

@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class wallDestory : MonoBehaviour
+public class WallDestory : MonoBehaviour
 {
 
     private int count = 0;
@@ -33,7 +31,7 @@ public class wallDestory : MonoBehaviour
         //}
     }
 
-    void moveGen2(char dir, int amount)
+    void MoveGen2(char dir, int amount)
     {
         count++;
         for (int i = 0; i < amount; i++)
@@ -66,19 +64,6 @@ public class wallDestory : MonoBehaviour
                     break;
             }
         }
-
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //transform.position = new Vector3(2, 0, 2);
-        //moveGen2('n', 1);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
 }

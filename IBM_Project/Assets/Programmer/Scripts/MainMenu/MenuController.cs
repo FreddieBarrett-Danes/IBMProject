@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Threading;
-using System.Runtime.Serialization.Formatters;
+using UnityEngine.Serialization;
 
 public class MenuController : MonoBehaviour
 {
@@ -21,17 +19,17 @@ public class MenuController : MonoBehaviour
     private GameObject buttonPrefab, sliderPrefab, tickboxPrefab, dropdownPrefab, skillsText, htp0Text, htp1Text, htp2Text, htp3Text, htp1Image, htp2Image, htp3Image, htp4Image, cornerButton;
 
     [SerializeField]
-    private List<GameObject> MainButtonList = new List<GameObject>();
+    private List<GameObject> mainButtonList = new List<GameObject>();
     [SerializeField]
-    private List<GameObject> PauseButtonList = new List<GameObject>();
+    private List<GameObject> pauseButtonList = new List<GameObject>();
     [SerializeField]
-    private List<GameObject> SettingsButtonList = new List<GameObject>();
+    private List<GameObject> settingsButtonList = new List<GameObject>();
     [SerializeField]
-    private List<GameObject> SkillsButtonList = new List<GameObject>();
+    private List<GameObject> skillsButtonList = new List<GameObject>();
     [SerializeField]
-    private List<GameObject> CreditsButtonList = new List<GameObject>();
+    private List<GameObject> creditsButtonList = new List<GameObject>();
     [SerializeField]
-    private List<GameObject> PlayButtonList = new List<GameObject>();
+    private List<GameObject> playButtonList = new List<GameObject>();
     [SerializeField]
     private List<GameObject> HTP0List = new List<GameObject>();
     [SerializeField]
@@ -92,7 +90,7 @@ public class MenuController : MonoBehaviour
 
     public bool inGame;
     public bool escCanBePressed;
-    public bool Quiz;
+    public bool quiz;
 
     [SerializeField]
     private GameObject lTick;
@@ -126,10 +124,7 @@ public class MenuController : MonoBehaviour
         FHD,
         LHD
     }
-    private void Awake()
-    {
 
-    }
     void Start()
     {
         /*        GameObject[] menuArray = GameObject.FindGameObjectsWithTag("MenuController");
@@ -180,9 +175,9 @@ public class MenuController : MonoBehaviour
         dropdownPrefab = Resources.Load<GameObject>("Menu/DropdownPrefab");
         skillsText = Resources.Load<GameObject>("Menu/SkillsText");
 
-        getCanvasSize();
-        spawnButtons();
-        setButtonPosition();
+        GetCanvasSize();
+        SpawnButtons();
+        SetButtonPosition();
         setButtonSize();
 
         menuState = MenuState.Main;
@@ -211,7 +206,7 @@ public class MenuController : MonoBehaviour
 
     void OnGUI()
     {
-        setButtonPosition();
+        SetButtonPosition();
         setButtonSize();
         PositionMenu();
     }
@@ -255,13 +250,13 @@ public class MenuController : MonoBehaviour
             }
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 26 || SceneManager.GetActiveScene().buildIndex == 27 || SceneManager.GetActiveScene().buildIndex == 28 || SceneManager.GetActiveScene().buildIndex == 29 || SceneManager.GetActiveScene().buildIndex == 30 || SceneManager.GetActiveScene().buildIndex == 31 || SceneManager.GetActiveScene().buildIndex == 32 || SceneManager.GetActiveScene().buildIndex == 33 || SceneManager.GetActiveScene().buildIndex == 34 || SceneManager.GetActiveScene().buildIndex == 35 || Quiz)
+        if (SceneManager.GetActiveScene().buildIndex == 26 || SceneManager.GetActiveScene().buildIndex == 27 || SceneManager.GetActiveScene().buildIndex == 28 || SceneManager.GetActiveScene().buildIndex == 29 || SceneManager.GetActiveScene().buildIndex == 30 || SceneManager.GetActiveScene().buildIndex == 31 || SceneManager.GetActiveScene().buildIndex == 32 || SceneManager.GetActiveScene().buildIndex == 33 || SceneManager.GetActiveScene().buildIndex == 34 || SceneManager.GetActiveScene().buildIndex == 35 || quiz)
         {
             menuState = MenuState.Running;
             music.enabled = false;
             escCanBePressed = false;
         }
-        else if (SceneManager.GetActiveScene().buildIndex == 0 || !Quiz)
+        else if (SceneManager.GetActiveScene().buildIndex == 0 || !quiz)
         {
             //menuState = MenuState.Main;
             escCanBePressed = true;
@@ -274,7 +269,7 @@ public class MenuController : MonoBehaviour
         }
         lastFrameMenuState = menuState;
 
-        fullscreen = SettingsButtonList[1].transform.GetChild(1).GetComponent<Toggle>().isOn;
+        fullscreen = settingsButtonList[1].transform.GetChild(1).GetComponent<Toggle>().isOn;
 
         if (lastframeFullscreen == fullscreen)
         {
@@ -285,7 +280,7 @@ public class MenuController : MonoBehaviour
 
         //Debug.Log(SettingsButtonList[2].GetComponent<TMP_Dropdown>());
 
-        int dropdownInt = SettingsButtonList[2].GetComponent<TMP_Dropdown>().value;
+        int dropdownInt = settingsButtonList[2].GetComponent<TMP_Dropdown>().value;
         //string temp = "Tempo";
 
         thisFrameResolution = (Resolution)dropdownInt;
@@ -320,12 +315,12 @@ public class MenuController : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
 
-            MainButtonList.Clear();
-            PauseButtonList.Clear();
-            SettingsButtonList.Clear();
-            SkillsButtonList.Clear();
-            CreditsButtonList.Clear();
-            PlayButtonList.Clear();
+            mainButtonList.Clear();
+            pauseButtonList.Clear();
+            settingsButtonList.Clear();
+            skillsButtonList.Clear();
+            creditsButtonList.Clear();
+            playButtonList.Clear();
             HTP0List.Clear();
             HTP1List.Clear();
             HTP2List.Clear();
@@ -343,10 +338,10 @@ public class MenuController : MonoBehaviour
             tickboxPrefab = Resources.Load<GameObject>("Menu/TickboxPrefab");
             dropdownPrefab = Resources.Load<GameObject>("Menu/DropdownPrefab");
             skillsText = Resources.Load<GameObject>("Menu/SkillsText");
-            getCanvasSize();
-            spawnButtons();
+            GetCanvasSize();
+            SpawnButtons();
             //SettingsButtonList[2].GetComponent<Dropdown>().value = resolution;
-            setButtonPosition();
+            SetButtonPosition();
             setButtonSize();
 
             //menuState = MenuState.Main;
@@ -372,15 +367,11 @@ public class MenuController : MonoBehaviour
     void FullscreenState()
     {
         Screen.fullScreen = fullscreen;
-
-        return;
     }
 
     void ResolutionState()
     {
         Screen.SetResolution((int)resOptions[thisFrameResolution.GetHashCode()].x, (int)resOptions[thisFrameResolution.GetHashCode()].y, true);
-
-        return;
     }
 
     void StateChanged()
@@ -585,49 +576,49 @@ public class MenuController : MonoBehaviour
 
     void ShowHideMainMenuComponents(bool showHide)
     {
-        for (int i = 0; i < MainButtonList.Count; i++)
+        for (int i = 0; i < mainButtonList.Count; i++)
         {
-            MainButtonList[i].gameObject.SetActive(showHide);
+            mainButtonList[i].gameObject.SetActive(showHide);
         }
     }
 
     void ShowHidePauseMenuComponents(bool showHide)
     {
-        for (int i = 0; i < PauseButtonList.Count; i++)
+        for (int i = 0; i < pauseButtonList.Count; i++)
         {
-            PauseButtonList[i].gameObject.SetActive(showHide);
+            pauseButtonList[i].gameObject.SetActive(showHide);
         }
     }
 
     void ShowHideSettingsMenuComponents(bool showHide)
     {
-        for (int i = 0; i < SettingsButtonList.Count; i++)
+        for (int i = 0; i < settingsButtonList.Count; i++)
         {
-            SettingsButtonList[i].gameObject.SetActive(showHide);
+            settingsButtonList[i].gameObject.SetActive(showHide);
         }
     }
 
     void ShowHideCreditsMenuComponents(bool showHide)
     {
-        for (int i = 0; i < CreditsButtonList.Count; i++)
+        for (int i = 0; i < creditsButtonList.Count; i++)
         {
-            CreditsButtonList[i].gameObject.SetActive(showHide);
+            creditsButtonList[i].gameObject.SetActive(showHide);
         }
     }
 
     void ShowHideSkillsMenuComponents(bool showHide)
     {
-        for (int i = 0; i < SkillsButtonList.Count; i++)
+        for (int i = 0; i < skillsButtonList.Count; i++)
         {
-            SkillsButtonList[i].gameObject.SetActive(showHide);
+            skillsButtonList[i].gameObject.SetActive(showHide);
         }
     }
 
     void ShowHidePlayMenuComponents(bool showHide)
     {
-        for (int i = 0; i < PlayButtonList.Count; i++)
+        for (int i = 0; i < playButtonList.Count; i++)
         {
-            PlayButtonList[i].gameObject.SetActive(showHide);
+            playButtonList[i].gameObject.SetActive(showHide);
         }
     }
 
@@ -685,18 +676,16 @@ public class MenuController : MonoBehaviour
         Application.OpenURL(hyperlink);
     }
 
-    void getCanvasSize()
+    void GetCanvasSize()
     {
         canvasRectTransform = canvas.GetComponent<RectTransform>();
 
         //This is to find the size of the canvas
         canvasWidth = canvasRectTransform.sizeDelta.x;
         canvasHeight = canvasRectTransform.sizeDelta.y;
-
-        return;
     }
 
-    void spawnButtons()
+    void SpawnButtons()
     {
         //
         //Spawning Main Menu
@@ -706,7 +695,7 @@ public class MenuController : MonoBehaviour
             GameObject tempPrefab = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
             //tempPrefab.transform.SetParent(canvas.transform);
             tempPrefab.transform.SetParent(canvas.transform);
-            MainButtonList.Add(tempPrefab);
+            mainButtonList.Add(tempPrefab);
             SetText(i);
             SetButtonActions(i);
             tempPrefab.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -723,7 +712,7 @@ public class MenuController : MonoBehaviour
             GameObject tempPrefab = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
             //tempPrefab.transform.parent = canvas.transform;
             tempPrefab.transform.SetParent(canvas.transform);
-            PauseButtonList.Add(tempPrefab);
+            pauseButtonList.Add(tempPrefab);
             SetPauseText(i);
             SetPauseButtonActions(i);
             tempPrefab.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -738,23 +727,23 @@ public class MenuController : MonoBehaviour
         //Spawn Audio Slider
         GameObject slider = Instantiate(sliderPrefab, canvas.transform.position, Quaternion.identity);
         slider.transform.SetParent(canvas.transform);
-        SettingsButtonList.Add(slider);
+        settingsButtonList.Add(slider);
         slider.GetComponent<Slider>().value = 5;
 
         //Spawn Fullscreen Tickbox
         GameObject tickbox = Instantiate(tickboxPrefab, canvas.transform.position, Quaternion.identity);
         tickbox.transform.SetParent(canvas.transform);
-        SettingsButtonList.Add(tickbox);
+        settingsButtonList.Add(tickbox);
 
         //Spawn Resolution Dropdown
         GameObject dropdown = Instantiate(dropdownPrefab, canvas.transform.position, Quaternion.identity);
         dropdown.transform.SetParent(canvas.transform);
-        SettingsButtonList.Add(dropdown);
+        settingsButtonList.Add(dropdown);
 
         //Spawn Back Button
         GameObject settingsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         settingsBack.transform.SetParent(canvas.transform);
-        SettingsButtonList.Add(settingsBack);
+        settingsButtonList.Add(settingsBack);
         settingsBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
         settingsBack.GetComponent<Button>().onClick.AddListener(BackButtonPressed);
         settingsBack.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -767,12 +756,12 @@ public class MenuController : MonoBehaviour
 
         GameObject creditsText = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
         creditsText.transform.SetParent(canvas.transform);
-        CreditsButtonList.Add(creditsText);
+        creditsButtonList.Add(creditsText);
 
         //back button
         GameObject creditsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         creditsBack.transform.SetParent(canvas.transform);
-        CreditsButtonList.Add(creditsBack);
+        creditsButtonList.Add(creditsBack);
         creditsBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
         creditsBack.GetComponent<Button>().onClick.AddListener(BackButtonPressed);
         creditsBack.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -786,7 +775,7 @@ public class MenuController : MonoBehaviour
         //Start button
         GameObject skillsPlay = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         skillsPlay.transform.SetParent(canvas.transform);
-        SkillsButtonList.Add(skillsPlay);
+        skillsButtonList.Add(skillsPlay);
         skillsPlay.GetComponentInChildren<TextMeshProUGUI>().text = "Start";
         skillsPlay.GetComponent<Button>().onClick.AddListener(PlayButtonPressed);
         skillsPlay.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -796,7 +785,7 @@ public class MenuController : MonoBehaviour
         //link to ibm
         GameObject skillsLink = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         skillsLink.transform.SetParent(canvas.transform);
-        SkillsButtonList.Add(skillsLink);
+        skillsButtonList.Add(skillsLink);
         skillsLink.GetComponentInChildren<TextMeshProUGUI>().text = "IBM Skills Build";
         skillsLink.GetComponent<Button>().onClick.AddListener(OpenHyperlink);
         skillsLink.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -806,12 +795,12 @@ public class MenuController : MonoBehaviour
         //text for ibm
         GameObject ibmText = Instantiate(skillsText, canvas.transform.position, Quaternion.identity);
         ibmText.transform.SetParent(canvas.transform);
-        SkillsButtonList.Add(ibmText);
+        skillsButtonList.Add(ibmText);
 
         //menu for controls
         GameObject controls = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         controls.transform.SetParent(canvas.transform);
-        SkillsButtonList.Add(controls);
+        skillsButtonList.Add(controls);
         controls.GetComponentInChildren<TextMeshProUGUI>().text = "Controls";
         controls.GetComponent<Button>().onClick.AddListener(ControlsPressed);
         controls.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -821,7 +810,7 @@ public class MenuController : MonoBehaviour
         //back button
         GameObject skillsBack = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         skillsBack.transform.SetParent(canvas.transform);
-        SkillsButtonList.Add(skillsBack);
+        skillsButtonList.Add(skillsBack);
         skillsBack.GetComponentInChildren<TextMeshProUGUI>().text = "Back";
         skillsBack.GetComponent<Button>().onClick.AddListener(BackButtonPressed);
         skillsBack.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -835,7 +824,7 @@ public class MenuController : MonoBehaviour
 
         GameObject ship1 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship1.transform.SetParent(canvas.transform);
-        PlayButtonList.Add(ship1);
+        playButtonList.Add(ship1);
         ship1.GetComponentInChildren<TextMeshProUGUI>().text = "Cloud";
         ship1.GetComponent<Button>().onClick.AddListener(Ship1Start);
         ship1.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -844,7 +833,7 @@ public class MenuController : MonoBehaviour
 
         GameObject ship2 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship2.transform.SetParent(canvas.transform);
-        PlayButtonList.Add(ship2);
+        playButtonList.Add(ship2);
         ship2.GetComponentInChildren<TextMeshProUGUI>().text = "AI";
         ship2.GetComponent<Button>().onClick.AddListener(Ship2Start);
         ship2.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -853,7 +842,7 @@ public class MenuController : MonoBehaviour
 
         GameObject ship3 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship3.transform.SetParent(canvas.transform);
-        PlayButtonList.Add(ship3);
+        playButtonList.Add(ship3);
         ship3.GetComponentInChildren<TextMeshProUGUI>().text = "Data";
         ship3.GetComponent<Button>().onClick.AddListener(Ship3Start);
         ship3.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -862,7 +851,7 @@ public class MenuController : MonoBehaviour
 
         GameObject ship4 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship4.transform.SetParent(canvas.transform);
-        PlayButtonList.Add(ship4);
+        playButtonList.Add(ship4);
         ship4.GetComponentInChildren<TextMeshProUGUI>().text = "Quantum";
         ship4.GetComponent<Button>().onClick.AddListener(Ship4Start);
         ship4.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -871,7 +860,7 @@ public class MenuController : MonoBehaviour
 
         GameObject ship5 = Instantiate(buttonPrefab, canvas.transform.position, Quaternion.identity);
         ship5.transform.SetParent(canvas.transform);
-        PlayButtonList.Add(ship5);
+        playButtonList.Add(ship5);
         ship5.GetComponentInChildren<TextMeshProUGUI>().text = "Security";
         ship5.GetComponent<Button>().onClick.AddListener(Ship5Start);
         ship5.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
@@ -1014,63 +1003,61 @@ public class MenuController : MonoBehaviour
         Destroy(right.GetComponent<answersScript>());
         right.GetComponent<Image>().color = buttonColour;
         right.GetComponent<CornerScript>().thisIsRight = true;
-
-        return;
     }
 
-    void setButtonPosition()
+    void SetButtonPosition()
     {
         if (menuState == MenuState.Main)
         {
-            for (int i = 0; i < MainButtonList.Count; i++)
+            for (int i = 0; i < mainButtonList.Count; i++)
             {
                 Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
-                MainButtonList[i].transform.position = canvas.transform.position + pos;
+                mainButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
 
         else if (menuState == MenuState.Paused)
         {
-            for (int i = 0; i < PauseButtonList.Count; i++)
+            for (int i = 0; i < pauseButtonList.Count; i++)
             {
                 Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
-                PauseButtonList[i].transform.position = canvas.transform.position + pos;
+                pauseButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
 
         else if (menuState == MenuState.Settings)
         {
-            for (int i = 0; i < SettingsButtonList.Count; i++)
+            for (int i = 0; i < settingsButtonList.Count; i++)
             {
                 Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
-                SettingsButtonList[i].transform.position = canvas.transform.position + pos;
+                settingsButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
 
         else if (menuState == MenuState.Credits)
         {
-            for (int i = 0; i < CreditsButtonList.Count; i++)
+            for (int i = 0; i < creditsButtonList.Count; i++)
             {
                 Vector3 pos = new Vector3(0, creditsHeightFrom - ((creditsSpacing * canvasHeight) * i), 0);
-                CreditsButtonList[i].transform.position = canvas.transform.position + pos;
+                creditsButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
 
         else if (menuState == MenuState.SkillsBuild)
         {
-            for (int i = 0; i < SkillsButtonList.Count; i++)
+            for (int i = 0; i < skillsButtonList.Count; i++)
             {
                 Vector3 pos = new Vector3(0, startHeightFromStart - ((buttonSpacing * canvasHeight) * i), 0);
-                SkillsButtonList[i].transform.position = canvas.transform.position + pos;
+                skillsButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
 
         else if (menuState == MenuState.Levels)
         {
-            for (int i = 0; i < PlayButtonList.Count; i++)
+            for (int i = 0; i < playButtonList.Count; i++)
             {
                 Vector3 pos = new Vector3((shipsSpacing * canvasWidth) * i, 0, 0);
-                PlayButtonList[i].transform.position = canvas.transform.position + pos;
+                playButtonList[i].transform.position = canvas.transform.position + pos;
             }
         }
 
@@ -1141,21 +1128,21 @@ public class MenuController : MonoBehaviour
 
         if (menuState == MenuState.Main)
         {
-            for (int i = 0; i < MainButtonList.Count; i++)
+            for (int i = 0; i < mainButtonList.Count; i++)
             {
-                MainButtonList[i].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+                mainButtonList[i].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
 
-                MainButtonList[i].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+                mainButtonList[i].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
             }
         }
 
         else if (menuState == MenuState.Paused)
         {
-            for (int i = 0; i < PauseButtonList.Count; i++)
+            for (int i = 0; i < pauseButtonList.Count; i++)
             {
-                PauseButtonList[i].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+                pauseButtonList[i].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
 
-                PauseButtonList[i].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+                pauseButtonList[i].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
             }
         }
 
@@ -1166,21 +1153,21 @@ public class MenuController : MonoBehaviour
 
             float sliderSize = Mathf.Min(canvasWidth, canvasHeight) * (sliderScaler / 100f);
             //SettingsButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, ((buttonWidth / 500) * 30) * canvasHeight);
-            SettingsButtonList[0].transform.localScale = new Vector2(sliderSize, sliderSize);
+            settingsButtonList[0].transform.localScale = new Vector2(sliderSize, sliderSize);
 
             float checkboxSize = Mathf.Min(canvasWidth, canvasHeight) * (tickboxScaler / 100f);
-            SettingsButtonList[1].transform.localScale = new Vector2(checkboxSize, checkboxSize);
+            settingsButtonList[1].transform.localScale = new Vector2(checkboxSize, checkboxSize);
 
             /*SettingsButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
             SettingsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(((buttonWidth * canvasWidth) * textboxScalar) * 0.5f, ((buttonHeight * canvasHeight) * textboxScalar) * 0.5f);*/ //This is scaling funny and idk why
 
             float resSize = Mathf.Min(canvasWidth, canvasHeight) * (resScaler / 100f);
-            SettingsButtonList[2].transform.localScale = new Vector2(resSize, resSize);
+            settingsButtonList[2].transform.localScale = new Vector2(resSize, resSize);
             //SettingsButtonList[2].transform.GetChild(0).GetComponent<TextMeshProUGUI>
-            SettingsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(160 * 0.8f, 30 * 0.8f);
+            settingsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(160 * 0.8f, 30 * 0.8f);
 
-            SettingsButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
-            SettingsButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+            settingsButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            settingsButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
 
             /*float resSize = Mathf.Min(canvasWidth, canvasHeight) * (resScaler / 100f);
             SettingsButtonList[3].transform.localScale = new Vector2(resSize, resSize);*/
@@ -1190,27 +1177,27 @@ public class MenuController : MonoBehaviour
         else if (menuState == MenuState.Credits)
         {
             float creditsSize = Mathf.Min(canvasWidth, canvasHeight) * (creditsScaler / 100f);
-            CreditsButtonList[0].transform.localScale = new Vector2(creditsSize, creditsSize);
+            creditsButtonList[0].transform.localScale = new Vector2(creditsSize, creditsSize);
 
-            CreditsButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
-            CreditsButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+            creditsButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            creditsButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
         }
 
         else if (menuState == MenuState.SkillsBuild)
         {
-            SkillsButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
-            SkillsButtonList[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+            skillsButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            skillsButtonList[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
 
-            SkillsButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
-            SkillsButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+            skillsButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            skillsButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
 
-            SkillsButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(0.8f * canvasWidth, buttonHeight * canvasHeight);
-            SkillsButtonList[2].GetComponent<TextMeshProUGUI>().text = SkillsText;
-            SkillsButtonList[2].GetComponent<TextMeshProUGUI>().color = textColour;
-            SkillsButtonList[2].GetComponent<TextMeshProUGUI>().enableAutoSizing = true;
+            skillsButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(0.8f * canvasWidth, buttonHeight * canvasHeight);
+            skillsButtonList[2].GetComponent<TextMeshProUGUI>().text = SkillsText;
+            skillsButtonList[2].GetComponent<TextMeshProUGUI>().color = textColour;
+            skillsButtonList[2].GetComponent<TextMeshProUGUI>().enableAutoSizing = true;
 
             float skillsSize = Mathf.Min(canvasWidth, canvasHeight) * (testScale / 100f);
-            SkillsButtonList[2].transform.localScale = new Vector2(skillsSize, skillsSize);
+            skillsButtonList[2].transform.localScale = new Vector2(skillsSize, skillsSize);
             //SettingsButtonList[2].transform.GetChild(0).GetComponent<TextMeshProUGUI>
             //SkillsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(160 * 0.8f, 30 * 0.8f);
 
@@ -1221,29 +1208,29 @@ public class MenuController : MonoBehaviour
 
             //SkillsButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
 
-            SkillsButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
-            SkillsButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+            skillsButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            skillsButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
 
-            SkillsButtonList[4].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
-            SkillsButtonList[4].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
+            skillsButtonList[4].GetComponent<RectTransform>().sizeDelta = new Vector2(buttonWidth * canvasWidth, buttonHeight * canvasHeight);
+            skillsButtonList[4].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((buttonWidth * canvasWidth) * textboxScalar, (buttonHeight * canvasHeight) * textboxScalar);
         }
 
         else if (menuState == MenuState.Levels)
         {
-            PlayButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
-            PlayButtonList[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+            playButtonList[0].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
+            playButtonList[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
 
-            PlayButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
-            PlayButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+            playButtonList[1].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
+            playButtonList[1].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
 
-            PlayButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
-            PlayButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+            playButtonList[2].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
+            playButtonList[2].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
 
-            PlayButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
-            PlayButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+            playButtonList[3].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
+            playButtonList[3].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
 
-            PlayButtonList[4].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
-            PlayButtonList[4].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
+            playButtonList[4].GetComponent<RectTransform>().sizeDelta = new Vector2(shipsButtonWidth * canvasWidth, shipsButtonHeight * canvasHeight);
+            playButtonList[4].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2((shipsButtonWidth * canvasWidth) * textboxScalar, (shipsButtonHeight * canvasHeight) * textboxScalar);
         }
 
         else if (menuState == MenuState.HTP0)
@@ -1323,19 +1310,19 @@ public class MenuController : MonoBehaviour
         switch (buttonNumber)
         {
             case 0:
-                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton1; // start
+                mainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton1; // start
                 break;
             case 1:
-                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton2; // settings
+                mainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton2; // settings
                 break;
             case 2:
-                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton3; // settings
+                mainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton3; // settings
                 break;
             case 3:
-                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton4; // credits
+                mainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton4; // credits
                 break;
             case 4:
-                MainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton5; // exit
+                mainButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton5; // exit
                 break;
             default:
                 Debug.Log("Unknown button");
@@ -1348,19 +1335,19 @@ public class MenuController : MonoBehaviour
         switch (buttonNumber)
         {
             case 0:
-                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = "Continue"; // continue
+                pauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = "Continue"; // continue
                 break;
             case 1:
-                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton2; // settings
+                pauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton2; // settings
                 break;
             case 2:
-                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton3; // Credits
+                pauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton3; // Credits
                 break;
             case 3:
-                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton4; // Exit
+                pauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton4; // Exit
                 break;
             case 4:
-                PauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton5; // exit
+                pauseButtonList[buttonNumber].GetComponentInChildren<TextMeshProUGUI>().text = menuButton5; // exit
                 break;
             default:
                 Debug.Log("Unknown button");
@@ -1373,19 +1360,19 @@ public class MenuController : MonoBehaviour
         switch (buttonNumber)
         {
             case 0:
-                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SkillsButtonPressed);
+                mainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SkillsButtonPressed);
                 break;
             case 1:
-                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SettingsButtonPressed);
+                mainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SettingsButtonPressed);
                 break;
             case 2:
-                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
+                mainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
                 break;
             case 3:
-                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                mainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
                 break;
             case 4:
-                MainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
+                mainButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(ExitButtonPressed);
                 break;
             default:
                 Debug.Log("Unknown button");
@@ -1398,19 +1385,19 @@ public class MenuController : MonoBehaviour
         switch (buttonNumber)
         {
             case 0:
-                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(UnpauseGame);
+                pauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(UnpauseGame);
                 break;
             case 1:
-                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SettingsButtonPressed);
+                pauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(SettingsButtonPressed);
                 break;
             case 2:
-                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
+                pauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(CreditsButtonPressed);
                 break;
             case 3:
-                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(BackMainMenuPressed);
+                pauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(BackMainMenuPressed);
                 break;
             case 4:
-                PauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(BackMainMenuPressed);
+                pauseButtonList[buttonNumber].GetComponent<Button>().onClick.AddListener(BackMainMenuPressed);
                 break;
             default:
                 Debug.Log("Unknown button");
@@ -1425,90 +1412,90 @@ public class MenuController : MonoBehaviour
 
         if (menuState == MenuState.Main)
         {
-            for (int i = 0; i < MainButtonList.Count; i++)
+            for (int i = 0; i < mainButtonList.Count; i++)
             {
-                averageHeight += MainButtonList[i].GetComponent<RectTransform>().localPosition.y;
+                averageHeight += mainButtonList[i].GetComponent<RectTransform>().localPosition.y;
             }
-            averageHeight /= MainButtonList.Count;
+            averageHeight /= mainButtonList.Count;
             //Debug.Log(averageHeight);
 
-            for (int i = 0; i < MainButtonList.Count; i++)
+            for (int i = 0; i < mainButtonList.Count; i++)
             {
-                MainButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+                mainButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
             }
         }
 
         else if (menuState == MenuState.Paused)
         {
-            for (int i = 0; i < PauseButtonList.Count; i++)
+            for (int i = 0; i < pauseButtonList.Count; i++)
             {
-                averageHeight += PauseButtonList[i].GetComponent<RectTransform>().localPosition.y;
+                averageHeight += pauseButtonList[i].GetComponent<RectTransform>().localPosition.y;
             }
-            averageHeight /= PauseButtonList.Count;
+            averageHeight /= pauseButtonList.Count;
             //Debug.Log(averageHeight);
 
-            for (int i = 0; i < PauseButtonList.Count; i++)
+            for (int i = 0; i < pauseButtonList.Count; i++)
             {
-                PauseButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+                pauseButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
             }
         }
 
         else if (menuState == MenuState.Settings)
         {
-            for (int i = 0; i < SettingsButtonList.Count; i++)
+            for (int i = 0; i < settingsButtonList.Count; i++)
             {
-                averageHeight += SettingsButtonList[i].GetComponent<RectTransform>().localPosition.y;
+                averageHeight += settingsButtonList[i].GetComponent<RectTransform>().localPosition.y;
             }
-            averageHeight /= SettingsButtonList.Count;
+            averageHeight /= settingsButtonList.Count;
             //Debug.Log(averageHeight);
 
-            for (int i = 0; i < SettingsButtonList.Count; i++)
+            for (int i = 0; i < settingsButtonList.Count; i++)
             {
-                SettingsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+                settingsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
             }
         }
 
         else if (menuState == MenuState.Credits)
         {
-            for (int i = 0; i < CreditsButtonList.Count; i++)
+            for (int i = 0; i < creditsButtonList.Count; i++)
             {
-                averageHeight += CreditsButtonList[i].GetComponent<RectTransform>().localPosition.y;
+                averageHeight += creditsButtonList[i].GetComponent<RectTransform>().localPosition.y;
             }
-            averageHeight /= CreditsButtonList.Count;
+            averageHeight /= creditsButtonList.Count;
             //Debug.Log(averageHeight);
 
-            for (int i = 0; i < CreditsButtonList.Count; i++)
+            for (int i = 0; i < creditsButtonList.Count; i++)
             {
-                CreditsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+                creditsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
             }
         }
 
         else if (menuState == MenuState.SkillsBuild)
         {
-            for (int i = 0; i < SkillsButtonList.Count; i++)
+            for (int i = 0; i < skillsButtonList.Count; i++)
             {
-                averageHeight += SkillsButtonList[i].GetComponent<RectTransform>().localPosition.y;
+                averageHeight += skillsButtonList[i].GetComponent<RectTransform>().localPosition.y;
             }
-            averageHeight /= SkillsButtonList.Count;
+            averageHeight /= skillsButtonList.Count;
             //Debug.Log(averageHeight);
 
-            for (int i = 0; i < SkillsButtonList.Count; i++)
+            for (int i = 0; i < skillsButtonList.Count; i++)
             {
-                SkillsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
+                skillsButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(0, averageHeight, 0);
             }
         }
 
         else if (menuState == MenuState.Levels)
         {
-            for (int i = 0; i < PlayButtonList.Count; i++)
+            for (int i = 0; i < playButtonList.Count; i++)
             {
-                averageWidth += PlayButtonList[i].GetComponent<RectTransform>().localPosition.x;
+                averageWidth += playButtonList[i].GetComponent<RectTransform>().localPosition.x;
             }
-            averageWidth /= PlayButtonList.Count;
+            averageWidth /= playButtonList.Count;
 
-            for (int i = 0; i < PlayButtonList.Count; i++)
+            for (int i = 0; i < playButtonList.Count; i++)
             {
-                PlayButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(averageWidth, 0, 0);
+                playButtonList[i].GetComponent<RectTransform>().transform.localPosition -= new Vector3(averageWidth, 0, 0);
             }
 
         }
@@ -1601,7 +1588,6 @@ public class MenuController : MonoBehaviour
         menuState = MenuState.Levels;
         GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
         Destroy(audio, 3f);
-        return;
     }
 
     void Ship1Start()
@@ -1609,7 +1595,6 @@ public class MenuController : MonoBehaviour
         //Add the game start logic here
         SceneManager.LoadScene(1);
         inGame = true;
-        return;
     }
 
     void Ship2Start()
@@ -1617,7 +1602,6 @@ public class MenuController : MonoBehaviour
         //Add the game start logic here
         SceneManager.LoadScene(6);
         inGame = true;
-        return;
     }
 
     void Ship3Start()
@@ -1625,7 +1609,6 @@ public class MenuController : MonoBehaviour
         //Add the game start logic here
         SceneManager.LoadScene(11);
         inGame = true;
-        return;
     }
 
     void Ship4Start()
@@ -1633,7 +1616,6 @@ public class MenuController : MonoBehaviour
         //Add the game start logic here
         SceneManager.LoadScene(16);
         inGame = true;
-        return;
     }
 
     void Ship5Start()
@@ -1641,7 +1623,6 @@ public class MenuController : MonoBehaviour
         //Add the game start logic here
         SceneManager.LoadScene(21);
         inGame = true;
-        return;
     }
 
     void SettingsButtonPressed()
@@ -1650,7 +1631,6 @@ public class MenuController : MonoBehaviour
         menuState = MenuState.Settings;
         GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
         Destroy(audio, 3f);
-        return;
     }
 
     void SkillsButtonPressed()
@@ -1659,7 +1639,6 @@ public class MenuController : MonoBehaviour
         menuState = MenuState.SkillsBuild;
         GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
         Destroy(audio, 3f);
-        return;
     }
 
     void CreditsButtonPressed()
@@ -1668,16 +1647,12 @@ public class MenuController : MonoBehaviour
         menuState = MenuState.Credits;
         GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
         Destroy(audio, 3f);
-        return;
     }
 
     void ExitButtonPressed()
     {
         //Force Quit Game..
-
         Application.Quit();
-
-        return;
     }
     void BackMainMenuPressed()
     {
@@ -1686,8 +1661,6 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene(0);
         Time.timeScale = 1;
         menuState = MenuState.Main;
-        
-        return;
     }
     void BackButtonPressed()
     {
@@ -1699,7 +1672,6 @@ public class MenuController : MonoBehaviour
 
         GameObject audio = Instantiate(lTick, transform.position, transform.rotation);
         Destroy(audio, 3f);
-        return;
     }
 
     void ControlsPressed()

@@ -5,14 +5,14 @@ public class DHuntedState : BT_Node
 {
     private readonly BotInfo bot;
 
-    public DHuntedState(BotInfo pinput)
+    public DHuntedState(BotInfo pInput)
     {
-        bot = pinput;
+        bot = pInput;
     }
 
     public override NodeState Evaluate()
     {
-        switch (bot.bGameControl.PlayerStatus)
+        switch (bot.bGameControl.playerStatus)
         {
             case GameController.Status.SAFE:
                 state = NodeState.FAILURE;

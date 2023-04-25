@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MakeInvisible : MonoBehaviour
@@ -8,11 +6,5 @@ public class MakeInvisible : MonoBehaviour
     void Start()
     {
         //GetComponent(MeshRenderer).enabled = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

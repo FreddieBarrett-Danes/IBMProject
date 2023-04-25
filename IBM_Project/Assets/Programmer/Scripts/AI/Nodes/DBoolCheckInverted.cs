@@ -4,9 +4,9 @@ public class DBoolCheckInverted : BT_Node
 {
     private readonly BotInfo bot;
 
-    public DBoolCheckInverted(BotInfo pinput)
+    public DBoolCheckInverted(BotInfo pInput)
     {
-        bot = pinput;
+        bot = pInput;
     }
 
     public override NodeState Evaluate()

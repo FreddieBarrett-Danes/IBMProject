@@ -1,8 +1,7 @@
-  using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 //Camera position is handled as cameraMaze(bool inMaze)
@@ -16,7 +15,7 @@ using UnityEngine.UI;
 //1. Move targetPosWorld to adjacent unvisited cell at random
 //Use gridMovement (targetPosGrid = gridMovement(currentPosGrid);
 
-//IF there’s at least one viable cell adjacent:
+//IF thereï¿½s at least one viable cell adjacent:
 
 //2.Break walls between current and target position
 //WallDestroyer.transform.position = Vector3.Lerp(ConvertToWorld(currentPosGrid),ConvertToWorld(targetPosGrid), 0.5f)
@@ -28,32 +27,30 @@ using UnityEngine.UI;
 //visitedStack.push(targetPosGrid.x, targetPosGrid.y);
 //Repeat back up from step 1
 
-//————————
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-//IF there’s no viable adjacent cells:
+//IF thereï¿½s no viable adjacent cells:
 
 //2.Move CurrentPos and TargetPos to position of top stack item
 //CurrentPosGrid = visitedStack.pop()
 //TargetPosGrid = CurrentPosGrid
 
 
-//    IF there’s at least one element on the stack:
+//    IF thereï¿½s at least one element on the stack:
 //If(visitedCells.Contains(startposition) == true);
 
 //Repeat back up from step 1
 
-//	IF there’s no elements in the stack:
+//	IF thereï¿½s no elements in the stack:
 
 //Mark maze as complete
 
-public class walGen : MonoBehaviour
+public class WallGen : MonoBehaviour
 {
     //public int frameRate;
-
-
-    public int Maze_Width; //Designer input to set maze Width (up to 100?)
-    public int Maze_Height; //Designer input to set maze Height (up to 100?)
-    Vector2 Maze_Size; //Maze_Size.x, Maze_Size.y, uses Maze_Width and Maze_Height
+    public int mazeWidth; //Designer input to set maze Width (up to 100?)
+    public int mazeHeight; //Designer input to set maze Height (up to 100?)
+    Vector2 mazeSize; //Maze_Size.x, Maze_Size.y, uses Maze_Width and Maze_Height
     bool[,] mazeGrid; //
     bool mazeReady; //Indicates when maze has finished generating
 
@@ -82,7 +79,7 @@ public class walGen : MonoBehaviour
     //UI
     public GameObject pregameText;
     //public GameObject pressStartText;
-    public GameObject Timer;
+    public GameObject timer;
     public bool showIngameText;
     public bool showPregameTutorial;
     
@@ -98,7 +95,7 @@ public class walGen : MonoBehaviour
     public GameObject mazeLives;
     int goalLocationRng;
 
-    public Vector3 Origin;
+    public Vector3 origin;
 
 
     //public delegate void DelType1(bool mazeReady); //Delegate type
@@ -113,11 +110,9 @@ public class walGen : MonoBehaviour
     //Converting between GridSpace and WorldSpace
     //WorldSpace -> GridSpace: (WorldSpace - 2x) / 4
     //GridSpace -> WorldSpace: (GridSpace * 4) + 2x
+    
 
-
-
-
-    void genGrid(Vector3 Origin, Vector2 ab) //Generate Maze cell by instantiating 4 walls
+    void GenGrid(Vector3 Origin, Vector2 ab) //Generate Maze cell by instantiating 4 walls
     {
         //Debug.Log(Origin.x + "," + Origin.y + "," + Origin.z);
         Instantiate(wallPrefab, new Vector3(Origin.x + 2.0f, Origin.y, Origin.z + 2.0f), Quaternion.identity);
@@ -126,7 +121,7 @@ public class walGen : MonoBehaviour
         Instantiate(wallPrefab, new Vector3(Origin.x + 4.0f, Origin.y, Origin.z), Quaternion.Euler(0.0f, 90.0f, 0.0f));
     }
 
-    Vector2 convertToGrid(Vector3 v3) //WorldSpace -> GridSpace
+    Vector2 ConvertToGrid(Vector3 v3) //WorldSpace -> GridSpace
     {
         v3 -= new Vector3(62, 0, 60);
         v3 -= new Vector3(2, 0, 0);
@@ -148,7 +143,7 @@ public class walGen : MonoBehaviour
     */
 
 
-    Vector3 convertToWorld(Vector2 v2) //GridSpace -> WorldSpace
+    Vector3 ConvertToWorld(Vector2 v2) //GridSpace -> WorldSpace
     {
         Vector3 rv = new Vector3(v2.x, 0, v2.y);
         rv *= 4;
@@ -160,7 +155,7 @@ public class walGen : MonoBehaviour
         //Debug.Log("Grid , World" + " " + v2 + "," + rv);
         return rv;
     }
-    Vector2 gridMovement(Vector2 cgp) //Moves currentposGrid to an adjacent unvistied cell if viable (backtracks using stack if isn't)
+    Vector2 GridMovement(Vector2 cgp) //Moves currentposGrid to an adjacent unvistied cell if viable (backtracks using stack if isn't)
                                       //cgp = current grip pos
     {
         int[] array1 = new int[] { 0, 0, 0, 0, 0 }; //Array is used to hold which cells are unvisited to use for rng.
@@ -170,7 +165,7 @@ public class walGen : MonoBehaviour
         //Debug.Log("cpg.x = " + cgp.x + " | cpg.y = " + cgp.y);
         //This checks what adjacent cells are unvisited.
         //Area of refinement: convert to switch case?
-        if (cgp.y != (Maze_Size.y - 1))
+        if (cgp.y != (mazeSize.y - 1))
         {
             if (mazeGrid[(int)cgp.x, (int)cgp.y + 1] == false)
             {
@@ -187,7 +182,7 @@ public class walGen : MonoBehaviour
                 array1[1] = 2;
             }
         }
-        if (cgp.x != (Maze_Size.x - 1))
+        if (cgp.x != (mazeSize.x - 1))
         {
             if (mazeGrid[(int)cgp.x + 1, (int)cgp.y] == false)
             {
@@ -292,12 +287,12 @@ public class walGen : MonoBehaviour
             //targetPosWorld.GetComponent<MeshRenderer>().enabled = true;
 
         }
-        targetPosWorld.transform.position = convertToWorld(targetPosGrid);
-        currentPosWorld.transform.position = convertToWorld(currentPosGrid);
-        targetPosWorld.transform.position = convertToWorld(cgp);
-        currentPosWorld.transform.position = convertToWorld(cgp);
+        targetPosWorld.transform.position = ConvertToWorld(targetPosGrid);
+        currentPosWorld.transform.position = ConvertToWorld(currentPosGrid);
+        targetPosWorld.transform.position = ConvertToWorld(cgp);
+        currentPosWorld.transform.position = ConvertToWorld(cgp);
         //GameObject.Find("Tracker").transform.position = convertToWorld(cgp);
-        if (backtracking == false) { wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(cgp), 0.5f); }
+        if (backtracking == false) { wallDestroyer.transform.position = Vector3.Lerp(ConvertToWorld(currentPosGrid), ConvertToWorld(cgp), 0.5f); }
         //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(cgp), 0.5f);
         currentPosGrid = cgp;
         //if (backtracking == false)
@@ -314,7 +309,7 @@ public class walGen : MonoBehaviour
 
     //'Direction' of the maze generation can be influenced using moveGen
 
-    void moveGen3(short dir)
+    void MoveGen3(short dir)
     {
         switch (dir)
         {
@@ -374,7 +369,7 @@ public class walGen : MonoBehaviour
         //pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
         //Debug.Log("Pregame enabled: " + pregameText.GetComponent<TextMeshProUGUI>().enabled);
         preGoalLocation = new Vector3(0, 0, 0);
-        goalLocationRng = Random.Range(Maze_Width*2, (Maze_Width * Maze_Height));
+        goalLocationRng = Random.Range(mazeWidth*2, (mazeWidth * mazeHeight));
         mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
 
         //--------------------------------------
@@ -408,8 +403,8 @@ public class walGen : MonoBehaviour
 
 
         //camera game position: (24.8, 28.3, 12.1) x = 24.8, y = 28.3 , z = 12.1 | rotation x = 90 y and z are 0 | scale is all 1
-        Maze_Size.x = Maze_Width;
-        Maze_Size.y = Maze_Height;
+        mazeSize.x = mazeWidth;
+        mazeSize.y = mazeHeight;
         //Maze_Width = 5;
         //Maze_Height = 5;
         //Maze_Size.x = 5;
@@ -419,23 +414,23 @@ public class walGen : MonoBehaviour
         //Instantiate(wallPrefab, new Vector3(wallPrefab.transform.position.x + 50.0f, wallPrefab.transform.position.y, wallPrefab.transform.position.z), Quaternion.identity);
 
         //Sets random start location (not currently implemented)
-        int a = Random.Range(1, (int)Maze_Size.x) * 4;
-        int b = Random.Range(1, (int)Maze_Size.y) * 4;
+        int a = Random.Range(1, (int)mazeSize.x) * 4;
+        int b = Random.Range(1, (int)mazeSize.y) * 4;
         //Debug.Log(a + "," + b);
 
         //Generate grid in world space (instigate wall gameobject)
 
         //StartCoroutine(test());
 
-        for (int i = 82; i < (82 + (int)Maze_Size.x * 4); i += 4)
+        for (int i = 82; i < (82 + (int)mazeSize.x * 4); i += 4)
         {
-            for (int j = 82; j < (82 + (int)Maze_Size.y * 4); j += 4)
+            for (int j = 82; j < (82 + (int)mazeSize.y * 4); j += 4)
             {
                 //Debug.Log("(" + i + "," + j + "," + ")");
                 //Origin = new Vector3(i, 0, j);
                 //Debug.Log("Origin: " + Origin);
                 //StartCoroutine(test());
-                genGrid(new Vector3(i, 0, j), new Vector2(1, 1));
+                GenGrid(new Vector3(i, 0, j), new Vector2(1, 1));
             }
         }
 
@@ -489,7 +484,7 @@ public class walGen : MonoBehaviour
         //visitedStack.Push(currentPosGrid);
         
         
-        StartCoroutine(destroyWall());
+        StartCoroutine(DestroyWall());
 
         //targetPosWorld.transform.position = convertToWorld(targetPosGrid);
         //currentPosWorld.transform.position = convertToWorld(currentPosGrid);
@@ -559,7 +554,7 @@ public class walGen : MonoBehaviour
     //}
 
 
-    IEnumerator destroyWall()
+    IEnumerator DestroyWall()
     {
         float delay = 0.035f; //0.035f; //0.0175f; //0.035f;
 
@@ -572,7 +567,7 @@ public class walGen : MonoBehaviour
 
         yield return new WaitForSeconds(delay);
 
-        targetPosGrid = gridMovement(currentPosGrid);
+        targetPosGrid = GridMovement(currentPosGrid);
         //targetPosWorld.transform.position = convertToWorld(targetPosGrid);
         //currentPosWorld.transform.position = convertToWorld(currentPosGrid);
         //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
@@ -590,7 +585,7 @@ public class walGen : MonoBehaviour
         while (visitedStack.Count != 0) //Looping 100 times for demonstration
         {
             cellCount++;
-            targetPosGrid = gridMovement(currentPosGrid);
+            targetPosGrid = GridMovement(currentPosGrid);
             //targetPosWorld.transform.position = convertToWorld(targetPosGrid);
             //currentPosWorld.transform.position = convertToWorld(currentPosGrid);
             //wallDestroyer.transform.position = Vector3.Lerp(convertToWorld(currentPosGrid), convertToWorld(targetPosGrid), 0.5f);
@@ -600,7 +595,7 @@ public class walGen : MonoBehaviour
             //currentPosWorld.transform.position = targetPosWorld.transform.position;
             //Debug.Log("UPDATE " + targetPosGrid.x + "," + targetPosGrid.y);
 
-            if (cellCount == ((Maze_Size.x * Maze_Size.y))) { preGoalLocation = convertToWorld(currentPosGrid); }
+            if (cellCount == ((mazeSize.x * mazeSize.y))) { preGoalLocation = ConvertToWorld(currentPosGrid); }
             //if (cellCount == goalLocationRng) { preGoalLocation = convertToWorld(currentPosGrid); }
 
             yield return new WaitForSeconds(delay); 
@@ -649,7 +644,7 @@ public class walGen : MonoBehaviour
 
 
     //Generates sample maze for proof of concept within 5 seconds.
-    IEnumerator setGen()
+    IEnumerator SetGen()
     {
         float delay = 0.035f; //0.035f;
         Debug.Log("setGen() in WalGen.cs has been activated");
@@ -659,78 +654,78 @@ public class walGen : MonoBehaviour
         //moveGen3(1);
         yield return new WaitForSeconds(delay);
         //moveGen2('n');
-        moveGen3(1);
+        MoveGen3(1);
         yield return new WaitForSeconds(delay);
-        moveGen3(1);
+        MoveGen3(1);
         //moveGen2('n');
         yield return new WaitForSeconds(delay);
-        moveGen3(1);
+        MoveGen3(1);
         //moveGen2('n');
         yield return new WaitForSeconds(delay);
         //targetPos.transform.position += new Vector3(2, 0, 2);
-        moveGen3(2);
+        MoveGen3(2);
         yield return new WaitForSeconds(delay);
         //---------------
         //moveGen2('e');
-        moveGen3(3);
+        MoveGen3(3);
         yield return new WaitForSeconds(delay);
         //moveGen2('e');
-        moveGen3(3);
+        MoveGen3(3);
         yield return new WaitForSeconds(delay);
         //moveGen2('e');
-        moveGen3(3);
+        MoveGen3(3);
         yield return new WaitForSeconds(delay);
         //targetPos.transform.position += new Vector3(2, 0, -2);
-        moveGen3(4);
+        MoveGen3(4);
         yield return new WaitForSeconds(delay);
         //-------------------------------
         //moveGen2('s');
-        moveGen3(5);
+        MoveGen3(5);
         yield return new WaitForSeconds(delay);
         //moveGen2('s');
-        moveGen3(5);
+        MoveGen3(5);
         yield return new WaitForSeconds(delay);
         //('s');
-        moveGen3(5);
+        MoveGen3(5);
         yield return new WaitForSeconds(delay);
         //targetPos.transform.position += new Vector3(-2, 0, -2);
-        moveGen3(6);
+        MoveGen3(6);
         yield return new WaitForSeconds(delay);
         //------------------------------
         //moveGen2('w');
-        moveGen3(7);
+        MoveGen3(7);
         yield return new WaitForSeconds(delay);
-        moveGen3(7);
+        MoveGen3(7);
         // moveGen2('w');
         yield return new WaitForSeconds(delay);
         //targetPos.transform.position += new Vector3(-2, 0, 2);
-        moveGen3(8);
+        MoveGen3(8);
         yield return new WaitForSeconds(delay);
         //-----------------------------
 
 
         //moveGen2('n');
-        moveGen3(1);
+        MoveGen3(1);
         yield return new WaitForSeconds(delay);
-        moveGen3(1);
+        MoveGen3(1);
         //moveGen2('n');
         yield return new WaitForSeconds(delay);
-        moveGen3(2);
+        MoveGen3(2);
         //targetPos.transform.position += new Vector3(2, 0, 2);
         yield return new WaitForSeconds(delay);
         ////---------------------------
         //moveGen2('e');
-        moveGen3(3);
+        MoveGen3(3);
         yield return new WaitForSeconds(delay);
-        moveGen3(4);
+        MoveGen3(4);
         //targetPos.transform.position += new Vector3(-2, 0, -2);
         yield return new WaitForSeconds(delay);
-        moveGen3(5);
+        MoveGen3(5);
         yield return new WaitForSeconds(delay);
 
-        moveGen3(6);
+        MoveGen3(6);
         yield return new WaitForSeconds(delay);
-        moveGen3(8);
+        MoveGen3(8);
         yield return new WaitForSeconds(delay);
         ////----------------------------
         ////moveGen2('w');
@@ -826,12 +821,12 @@ public class walGen : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            for (int i = 82; i < (82 + (int)Maze_Size.x * 4); i += 4)
+            for (int i = 82; i < (82 + (int)mazeSize.x * 4); i += 4)
             {
-                for (int j = 82; j < (82 + (int)Maze_Size.y * 4); j += 4)
+                for (int j = 82; j < (82 + (int)mazeSize.y * 4); j += 4)
                 {
                     //Debug.Log("(" + i + "," + j + "," + ")");
-                    genGrid(new Vector3(i, 0, j), new Vector2(1, 1));
+                    GenGrid(new Vector3(i, 0, j), new Vector2(1, 1));
                 }
             }
         }

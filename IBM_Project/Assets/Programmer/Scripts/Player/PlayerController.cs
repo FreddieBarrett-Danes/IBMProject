@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -90,10 +87,10 @@ public class PlayerController : MonoBehaviour
     {
         if (miniController.completedQuiz)
         {
-            gc.Deactivate = false;
+            gc.deactivate = false;
         }
 
-        if (!gc.Deactivate)
+        if (!gc.deactivate)
         {
             Movement();
             PlayerShooting();
@@ -195,7 +192,7 @@ public class PlayerController : MonoBehaviour
         {
             loseSoundPlayed = false;
             miniController.StartQuiz(1);
-            gc.Deactivate = true;
+            gc.deactivate = true;
         }
         else if (!isBehindEnemy && Input.GetKeyDown(KeyCode.E) && Time.timeScale != 0)
         {

@@ -8,10 +8,10 @@ public class TScoutSus: BT_Node
     private readonly BotInfo botInfo;
     private readonly Perception percep;
 
-    public TScoutSus(NavMeshAgent pAgent, BotInfo pbotInfo, Perception pPercep)
+    public TScoutSus(NavMeshAgent pAgent, BotInfo pBotInfo, Perception pPercep)
     {
         agent = pAgent;
-        botInfo = pbotInfo;
+        botInfo = pBotInfo;
         percep = pPercep;
     }
 

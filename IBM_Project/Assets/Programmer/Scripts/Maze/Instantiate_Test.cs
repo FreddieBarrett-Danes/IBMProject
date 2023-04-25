@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Instantiate_Test : MonoBehaviour
+public class InstantiateTest : MonoBehaviour
 {
     public GameObject prefab;
     // Start is called before the first frame update

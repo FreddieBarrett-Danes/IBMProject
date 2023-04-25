@@ -1,13 +1,12 @@
 using BT;
-using UnityEngine;
 
 public class DRemainingBots : BT_Node
 {
     private readonly BotInfo bot;
 
-    public DRemainingBots(BotInfo pinput)
+    public DRemainingBots(BotInfo pInput)
     {
-        bot = pinput;
+        bot = pInput;
     }
 
     public override NodeState Evaluate()
