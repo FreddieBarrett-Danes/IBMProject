@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+  using UnityEngine.Serialization;
+  using UnityEngine.UI;
 
 
 //Camera position is handled as cameraMaze(bool inMaze)
@@ -16,7 +17,7 @@ using UnityEngine.UI;
 //1. Move targetPosWorld to adjacent unvisited cell at random
 //Use gridMovement (targetPosGrid = gridMovement(currentPosGrid);
 
-//IF there’s at least one viable cell adjacent:
+//IF thereï¿½s at least one viable cell adjacent:
 
 //2.Break walls between current and target position
 //WallDestroyer.transform.position = Vector3.Lerp(ConvertToWorld(currentPosGrid),ConvertToWorld(targetPosGrid), 0.5f)
@@ -28,21 +29,21 @@ using UnityEngine.UI;
 //visitedStack.push(targetPosGrid.x, targetPosGrid.y);
 //Repeat back up from step 1
 
-//————————
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-//IF there’s no viable adjacent cells:
+//IF thereï¿½s no viable adjacent cells:
 
 //2.Move CurrentPos and TargetPos to position of top stack item
 //CurrentPosGrid = visitedStack.pop()
 //TargetPosGrid = CurrentPosGrid
 
 
-//    IF there’s at least one element on the stack:
+//    IF thereï¿½s at least one element on the stack:
 //If(visitedCells.Contains(startposition) == true);
 
 //Repeat back up from step 1
 
-//	IF there’s no elements in the stack:
+//	IF thereï¿½s no elements in the stack:
 
 //Mark maze as complete
 
@@ -51,9 +52,9 @@ public class walGen : MonoBehaviour
     //public int frameRate;
 
 
-    public int Maze_Width; //Designer input to set maze Width (up to 100?)
-    public int Maze_Height; //Designer input to set maze Height (up to 100?)
-    Vector2 Maze_Size; //Maze_Size.x, Maze_Size.y, uses Maze_Width and Maze_Height
+    public int mazeWidth; //Designer input to set maze Width (up to 100?)
+    public int mazeHeight; //Designer input to set maze Height (up to 100?)
+    Vector2 mazeSize; //Maze_Size.x, Maze_Size.y, uses Maze_Width and Maze_Height
     bool[,] mazeGrid; //
     bool mazeReady; //Indicates when maze has finished generating
 
@@ -82,7 +83,7 @@ public class walGen : MonoBehaviour
     //UI
     public GameObject pregameText;
     //public GameObject pressStartText;
-    public GameObject Timer;
+    public GameObject timer;
     public bool showIngameText;
     public bool showPregameTutorial;
     
@@ -98,7 +99,7 @@ public class walGen : MonoBehaviour
     public GameObject mazeLives;
     int goalLocationRng;
 
-    public Vector3 Origin;
+    public Vector3 origin;
 
 
     //public delegate void DelType1(bool mazeReady); //Delegate type
@@ -170,7 +171,7 @@ public class walGen : MonoBehaviour
         //Debug.Log("cpg.x = " + cgp.x + " | cpg.y = " + cgp.y);
         //This checks what adjacent cells are unvisited.
         //Area of refinement: convert to switch case?
-        if (cgp.y != (Maze_Size.y - 1))
+        if (cgp.y != (mazeSize.y - 1))
         {
             if (mazeGrid[(int)cgp.x, (int)cgp.y + 1] == false)
             {
@@ -187,7 +188,7 @@ public class walGen : MonoBehaviour
                 array1[1] = 2;
             }
         }
-        if (cgp.x != (Maze_Size.x - 1))
+        if (cgp.x != (mazeSize.x - 1))
         {
             if (mazeGrid[(int)cgp.x + 1, (int)cgp.y] == false)
             {
@@ -374,7 +375,7 @@ public class walGen : MonoBehaviour
         //pregameText.GetComponent<TextMeshProUGUI>().enabled = true;
         //Debug.Log("Pregame enabled: " + pregameText.GetComponent<TextMeshProUGUI>().enabled);
         preGoalLocation = new Vector3(0, 0, 0);
-        goalLocationRng = Random.Range(Maze_Width*2, (Maze_Width * Maze_Height));
+        goalLocationRng = Random.Range(mazeWidth*2, (mazeWidth * mazeHeight));
         mazeLives.GetComponent<TextMeshProUGUI>().enabled = false;
 
         //--------------------------------------
@@ -408,8 +409,8 @@ public class walGen : MonoBehaviour
 
 
         //camera game position: (24.8, 28.3, 12.1) x = 24.8, y = 28.3 , z = 12.1 | rotation x = 90 y and z are 0 | scale is all 1
-        Maze_Size.x = Maze_Width;
-        Maze_Size.y = Maze_Height;
+        mazeSize.x = mazeWidth;
+        mazeSize.y = mazeHeight;
         //Maze_Width = 5;
         //Maze_Height = 5;
         //Maze_Size.x = 5;
@@ -419,17 +420,17 @@ public class walGen : MonoBehaviour
         //Instantiate(wallPrefab, new Vector3(wallPrefab.transform.position.x + 50.0f, wallPrefab.transform.position.y, wallPrefab.transform.position.z), Quaternion.identity);
 
         //Sets random start location (not currently implemented)
-        int a = Random.Range(1, (int)Maze_Size.x) * 4;
-        int b = Random.Range(1, (int)Maze_Size.y) * 4;
+        int a = Random.Range(1, (int)mazeSize.x) * 4;
+        int b = Random.Range(1, (int)mazeSize.y) * 4;
         //Debug.Log(a + "," + b);
 
         //Generate grid in world space (instigate wall gameobject)
 
         //StartCoroutine(test());
 
-        for (int i = 82; i < (82 + (int)Maze_Size.x * 4); i += 4)
+        for (int i = 82; i < (82 + (int)mazeSize.x * 4); i += 4)
         {
-            for (int j = 82; j < (82 + (int)Maze_Size.y * 4); j += 4)
+            for (int j = 82; j < (82 + (int)mazeSize.y * 4); j += 4)
             {
                 //Debug.Log("(" + i + "," + j + "," + ")");
                 //Origin = new Vector3(i, 0, j);
@@ -600,7 +601,7 @@ public class walGen : MonoBehaviour
             //currentPosWorld.transform.position = targetPosWorld.transform.position;
             //Debug.Log("UPDATE " + targetPosGrid.x + "," + targetPosGrid.y);
 
-            if (cellCount == ((Maze_Size.x * Maze_Size.y))) { preGoalLocation = convertToWorld(currentPosGrid); }
+            if (cellCount == ((mazeSize.x * mazeSize.y))) { preGoalLocation = convertToWorld(currentPosGrid); }
             //if (cellCount == goalLocationRng) { preGoalLocation = convertToWorld(currentPosGrid); }
 
             yield return new WaitForSeconds(delay); 
@@ -826,9 +827,9 @@ public class walGen : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            for (int i = 82; i < (82 + (int)Maze_Size.x * 4); i += 4)
+            for (int i = 82; i < (82 + (int)mazeSize.x * 4); i += 4)
             {
-                for (int j = 82; j < (82 + (int)Maze_Size.y * 4); j += 4)
+                for (int j = 82; j < (82 + (int)mazeSize.y * 4); j += 4)
                 {
                     //Debug.Log("(" + i + "," + j + "," + ")");
                     genGrid(new Vector3(i, 0, j), new Vector2(1, 1));

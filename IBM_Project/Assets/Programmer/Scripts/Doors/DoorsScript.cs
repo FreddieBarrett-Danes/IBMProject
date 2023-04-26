@@ -8,8 +8,8 @@ using UnityEngine.UIElements;
 
 public class DoorsScript : MonoBehaviour
 {
-    private Transform ADoors;
-    private Transform BDoors;
+    private Transform aDoors;
+    private Transform bDoors;
 
     public GameObject openDoor;
     public GameObject closeDoor;
@@ -42,14 +42,14 @@ public class DoorsScript : MonoBehaviour
     [SerializeField]
     private float moveSpeed;
 
-    private Vector3 AOpen, AClosed, BOpen, BClosed;
+    private Vector3 aOpen, aClosed, bOpen, bClosed;
 
 
     void Start()
     {
         player = FindObjectOfType(typeof(PlayerController)).GameObject();
-        ADoors = this.gameObject.transform.Find("ADoor");
-        BDoors = this.gameObject.transform.Find("BDoor");
+        aDoors = this.gameObject.transform.Find("ADoor");
+        bDoors = this.gameObject.transform.Find("BDoor");
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         FindEnemiesInScene();
 
@@ -99,13 +99,13 @@ public class DoorsScript : MonoBehaviour
 
             openAmount10 = Mathf.Clamp01(openAmount10);
 
-            AOpen = ADoors.transform.localPosition = new Vector3(-openDistance, restingDoorPos.y, restingDoorPos.z);
-            AClosed = ADoors.transform.localPosition = restingDoorPos;
-            BOpen = BDoors.transform.localPosition = new Vector3(openDistance, restingDoorPos.y, restingDoorPos.z);
-            BClosed = BDoors.transform.localPosition = new Vector3(-restingDoorPos.x, restingDoorPos.y, restingDoorPos.z);
+            aOpen = aDoors.transform.localPosition = new Vector3(-openDistance, restingDoorPos.y, restingDoorPos.z);
+            aClosed = aDoors.transform.localPosition = restingDoorPos;
+            bOpen = bDoors.transform.localPosition = new Vector3(openDistance, restingDoorPos.y, restingDoorPos.z);
+            bClosed = bDoors.transform.localPosition = new Vector3(-restingDoorPos.x, restingDoorPos.y, restingDoorPos.z);
 
-            ADoors.transform.localPosition = Vector3.Lerp(AOpen, AClosed, openAmount10);
-            BDoors.transform.localPosition = Vector3.Lerp(BOpen, BClosed, openAmount10);
+            aDoors.transform.localPosition = Vector3.Lerp(aOpen, aClosed, openAmount10);
+            bDoors.transform.localPosition = Vector3.Lerp(bOpen, bClosed, openAmount10);
         }
         else if (isComputer)
         {

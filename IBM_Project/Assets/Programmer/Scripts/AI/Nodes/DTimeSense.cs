@@ -16,7 +16,7 @@ public class DTimeSense : BT_Node
     {
         if (bot.bComputer.GetComponent<ComputerInteraction>().mazeFailed)
         {
-            bot.bGameControl.PlayerStatus = GameController.Status.ALERTED;
+            bot.bGameControl.playerStatus = GameController.Status.ALERTED;
             state = NodeState.SUCCESS;
             return state;
         }
@@ -30,7 +30,7 @@ public class DTimeSense : BT_Node
                     if (!bot.bPlayerInView &&
                         percep.sensedRecord[0].timeLastSensed > now.Subtract(new TimeSpan(0, 0, bot.bSearchTime)))
                     {
-                        bot.bGameControl.PlayerStatus = GameController.Status.ALERTED;
+                        bot.bGameControl.playerStatus = GameController.Status.ALERTED;
                         state = NodeState.SUCCESS;
                         return state;
                     }

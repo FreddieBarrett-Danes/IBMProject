@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Pause_Menu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
-    bool PauseToggle;
+    bool pauseToggle;
     bool uiUpdate;
     private bool mouseHover;
     public Sprite[] sprite = new Sprite[2];
@@ -95,10 +95,10 @@ public class Pause_Menu : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     void newUpdate()
     {
-        if (PauseToggle == false) { PauseToggle = true; }
-        else { PauseToggle = false; }
-        Debug.Log(PauseToggle);
-        this.GetComponent<Image>().enabled = PauseToggle;
+        if (pauseToggle == false) { pauseToggle = true; }
+        else { pauseToggle = false; }
+        Debug.Log(pauseToggle);
+        this.GetComponent<Image>().enabled = pauseToggle;
         uiUpdate = false;
     }
 
@@ -109,8 +109,8 @@ public class Pause_Menu : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         //sprite = this.GetComponent<Image>().sprite;
         mouseHover = false;
         uiUpdate = false;
-        PauseToggle = false;
-        this.GetComponent<Image>().enabled = PauseToggle;
+        pauseToggle = false;
+        this.GetComponent<Image>().enabled = pauseToggle;
     }
 
     // Update is called once per frame

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 
 
 //Left for Alignment minigame:
@@ -23,31 +23,31 @@ public class Updated_Disc_Rotation : MonoBehaviour
 {
 
     public float[] rotationSpeed;
-    private const int DISCS = 3;
+    private const int discs = 3;
     //public int test1;
     //private short ID; //1 for red (outline) 2 for green (middle) 3 for white (center)
     private short currentSelect;
-    private bool Selected;
+    private bool selected;
     private bool[] numAligned;
     private bool debugWin;
     [SerializeField]
-    GameObject Disc1; //Red (outline)
+    GameObject disc1; //Red (outline)
     [SerializeField]
-    GameObject Disc2; //green (middle)
+    GameObject disc2; //green (middle)
     [SerializeField]
-    GameObject Disc3; //White (center)
+    GameObject disc3; //White (center)
 
     //Gameobjects used to check alignment. Moves position when a combonation of discs are aligned.
-    GameObject R1;
-    GameObject R2;
-    GameObject R3;
+    GameObject r1;
+    GameObject r2;
+    GameObject r3;
 
-    Quaternion Disc1startRotation;
-    Quaternion Disc2startRotation;
-    Quaternion Disc3startRotation;
+    Quaternion disc1StartRotation;
+    Quaternion disc2StartRotation;
+    Quaternion disc3StartRotation;
 
-    Vector3 R1startPosition;
-    Vector3 R1startRotation;
+    Vector3 r1StartPosition;
+    Vector3 r1StartRotation;
 
     //Commentted out code with '!REMOVE!' needs to be de-commented after testing in demo scene
     public GameObject pregameText;
@@ -55,15 +55,15 @@ public class Updated_Disc_Rotation : MonoBehaviour
 
     public bool randomiseRotations;
 
-    public GameObject Timer;
-    private ScoreSystem ScoreSystemGameObject;
+    public GameObject timer;
+    private ScoreSystem scoreSystemGameObject;
 
     public Minigame_Timer mTimer;
 
     private GameController gC;
     // Start is called before the first frame update
 
-    public delegate void DelType1(bool DiscAlignmentReady);
+    public delegate void DelType1(bool discAlignmentReady);
     public static event DelType1 OnDiscAlignmentReady;
 
     Vector3 RotationToDegrees(Vector3 v3)
@@ -78,7 +78,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
     private void OnEnable()
     {
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
+        scoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
 
 
         currentSelect = 1;
@@ -92,17 +92,17 @@ public class Updated_Disc_Rotation : MonoBehaviour
         numAligned[1] = false;
         numAligned[2] = false;
 
-        R1 = GameObject.Find("R1");
-        R2 = GameObject.Find("R2");
-        R3 = GameObject.Find("R3");
+        r1 = GameObject.Find("R1");
+        r2 = GameObject.Find("R2");
+        r3 = GameObject.Find("R3");
 
-        R1.transform.position = new Vector3(-5, 15, 0);
-        R2.transform.position = new Vector3(0, 15, 0);
-        R3.transform.position = new Vector3(5, 15, 0);
+        r1.transform.position = new Vector3(-5, 15, 0);
+        r2.transform.position = new Vector3(0, 15, 0);
+        r3.transform.position = new Vector3(5, 15, 0);
 
-        Disc1startRotation = Disc1.transform.rotation;
-        Disc2startRotation = Disc2.transform.rotation;
-        Disc3startRotation = Disc3.transform.rotation;
+        disc1StartRotation = disc1.transform.rotation;
+        disc2StartRotation = disc2.transform.rotation;
+        disc3StartRotation = disc3.transform.rotation;
 
         int randDirection = 0;
         randDirection = UnityEngine.Random.Range(-1, 2);
@@ -136,8 +136,8 @@ public class Updated_Disc_Rotation : MonoBehaviour
         //R1startPosition = R1.transform.position;
         //R1startRotation = R1.transform.eulerAngles;
         //Debug.Log(R1startPosition + "," + R1startRotation);
-        Timer.SetActive(true);
-        Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+        timer.SetActive(true);
+        timer.GetComponent<TextMeshProUGUI>().enabled = false;
         GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
         pregameText.SetActive(showTutorial);
     }
@@ -150,10 +150,10 @@ public class Updated_Disc_Rotation : MonoBehaviour
     void OnValidate()
     {
         //if (rotationSpeed.Length != 3)
-        if (rotationSpeed.Length != DISCS)
+        if (rotationSpeed.Length != discs)
         {
             //Debug.LogError("Oi! What you doing?! The rotationSpeed length should be set to " + DISCS + "! (Because there should be exactly " + DISCS + " discs)");
-            Array.Resize(ref rotationSpeed, DISCS);
+            Array.Resize(ref rotationSpeed, discs);
         }
     }
 
@@ -163,23 +163,23 @@ public class Updated_Disc_Rotation : MonoBehaviour
         {
             
             case 1:
-                Disc2.GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
-                Disc3.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
-                Disc1.GetComponent<Renderer>().material.color = Color.black;
+                disc2.GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
+                disc3.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
+                disc1.GetComponent<Renderer>().material.color = Color.black;
                 //Debug.Log(currentSelect + " 1~ " + transform.rotation.eulerAngles.x + " 2~ " + transform.rotation.eulerAngles.x + " 3~ " + transform.rotation.eulerAngles.x);
                 break;
             case 2:
-                Disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
-                Disc3.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
-                Disc2.GetComponent<Renderer>().material.color = Color.black;
+                disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
+                disc3.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
+                disc2.GetComponent<Renderer>().material.color = Color.black;
                 //GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
                 //Debug.Log(currentSelect + " 1~ " + transform.rotation.eulerAngles.x + " 2~ " + transform.rotation.eulerAngles.x + " 3~ " + transform.rotation.eulerAngles.x);
                 break;
             case 3:
                 //GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
-                Disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
-                Disc2.GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
-                Disc3.GetComponent<Renderer>().material.color = Color.black;
+                disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
+                disc2.GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
+                disc3.GetComponent<Renderer>().material.color = Color.black;
                 //Debug.Log(currentSelect + " 1~ " + transform.rotation.eulerAngles.x + " 2~ " + transform.rotation.eulerAngles.x + " 3~ " + transform.rotation.eulerAngles.x);
                 break;
             
@@ -193,18 +193,18 @@ public class Updated_Disc_Rotation : MonoBehaviour
         {
             case 1:
                 //Debug.Log("case 1");
-                Disc1.transform.Rotate(new Vector3(0, (rotationSpeed[0] * direction) * Time.deltaTime, 0));
+                disc1.transform.Rotate(new Vector3(0, (rotationSpeed[0] * direction) * Time.deltaTime, 0));
                 break;
             case 2:
                 //Debug.Log("case 2");
-                Disc1.transform.Rotate(new Vector3(0, (rotationSpeed[0] * direction) * Time.deltaTime, 0));
-                Disc2.transform.Rotate(new Vector3(0, (rotationSpeed[1] * direction) * Time.deltaTime, 0));
+                disc1.transform.Rotate(new Vector3(0, (rotationSpeed[0] * direction) * Time.deltaTime, 0));
+                disc2.transform.Rotate(new Vector3(0, (rotationSpeed[1] * direction) * Time.deltaTime, 0));
                 break;
             case 3:
                 //Debug.Log("case 3");
-                Disc1.transform.Rotate(new Vector3(0, (rotationSpeed[0] * direction) * Time.deltaTime, 0));
-                Disc2.transform.Rotate(new Vector3(0, (rotationSpeed[1] * direction) * Time.deltaTime, 0));
-                Disc3.transform.Rotate(new Vector3(0, (rotationSpeed[2] * direction) * Time.deltaTime, 0));
+                disc1.transform.Rotate(new Vector3(0, (rotationSpeed[0] * direction) * Time.deltaTime, 0));
+                disc2.transform.Rotate(new Vector3(0, (rotationSpeed[1] * direction) * Time.deltaTime, 0));
+                disc3.transform.Rotate(new Vector3(0, (rotationSpeed[2] * direction) * Time.deltaTime, 0));
                 break;
         }
     }
@@ -252,7 +252,7 @@ public class Updated_Disc_Rotation : MonoBehaviour
                 pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
                 //OnDiscAlignmentReady(true);
                 //Timer.SetActive(true);
-                Timer.GetComponent<TextMeshProUGUI>().enabled = true;
+                timer.GetComponent<TextMeshProUGUI>().enabled = true;
                 OnDiscAlignmentReady(true);
                 //Debug.Log("If Timer isn't showing, press 'N'");
             }
@@ -276,9 +276,9 @@ public class Updated_Disc_Rotation : MonoBehaviour
             }
             else
             {
-                Disc1.transform.rotation = Disc1startRotation;
-                Disc2.transform.rotation = Disc2startRotation;
-                Disc3.transform.rotation = Disc3startRotation;
+                disc1.transform.rotation = disc1StartRotation;
+                disc2.transform.rotation = disc2StartRotation;
+                disc3.transform.rotation = disc3StartRotation;
             }
         }
 
@@ -362,56 +362,56 @@ public class Updated_Disc_Rotation : MonoBehaviour
         //Debug.Log("Disc2: " + (int)Disc2.transform.rotation.eulerAngles.x + "," + (int)Disc2.transform.eulerAngles.y + "," + (int)Disc2.transform.eulerAngles.z);
         //Debug.Log("Disc3: " + (int)Disc3.transform.rotation.eulerAngles.x + "," + (int)Disc3.transform.eulerAngles.y + "," + (int)Disc3.transform.eulerAngles.z);
 
-        Debug.Log("Disc1 Rotations xyz: " + Disc1.transform.rotation.eulerAngles.x + "," + Disc1.transform.rotation.eulerAngles.y + "," + Disc1.transform.rotation.eulerAngles.z);
-        Debug.Log("Disc2 Rotations xyz: " + Disc2.transform.rotation.eulerAngles.x + "," + Disc2.transform.rotation.eulerAngles.y + "," + Disc2.transform.rotation.eulerAngles.z);
-        Debug.Log("Disc3 Rotations xyz: " + Disc3.transform.rotation.eulerAngles.x + "," + Disc3.transform.rotation.eulerAngles.y + "," + Disc3.transform.rotation.eulerAngles.z);
+        Debug.Log("Disc1 Rotations xyz: " + disc1.transform.rotation.eulerAngles.x + "," + disc1.transform.rotation.eulerAngles.y + "," + disc1.transform.rotation.eulerAngles.z);
+        Debug.Log("Disc2 Rotations xyz: " + disc2.transform.rotation.eulerAngles.x + "," + disc2.transform.rotation.eulerAngles.y + "," + disc2.transform.rotation.eulerAngles.z);
+        Debug.Log("Disc3 Rotations xyz: " + disc3.transform.rotation.eulerAngles.x + "," + disc3.transform.rotation.eulerAngles.y + "," + disc3.transform.rotation.eulerAngles.z);
 
         //Disc1 and Disc2
-        if ((Disc1.transform.rotation.eulerAngles.x >= Disc2.transform.rotation.eulerAngles.x - 5.0f && Disc1.transform.rotation.eulerAngles.x <= Disc2.transform.rotation.eulerAngles.x + 5.0f 
-            && Disc1.transform.rotation.eulerAngles.y >= Disc2.transform.rotation.eulerAngles.y - 5.0f && Disc1.transform.rotation.eulerAngles.y <= Disc2.transform.rotation.eulerAngles.y + 5.0f
-            && Disc1.transform.rotation.eulerAngles.z >= Disc2.transform.rotation.eulerAngles.z - 5.0f && Disc1.transform.rotation.eulerAngles.z <= Disc2.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true || (Disc1.transform.rotation.eulerAngles.x - Disc2.transform.rotation.eulerAngles.x) > 340.0f)
+        if ((disc1.transform.rotation.eulerAngles.x >= disc2.transform.rotation.eulerAngles.x - 5.0f && disc1.transform.rotation.eulerAngles.x <= disc2.transform.rotation.eulerAngles.x + 5.0f 
+            && disc1.transform.rotation.eulerAngles.y >= disc2.transform.rotation.eulerAngles.y - 5.0f && disc1.transform.rotation.eulerAngles.y <= disc2.transform.rotation.eulerAngles.y + 5.0f
+            && disc1.transform.rotation.eulerAngles.z >= disc2.transform.rotation.eulerAngles.z - 5.0f && disc1.transform.rotation.eulerAngles.z <= disc2.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true || (disc1.transform.rotation.eulerAngles.x - disc2.transform.rotation.eulerAngles.x) > 340.0f)
         {
             numAligned[0] = true;
             //Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc2.transform.rotation.eulerAngles.x + " [Discs 1 and 2 are aligned]");
-            R1.transform.position = new Vector3(-5, 10, 0);
+            r1.transform.position = new Vector3(-5, 10, 0);
             ////Disc1.GetComponent<Renderer>().material.color = Color.yellow;
         }
         else
         {
             numAligned[0] = false;
-            R1.transform.position = new Vector3(-5, 15, 0);
+            r1.transform.position = new Vector3(-5, 15, 0);
         }
 
         //Disc1 and Disc3
-        if ((Disc1.transform.rotation.eulerAngles.x >= Disc3.transform.rotation.eulerAngles.x - 5.0f && Disc1.transform.rotation.eulerAngles.x <= Disc3.transform.rotation.eulerAngles.x + 5.0f
-            && Disc1.transform.rotation.eulerAngles.y >= Disc3.transform.rotation.eulerAngles.y - 5.0f && Disc1.transform.rotation.eulerAngles.y <= Disc3.transform.rotation.eulerAngles.y + 5.0f
-            && Disc1.transform.rotation.eulerAngles.z >= Disc3.transform.rotation.eulerAngles.z - 5.0f && Disc1.transform.rotation.eulerAngles.z <= Disc3.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true || (Disc1.transform.rotation.eulerAngles.x - Disc3.transform.rotation.eulerAngles.x) > 340.0f)
+        if ((disc1.transform.rotation.eulerAngles.x >= disc3.transform.rotation.eulerAngles.x - 5.0f && disc1.transform.rotation.eulerAngles.x <= disc3.transform.rotation.eulerAngles.x + 5.0f
+            && disc1.transform.rotation.eulerAngles.y >= disc3.transform.rotation.eulerAngles.y - 5.0f && disc1.transform.rotation.eulerAngles.y <= disc3.transform.rotation.eulerAngles.y + 5.0f
+            && disc1.transform.rotation.eulerAngles.z >= disc3.transform.rotation.eulerAngles.z - 5.0f && disc1.transform.rotation.eulerAngles.z <= disc3.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true || (disc1.transform.rotation.eulerAngles.x - disc3.transform.rotation.eulerAngles.x) > 340.0f)
         {
             numAligned[1] = true;
             //Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc3.transform.rotation.eulerAngles.x + " [Discs 1 and 3 are aligned]");
-            R2.transform.position = new Vector3(0, 10, 0);
+            r2.transform.position = new Vector3(0, 10, 0);
             ////Disc3.GetComponent<Renderer>().material.color = Color.yellow;
         }
         else
         {
             numAligned[1] = false;
-            R2.transform.position = new Vector3(-5, 15, 0);
+            r2.transform.position = new Vector3(-5, 15, 0);
         }
 
         //Disc2 and Disc3
-        if ((Disc2.transform.rotation.eulerAngles.x >= Disc3.transform.rotation.eulerAngles.x - 5.0f && Disc2.transform.rotation.eulerAngles.x <= Disc3.transform.rotation.eulerAngles.x + 5.0f
-            && Disc2.transform.rotation.eulerAngles.y >= Disc3.transform.rotation.eulerAngles.y - 5.0f && Disc2.transform.rotation.eulerAngles.y <= Disc3.transform.rotation.eulerAngles.y + 5.0f
-            && Disc2.transform.rotation.eulerAngles.z >= Disc3.transform.rotation.eulerAngles.z - 5.0f && Disc2.transform.rotation.eulerAngles.z <= Disc3.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true || (Disc1.transform.rotation.eulerAngles.x - Disc2.transform.rotation.eulerAngles.x) > 340.0f)
+        if ((disc2.transform.rotation.eulerAngles.x >= disc3.transform.rotation.eulerAngles.x - 5.0f && disc2.transform.rotation.eulerAngles.x <= disc3.transform.rotation.eulerAngles.x + 5.0f
+            && disc2.transform.rotation.eulerAngles.y >= disc3.transform.rotation.eulerAngles.y - 5.0f && disc2.transform.rotation.eulerAngles.y <= disc3.transform.rotation.eulerAngles.y + 5.0f
+            && disc2.transform.rotation.eulerAngles.z >= disc3.transform.rotation.eulerAngles.z - 5.0f && disc2.transform.rotation.eulerAngles.z <= disc3.transform.rotation.eulerAngles.z + 5.0f) || debugWin == true || (disc1.transform.rotation.eulerAngles.x - disc2.transform.rotation.eulerAngles.x) > 340.0f)
         {
             numAligned[2] = true;
             //Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc3.transform.rotation.eulerAngles.x + " [Discs 2 and 3 are aligned]");
-            R3.transform.position = new Vector3(5, 10, 0);
+            r3.transform.position = new Vector3(5, 10, 0);
             ////Disc2.GetComponent<Renderer>().material.color = Color.yellow;
         }
         else
         {
             numAligned[2] = false;
-            R3.transform.position = new Vector3(5, 15, 0);
+            r3.transform.position = new Vector3(5, 15, 0);
         }
 
         //Disc2 and Disc3
@@ -461,16 +461,16 @@ public class Updated_Disc_Rotation : MonoBehaviour
 
         //if (Input.GetKeyDown(KeyCode.M))
         //{
-            if (R1.transform.position == new Vector3(-5, 10, 0) && R2.transform.position == new Vector3(0, 10, 0) && R3.transform.position == new Vector3(5, 10, 0))// || debugWin == true)
+            if (r1.transform.position == new Vector3(-5, 10, 0) && r2.transform.position == new Vector3(0, 10, 0) && r3.transform.position == new Vector3(5, 10, 0))// || debugWin == true)
             {
             //Debug.Log(mTimer.timer + "!!!!!!!!!");
-            Timer.SetActive(false);
-            Timer.GetComponent<TextMeshProUGUI>().enabled = false;
+            timer.SetActive(false);
+            timer.GetComponent<TextMeshProUGUI>().enabled = false;
             OnDiscAlignmentReady(false);
             gC.mC.completedDoor = true;
 
             gC.inMinigame = false;
-            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(2, mTimer.timer)); //2 = DiscAlignment minigame NEED TO REPLACE 10, ACTING AS PLACEHOLDER!!!
+            scoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(2, mTimer.timer)); //2 = DiscAlignment minigame NEED TO REPLACE 10, ACTING AS PLACEHOLDER!!!
             Debug.Log("Disc Complete!!!");
             //Debug.Log("You Win!");
         }

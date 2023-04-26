@@ -18,7 +18,7 @@ public class elevator : MonoBehaviour
     [SerializeField]
     public GameObject[] enemiesArray;
 
-    private GameObject PC;
+    private GameObject pc;
 
     public Vector3 debug;
 
@@ -37,7 +37,7 @@ public class elevator : MonoBehaviour
         reader = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         cam = GameObject.FindGameObjectWithTag("MainCamera");
-        PC = GameObject.FindGameObjectWithTag("Computer");
+        pc = GameObject.FindGameObjectWithTag("Computer");
     }
 
     private void Update()

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using UnityEditor;
 using UnityEngine.Analytics;
+using UnityEngine.Serialization;
 
 public class ComputerInteraction : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class ComputerInteraction : MonoBehaviour
     private GameObject cam;
 
     public bool mazeFailed = false;
-    public bool mazeDONE = false;
+    public bool mazeDone = false;
 
     private bool isTouching;
     [SerializeField]
@@ -59,7 +60,7 @@ public class ComputerInteraction : MonoBehaviour
 
         }
 
-        if (gC.Level5 && allDead)
+        if (gC.level5 && allDead)
         {
             if (!playOnce)
             {
@@ -87,7 +88,7 @@ public class ComputerInteraction : MonoBehaviour
                     enemy.GetComponent<BotInfo>().bIsDead = true;
                 }
             }
-            mazeDONE = true;
+            mazeDone = true;
             //enemiesArray = null;
             miniController.completedMaze = false;
         }

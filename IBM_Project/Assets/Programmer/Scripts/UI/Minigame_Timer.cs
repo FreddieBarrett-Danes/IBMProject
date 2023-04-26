@@ -63,10 +63,10 @@ public class Minigame_Timer : UITimer
             //Debug.Log("Times up, fail minigame!");
             gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
             gC.failMinigame = true;
-            if (gC.PlayerStatus == GameController.Status.HUNTED)
+            if (gC.playerStatus == GameController.Status.HUNTED)
                 return;
             else
-                gC.PlayerStatus = GameController.Status.ALERTED;
+                gC.playerStatus = GameController.Status.ALERTED;
             gC.inMinigame = false;
             gameObject.SetActive(false);
             //Debug.Log("Minigame failed, exit minigame and set droids to alert state");

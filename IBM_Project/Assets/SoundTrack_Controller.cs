@@ -43,7 +43,7 @@ public class SoundTrack_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gC.PlayerStatus == GameController.Status.SAFE && !gC.inMinigame && !gC.inQuiz)
+        if(gC.playerStatus == GameController.Status.SAFE && !gC.inMinigame && !gC.inQuiz)
         {
             //Debug.Log("player safe");
             safeState.mute = false;
@@ -53,7 +53,7 @@ public class SoundTrack_Controller : MonoBehaviour
             quizState.mute = true;
 
         }
-        else if (gC.PlayerStatus == GameController.Status.ALERTED && !gC.inMinigame && !gC.inQuiz)
+        else if (gC.playerStatus == GameController.Status.ALERTED && !gC.inMinigame && !gC.inQuiz)
         {
             //Debug.Log("player alert");
             safeState.mute = true;
@@ -63,7 +63,7 @@ public class SoundTrack_Controller : MonoBehaviour
             quizState.mute = true;
 
         }
-        else if (gC.PlayerStatus == GameController.Status.HUNTED && !gC.inMinigame && !gC.inQuiz)
+        else if (gC.playerStatus == GameController.Status.HUNTED && !gC.inMinigame && !gC.inQuiz)
         {
             //Debug.Log("player hunted");
             safeState.mute = true;

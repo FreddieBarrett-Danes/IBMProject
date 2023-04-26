@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class ReadTSV : MonoBehaviour
@@ -28,19 +29,19 @@ public class ReadTSV : MonoBehaviour
 
     public TextAsset TSVFile;
 
-    public TextAsset CloudTSV;
+    public TextAsset cloudTSV;
     public int cloudRangeMax;
 
     public TextAsset AITSV;
     public int aiRangeMax;
 
-    public TextAsset DataTSV;
+    public TextAsset dataTSV;
     public int dataRangeMax;
 
-    public TextAsset QuantumTSV;
+    public TextAsset quantumTSV;
     public int quantumRangeMax;
 
-    public TextAsset SecurityTSV;
+    public TextAsset securityTSV;
     public int securityRangeMax;
 
     public int shipNumber;
@@ -135,7 +136,7 @@ public class ReadTSV : MonoBehaviour
     [Header("Debug")]
     public bool debug;
 
-    private ScoreSystem ScoreSystemGameObject;
+    private ScoreSystem scoreSystemGameObject;
 
 
 
@@ -188,27 +189,27 @@ public class ReadTSV : MonoBehaviour
 
         find = false;
 
-        var dataset = CloudTSV;
+        var dataset = cloudTSV;
 
-        if (gC.Ship1)
+        if (gC.ship1)
         {
-            dataset = CloudTSV;
+            dataset = cloudTSV;
         }
-        else if (gC.Ship2)
+        else if (gC.ship2)
         {
             dataset = AITSV;
         }
-        else if (gC.Ship3)
+        else if (gC.ship3)
         {
-            dataset = DataTSV;
+            dataset = dataTSV;
         }
-        else if (gC.Ship4)
+        else if (gC.ship4)
         {
-            dataset = QuantumTSV;
+            dataset = quantumTSV;
         }
-        else if (gC.Ship5)
+        else if (gC.ship5)
         {
-            dataset = SecurityTSV;
+            dataset = securityTSV;
         }
 
         var splitDataset = dataset.text.Split(new char[] { '\n' });
@@ -252,11 +253,11 @@ public class ReadTSV : MonoBehaviour
 
         find = false;
 
-        var dataset = CloudTSV;
+        var dataset = cloudTSV;
 
         if (shipNumber == 1)
         {
-            dataset = CloudTSV;
+            dataset = cloudTSV;
         }
         else if (shipNumber == 2)
         {
@@ -264,15 +265,15 @@ public class ReadTSV : MonoBehaviour
         }
         else if (shipNumber == 3)
         {
-            dataset = DataTSV;
+            dataset = dataTSV;
         }
         else if (shipNumber == 4)
         {
-            dataset = QuantumTSV;
+            dataset = quantumTSV;
         }
         else if (shipNumber == 5)
         {
-            dataset = SecurityTSV;
+            dataset = securityTSV;
         }
 
         var splitDataset = dataset.text.Split(new char[] { '\n' });
@@ -321,18 +322,18 @@ public class ReadTSV : MonoBehaviour
 
     public void nonDuplicateRow()
     {
-        if (gC.Ship1)
+        if (gC.ship1)
             row = Random.Range(1, cloudRangeMax + 1);
-        else if (gC.Ship2)
+        else if (gC.ship2)
             row = Random.Range(1, aiRangeMax + 1);
-        else if (gC.Ship3)
+        else if (gC.ship3)
             row = Random.Range(1, dataRangeMax + 1);
-        else if (gC.Ship4)
+        else if (gC.ship4)
             row = Random.Range(1, quantumRangeMax + 1);
-        else if (gC.Ship5)
+        else if (gC.ship5)
             row = Random.Range(1, securityRangeMax + 1);
 
-        if (gC.Ship1)
+        if (gC.ship1)
         {
             for (int i = 0; i < cloudIncorrectAnswersList.Count; i++)
             {
@@ -345,7 +346,7 @@ public class ReadTSV : MonoBehaviour
             //cloudIncorrectAnswersList
 
         }
-        else if (gC.Ship2)
+        else if (gC.ship2)
         {
             for (int i = 0; i < aiIncorrectAnswersList.Count; i++)
             {
@@ -358,7 +359,7 @@ public class ReadTSV : MonoBehaviour
             //aiIncorrectAnswersList =
 
         }
-        else if (gC.Ship3)
+        else if (gC.ship3)
         {
             for (int i = 0; i < dataIncorrectAnswersList.Count; i++)
             {
@@ -371,7 +372,7 @@ public class ReadTSV : MonoBehaviour
             //dataIncorrectAnswersList
 
         }
-        else if (gC.Ship4)
+        else if (gC.ship4)
         {
             for (int i = 0; i < quantumIncorrectAnswersList.Count; i++)
             {
@@ -384,7 +385,7 @@ public class ReadTSV : MonoBehaviour
             //quantumIncorrectAnswersList
 
         }
-        else if (gC.Ship5)
+        else if (gC.ship5)
         {
             for (int i = 0; i < securityIncorrectAnswersList.Count; i++)
             {
@@ -412,7 +413,7 @@ public class ReadTSV : MonoBehaviour
     {
         string cloudPath = Path.Combine(Application.streamingAssetsPath, "CloudTSV.tsv");
         string cloudContents = File.ReadAllText(cloudPath);
-        CloudTSV = new TextAsset(cloudContents);
+        cloudTSV = new TextAsset(cloudContents);
 
         string aiPath = Path.Combine(Application.streamingAssetsPath, "AITSV.tsv");
         string aiContents = File.ReadAllText(aiPath);
@@ -420,19 +421,19 @@ public class ReadTSV : MonoBehaviour
 
         string dataPath = Path.Combine(Application.streamingAssetsPath, "DataTSV.tsv");
         string dataContents = File.ReadAllText(dataPath);
-        DataTSV = new TextAsset(dataContents);
+        dataTSV = new TextAsset(dataContents);
 
         string quantumPath = Path.Combine(Application.streamingAssetsPath, "QuantumTSV.tsv");
         string quantumContents = File.ReadAllText(quantumPath);
-        QuantumTSV = new TextAsset(quantumContents);
+        quantumTSV = new TextAsset(quantumContents);
 
         string securityPath = Path.Combine(Application.streamingAssetsPath, "SecurityTSV.tsv");
         string securityContents = File.ReadAllText(securityPath);
-        SecurityTSV = new TextAsset(securityContents);
+        securityTSV = new TextAsset(securityContents);
 
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
-        ScoreSystemGameObject = FindObjectOfType<ScoreSystem>().gameObject.GetComponent<ScoreSystem>();
+        scoreSystemGameObject = FindObjectOfType<ScoreSystem>().gameObject.GetComponent<ScoreSystem>();
         canvas = GameObject.FindGameObjectWithTag("Canvas"); // may be ambiguous if theres several //why tf would there be several?? //oh coz if you combine scens //scenes cant read between eachother
         canvasRectTransform = canvas.GetComponent<RectTransform>();
 
@@ -761,27 +762,27 @@ public class ReadTSV : MonoBehaviour
             //set this question as asked
             //askedList.Add(row); //double check this works
 
-            if (gC.Ship1)
+            if (gC.ship1)
             {
                 cloudAskedList.Add(row);
 
             }
-            else if (gC.Ship2)
+            else if (gC.ship2)
             {
                 aiAskedList.Add(row);
 
             }
-            else if (gC.Ship3)
+            else if (gC.ship3)
             {
                 dataAskedList.Add(row);
 
             }
-            else if (gC.Ship4)
+            else if (gC.ship4)
             {
                 quantumAskedList.Add(row);
 
             }
-            else if (gC.Ship5)
+            else if (gC.ship5)
             {
                 securityAskedList.Add(row);
 
@@ -790,27 +791,27 @@ public class ReadTSV : MonoBehaviour
             //set this question right/wrong/partial depending on answer
             if (tempWrong > 0)
             {
-                if (gC.Ship1)
+                if (gC.ship1)
                 {
                     cloudIncorrectAnswersList.Add(row);
 
                 }
-                else if (gC.Ship2)
+                else if (gC.ship2)
                 {
                     aiIncorrectAnswersList.Add(row);
 
                 }
-                else if (gC.Ship3)
+                else if (gC.ship3)
                 {
                     dataIncorrectAnswersList.Add(row);
 
                 }
-                else if (gC.Ship4)
+                else if (gC.ship4)
                 {
                     quantumIncorrectAnswersList.Add(row);
 
                 }
-                else if (gC.Ship5)
+                else if (gC.ship5)
                 {
                     securityIncorrectAnswersList.Add(row);
 
@@ -822,27 +823,27 @@ public class ReadTSV : MonoBehaviour
             //Set this question as answered fully correct
             else
             {
-                if (gC.Ship1)
+                if (gC.ship1)
                 {  
                     cloudCorrectAnswersList.Add(row);    
 
                 }
-                else if (gC.Ship2)
+                else if (gC.ship2)
                 {
                     aiCorrectAnswersList.Add(row); 
 
                 }
-                else if (gC.Ship3)
+                else if (gC.ship3)
                 {
                     dataCorrectAnswersList.Add(row); 
 
                 }
-                else if (gC.Ship4)
+                else if (gC.ship4)
                 {
                     quantumCorrectAnswersList.Add(row); 
                    
                 }
-                else if (gC.Ship5)
+                else if (gC.ship5)
                 {
                     securityCorrectAnswersList.Add(row); 
 
@@ -853,7 +854,7 @@ public class ReadTSV : MonoBehaviour
 
             //Update the user points for each correct answer
             totalPoints += tempCorrect*5;
-            ScoreSystemGameObject.QuizQuestionUpdate();
+            scoreSystemGameObject.QuizQuestionUpdate();
             //Check if all of the answers were correct
             if (tempCorrect == correctAnswers)
             {
@@ -866,20 +867,20 @@ public class ReadTSV : MonoBehaviour
             {
                 //LEWIS
                 //Set bots to a hunting state.
-                GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().PlayerStatus = GameController.Status.HUNTED;
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().playerStatus = GameController.Status.HUNTED;
             }
 
             //Reset asked list if all questions have already been asked
 
-            if (gC.Ship1 && cloudAskedList.Count == cloudRangeMax)
+            if (gC.ship1 && cloudAskedList.Count == cloudRangeMax)
                 cloudAskedList.Clear();
-            else if (gC.Ship2 && aiAskedList.Count == aiRangeMax)
+            else if (gC.ship2 && aiAskedList.Count == aiRangeMax)
                 aiAskedList.Clear();
-            else if (gC.Ship3 && dataAskedList.Count == dataRangeMax)
+            else if (gC.ship3 && dataAskedList.Count == dataRangeMax)
                 dataAskedList.Clear();
-            else if (gC.Ship4 && quantumAskedList.Count == quantumRangeMax)
+            else if (gC.ship4 && quantumAskedList.Count == quantumRangeMax)
                 quantumAskedList.Clear();
-            else if (gC.Ship5 && securityAskedList.Count == securityRangeMax)
+            else if (gC.ship5 && securityAskedList.Count == securityRangeMax)
                 securityAskedList.Clear();
 
             /*if (askedList.Count == rangeOfQuestionsMax)
@@ -915,7 +916,7 @@ public class ReadTSV : MonoBehaviour
 
                 gC.inMinigame = false;
                 gC.inQuiz = false;
-                gC.scoreSystem.scorePool = gC.scoreSystem.Score;
+                gC.scoreSystem.scorePool = gC.scoreSystem.score;
                 gC.completedLevel = true;
             }
             else

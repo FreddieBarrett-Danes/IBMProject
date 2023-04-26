@@ -510,7 +510,7 @@ MonoBehaviour:
   wG: {fileID: 1690106255004003015}
   mTimer: {fileID: 2523596634021114271}
   setCameraPosition: 1
-  Lives: 6
+  lives: 6
   mazeLives: {fileID: 5599153729830589185}
 --- !u!1 &1655351960577961017
 GameObject:
@@ -623,7 +623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pregameText: {fileID: 181245468296008511}
-  Timer: {fileID: 4265221875148390000}
+  timer: {fileID: 4265221875148390000}
   mazePlayer: {fileID: 1655351960656588649}
   goalLocation: {fileID: 1655351960237499582}
   showIngameText: 0
@@ -759,7 +759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   returnToStartUponCollision: 1
-  Timer: {fileID: 0}
+  timer: {fileID: 0}
   wallHitSound: {fileID: 8371733835861132683}
   timesHit: 0
 --- !u!1 &1690106254633926040
@@ -1132,19 +1132,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d851b201ed4bd204496ede78e4381739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Maze_Width: 10
-  Maze_Height: 10
+  mazeWidth: 10
+  mazeHeight: 10
   wallDestroyer: {fileID: 1690106255709110969}
   wallPrefab: {fileID: 1690106254666117920}
   targetPosWorld: {fileID: 1690106255041822279}
   currentPosWorld: {fileID: 1690106254633926040}
   pregameText: {fileID: 181245468296008511}
-  Timer: {fileID: 4265221875148390000}
+  timer: {fileID: 4265221875148390000}
   showIngameText: 0
   showPregameTutorial: 1
   preGoalLocation: {x: 0, y: 0, z: 0}
   mazeLives: {fileID: 1839526450004476608}
-  Origin: {x: 0, y: 0, z: 0}
+  origin: {x: 0, y: 0, z: 0}
 --- !u!1 &1690106255041822279
 GameObject:
   m_ObjectHideFlags: 0
@@ -1551,13 +1551,13 @@ MonoBehaviour:
   - 80
   - 30
   - 50
-  Disc1: {fileID: 6243187106071627038}
-  Disc2: {fileID: 6243187106213159206}
-  Disc3: {fileID: 6243187105421256919}
+  disc1: {fileID: 6243187106071627038}
+  disc2: {fileID: 6243187106213159206}
+  disc3: {fileID: 6243187105421256919}
   pregameText: {fileID: 2336674020451952231}
   showTutorial: 1
   randomiseRotations: 1
-  Timer: {fileID: 2119993664480814291}
+  timer: {fileID: 2119993664480814291}
   mTimer: {fileID: 5458436477903623655}
 --- !u!1 &1839526450004476608
 GameObject:
@@ -3328,15 +3328,15 @@ MonoBehaviour:
   submitButtonSizeMultiplier: 0.65
   answersList: []
   TSVFile: {fileID: -1022232229856555865, guid: de74e8f252c53a641a3fc668f5090091, type: 3}
-  CloudTSV: {fileID: 4134640566548223314, guid: 81c0be0972af75e4b8870ab9af13a8dc, type: 3}
+  cloudTSV: {fileID: 0}
   cloudRangeMax: 0
   AITSV: {fileID: -5961253661617688450, guid: 37cb60f6dd0443542a11ecd1daa8c99e, type: 3}
   aiRangeMax: 0
-  DataTSV: {fileID: 4937745292970980521, guid: 140cee27cf34e6e47b34a00dd58b0da9, type: 3}
+  dataTSV: {fileID: 0}
   dataRangeMax: 0
-  QuantumTSV: {fileID: -8154413885656020249, guid: 18f28aae1144ac84aae062d1d1901249, type: 3}
+  quantumTSV: {fileID: 0}
   quantumRangeMax: 0
-  SecurityTSV: {fileID: -616951207384574251, guid: 8efa5c03c1f789e44b842cab8c060e8c, type: 3}
+  securityTSV: {fileID: 0}
   securityRangeMax: 0
   shipNumber: 0
   questionsInARow: 3
@@ -8493,7 +8493,7 @@ MonoBehaviour:
   gridWidth: 3
   tilePrefab: {fileID: 6497808199457241649}
   pregameText: {fileID: 1919364697626368917}
-  Timer: {fileID: 4414674609320834708}
+  timer: {fileID: 4414674609320834708}
   showCorrectRotation: 1
   showTutorial: 1
   mTimer: {fileID: 6743781225662773657}

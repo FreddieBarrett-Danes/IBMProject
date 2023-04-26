@@ -18,7 +18,7 @@ public class MinigameController : MonoBehaviour
 
     private GameController gameController;
 
-    private ScoreSystem ScoreSystemGameObject;
+    private ScoreSystem scoreSystemGameObject;
 
     [SerializeField]
     private GameObject[] doorGame;

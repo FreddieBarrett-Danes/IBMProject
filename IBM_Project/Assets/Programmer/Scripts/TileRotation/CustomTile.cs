@@ -6,17 +6,17 @@ public class CustomTile
 {
     //public Vector2 Pos;
     //////public bool[] Directions;
-    public bool Visited = false;
+    public bool visited = false;
     //public string Type;
-    public tileType type = tileType.UpDown;
+    public TileType type = TileType.UpDown;
 
     public GameObject gameObjectFront; //The interactable tiles in front of the camera
     public GameObject gameObjectBack; //A set of tiles out of the camera's view which references the correct solution
 
-    public Quaternion FrontRotation;
-    public Vector3 FrontRotationEuler;
-    public Quaternion BackRotation;
-    public Vector3 BackRotationEuler;
+    public Quaternion frontRotation;
+    public Vector3 frontRotationEuler;
+    public Quaternion backRotation;
+    public Vector3 backRotationEuler;
 
     //Temp variabiles for easier testing of concept
     //To replace with bool array if successful
@@ -27,7 +27,7 @@ public class CustomTile
 
     public bool correctRotation = false;
 
-    public enum tileType
+    public enum TileType
     {
         UpDown,
         LeftRight,
@@ -56,13 +56,13 @@ public class CustomTile
     //    type = tileType.UpDown;
     //}
 
-    public CustomTile(bool n, bool s, bool e, bool w, bool Visited)
+    public CustomTile(bool n, bool s, bool e, bool w, bool visited)
     {
         this.n = n;
         this.s = s;
         this.e = e;
         this.w = w;
-        this.Visited = Visited;
+        this.visited = visited;
     }
 
     public CustomTile()
@@ -71,14 +71,14 @@ public class CustomTile
         this.s = false;
         this.e = false;
         this.w = false;
-        this.Visited = false;
+        this.visited = false;
         this.correctRotation = false;
         this.gameObjectFront = GameObject.Find("Tile_Blank");
     }
 
-    public tileType ConvertIntoTile(short num1)
+    public TileType ConvertIntoTile(short num1)
     {
-        tileType rv = tileType.UpDown;
+        TileType rv = TileType.UpDown;
         //Debug.Log("[" + num1 + "]" + "Before switch: " + n + "," + s + "," + e + "," + w);
                                                         //up       down     right     left
         
@@ -86,39 +86,39 @@ public class CustomTile
         {
             //Double direction tiles:
             case (true, true, false, false):
-                rv = tileType.UpDown;
+                rv = TileType.UpDown;
                 break;
             case (true, false, true, false):
-                rv = tileType.UpRight;
+                rv = TileType.UpRight;
                 break;
             case (true, false, false, true):
-                rv = tileType.UpLeft;
+                rv = TileType.UpLeft;
                 break;
             //---
             case (false, true, true, false):
-                rv = tileType.DownRight;
+                rv = TileType.DownRight;
                 break;
             case (false, true, false, true):
-                rv = tileType.DownLeft;
+                rv = TileType.DownLeft;
                 break;
             //---
             case (false, false, true, true):
-                rv = tileType.LeftRight;
+                rv = TileType.LeftRight;
                 break;
             //---
             //---
             //Single direction tiles:
             case (true, false, false, false):
-                rv = tileType.StartUp;
+                rv = TileType.StartUp;
                 break;
             case (false, true, false, false):
-                rv = tileType.StartDown;
+                rv = TileType.StartDown;
                 break;
             case (false, false, true, false):
-                rv = tileType.StartRight;
+                rv = TileType.StartRight;
                 break;
             case (false, false, false, true):
-                rv = tileType.StartLeft;
+                rv = TileType.StartLeft;
                 break;
 
             default:

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 //using UnityEngine.SocialPlatforms.Impl;
 
 public class LoseWinScreens : MonoBehaviour
@@ -11,7 +13,7 @@ public class LoseWinScreens : MonoBehaviour
     private RectTransform canvas;
     [SerializeField]
     private ScoreSystem scoreSystem;
-    public TextMeshProUGUI ScoreText;
+    public TextMeshProUGUI scoreText;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +36,7 @@ public class LoseWinScreens : MonoBehaviour
         if (!AnimatorIsPlaying())
         {
             button.SetActive(true);
-            ScoreText.text = scoreSystem.Score.ToString("Score: " + scoreSystem.Score);
+            scoreText.text = scoreSystem.score.ToString("Score: " + scoreSystem.score);
         }
     }
     bool AnimatorIsPlaying()

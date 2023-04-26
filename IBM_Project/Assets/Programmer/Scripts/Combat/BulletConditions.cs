@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BulletConditions : MonoBehaviour
 {
@@ -6,9 +7,9 @@ public class BulletConditions : MonoBehaviour
     private GameController gC;
     public AudioSource breakbox;
 
-    public AudioSource PlayerShoot;
-    public AudioSource EnemyShoot;
-    public AudioSource WallHit;
+    public AudioSource playerShoot;
+    public AudioSource enemyShoot;
+    public AudioSource wallHit;
 
     private void Start()
     {
@@ -16,13 +17,13 @@ public class BulletConditions : MonoBehaviour
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         if (gameObject.CompareTag("Player"))
         {
-            EnemyShoot.enabled = false;
-            PlayerShoot.enabled = true;
+            enemyShoot.enabled = false;
+            playerShoot.enabled = true;
         }
         else
         {
-            PlayerShoot.enabled = false;
-            EnemyShoot.enabled = true;
+            playerShoot.enabled = false;
+            enemyShoot.enabled = true;
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -39,7 +40,7 @@ public class BulletConditions : MonoBehaviour
                }
                else if (other.gameObject.CompareTag("Wall"))
                {
-                    WallHit.enabled = true;
+                    wallHit.enabled = true;
                     gameObject.GetComponent<SpriteRenderer>().enabled = false;
                     gameObject.GetComponent<SphereCollider>().enabled = false;
 
@@ -67,7 +68,7 @@ public class BulletConditions : MonoBehaviour
            }
            else if (other.gameObject.CompareTag("Wall"))
            {
-                WallHit.enabled = true;
+                wallHit.enabled = true;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 gameObject.GetComponent<SphereCollider>().enabled = false;
            }

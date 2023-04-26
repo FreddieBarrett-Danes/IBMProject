@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="97543aa5-a67a-4a8c-8bc8-54c6c10e7b1e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,13 +37,17 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Console Colors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\rewri\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\rewri\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\rewri\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\rewri\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache&quot;,
       &quot;C:\\Users\\rewri\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
@@ -57,6 +64,14 @@
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath C:\Users\rewri\Documents\GitHub\TemplateIBMProject\IBM_Project -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\rewri\Documents\GitHub\TemplateIBMProject\IBM_Project" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath C:\Users\rewri\Documents\GitHub\TemplateIBMProject\IBM_Project -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="C:\Users\rewri\Documents\GitHub\TemplateIBMProject\IBM_Project" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
@@ -156,6 +171,11 @@
       <workItem from="1680120807359" duration="1574000" />
       <workItem from="1680172885484" duration="713000" />
       <workItem from="1680187795545" duration="2095000" />
+      <workItem from="1682540916773" duration="84000" />
+      <workItem from="1682541138747" duration="132000" />
+      <workItem from="1682541865455" duration="1862000" />
+      <workItem from="1682543797882" duration="16000" />
+      <workItem from="1682545156393" duration="649000" />
     </task>
     <servers />
   </component>
@@ -184,13 +204,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Programmer/Scripts/FileReading/ReadTSV.cs</url>
-          <line>736</line>
+          <line>741</line>
           <properties documentPath="C:\Users\rewri\Documents\GitHub\TemplateIBMProject\IBM_Project\Assets\Programmer\Scripts\FileReading\ReadTSV.cs" initialLine="734" containingFunctionPresentation="method 'Update'">
             <startOffsets>
-              <option value="25259" />
+              <option value="25292" />
             </startOffsets>
             <endOffsets>
-              <option value="25302" />
+              <option value="25335" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="1" />

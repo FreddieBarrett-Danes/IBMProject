@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     public GameObject visuals;
     public GameObject body;
 
-    private ComputerInteraction PC;
+    private ComputerInteraction pc;
 
     private Camera mainCamera;
 
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         miniController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
-        PC = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
+        pc = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rBody = GetComponent<Rigidbody>();
@@ -90,10 +90,10 @@ public class PlayerController : MonoBehaviour
     {
         if (miniController.completedQuiz)
         {
-            gc.Deactivate = false;
+            gc.deactivate = false;
         }
 
-        if (!gc.Deactivate)
+        if (!gc.deactivate)
         {
             Movement();
             PlayerShooting();
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
         {
             loseSoundPlayed = false;
             miniController.StartQuiz(1);
-            gc.Deactivate = true;
+            gc.deactivate = true;
         }
         else if (!isBehindEnemy && Input.GetKeyDown(KeyCode.E) && Time.timeScale != 0)
         {
