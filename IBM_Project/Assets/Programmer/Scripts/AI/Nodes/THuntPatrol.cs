@@ -1,15 +1,17 @@
+using UnityEngine;
 using UnityEngine.AI;
 using BT;
+using static System.Array;
 
 public class THuntPatrol : BT_Node
 {
     private readonly NavMeshAgent agent;
     private readonly BotInfo botInfo;
 
-    public THuntPatrol(NavMeshAgent pAgent, BotInfo pBotInfo)
+    public THuntPatrol(NavMeshAgent pAgent, BotInfo pbotInfo)
     {
         agent = pAgent;
-        botInfo = pBotInfo;
+        botInfo = pbotInfo;
     }
 
     public override NodeState Evaluate()

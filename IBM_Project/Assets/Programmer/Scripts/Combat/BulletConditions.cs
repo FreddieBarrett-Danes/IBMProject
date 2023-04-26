@@ -4,11 +4,11 @@ public class BulletConditions : MonoBehaviour
 {
     private GameObject[] enemies;
     private GameController gC;
-    public AudioSource breakBox;
+    public AudioSource breakbox;
 
-    public AudioSource playerShoot;
-    public AudioSource enemyShoot;
-    public AudioSource wallHit;
+    public AudioSource PlayerShoot;
+    public AudioSource EnemyShoot;
+    public AudioSource WallHit;
 
     private void Start()
     {
@@ -16,61 +16,66 @@ public class BulletConditions : MonoBehaviour
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         if (gameObject.CompareTag("Player"))
         {
-            enemyShoot.enabled = false;
-            playerShoot.enabled = true;
+            EnemyShoot.enabled = false;
+            PlayerShoot.enabled = true;
         }
         else
         {
-            playerShoot.enabled = false;
-            enemyShoot.enabled = true;
+            PlayerShoot.enabled = false;
+            EnemyShoot.enabled = true;
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (gameObject.CompareTag("Player"))
-        {
-            foreach (GameObject enemy in enemies)
-            {
-                if (other.gameObject == enemy)
-                {
+       if(gameObject.CompareTag("Player"))
+       {
+           foreach(GameObject enemy in enemies)
+           {
+               if (other.gameObject == enemy)
+               {
 
-                    other.GetComponent<BotInfo>().bIsDead = true;
-                    Destroy(gameObject);
-                }
-                else if (other.gameObject.CompareTag("Wall"))
-                {
-                    wallHit.enabled = true;
+                   other.GetComponent<BotInfo>().bIsDead = true;
+                   Destroy(gameObject);
+               }
+               else if (other.gameObject.CompareTag("Wall"))
+               {
+                    WallHit.enabled = true;
                     gameObject.GetComponent<SpriteRenderer>().enabled = false;
                     gameObject.GetComponent<SphereCollider>().enabled = false;
 
                 }
-                else if (other.gameObject.CompareTag("BreakableBox"))
-                {
+               else if(other.gameObject.CompareTag("BreakableBox"))
+               {
 
                     Destroy(other.gameObject);
-                    breakBox.enabled = true;
+                    breakbox.enabled = true;
 
-
+                    
                     //Destroy(gameObject);
-                }
+               }
             }
-        }
-        else if (gameObject.CompareTag("Enemy"))
-        {
-            if (other.gameObject.CompareTag("Player"))
-            {
+            
+
+       }
+       else if (gameObject.CompareTag("Enemy"))
+       {
+           if (other.gameObject.CompareTag("Player"))
+           {
                 //reduce level timer
                 gC.playerHit = true;
                 Destroy(gameObject);
-            }
-            else if (other.gameObject.CompareTag("Wall"))
-            {
-                wallHit.enabled = true;
+           }
+           else if (other.gameObject.CompareTag("Wall"))
+           {
+                WallHit.enabled = true;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 gameObject.GetComponent<SphereCollider>().enabled = false;
-            }
+           }
             else if (other.gameObject.CompareTag("BreakableBox"))
             {
+
+                
+
                 Destroy(gameObject);
             }
         }

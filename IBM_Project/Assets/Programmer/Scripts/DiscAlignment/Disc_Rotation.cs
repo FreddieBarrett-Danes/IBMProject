@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -21,22 +23,22 @@ public class Disc_Rotation : MonoBehaviour
     public short ID; //1 for red (outline) 2 for green (middle) 3 for white (center)
     public float rotationSpeed;
     private short currentSelect;
-    private bool selected;
+    private bool Selected;
     private bool[] numAligned;
     private bool debugWin;
 
-    GameObject disc1; //Red (outline)
-    GameObject disc2; //green (middle)
-    GameObject disc3; //White (center)
+    GameObject Disc1; //Red (outline)
+    GameObject Disc2; //green (middle)
+    GameObject Disc3; //White (center)
 
     //Gameobjects used to check alignment. Moves position when a combonation of discs are aligned.
     GameObject R1;
     GameObject R2;
     GameObject R3;
 
-    Quaternion disc1StartRotation;
-    Quaternion disc2StartRotation;
-    Quaternion disc3StartRotation;
+    Quaternion Disc1startRotation;
+    Quaternion Disc2startRotation;
+    Quaternion Disc3startRotation;
 
     Vector3 R1startPosition;
     Vector3 R1startRotation;
@@ -63,9 +65,9 @@ public class Disc_Rotation : MonoBehaviour
 
         currentSelect = 1;
         numAligned = new bool[3];
-        disc1 = GameObject.Find("Disc1n");
-        disc2 = GameObject.Find("Disc2n");
-        disc3 = GameObject.Find("Disc3n");
+        Disc1 = GameObject.Find("Disc1n");
+        Disc2 = GameObject.Find("Disc2n");
+        Disc3 = GameObject.Find("Disc3n");
 
 
         numAligned[0] = true;
@@ -80,9 +82,9 @@ public class Disc_Rotation : MonoBehaviour
         R2.transform.position = new Vector3(0, 15, 0);
         R3.transform.position = new Vector3(5, 15, 0);
 
-        disc1StartRotation = disc1.transform.rotation;
-        disc2StartRotation = disc2.transform.rotation;
-        disc3StartRotation = disc3.transform.rotation;
+        Disc1startRotation = Disc1.transform.rotation;
+        Disc2startRotation = Disc2.transform.rotation;
+        Disc3startRotation = Disc3.transform.rotation;
 
         GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = showTutorial;
         pregameText.GetComponent<TextMeshProUGUI>().enabled = showTutorial;
@@ -101,7 +103,7 @@ public class Disc_Rotation : MonoBehaviour
         //GetComponent<Renderer>().material.color = Color.grey;
         if (currentSelect >= ID)
         {
-            selected = true;
+            Selected = true;
             //GetComponent<Renderer>().material.color = Color.black;
             ////////Debug.Log("Disc1: " + (int)Disc1.transform.rotation.eulerAngles.x + " | Disc2: " + (int)Disc2.transform.rotation.eulerAngles.x + " | Disc3: " + (int)Disc3.transform.rotation.eulerAngles.x + " | currentSelect: " + currentSelect);
 
@@ -111,23 +113,23 @@ public class Disc_Rotation : MonoBehaviour
             {
                 
                 case 1:
-                    disc2.GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
-                    disc3.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
-                    disc1.GetComponent<Renderer>().material.color = Color.black;
+                    Disc2.GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
+                    Disc3.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
+                    Disc1.GetComponent<Renderer>().material.color = Color.black;
                     //Debug.Log(currentSelect + " 1~ " + transform.rotation.eulerAngles.x + " 2~ " + transform.rotation.eulerAngles.x + " 3~ " + transform.rotation.eulerAngles.x);
                     break;
                 case 2:
-                    disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
-                    disc3.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
-                    disc2.GetComponent<Renderer>().material.color = Color.black;
+                    Disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
+                    Disc3.GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
+                    Disc2.GetComponent<Renderer>().material.color = Color.black;
                     //GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
                     //Debug.Log(currentSelect + " 1~ " + transform.rotation.eulerAngles.x + " 2~ " + transform.rotation.eulerAngles.x + " 3~ " + transform.rotation.eulerAngles.x);
                     break;
                 case 3:
                     //GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f);
-                    disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
-                    disc2.GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
-                    disc3.GetComponent<Renderer>().material.color = Color.black;
+                    Disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
+                    Disc2.GetComponent<Renderer>().material.color = new Color(0.5f, 1.0f, 0.5f);
+                    Disc3.GetComponent<Renderer>().material.color = Color.black;
                     //Debug.Log(currentSelect + " 1~ " + transform.rotation.eulerAngles.x + " 2~ " + transform.rotation.eulerAngles.x + " 3~ " + transform.rotation.eulerAngles.x);
                     break;
                 
@@ -150,7 +152,7 @@ public class Disc_Rotation : MonoBehaviour
         }
         else
         {
-            selected = false;
+            Selected = false;
             //switch (ID)
             //{
             //    case 1:
@@ -169,14 +171,14 @@ public class Disc_Rotation : MonoBehaviour
         }
 
         //Changed rotation input from Q and E to A and D to keep consistency with player controls
-        if (Input.GetKey(KeyCode.D) && selected == true)
+        if (Input.GetKey(KeyCode.D) && Selected == true)
         {
 
             transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
             //if (currentSelect == 2) { ... }
         }
 
-        if (Input.GetKey(KeyCode.A) && selected == true)
+        if (Input.GetKey(KeyCode.A) && Selected == true)
         {
 
             transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
@@ -209,9 +211,9 @@ public class Disc_Rotation : MonoBehaviour
         {
             GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
             pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
-            disc1.transform.rotation = disc1StartRotation;
-            disc2.transform.rotation = disc2StartRotation;
-            disc3.transform.rotation = disc3StartRotation;
+            Disc1.transform.rotation = Disc1startRotation;
+            Disc2.transform.rotation = Disc2startRotation;
+            Disc3.transform.rotation = Disc3startRotation;
         }
 
         //Testing example, to be set when paths align
@@ -221,21 +223,21 @@ public class Disc_Rotation : MonoBehaviour
         //if (transform.rotation.eulerAngles.x >= 85.0f && transform.rotation.eulerAngles.x <= 105.0f && ID == 1)
         //If ID1.transform.rotation == ID2.transform.rotation with 10 degree leniance (5 degrees for going over or under target rotation)
         //Disc1 and Disc2
-        if ((disc1.transform.rotation.eulerAngles.x >= disc2.transform.rotation.eulerAngles.x - 10.0f && disc1.transform.rotation.eulerAngles.x <= disc2.transform.rotation.eulerAngles.x + 10.0f) || debugWin == true)
+        if ((Disc1.transform.rotation.eulerAngles.x >= Disc2.transform.rotation.eulerAngles.x - 10.0f && Disc1.transform.rotation.eulerAngles.x <= Disc2.transform.rotation.eulerAngles.x + 10.0f) || debugWin == true)
         {
             numAligned[ID - 1] = true; //numAligned[0] = true
-            Debug.Log((int)disc1.transform.rotation.eulerAngles.x + " , " + (int)disc2.transform.rotation.eulerAngles.x + " [Disc 1 is in target position]");
+            Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc2.transform.rotation.eulerAngles.x + " [Disc 1 is in target position]");
             R1.transform.position = new Vector3(-5, 10, 0);
-            disc1.GetComponent<Renderer>().material.color = Color.green;
+            Disc1.GetComponent<Renderer>().material.color = Color.green;
         }
         else
         {
-            if (ID == 1) { numAligned[ID - 1] = false; R1.transform.position = new Vector3(-5, 15, 0); Debug.Log((int)disc1.transform.rotation.eulerAngles.x + " , " + (int)disc2.transform.rotation.eulerAngles.x);  }
+            if (ID == 1) { numAligned[ID - 1] = false; R1.transform.position = new Vector3(-5, 15, 0); Debug.Log((int)Disc1.transform.rotation.eulerAngles.x + " , " + (int)Disc2.transform.rotation.eulerAngles.x);  }
         }
 
         //if (transform.rotation.eulerAngles.x >= 80.0f && transform.rotation.eulerAngles.x <= 110.0f && ID == 2)
         //Disc1 and Disc3
-        if ((disc1.transform.rotation.eulerAngles.x >= disc3.transform.rotation.eulerAngles.x - 10.0f && disc1.transform.rotation.eulerAngles.x <= disc3.transform.rotation.eulerAngles.x + 10.0f) || debugWin == true)
+        if ((Disc1.transform.rotation.eulerAngles.x >= Disc3.transform.rotation.eulerAngles.x - 10.0f && Disc1.transform.rotation.eulerAngles.x <= Disc3.transform.rotation.eulerAngles.x + 10.0f) || debugWin == true)
         {
             numAligned[ID - 1] = true; //numAligned[1] = true
             Debug.Log("Disc 2 is in target position");
@@ -247,7 +249,7 @@ public class Disc_Rotation : MonoBehaviour
         }
         //Disc2 and Disc3
         //if (transform.rotation.eulerAngles.x >= 70.0f && transform.rotation.eulerAngles.x <= 120.0f && ID == 3)
-        if ((disc2.transform.rotation.eulerAngles.x >= disc3.transform.rotation.eulerAngles.x - 10.0f && disc2.transform.rotation.eulerAngles.x <= disc3.transform.rotation.eulerAngles.x + 10.0f) || debugWin == true)
+        if ((Disc2.transform.rotation.eulerAngles.x >= Disc3.transform.rotation.eulerAngles.x - 10.0f && Disc2.transform.rotation.eulerAngles.x <= Disc3.transform.rotation.eulerAngles.x + 10.0f) || debugWin == true)
         {
             numAligned[ID - 1] = true; //numAligned[2] = true
             Debug.Log("Disc 3 is in target position");

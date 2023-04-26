@@ -55,7 +55,7 @@ public class TDetectPlayer : BT_Node
                     botInfo.bTimer = botInfo.bWanderTimer;
                     botInfo.bEngaging = true;
                     botInfo.bViewCone.GetComponent<Light>().color = Color.red;
-                    botInfo.bGameControl.playerStatus = GameController.Status.HUNTED;
+                    botInfo.bGameControl.PlayerStatus = GameController.Status.HUNTED;
                     state = NodeState.SUCCESS;
                     return state;
                 }

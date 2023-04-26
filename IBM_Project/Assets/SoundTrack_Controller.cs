@@ -1,6 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundTrackController : MonoBehaviour
+public class SoundTrack_Controller : MonoBehaviour
 {
     //[SerializeField]
     //bool Ship1;
@@ -41,7 +43,7 @@ public class SoundTrackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gC.playerStatus == GameController.Status.SAFE && !gC.inMinigame && !gC.inQuiz)
+        if(gC.PlayerStatus == GameController.Status.SAFE && !gC.inMinigame && !gC.inQuiz)
         {
             //Debug.Log("player safe");
             safeState.mute = false;
@@ -51,7 +53,7 @@ public class SoundTrackController : MonoBehaviour
             quizState.mute = true;
 
         }
-        else if (gC.playerStatus == GameController.Status.ALERTED && !gC.inMinigame && !gC.inQuiz)
+        else if (gC.PlayerStatus == GameController.Status.ALERTED && !gC.inMinigame && !gC.inQuiz)
         {
             //Debug.Log("player alert");
             safeState.mute = true;
@@ -61,7 +63,7 @@ public class SoundTrackController : MonoBehaviour
             quizState.mute = true;
 
         }
-        else if (gC.playerStatus == GameController.Status.HUNTED && !gC.inMinigame && !gC.inQuiz)
+        else if (gC.PlayerStatus == GameController.Status.HUNTED && !gC.inMinigame && !gC.inQuiz)
         {
             //Debug.Log("player hunted");
             safeState.mute = true;

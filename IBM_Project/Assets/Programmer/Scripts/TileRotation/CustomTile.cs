@@ -1,20 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomTile
 {
     //public Vector2 Pos;
     //////public bool[] Directions;
-    public bool visited = false;
+    public bool Visited = false;
     //public string Type;
     public tileType type = tileType.UpDown;
 
     public GameObject gameObjectFront; //The interactable tiles in front of the camera
     public GameObject gameObjectBack; //A set of tiles out of the camera's view which references the correct solution
 
-    public Quaternion frontRotation;
-    public Vector3 frontRotationEuler;
-    public Quaternion backRotation;
-    public Vector3 backRotationEuler;
+    public Quaternion FrontRotation;
+    public Vector3 FrontRotationEuler;
+    public Quaternion BackRotation;
+    public Vector3 BackRotationEuler;
 
     //Temp variabiles for easier testing of concept
     //To replace with bool array if successful
@@ -54,13 +56,13 @@ public class CustomTile
     //    type = tileType.UpDown;
     //}
 
-    public CustomTile(bool n, bool s, bool e, bool w, bool visited)
+    public CustomTile(bool n, bool s, bool e, bool w, bool Visited)
     {
         this.n = n;
         this.s = s;
         this.e = e;
         this.w = w;
-        this.visited = visited;
+        this.Visited = Visited;
     }
 
     public CustomTile()
@@ -69,7 +71,7 @@ public class CustomTile
         this.s = false;
         this.e = false;
         this.w = false;
-        this.visited = false;
+        this.Visited = false;
         this.correctRotation = false;
         this.gameObjectFront = GameObject.Find("Tile_Blank");
     }

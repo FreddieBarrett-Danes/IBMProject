@@ -1,5 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Code inspired by Little Arch Games
 //"Generate 2D Isometric Grids By Code" (2021) https://www.youtube.com/watch?v=fmVJqt3aSdE
@@ -8,7 +11,7 @@ using UnityEngine;
 //3D Rotation Converter: https://www.andre-gaschler.com/rotationconverter/
 
 
-public class GenGrid : MonoBehaviour
+public class genGrid : MonoBehaviour
 {
     public int gridHeight;
     public int gridWidth;
@@ -19,9 +22,9 @@ public class GenGrid : MonoBehaviour
     Quaternion tileRotation;
     private Camera cam;
     public GameObject pregameText;
-    private bool startTileCheck;
+    private bool StartTileCheck;
     
-    public GameObject timer;
+    public GameObject Timer;
 
     public bool showCorrectRotation;
     public bool showTutorial;
@@ -29,17 +32,17 @@ public class GenGrid : MonoBehaviour
     public Minigame_Timer mTimer;
 
     //Following variables/objects used to be public
-    CustomTile[,] gridArray;
+    CustomTile[,] gridarray;
     CustomTile[] grid2;
-    bool[,] boolArrayTest;
+    bool[,] boolarraytest;
     Vector2 cPos; // Current Position (within Grid array)
     bool gridCompletion = false;
     private Color startColor;
     //int ij = 0;
     private short failCounter; //Amount of times the player has checked the tile grid (space) but the rotations weren't set correctly.
-    private ScoreSystem scoreSystemGameObject;
+    private ScoreSystem ScoreSystemGameObject;
 
-    public delegate void DelType1(bool tileRotationReady);
+    public delegate void DelType1(bool TileRotationReady);
     public static event DelType1 OnTileRotationReady;
 
     private GameController gC;
@@ -61,7 +64,7 @@ public class GenGrid : MonoBehaviour
         }
         tilePrefab2 = GameObject.Find("Tile_UpDown");
 
-        scoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
+        ScoreSystemGameObject = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
 
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -70,10 +73,10 @@ public class GenGrid : MonoBehaviour
 
 
 
-        startTileCheck = true;
+        StartTileCheck = true;
 
         grid2 = new CustomTile[3];
-        gridArray = new CustomTile[gridWidth, gridHeight];
+        gridarray = new CustomTile[gridWidth, gridHeight];
         //gridarray = new CustomTile[gridWidth, gridHeight];
         //int[] array1 = new int[] { 0, 0, 0, 0, 0 };
 
@@ -86,9 +89,9 @@ public class GenGrid : MonoBehaviour
 
         CustomTile[] grid3 = new CustomTile[] { tile1, tile2 };
 
-        boolArrayTest = new bool[3, 3];
+        boolarraytest = new bool[3, 3];
 
-        boolArrayTest[1, 1] = true;
+        boolarraytest[1, 1] = true;
 
         failCounter = -1; //Set to -1 to account for pressing space to start minigame
 
@@ -103,7 +106,7 @@ public class GenGrid : MonoBehaviour
             for (int y = 0; y < gridHeight; y++)
             {
                 //Debug.Log(x + "," + y);
-                gridArray[x, y] = new CustomTile();
+                gridarray[x, y] = new CustomTile();
                 //gridarray[x, y].n = false;
                 //gridarray[x, y].s = false;
                 //gridarray[x, y].e = false;
@@ -116,8 +119,8 @@ public class GenGrid : MonoBehaviour
         cPos = new Vector2(0, 0);
         //Debug.Log("start Cpos " + cPos.x + "," + cPos.y);
         //gridarray[0, 0].w = true;
-        gridArray[0, 0].visited = true;
-        gridArray[0, 0].s = true;
+        gridarray[0, 0].Visited = true;
+        gridarray[0, 0].s = true;
         while (gridCompletion == false)
         {
             GridMovement();
@@ -128,10 +131,10 @@ public class GenGrid : MonoBehaviour
         {
             for (int y = 0; y < gridHeight; y++)
             {
-                if (gridArray[x, y].visited == false)
+                if (gridarray[x, y].Visited == false)
                 {
-                    gridArray[x, y].gameObjectBack = Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, 0), GameObject.Find("Tile_Blank").transform.rotation);
-                    gridArray[x, y].gameObjectFront = Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, 0), GameObject.Find("Tile_Blank").transform.rotation);
+                    gridarray[x, y].gameObjectBack = Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, 0), GameObject.Find("Tile_Blank").transform.rotation);
+                    gridarray[x, y].gameObjectFront = Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, 0), GameObject.Find("Tile_Blank").transform.rotation);
                     //Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, 0), GameObject.Find("Tile_Blank").transform.rotation);
                     //Instantiate(GameObject.Find("Tile_Blank"), new Vector3(x, y, -20), GameObject.Find("Tile_Blank").transform.rotation);
                     //gridarray[x, y].gameObjectBack = GameObject.Find("Tile_Blank");
@@ -166,8 +169,8 @@ public class GenGrid : MonoBehaviour
         //gridarray[1, 1].type = CustomTile.tileType.StartLeft;
 
         //GridGeneration();
-        timer.SetActive(true);
-        timer.GetComponent<TextMeshProUGUI>().enabled = false;
+        Timer.SetActive(true);
+        Timer.GetComponent<TextMeshProUGUI>().enabled = false;
     }
     private void OnDisable()
     {
@@ -175,8 +178,8 @@ public class GenGrid : MonoBehaviour
         {
             for (int y = 0; y < gridHeight; y++)
             {
-                Destroy(gridArray[x, y].gameObjectBack);
-                Destroy(gridArray[x, y].gameObjectFront);
+                Destroy(gridarray[x, y].gameObjectBack);
+                Destroy(gridarray[x, y].gameObjectFront);
             }
         }
         Destroy(startTile);
@@ -202,17 +205,17 @@ public class GenGrid : MonoBehaviour
 
 
         
-        if (gridArray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(1) == CustomTile.tileType.UpDown) { tilePrefab2 = GameObject.Find("Tile_UpDown"); }
-        if (gridArray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(2) == CustomTile.tileType.UpLeft) { tilePrefab2 = GameObject.Find("Tile_UpLeft"); }
-        if (gridArray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(3) == CustomTile.tileType.UpRight) { tilePrefab2 = GameObject.Find("Tile_UpRight"); }
-        if (gridArray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(4) == CustomTile.tileType.DownLeft) { tilePrefab2 = GameObject.Find("Tile_DownLeft"); }
-        if (gridArray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(5) == CustomTile.tileType.DownRight) { tilePrefab2 = GameObject.Find("Tile_DownRight"); }
-        if (gridArray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(6) == CustomTile.tileType.LeftRight) { tilePrefab2 = GameObject.Find("Tile_LeftRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(1) == CustomTile.tileType.UpDown) { tilePrefab2 = GameObject.Find("Tile_UpDown"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(2) == CustomTile.tileType.UpLeft) { tilePrefab2 = GameObject.Find("Tile_UpLeft"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(3) == CustomTile.tileType.UpRight) { tilePrefab2 = GameObject.Find("Tile_UpRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(4) == CustomTile.tileType.DownLeft) { tilePrefab2 = GameObject.Find("Tile_DownLeft"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(5) == CustomTile.tileType.DownRight) { tilePrefab2 = GameObject.Find("Tile_DownRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(6) == CustomTile.tileType.LeftRight) { tilePrefab2 = GameObject.Find("Tile_LeftRight"); }
 
-        if (gridArray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(7) == CustomTile.tileType.StartUp) { tilePrefab2 = GameObject.Find("Tile_StartUp"); }
-        if (gridArray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(8) == CustomTile.tileType.StartLeft) { tilePrefab2 = GameObject.Find("Tile_StartLeft"); }
-        if (gridArray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(9) == CustomTile.tileType.StartRight) { tilePrefab2 = GameObject.Find("Tile_StartRight"); }
-        if (gridArray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(10) == CustomTile.tileType.StartDown) { tilePrefab2 = GameObject.Find("Tile_StartDown"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(7) == CustomTile.tileType.StartUp) { tilePrefab2 = GameObject.Find("Tile_StartUp"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(8) == CustomTile.tileType.StartLeft) { tilePrefab2 = GameObject.Find("Tile_StartLeft"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(9) == CustomTile.tileType.StartRight) { tilePrefab2 = GameObject.Find("Tile_StartRight"); }
+        if (gridarray[(int)cPos.x, (int)cPos.y].ConvertIntoTile(10) == CustomTile.tileType.StartDown) { tilePrefab2 = GameObject.Find("Tile_StartDown"); }
         
     }
     private void DoubleInstantiate()
@@ -273,13 +276,13 @@ public class GenGrid : MonoBehaviour
         //Generate path in front of the camera with randomised rotations:
         //----------------------------------------------------------------
         //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation);
-        if (cPos == new Vector2(0, 0) || gridArray[(int)cPos.x, (int)cPos.y].type == CustomTile.tileType.StartUp) { gridArray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation); }
-        else { gridArray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation); }
+        if (cPos == new Vector2(0, 0) || gridarray[(int)cPos.x, (int)cPos.y].type == CustomTile.tileType.StartUp) { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation); }
+        else { gridarray[(int)cPos.x, (int)cPos.y].gameObjectFront = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), quatRotation); }
 
         //Generate correct path behind the camera:
         //----------------------------------------
         //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, -20), tilePrefab2.transform.rotation);
-        gridArray[(int)cPos.x, (int)cPos.y].gameObjectBack = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, -20), tilePrefab2.transform.rotation);
+        gridarray[(int)cPos.x, (int)cPos.y].gameObjectBack = Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, -20), tilePrefab2.transform.rotation);
 
     }
 
@@ -362,7 +365,7 @@ public class GenGrid : MonoBehaviour
         Gizmos.DrawWireCube(new Vector3(gridWidth / 2, gridHeight / 2, -20), new Vector3(gridWidth, gridHeight, 2));
     }
 
-    private void TileCheck()
+    private void tileCheck()
     {
         bool[,] correctRotation = new bool[100,100];
         short counter1 = 0;
@@ -385,19 +388,19 @@ public class GenGrid : MonoBehaviour
 
                 //If GameObject at front is equal to GameObject at back OR (If GameObject at back is UpDown AND GameObject rotation is inverted (180 difference in z rotation))                                 //gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles ||
                 //This is to account for the UpDown tile featuring two outputs but four rotations
-                if (gridArray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridArray[x, y].gameObjectBack.transform.rotation.eulerAngles || 
-                    (gridArray[x, y].gameObjectBack.name == "Tile_UpDown(Clone)" || gridArray[x,y].gameObjectBack.name == "Tile_LeftRight(Clone)") && 
-                    (gridArray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridArray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0,0,180)) || 
-                    (gridArray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridArray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || 
-                    gridArray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridArray[x, y].gameObjectBack.transform.rotation.eulerAngles))
+                if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || 
+                    (gridarray[x, y].gameObjectBack.name == "Tile_UpDown(Clone)" || gridarray[x,y].gameObjectBack.name == "Tile_LeftRight(Clone)") && 
+                    (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0,0,180)) || 
+                    (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || 
+                    gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles))
                 
                     
                     
                     
                     //if (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles || (gridarray[x, y].gameObjectBack.name == "Tile_UpDown" && (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles + new Vector3(0, 0, 180)) || (gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles) == (gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles - new Vector3(0, 0, 180)) || gridarray[x, y].gameObjectFront.transform.rotation.eulerAngles == gridarray[x, y].gameObjectBack.transform.rotation.eulerAngles)))
                 {
-                    gridArray[x, y].gameObjectFront.transform.position = new Vector3(gridArray[x, y].gameObjectFront.transform.position.x, gridArray[x, y].gameObjectFront.transform.position.y, 1);
-                    if (showCorrectRotation == true && startTileCheck == false) { gridArray[x, y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
+                    gridarray[x, y].gameObjectFront.transform.position = new Vector3(gridarray[x, y].gameObjectFront.transform.position.x, gridarray[x, y].gameObjectFront.transform.position.y, 1);
+                    if (showCorrectRotation == true && StartTileCheck == false) { gridarray[x, y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
                     
                     //if (gridarray[x,y].gameObjectBack.name == "Tile_UpDown")
                     //{
@@ -433,8 +436,8 @@ public class GenGrid : MonoBehaviour
         if (finishLock == false)
         {
             //Debug.Log("Grid has been rotated correctly. Tile Rotation minigame complete, refer to tileCheck() for output");
-            scoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(3, mTimer.timer)); //3 = TileRotation
-            timer.SetActive(false);
+            ScoreSystemGameObject.SendMessage("CompletedMinigame", new Vector2(3, mTimer.timer)); //3 = TileRotation
+            Timer.SetActive(false);
             gC.mC.completedDoor = true;
             gC.inMinigame = false;
         }
@@ -501,7 +504,7 @@ public class GenGrid : MonoBehaviour
                 //Physics.OverlapBox
             }
         }
-        startTileCheck = false;
+        StartTileCheck = false;
         //Debug.Log("StartTileCheck3: " + StartTileCheck);
     }
 
@@ -522,28 +525,28 @@ public class GenGrid : MonoBehaviour
         //check north
         if (cPos.y != (gridHeight - 1))
         {
-            if (gridArray[(int)cPos.x, (int)cPos.y + 1].visited == false)
+            if (gridarray[(int)cPos.x, (int)cPos.y + 1].Visited == false)
             { arrayvar[0] = 1; }
         }
 
         //check south
         if (cPos.y != 0)
         {
-            if (gridArray[(int)cPos.x, (int)cPos.y - 1].visited == false)
+            if (gridarray[(int)cPos.x, (int)cPos.y - 1].Visited == false)
             { arrayvar[1] = 2; }
         }
 
         //check east
         if (cPos.x != (gridWidth - 1))
         {
-            if (gridArray[(int)cPos.x + 1, (int)cPos.y].visited == false)
+            if (gridarray[(int)cPos.x + 1, (int)cPos.y].Visited == false)
             { arrayvar[2] = 3; }
         }
 
         //check west
         if (cPos.x != 0)
         {
-            if (gridArray[(int)cPos.x - 1, (int)cPos.y].visited == false)
+            if (gridarray[(int)cPos.x - 1, (int)cPos.y].Visited == false)
             { arrayvar[3] = 4; }
         }
 
@@ -566,47 +569,47 @@ public class GenGrid : MonoBehaviour
         {
             case 1:
                 //move north
-                gridArray[(int)cPos.x, (int)cPos.y].visited = true;
-                gridArray[(int)cPos.x, (int)cPos.y].n = true;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].n = true;
                 SetPrefab();
                 DoubleInstantiate();
                 //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.y += 1;
-                gridArray[(int)cPos.x, (int)cPos.y].visited = true;
-                gridArray[(int)cPos.x, (int)cPos.y].s = true;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].s = true;
                 break;
             case 2:
                 //move south
-                gridArray[(int)cPos.x, (int)cPos.y].visited = true;
-                gridArray[(int)cPos.x, (int)cPos.y].s = true;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].s = true;
                 SetPrefab();
                 DoubleInstantiate();
                 //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.y -= 1;
-                gridArray[(int)cPos.x, (int)cPos.y].visited = true;
-                gridArray[(int)cPos.x, (int)cPos.y].n = true;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].n = true;
                 break;
             case 3:
                 //move east
-                gridArray[(int)cPos.x, (int)cPos.y].visited = true;
-                gridArray[(int)cPos.x, (int)cPos.y].e = true;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].e = true;
                 SetPrefab();
                 DoubleInstantiate();
                 //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.x += 1;
-                gridArray[(int)cPos.x, (int)cPos.y].visited = true;
-                gridArray[(int)cPos.x, (int)cPos.y].w = true;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].w = true;
                 break;
             case 4:
                 //move west
-                gridArray[(int)cPos.x, (int)cPos.y].visited = true;
-                gridArray[(int)cPos.x, (int)cPos.y].w = true;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].w = true;
                 SetPrefab();
                 DoubleInstantiate();
                 //Instantiate(tilePrefab2, new Vector3(cPos.x, cPos.y, 0), tilePrefab2.transform.rotation);
                 cPos.x -= 1;
-                gridArray[(int)cPos.x, (int)cPos.y].visited = true;
-                gridArray[(int)cPos.x, (int)cPos.y].e = true;
+                gridarray[(int)cPos.x, (int)cPos.y].Visited = true;
+                gridarray[(int)cPos.x, (int)cPos.y].e = true;
                 break;
             case 5:
                 //Mark grid path as complete
@@ -618,7 +621,7 @@ public class GenGrid : MonoBehaviour
         }
     }
 
-    private void UpdateRotation()
+    private void updateRotation()
     {
         for (int x = 0; x < gridWidth; x++)
         {
@@ -646,13 +649,13 @@ public class GenGrid : MonoBehaviour
                 //Debug.Log(obj.transform.position.x + "," + obj.transform.position.y);
                 //Debug.Log(gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles + " | " + gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles);
                 //Disc1.GetComponent<Renderer>().material.color = new Color(1.0f, 0.5f, 0.5f);
-                if (gridArray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles == gridArray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles)
+                if (gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.transform.rotation.eulerAngles == gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectBack.transform.rotation.eulerAngles)
                 {
                     //if (showCorrectRotation == true) { gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.5f); }
                 }
                 else
                 {
-                    gridArray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = startColor;
+                    gridarray[(int)obj.transform.position.x, (int)obj.transform.position.y].gameObjectFront.GetComponent<Renderer>().material.color = startColor;
                 }
                 
 
@@ -689,11 +692,11 @@ public class GenGrid : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            timer.GetComponent<TextMeshProUGUI>().enabled = true;
+            Timer.GetComponent<TextMeshProUGUI>().enabled = true;
             OnTileRotationReady(true);
             GameObject.Find("TutorialBackground").GetComponent<MeshRenderer>().enabled = false;
             pregameText.GetComponent<TextMeshProUGUI>().enabled = false;
-            TileCheck();
+            tileCheck();
             //GridMovement();
             //if (gridCompletion == false)
             //{

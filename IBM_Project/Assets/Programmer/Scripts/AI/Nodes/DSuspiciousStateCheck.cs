@@ -1,3 +1,4 @@
+using System;
 using BT;
 
 public class DSuspiciousStateCheck : BT_Node
@@ -11,7 +12,7 @@ public class DSuspiciousStateCheck : BT_Node
 
     public override NodeState Evaluate()
     {
-        switch (bot.bGameControl.playerStatus)
+        switch (bot.bGameControl.PlayerStatus)
         {
             case GameController.Status.HUNTED:
                 state = NodeState.SUCCESS;

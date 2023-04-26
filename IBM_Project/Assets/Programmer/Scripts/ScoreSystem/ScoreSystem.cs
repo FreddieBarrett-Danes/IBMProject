@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,44 +8,44 @@ using UnityEngine.SceneManagement;
 public class ScoreSystem : MonoBehaviour
 {
     [Header("Scripts")]
-    private LevelTimer levelTimer;
-    private ReadTSV quiz;
-    private TextMeshProUGUI scoreText;
-    private elevator elevatorTest;  
+    private LevelTimer LevelTimer;
+    private ReadTSV Quiz;
+    private TextMeshProUGUI ScoreText;
+    private elevator elevatortest;  
 
     private GameController Gc;
 
-    public float score; //Overall score
-    float timerUp; //Timer counting up (aka TimeTaken)
-    float timeBonus;
+    public float Score; //Overall score
+    float TimerUp; //Timer counting up (aka TimeTaken)
+    float TimeBonus;
 
     [Header("Bonus, Level and Quiz Modifiers")]
-    public float timeBonusThreshold = 180;
-    public float levelTimeScoreModifier = 1;
+    public float TimeBonusThreshold = 180;
+    public float LevelTimeScoreModifier = 1;
     
-    public float quizScoreModifier = 1;
+    public float QuizScoreModifier = 1;
 
-    public bool losePointsOnIncorrectAnswer;
+    public bool LosePointsOnIncorrectAnswer;
 
-    public int pointsPerQuestion;
+    public int PointsPerQuestion;
     public bool restarted = false;
     public float scorePool;
-    private float quizScore;
+    private float QuizScore;
 
     [Header("Minigame Points")]
-    public bool timerAwardsPoints = true; //If false, will reward the same amount of points regardless of the time of completion (use StaticPointsX_MazeY_DiscZ_Tile) | If true, the amount of points rewarded is based on the time remaining and ScoreModifier (use uiTimers and MinigameTimeScoreModifier)
-    public Vector3 staticPointsXMazeYDiscZTile = new Vector3(100, 20, 20); //X = Maze, Y = DiscAlignment, Z = TileRotation | This awards a static amount of points after completing the respective minigame (if TimeAwardsPoints is set to false)
-    public Vector3 minigameTimeScoreModifier = new Vector3(1, 1, 1); //X = Maze, Y = DiscAlignment, Z = TileRotation | The points awarded after completing a minigame: time remaining * MinigameTimerScoreModifier (for the respective minigame)
-    private Vector3 minigamePoints; //Stores values of MinigameTimeScoreModifier for easier referencing (whilst maintaining clarity in inspector)
+    public bool TimerAwardsPoints = true; //If false, will reward the same amount of points regardless of the time of completion (use StaticPointsX_MazeY_DiscZ_Tile) | If true, the amount of points rewarded is based on the time remaining and ScoreModifier (use uiTimers and MinigameTimeScoreModifier)
+    public Vector3 StaticPointsX_MazeY_DiscZ_Tile = new Vector3(100, 20, 20); //X = Maze, Y = DiscAlignment, Z = TileRotation | This awards a static amount of points after completing the respective minigame (if TimeAwardsPoints is set to false)
+    public Vector3 MinigameTimeScoreModifier = new Vector3(1, 1, 1); //X = Maze, Y = DiscAlignment, Z = TileRotation | The points awarded after completing a minigame: time remaining * MinigameTimerScoreModifier (for the respective minigame)
+    private Vector3 MinigamePoints; //Stores values of MinigameTimeScoreModifier for easier referencing (whilst maintaining clarity in inspector)
     public MinigameController minigameCont;
     
-    private static ScoreSystem scoreInstance;
+    private static ScoreSystem ScoreInstance;
 
-    private int askedUpdate;
+    private int AskedUpdate;
 
     private int askedListTotal;
 
-    private int tempQuizPoints;
+    private int TempQuizPoints;
 
     //LevelTimer.currentTime counts down starting from LevelTimer.startTime
     //public LevelTimeBank TimeBank;
@@ -77,7 +79,7 @@ public class ScoreSystem : MonoBehaviour
         //Score += TimeBonus;
         //Score = (LevelTimer.currentTime + TimeBonus /* + QuizTimer + MiscBonus*/);
 
-        score += (levelTimer.currentTime * levelTimeScoreModifier);
+        Score += (LevelTimer.currentTime * LevelTimeScoreModifier);
         //Debug.Log(Score);
 
     }
@@ -99,32 +101,32 @@ public class ScoreSystem : MonoBehaviour
         //3 = TileRotation
 
 
-        switch (num, TimerAwardsPoints: timerAwardsPoints)
+        switch (num, TimerAwardsPoints)
         {
             case (1, false):
                 //Debug.Log("Maze completed, static points awarded");
-                score += minigamePoints.x;
+                Score += MinigamePoints.x;
                 break;
             case (2, false):
                 //Debug.Log("DiscAlignment completed, static points awarded");
-                score += minigamePoints.y;
+                Score += MinigamePoints.y;
                 break;
             case (3, false):
                 //Debug.Log("TileRotation completed, static points awarded");
-                score += minigamePoints.z;
+                Score += MinigamePoints.z;
                 break;
             case (1, true):
                 //Debug.Log("Maze completed, points awarded based on time remainingTime: " + remainingTime + " MinigameTimeScoreModifier x: " + MinigameTimeScoreModifier.x);
-                score += (remainingTime * minigameTimeScoreModifier.x);
+                Score += (remainingTime * MinigameTimeScoreModifier.x);
                 break;
             case (2, true):
                 //Debug.Log("DiscAlignment completed, points awarded based on time" + remainingTime + "| " + MinigameTimeScoreModifier.y);
-                score += (remainingTime * minigameTimeScoreModifier.y);
+                Score += (remainingTime * MinigameTimeScoreModifier.y);
                 //Debug.Log(Score);
                 break;
             case (3, true):
                 //Debug.Log("TileRotation completed, points awarded based on time");
-                score += (remainingTime * minigameTimeScoreModifier.z);
+                Score += (remainingTime * MinigameTimeScoreModifier.z);
                 break;
             default:
                 //Debug.LogError("CompletedMinigame() num is " + num + " which isn't a registered minigame number");
@@ -150,7 +152,7 @@ public class ScoreSystem : MonoBehaviour
         //Score = (LevelTimer.currentTime + TimeBonus);
 
 
-        score += levelTimer.currentTime * levelTimeScoreModifier;
+        Score += LevelTimer.currentTime * LevelTimeScoreModifier;
 
     }
 
@@ -165,13 +167,13 @@ public class ScoreSystem : MonoBehaviour
 
         //Debug.Log("Quiz total points | TempQuizPoints " + Quiz.totalPoints + " | " + TempQuizPoints);
 
-        if (quiz.totalPoints != tempQuizPoints) //(Quiz.totalPoints > TempQuizPoints || Quiz.totalPoints < TempQuizPoints)
+        if (Quiz.totalPoints != TempQuizPoints) //(Quiz.totalPoints > TempQuizPoints || Quiz.totalPoints < TempQuizPoints)
         {
             //Score += 1;
             //Debug.Log("Score updated: " + Score + "," + Quiz.totalPoints + "," + TempQuizPoints);
-            score += (quiz.totalPoints - tempQuizPoints);
-            score += pointsPerQuestion;
-            tempQuizPoints = quiz.totalPoints;
+            Score += (Quiz.totalPoints - TempQuizPoints);
+            Score += PointsPerQuestion;
+            TempQuizPoints = Quiz.totalPoints;
             //Debug.Log("Score updated: " + Score + "," + Quiz.totalPoints + "," + TempQuizPoints);
         }
         //if (Quiz.totalPoints < TempQuizPoints)
@@ -194,28 +196,28 @@ public class ScoreSystem : MonoBehaviour
         //Debug.Log("ScoreSystem Awake");
         Gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         //mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
-        quiz = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
-        scoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
-        levelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
-        askedUpdate = quiz.cloudAskedList.Count + quiz.aiAskedList.Count + quiz.dataAskedList.Count + quiz.quantumAskedList.Count + quiz.securityAskedList.Count;
+        Quiz = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
+        ScoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
+        LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
+        AskedUpdate = Quiz.cloudAskedList.Count + Quiz.aiAskedList.Count + Quiz.dataAskedList.Count + Quiz.quantumAskedList.Count + Quiz.securityAskedList.Count;
         minigameCont = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
         
 
         
         
         DontDestroyOnLoad(this);
-        if (scoreInstance == null)
+        if (ScoreInstance == null)
         {
-            scoreInstance = this;
+            ScoreInstance = this;
         }
         else
         {
             Destroy(gameObject);
         }
         restarted = false;
-        tempQuizPoints = quiz.totalPoints; //Move to Awake()
+        TempQuizPoints = Quiz.totalPoints; //Move to Awake()
         //Debug.Log("push test");
-        minigamePoints = staticPointsXMazeYDiscZTile;
+        MinigamePoints = StaticPointsX_MazeY_DiscZ_Tile;
         //Gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         //LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         //CompletedMinigame(1);
@@ -244,17 +246,17 @@ public class ScoreSystem : MonoBehaviour
             Gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         }
         //mC = GameObject.FindGameObjectWithTag("GameController").GetComponent<MinigameController>();
-        if (quiz == null)
+        if (Quiz == null)
         {
-            quiz = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
+            Quiz = GameObject.FindGameObjectWithTag("QuizMaster").GetComponent<ReadTSV>();
         }
-        if (scoreText == null)
+        if (ScoreText == null)
         {
-            scoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
+            ScoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
         }
-        if (levelTimer == null)
+        if (LevelTimer == null)
         {
-            levelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
+            LevelTimer = GameObject.FindGameObjectWithTag("LevelTimer").GetComponent<LevelTimer>();
         }
 /*        if(restarted)
         {
@@ -267,20 +269,20 @@ public class ScoreSystem : MonoBehaviour
             //Debug.Log("Score: " + Score);
             //if (!Gc.inMinigame)
             //{
-            scoreText.text = score.ToString("Score:" + "0");
+            ScoreText.text = Score.ToString("Score:" + "0");
             //countdownText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
             //Debug.Log("Score: " + Score);
 
-            if (quiz.completedQuiz == true) { CompletedQuiz(); } //Score += Quiz.totalPoints;
+            if (Quiz.completedQuiz == true) { CompletedQuiz(); } //Score += Quiz.totalPoints;
 
 
             if (Gc.inQuiz || Gc.inMinigame)
             {
-                scoreText.enabled = false;
+                ScoreText.enabled = false;
             }
-            else { scoreText.enabled = true; }
+            else { ScoreText.enabled = true; }
 
-            if (Gc.inQuiz && askedListTotal > askedUpdate) { askedUpdate = askedListTotal; Debug.Log("QuestionUpdate"); QuizQuestionUpdate(); }
+            if (Gc.inQuiz && askedListTotal > AskedUpdate) { AskedUpdate = askedListTotal; Debug.Log("QuestionUpdate"); QuizQuestionUpdate(); }
 
             
            /* if (Input.GetKeyDown(KeyCode.J))

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MinigameController : MonoBehaviour
@@ -17,7 +18,7 @@ public class MinigameController : MonoBehaviour
 
     private GameController gameController;
 
-    private ScoreSystem scoreSystemGameObject;
+    private ScoreSystem ScoreSystemGameObject;
 
     [SerializeField]
     private GameObject[] doorGame;
@@ -62,7 +63,7 @@ public class MinigameController : MonoBehaviour
         {
             if (!chosenMinigame.activeSelf)
             {
-                if(chosenMinigame != null) 
+                if(chosenMinigame != null)
                 chosenMinigame.SetActive(true);
                 inMaze = true;
                 gameController.inMinigame = true;

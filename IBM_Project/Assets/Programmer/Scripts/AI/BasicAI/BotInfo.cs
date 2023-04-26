@@ -221,7 +221,7 @@ public class BotInfo : MonoBehaviour
         if (bPlayerInView ||
             GetComponent<Perception>().sensedRecord[0].timeLastSensed >=
             now.Subtract(new TimeSpan(0, 0, bSearchTime))) return;
-        bGameControl.playerStatus = GameController.Status.SAFE;
+        bGameControl.PlayerStatus = GameController.Status.SAFE;
         bDetectionTimer = 0;
         if (bRemainingBots < bBotCount / 2) return;
         bViewRadius = bDefaultViewRadius;

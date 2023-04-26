@@ -1,8 +1,9 @@
+using System.Diagnostics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -11,21 +12,21 @@ public class GameController : MonoBehaviour
     //keeps track if in lavel/mingame or quiz
     //private LevelTimer levelTimer;
     [Header("Cloud")]
-    public bool ship1;
+    public bool Ship1;
     [Header("AI")]
-    public bool ship2;
+    public bool Ship2;
     [Header("Data")]
-    public bool ship3;
+    public bool Ship3;
     [Header("Quantum")]
-    public bool ship4;
+    public bool Ship4;
     [Header("Security")]
-    public bool ship5;
+    public bool Ship5;
     [Header("Level")]
-    public bool level5;
+    public bool Level5;
     public GameObject level;
     private GameObject player;
     [Header("Minigame")] 
-    public bool noComputerInScene;
+    public bool NoComputerInScene;
     public MinigameController mC;
     public bool inMinigame = false;
     public bool inQuiz = false;
@@ -41,14 +42,14 @@ public class GameController : MonoBehaviour
     [Header("Timer")]
     public GameObject levelTimer;
 
-    public float levelTimeBank = 0.0f;
+    public float LevelTimeBank = 0.0f;
 
     [Header("Level Bools")]
     public bool completedLevel = false;
-    public bool gameOver = false;
+    public bool GameOver = false;
     public bool newScene = false;
     public bool playerHit = false;
-    public bool deactivate;
+    public bool Deactivate;
 
     [Header("Enemies")]
     public GameObject[] bots;
@@ -60,7 +61,7 @@ public class GameController : MonoBehaviour
     public bool winSoundPlayed;
 
     [SerializeField]
-    private GameObject menu;
+    private GameObject Menu;
     public enum Status
     {
         SAFE,
@@ -68,13 +69,14 @@ public class GameController : MonoBehaviour
         HUNTED
     }
 
-    public PlayerController playerControl;
-    public Status playerStatus;
-    public TextMeshProUGUI playerStatusText;
-    public Image shootAbilityIconImage;
-    public Image moveAbilityIconImage;
-    public Image canHackIconImage;
-    public Image computerAvailableImage;
+    public PlayerController PlayerControl;
+    
+    public Status PlayerStatus;
+    public TextMeshProUGUI playerstatusText;
+    public Image shootabilityiconImage;
+    public Image moveabilityiconImage;
+    public Image canhackiconImage;
+    public Image computeravailableImage;
     private Sprite greyShooting;
     private Sprite greyMove;
     private Sprite greyHack;
@@ -88,7 +90,7 @@ public class GameController : MonoBehaviour
 
     public ScoreSystem scoreSystem;
 
-    public ComputerInteraction computerObj;
+    public ComputerInteraction ComputerObj;
     // Start is called before the first frame update
     void Start()
     {
@@ -109,19 +111,19 @@ public class GameController : MonoBehaviour
         {
             tile.SetActive(false);
         }
-        menu = GameObject.Find("Menu");
+        Menu = GameObject.Find("Menu");
         scoreSystem = GameObject.FindGameObjectWithTag("ScoreSystem").GetComponent<ScoreSystem>();
         levelUI = GameObject.FindGameObjectsWithTag("LevelUI");
         levelTimer = GameObject.FindGameObjectWithTag("LevelTimer");
         level = GameObject.FindGameObjectWithTag("LevelObject");
         mC = gameObject.GetComponent<MinigameController>();
         player = FindObjectOfType<PlayerController>().GameObject();
-        playerStatus = Status.SAFE;
+        PlayerStatus = Status.SAFE;
         bots = GameObject.FindGameObjectsWithTag("Sprite");
         computerTimerOrigin = computerDoorTimer;
         //levelTimer = GameObject.FindGameObjectWithTag("Level Timer").GetComponent<LevelTimer>();
 
-        playerControl = player.GetComponent<PlayerController>();
+        PlayerControl = player.GetComponent<PlayerController>();
         
         greyShooting = Resources.Load<Sprite>("GunIconGrey");
         greyMove = Resources.Load<Sprite>("Speed_Icon_Grey");
@@ -132,18 +134,18 @@ public class GameController : MonoBehaviour
         greenHack = Resources.Load<Sprite>("RobotIcon");
         greenComputer = Resources.Load<Sprite>("ComputerIcon");
         
-        playerStatusText = FindObjectOfType<FinderScript>().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        playerStatusText.text = "SAFE";
-        shootAbilityIconImage = FindObjectOfType<FinderScript>().transform.GetChild(3).GetComponent<Image>();
-        shootAbilityIconImage.sprite = greyShooting;
-        moveAbilityIconImage = FindObjectOfType<FinderScript>().transform.GetChild(4).GetComponent<Image>();
-        moveAbilityIconImage.sprite = greyMove;
-        canHackIconImage = FindObjectOfType<FinderScript>().transform.GetChild(5).GetComponent<Image>();
-        canHackIconImage.sprite = greyHack;
-        computerAvailableImage = FindObjectOfType<FinderScript>().transform.GetChild(6).GetComponent<Image>();
-        computerAvailableImage.sprite = greyComputer;
+        playerstatusText = FindObjectOfType<FinderScript>().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        playerstatusText.text = "SAFE";
+        shootabilityiconImage = FindObjectOfType<FinderScript>().transform.GetChild(3).GetComponent<Image>();
+        shootabilityiconImage.sprite = greyShooting;
+        moveabilityiconImage = FindObjectOfType<FinderScript>().transform.GetChild(4).GetComponent<Image>();
+        moveabilityiconImage.sprite = greyMove;
+        canhackiconImage = FindObjectOfType<FinderScript>().transform.GetChild(5).GetComponent<Image>();
+        canhackiconImage.sprite = greyHack;
+        computeravailableImage = FindObjectOfType<FinderScript>().transform.GetChild(6).GetComponent<Image>();
+        computeravailableImage.sprite = greyComputer;
 
-        computerObj = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
+        ComputerObj = GameObject.FindGameObjectWithTag("Computer").GetComponent<ComputerInteraction>();
         scoreSystem.restarted = false;
 
     }
@@ -153,35 +155,35 @@ public class GameController : MonoBehaviour
     {
         if (!completedLevel)
         {
-            menu.GetComponent<MenuController>().quiz = inQuiz;
+            Menu.GetComponent<MenuController>().Quiz = inQuiz;
             deadDroids = GameObject.FindGameObjectsWithTag("DeadEnemy");
-            if (playerControl.canShoot)
-                shootAbilityIconImage.sprite = greenShooting;
+            if (PlayerControl.canShoot)
+                shootabilityiconImage.sprite = greenShooting;
             else
-                shootAbilityIconImage.sprite = greyShooting;
-            if (playerControl.canSpeed)
-                moveAbilityIconImage.sprite = greenMove;
+                shootabilityiconImage.sprite = greyShooting;
+            if (PlayerControl.canSpeed)
+                moveabilityiconImage.sprite = greenMove;
             else
-                moveAbilityIconImage.sprite = greyMove;
-            if (playerControl.isBehindEnemy)
-                canHackIconImage.sprite = greenHack;
+                moveabilityiconImage.sprite = greyMove;
+            if (PlayerControl.isBehindEnemy)
+                canhackiconImage.sprite = greenHack;
             else
-                canHackIconImage.sprite = greyHack;
+                canhackiconImage.sprite = greyHack;
             
-            switch(noComputerInScene)
+            switch(NoComputerInScene)
             {
                 case false:
                 {
-                    switch (computerObj.mazeFailed || computerObj.mazeDONE)
+                    switch (ComputerObj.mazeFailed || ComputerObj.mazeDONE)
                     {
                         case true:
                         {
-                            computerAvailableImage.sprite = greyComputer;
+                            computeravailableImage.sprite = greyComputer;
                             break;
                         }
                         case false:
                         {
-                            computerAvailableImage.sprite = greenComputer;
+                            computeravailableImage.sprite = greenComputer;
                             break;
                         }
                     }
@@ -189,7 +191,7 @@ public class GameController : MonoBehaviour
                 }
                 case true:
                 {
-                    computerAvailableImage.sprite = greyComputer;
+                    computeravailableImage.sprite = greyComputer;
                     break;
                 }
             }
@@ -218,9 +220,9 @@ public class GameController : MonoBehaviour
                 {
                     //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                     scoreSystem.restarted = true;
-                    scoreSystem.score = scoreSystem.scorePool;
+                    scoreSystem.Score = scoreSystem.scorePool;
                     levelTimer.GetComponent<LevelTimer>().currentTime = levelTimer.GetComponent<LevelTimer>().startTime;
-                    Debug.Log("Score " + scoreSystem.scorePool);
+                    UnityEngine.Debug.Log("Score " + scoreSystem.scorePool);
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
             }
@@ -229,37 +231,37 @@ public class GameController : MonoBehaviour
                 //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-            if (gameOver)
+            if (GameOver)
             {
                 //transistion to losing scene
                 Destroy(levelTimer);
                 //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-                if (ship1)
+                if (Ship1)
                 {
                     SceneManager.LoadScene(28);
                 }
-                else if (ship2)
+                else if (Ship2)
                 {
                     SceneManager.LoadScene(26);
                 }
-                else if (ship3)
+                else if (Ship3)
                 {
                     SceneManager.LoadScene(30);
                 }
-                else if (ship4)
+                else if (Ship4)
                 {
                     SceneManager.LoadScene(32);
                 }
-                else if (ship5)
+                else if (Ship5)
                 {
                     SceneManager.LoadScene(34);
                 }
             }
 
-            if (playerStatusText == null)
+            if (playerstatusText == null)
             {
-                playerStatusText.text = "SAFE";
-                playerStatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                playerstatusText.text = "SAFE";
+                playerstatusText = GameObject.FindGameObjectWithTag("LevelUI").transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             }
             if (inMinigame)
             {
@@ -282,7 +284,7 @@ public class GameController : MonoBehaviour
                 //        Destroy(mazeWalls[i]);
                 //    }
                 //}
-                playerStatusText.text = playerStatus switch
+                playerstatusText.text = PlayerStatus switch
                 {
                     Status.SAFE => "SAFE",
                     Status.HUNTED => "HUNTED",
@@ -347,7 +349,7 @@ public class GameController : MonoBehaviour
                 }
             }
 
-            switch (deactivate)
+            switch (Deactivate)
             {
                 case true:
                 {
@@ -410,23 +412,23 @@ public class GameController : MonoBehaviour
         {
             Destroy(levelTimer);
             //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-            if (ship1 && level5)
+            if (Ship1 && Level5)
             {
                 SceneManager.LoadScene(29);
             }
-            else if (ship2 && level5)
+            else if (Ship2 && Level5)
             {
                 SceneManager.LoadScene(27);
             }
-            else if (ship3 && level5)
+            else if (Ship3 && Level5)
             {
                 SceneManager.LoadScene(31);
             }
-            else if (ship4 && level5)
+            else if (Ship4 && Level5)
             {
                 SceneManager.LoadScene(33);
             }
-            else if (ship5 && level5)
+            else if (Ship5 && Level5)
             {
                 SceneManager.LoadScene(35);
             }

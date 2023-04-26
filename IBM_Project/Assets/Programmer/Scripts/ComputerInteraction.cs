@@ -1,5 +1,10 @@
 using UnityEngine;
 using Unity.VisualScripting;
+using System.Linq;
+using System.Collections.Generic;
+using System;
+using UnityEditor;
+using UnityEngine.Analytics;
 
 public class ComputerInteraction : MonoBehaviour
 {
@@ -54,7 +59,7 @@ public class ComputerInteraction : MonoBehaviour
 
         }
 
-        if (gC.level5 && allDead)
+        if (gC.Level5 && allDead)
         {
             if (!playOnce)
             {

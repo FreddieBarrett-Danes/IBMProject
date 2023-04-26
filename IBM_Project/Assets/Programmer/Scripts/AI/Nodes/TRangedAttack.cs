@@ -7,10 +7,10 @@ public class TRangedAttack : BT_Node
     private readonly NavMeshAgent agent;
     private readonly BotInfo botInfo;
 
-    public TRangedAttack(NavMeshAgent pAgent, BotInfo pBotInfo)
+    public TRangedAttack(NavMeshAgent pAgent, BotInfo pbotInfo)
     {
         agent = pAgent;
-        botInfo = pBotInfo;
+        botInfo = pbotInfo;
     }
 
     public override NodeState Evaluate()

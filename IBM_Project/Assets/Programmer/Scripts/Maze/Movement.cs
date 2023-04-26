@@ -1,10 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
     public int speed;
     public int frameRate;
-    public Vector2 startPos;
+    public Vector2 StartPos;
     RectTransform rectTrans;
     bool touchWall;
     public GameObject uiPlayer;
@@ -12,7 +14,7 @@ public class Movement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         //transform.position.an = new Vector2(StartPos.x, StartPos.y);
-        rectTrans.anchoredPosition = new Vector2(startPos.x, startPos.y);
+        rectTrans.anchoredPosition = new Vector2(StartPos.x, StartPos.y);
         //touchWall = true;
         //transform.position -= new Vector3((speed*3) * Time.deltaTime, 0, 0);
         
@@ -54,7 +56,7 @@ public class Movement : MonoBehaviour
         //speed = 10;
         Application.targetFrameRate = frameRate;
         touchWall = false;
-        rectTrans.anchoredPosition = new Vector2(startPos.x, startPos.y);
+        rectTrans.anchoredPosition = new Vector2(StartPos.x, StartPos.y);
     }
 
     // Update is called once per frame

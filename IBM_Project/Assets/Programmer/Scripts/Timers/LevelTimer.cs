@@ -1,12 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelTimer : MonoBehaviour
 {
     public float startTime;
     public float currentTime;
-    public bool timeUp = false;
+    public bool TimeUp = false;
     private GameController gC;
 
     public TextMeshProUGUI countdownText;
@@ -46,7 +49,7 @@ public class LevelTimer : MonoBehaviour
         {
             countdownText = FindObjectOfType<FinderScript>().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         }
-        if (!timeUp)
+        if (!TimeUp)
         {
             if (currentTime > 0)
             {
@@ -65,12 +68,12 @@ public class LevelTimer : MonoBehaviour
             {
                 //time has run out
                 currentTime = 0;
-                timeUp = true;
+                TimeUp = true;
             }
         }
         else
         {
-            gC.gameOver = true;
+            gC.GameOver = true;
         }
     }
     void UpdateTimer(float currentTime)
