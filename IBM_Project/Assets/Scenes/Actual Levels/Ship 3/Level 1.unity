@@ -543,6 +543,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 4803746324015185170, guid: cad60745fa91ee94e92d8e418040d9ce, type: 3}
+      propertyPath: minigameCont
+      value: 
+      objectReference: {fileID: 1803711055}
     - target: {fileID: 4803746324015185171, guid: cad60745fa91ee94e92d8e418040d9ce, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -29448,6 +29452,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: ship3
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: levelTimer
       value: 
       objectReference: {fileID: 113468936}
@@ -29537,6 +29545,17 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 8fe7d218942a9a34bb1b1d7fdf0907d9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+--- !u!114 &1803711055 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5677019258401350937, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+  m_PrefabInstance: {fileID: 1803711054}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f0dafb6dd28f004b8752aac789dc79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1805245672 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1920020246102581617, guid: 593c4efad8796d8428bfffd869986ce0, type: 3}

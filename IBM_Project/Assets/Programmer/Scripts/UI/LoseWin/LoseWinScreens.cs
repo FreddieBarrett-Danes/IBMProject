@@ -36,7 +36,7 @@ public class LoseWinScreens : MonoBehaviour
         if (!AnimatorIsPlaying())
         {
             button.SetActive(true);
-            scoreText.text = scoreSystem.score.ToString("Score: " + scoreSystem.score);
+            //scoreText.text = scoreSystem.score.ToString("Score: " + scoreSystem.score);
         }
     }
     bool AnimatorIsPlaying()

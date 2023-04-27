@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44515526, g: 0.4947673, b: 0.5738286, a: 1}
+  m_IndirectSpecularColor: {r: 0.44515568, g: 0.49476755, b: 0.5738293, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -59922,6 +59922,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+      propertyPath: ship1
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 468921459094082809, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
       propertyPath: Level5
       value: 0
       objectReference: {fileID: 0}
@@ -60055,6 +60059,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+--- !u!114 &2138871593 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5677019258401350937, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
+  m_PrefabInstance: {fileID: 2138871592}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f0dafb6dd28f004b8752aac789dc79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2138871594 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3271240097370296493, guid: 9e310e1d1bae19b4e9d6b38f9a7abab5, type: 3}
@@ -60275,6 +60290,10 @@ PrefabInstance:
       propertyPath: LevelTimer
       value: 
       objectReference: {fileID: 1971977679}
+    - target: {fileID: 4803746324015185170, guid: cad60745fa91ee94e92d8e418040d9ce, type: 3}
+      propertyPath: minigameCont
+      value: 
+      objectReference: {fileID: 2138871593}
     - target: {fileID: 4803746324015185171, guid: cad60745fa91ee94e92d8e418040d9ce, type: 3}
       propertyPath: m_RootOrder
       value: 7

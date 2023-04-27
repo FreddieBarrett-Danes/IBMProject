@@ -20,7 +20,7 @@ public class LevelTimer : MonoBehaviour
 
     private void Awake()
     {
-        gC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        gC = GameObject.Find("GameController").GetComponent<GameController>();
         DontDestroyOnLoad(this);
         if (timerInstance == null) 
         { 

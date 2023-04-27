@@ -230,11 +230,13 @@ public class GameController : MonoBehaviour
             if(playerHit)
             {
                 //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                scoreSystem.score = scoreSystem.scorePool;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             if (gameOver)
             {
                 //transistion to losing scene
+                scoreSystem.score = scoreSystem.scorePool;
                 Destroy(levelTimer);
                 //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                 if (ship1)
